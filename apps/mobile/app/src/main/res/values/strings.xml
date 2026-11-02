@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Moonfold</string>
+    <string name="mark_description">Moonfold</string>
+
+    <string name="welcome_title">Moonfold</string>
+    <string name="welcome_body">Follow your computer from here. On your computer, open Moonfold, go to Settings, then Mobile App, and scan the code.</string>
+    <string name="scan">Scan code</string>
+    <string name="scan_new">Scan a new code</string>
+
+    <string name="connecting_title">Connecting to %1$s</string>
+    <string name="waiting_title">Waiting for %1$s</string>
+    <string name="waiting_body">Moonfold is not answering. This screen reconnects by itself once Moonfold is running there and this phone can reach it over the same Wi-Fi, Tailscale or a VPN.</string>
+
+    <string name="revoked_title">This phone was disconnected</string>
+    <string name="revoked_body">The computer ended this phone\'s access. Scan a new code from Settings, then Mobile App, to connect again.</string>
+    <string name="code_used_title">That code did not work</string>
+    <string name="code_used_body">Codes work once and for a few minutes. Show a new one in Settings, then Mobile App, and scan it.</string>
+    <string name="unreachable_title">Could not reach your computer</string>
+    <string name="unreachable_body">Check that this phone is on the same Wi-Fi as your computer, or on the same Tailscale or VPN network, then scan again.</string>
+
+    <string name="confirm_title">Connect to %1$s?</string>
+    <string name="confirm_body">This phone will show everything Moonfold shows at %1$s. Only continue if this is your computer.</string>
+    <string name="confirm_connect">Connect</string>
+    <string name="confirm_cancel">Cancel</string>
+
+    <string name="scan_hint">Point the camera at the code in Settings, then Mobile App</string>
+    <string name="scan_wrong_code">That is not a Moonfold code</string>
+    <string name="scan_camera_needed">Moonfold needs the camera only to scan the pairing code.</string>
+    <string name="scan_allow_camera">Allow camera</string>
+    <string name="no_browser">No app here can open that link.</string>
+</resources>

@@ -235,6 +235,27 @@ async function renderChannel(channel: ChannelOutputs): Promise<void> {
   emit(`${channel.iconComposerProject}/icon.json`, iconComposerProject(channel.background.to));
 }
 
+const ANDROID_RES = "apps/mobile/app/src/main/res";
+/** Launcher layers are 108dp at each density. */
+const ANDROID_DENSITIES = { mdpi: 108, hdpi: 162, xhdpi: 216, xxhdpi: 324, xxxhdpi: 432 } as const;
+
+/** The Android launcher layers (the mask keeps the middle 66dp of 108) and the in-app mark. */
+async function renderAndroid(): Promise<void> {
+  const foreground = svg(fullMark(590));
+  const monochrome = svg(monoMark(placeMark(590, 512, 512), "#FFFFFF"));
+  for (const [density, size] of Object.entries(ANDROID_DENSITIES)) {
+    emit(
+      `${ANDROID_RES}/mipmap-${density}/ic_launcher_foreground.png`,
+      await png(foreground, size),
+    );
+    emit(
+      `${ANDROID_RES}/mipmap-${density}/ic_launcher_monochrome.png`,
+      await png(monochrome, size),
+    );
+  }
+  emit(`${ANDROID_RES}/drawable-nodpi/moonfold_mark.png`, await png(svg(fullMark(940)), 336));
+}
+
 function sameJson(left: Buffer, right: Buffer): boolean {
   try {
     return (
@@ -256,6 +277,7 @@ async function main(): Promise<void> {
   emit("assets/brand/moonfold-app-icon.svg", roundedIcon(CHANNEL_BACKGROUNDS.production));
   emit("assets/brand/moonfold-app-icon-macos.svg", macosIcon(CHANNEL_BACKGROUNDS.production));
   for (const channel of CHANNELS) await renderChannel(channel);
+  await renderAndroid();
   emit(
     "apps/desktop/resources/dmg/dmg-background-latest.svg",
     dmgBackground(MOONFOLD_COLORS.royal),

@@ -88,6 +88,7 @@ import {
   type KeybindingsUpdateToastController,
 } from "../components/KeybindingsUpdateToast.logic";
 
+import { isMobileApp } from "../mobileApp";
 import { getDesktopSnapShotBridge } from "../lib/desktopSnapShot";
 import { installDesktopPasteAsText } from "../lib/desktopPasteAsText";
 import { shouldResumeSnapShotSetupOnStartup } from "../lib/snapShotSetupResume";
@@ -250,7 +251,8 @@ function RootRouteView() {
         <ProviderAuthCallbackCoordinator />
         <ChatGptWelcomeCoordinator />
         <FirstRunGate
-          enabled={primaryEnvironmentAuthenticated}
+          // Setup belongs to the computer; a paired phone goes straight to what it runs.
+          enabled={primaryEnvironmentAuthenticated && !isMobileApp()}
           hostedStatic={authGateState.status === "hosted-static"}
         >
           {primaryEnvironmentAuthenticated ? <AuthenticatedTracingBootstrap /> : null}
