@@ -174,7 +174,14 @@ const SECTIONS = [
   {
     title: "Get started",
     blurb: "Install Moonfold, run it the first time and keep it up to date.",
-    pages: ["install", "welcome-wizard", "updating", "remote-access", "background-service"],
+    pages: [
+      "install",
+      "welcome-wizard",
+      "updating",
+      "remote-access",
+      "mobile-app",
+      "background-service",
+    ],
   },
   {
     title: "Work with agents",

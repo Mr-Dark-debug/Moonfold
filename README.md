@@ -74,7 +74,7 @@ has installers for macOS, Windows and Linux; they are not code-signed yet.
 
 Download the desktop app for your system from
 [Releases](https://github.com/Mr-Dark-debug/Moonfold/releases): `.dmg` for macOS, `.exe` for
-Windows, `.AppImage` or `.deb` for Linux. Because the beta is unsigned, the first launch needs one
+Windows, `.AppImage` or `.deb` for Linux, and an `.apk` for the [Android app](./docs/user/mobile-app.md). Because the beta is unsigned, the first launch needs one
 extra step; [Install and first run](./docs/user/install.md#opening-an-unsigned-build) shows how.
 
 Or install the `moonfold` command, which serves the same app to your browser:
@@ -194,6 +194,7 @@ The user guides are also published at [mr-dark-debug.github.io/Moonfold](https:/
 - [Keyboard shortcuts](./docs/user/keybindings.md)
 - [Project settings](./docs/user/project-settings.md)
 - [Remote access from another machine](./docs/user/remote-access.md)
+- [Mobile app for Android](./docs/user/mobile-app.md)
 - [Connect outside agents over MCP](./docs/user/outside-agents.md)
 - [Source control integrations](./docs/user/source-control.md)
 - [Codex](./docs/user/providers-codex.md), [Claude](./docs/user/providers-claude.md) and
