@@ -90,6 +90,14 @@ export async function installEnvironmentHttpTest(scenario: EnvironmentHttpTestSc
                 return yield* scenario.session?.() ?? unexpectedEndpoint("auth.session");
               }),
             )
+            .handle("mobileAccessStatus", () =>
+              Effect.succeed({
+                enabled: false,
+                port: null,
+                certificateSha256: null,
+                addresses: [],
+              }),
+            )
             .handle(
               "browserSession",
               Effect.fn("test.environment.auth.browserSession")(function* ({ payload }) {

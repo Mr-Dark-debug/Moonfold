@@ -27,6 +27,7 @@ import { Route as SettingsProjectsRouteImport } from './routes/settings.projects
 import { Route as SettingsPluginsRouteImport } from './routes/settings.plugins'
 import { Route as SettingsPersonalizationRouteImport } from './routes/settings.personalization'
 import { Route as SettingsOpenSourceLicensesRouteImport } from './routes/settings.open-source-licenses'
+import { Route as SettingsMobileRouteImport } from './routes/settings.mobile'
 import { Route as SettingsMemoriesRouteImport } from './routes/settings.memories'
 import { Route as SettingsKeybindingsRouteImport } from './routes/settings.keybindings'
 import { Route as SettingsIntegrationsRouteImport } from './routes/settings.integrations'
@@ -133,6 +134,11 @@ const SettingsOpenSourceLicensesRoute =
     path: '/open-source-licenses',
     getParentRoute: () => SettingsRoute,
   } as any)
+const SettingsMobileRoute = SettingsMobileRouteImport.update({
+  id: '/mobile',
+  path: '/mobile',
+  getParentRoute: () => SettingsRoute,
+} as any)
 const SettingsMemoriesRoute = SettingsMemoriesRouteImport.update({
   id: '/memories',
   path: '/memories',
@@ -231,6 +237,7 @@ export interface FileRoutesByFullPath {
   '/settings/integrations': typeof SettingsIntegrationsRoute
   '/settings/keybindings': typeof SettingsKeybindingsRoute
   '/settings/memories': typeof SettingsMemoriesRoute
+  '/settings/mobile': typeof SettingsMobileRoute
   '/settings/open-source-licenses': typeof SettingsOpenSourceLicensesRoute
   '/settings/personalization': typeof SettingsPersonalizationRoute
   '/settings/plugins': typeof SettingsPluginsRoute
@@ -264,6 +271,7 @@ export interface FileRoutesByTo {
   '/settings/integrations': typeof SettingsIntegrationsRoute
   '/settings/keybindings': typeof SettingsKeybindingsRoute
   '/settings/memories': typeof SettingsMemoriesRoute
+  '/settings/mobile': typeof SettingsMobileRoute
   '/settings/open-source-licenses': typeof SettingsOpenSourceLicensesRoute
   '/settings/personalization': typeof SettingsPersonalizationRoute
   '/settings/plugins': typeof SettingsPluginsRoute
@@ -300,6 +308,7 @@ export interface FileRoutesById {
   '/settings/integrations': typeof SettingsIntegrationsRoute
   '/settings/keybindings': typeof SettingsKeybindingsRoute
   '/settings/memories': typeof SettingsMemoriesRoute
+  '/settings/mobile': typeof SettingsMobileRoute
   '/settings/open-source-licenses': typeof SettingsOpenSourceLicensesRoute
   '/settings/personalization': typeof SettingsPersonalizationRoute
   '/settings/plugins': typeof SettingsPluginsRoute
@@ -337,6 +346,7 @@ export interface FileRouteTypes {
     | '/settings/integrations'
     | '/settings/keybindings'
     | '/settings/memories'
+    | '/settings/mobile'
     | '/settings/open-source-licenses'
     | '/settings/personalization'
     | '/settings/plugins'
@@ -370,6 +380,7 @@ export interface FileRouteTypes {
     | '/settings/integrations'
     | '/settings/keybindings'
     | '/settings/memories'
+    | '/settings/mobile'
     | '/settings/open-source-licenses'
     | '/settings/personalization'
     | '/settings/plugins'
@@ -405,6 +416,7 @@ export interface FileRouteTypes {
     | '/settings/integrations'
     | '/settings/keybindings'
     | '/settings/memories'
+    | '/settings/mobile'
     | '/settings/open-source-licenses'
     | '/settings/personalization'
     | '/settings/plugins'
@@ -559,6 +571,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsOpenSourceLicensesRouteImport
       parentRoute: typeof SettingsRoute
     }
+    '/settings/mobile': {
+      id: '/settings/mobile'
+      path: '/mobile'
+      fullPath: '/settings/mobile'
+      preLoaderRoute: typeof SettingsMobileRouteImport
+      parentRoute: typeof SettingsRoute
+    }
     '/settings/memories': {
       id: '/settings/memories'
       path: '/memories'
@@ -696,6 +715,7 @@ interface SettingsRouteChildren {
   SettingsIntegrationsRoute: typeof SettingsIntegrationsRoute
   SettingsKeybindingsRoute: typeof SettingsKeybindingsRoute
   SettingsMemoriesRoute: typeof SettingsMemoriesRoute
+  SettingsMobileRoute: typeof SettingsMobileRoute
   SettingsOpenSourceLicensesRoute: typeof SettingsOpenSourceLicensesRoute
   SettingsPersonalizationRoute: typeof SettingsPersonalizationRoute
   SettingsPluginsRoute: typeof SettingsPluginsRoute
@@ -719,6 +739,7 @@ const SettingsRouteChildren: SettingsRouteChildren = {
   SettingsIntegrationsRoute: SettingsIntegrationsRoute,
   SettingsKeybindingsRoute: SettingsKeybindingsRoute,
   SettingsMemoriesRoute: SettingsMemoriesRoute,
+  SettingsMobileRoute: SettingsMobileRoute,
   SettingsOpenSourceLicensesRoute: SettingsOpenSourceLicensesRoute,
   SettingsPersonalizationRoute: SettingsPersonalizationRoute,
   SettingsPluginsRoute: SettingsPluginsRoute,

@@ -3,6 +3,7 @@ import type {
   AuthClientMetadata,
   AuthEnvironmentScope,
   AuthGrantScope,
+  AuthMobileAccessStatus,
   AuthPairingCredentialResult,
   ServerAuthSessionMethod,
   AuthSessionId,
@@ -29,6 +30,7 @@ const PrimaryEnvironmentRequestOperation = Schema.Literals([
   "create-pairing-credential",
   "list-pairing-links",
   "revoke-pairing-link",
+  "read-mobile-access",
   "list-client-sessions",
   "revoke-client-session",
   "revoke-other-client-sessions",
@@ -353,9 +355,26 @@ export async function submitServerAuthCredential(credential: string): Promise<vo
   stripPairingTokenFromUrl();
 }
 
+export async function fetchMobileAccessStatus(): Promise<AuthMobileAccessStatus> {
+  try {
+    return await runPrimaryHttp(
+      PrimaryEnvironmentHttpClient.pipe(
+        Effect.flatMap((client) => client.auth.mobileAccessStatus({ headers: {} })),
+      ),
+    );
+  } catch (error) {
+    throw PrimaryEnvironmentRequestError.fromCause({
+      operation: "read-mobile-access",
+      cause: error,
+    });
+  }
+}
+
 export async function createServerPairingCredential(input?: {
   readonly label?: string;
   readonly scopes?: ReadonlyArray<AuthGrantScope>;
+  /** Pairs the Moonfold mobile app, whose session lasts a year. */
+  readonly mobile?: boolean;
 }): Promise<AuthPairingCredentialResult> {
   const trimmedLabel = input?.label?.trim();
   try {
@@ -367,6 +386,7 @@ export async function createServerPairingCredential(input?: {
             payload: {
               ...(trimmedLabel ? { label: trimmedLabel } : {}),
               ...(input?.scopes ? { scopes: input.scopes } : {}),
+              ...(input?.mobile === true ? { mobile: true } : {}),
             },
           }),
         ),

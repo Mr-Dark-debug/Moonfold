@@ -455,8 +455,19 @@ export type AuthRevokeClientSessionInput = typeof AuthRevokeClientSessionInput.T
 export const AuthCreatePairingCredentialInput = Schema.Struct({
   label: Schema.optionalKey(TrimmedNonEmptyString),
   scopes: Schema.optionalKey(AuthGrantScopes),
+  /** Pairs the Moonfold mobile app, whose session lasts a year (D-58). */
+  mobile: Schema.optionalKey(Schema.Boolean),
 });
 export type AuthCreatePairingCredentialInput = typeof AuthCreatePairingCredentialInput.Type;
+
+/** Whether the HTTPS listener for the mobile app is up, and how a QR code should describe it. */
+export const AuthMobileAccessStatus = Schema.Struct({
+  enabled: Schema.Boolean,
+  port: Schema.NullOr(Schema.Int),
+  certificateSha256: Schema.NullOr(TrimmedNonEmptyString),
+  addresses: Schema.Array(TrimmedNonEmptyString),
+});
+export type AuthMobileAccessStatus = typeof AuthMobileAccessStatus.Type;
 
 export const AuthSessionState = Schema.Struct({
   authenticated: Schema.Boolean,

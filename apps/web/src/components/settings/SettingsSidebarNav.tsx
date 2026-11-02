@@ -13,6 +13,7 @@ import {
   ArchiveIcon,
   ArrowRightLeftIcon,
   MessageSquareQuoteIcon,
+  SmartphoneIcon,
   BlocksIcon,
   BookmarkIcon,
   BotIcon,
@@ -101,6 +102,7 @@ const SETTINGS_SECTION_ICONS: Readonly<
   "/settings/source-control": GitBranchIcon,
   "/settings/storage": HardDriveIcon,
   "/settings/connections": Link2Icon,
+  "/settings/mobile": SmartphoneIcon,
   "/settings/archived": ArchiveIcon,
 };
 

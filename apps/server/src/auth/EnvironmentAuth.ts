@@ -84,6 +84,9 @@ export interface IssuedBearerSession {
  */
 const MCP_CLIENT_SUBJECT = "mcp-client";
 const MCP_CLIENT_SESSION_TTL = Duration.days(30);
+/** Subject of a mobile app's pairing and session. Its phone stays paired until revoked (D-58). */
+const MOBILE_PAIRING_SUBJECT = "mobile-app";
+const MOBILE_SESSION_TTL = Duration.days(365);
 
 export const mcpClientScopes = (
   access: AuthMcpClientAccess,
@@ -908,6 +911,7 @@ export const make = Effect.gen(function* () {
         method: "browser-session-cookie",
         subject: grant.subject,
         scopes: grant.scopes,
+        ...(grant.subject === MOBILE_PAIRING_SUBJECT ? { ttl: MOBILE_SESSION_TTL } : {}),
         ...(previousSession?.method === "browser-session-cookie"
           ? { replaceSessionId: previousSession.sessionId }
           : {}),
@@ -1157,8 +1161,12 @@ export const make = Effect.gen(function* () {
   const issuePairingCredential: EnvironmentAuth["Service"]["issuePairingCredential"] = (input) =>
     issuePairingCredentialForSubject({
       scopes: input?.scopes ?? AuthStandardClientScopes,
-      subject: "one-time-token",
-      ...(input?.label ? { label: input.label } : {}),
+      subject: input?.mobile === true ? MOBILE_PAIRING_SUBJECT : "one-time-token",
+      ...(input?.label
+        ? { label: input.label }
+        : input?.mobile === true
+          ? { label: "Moonfold mobile" }
+          : {}),
     }).pipe(Effect.withSpan("EnvironmentAuth.issuePairingCredential"));
 
   const issueStartupPairingCredential: EnvironmentAuth["Service"]["issueStartupPairingCredential"] =

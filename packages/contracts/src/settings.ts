@@ -1171,6 +1171,8 @@ export const ServerSettings = Schema.Struct({
   continueThreadsAfterServerUpdate: Schema.Boolean.pipe(
     Schema.withDecodingDefault(Effect.succeed(true)),
   ),
+  /** Serves the Moonfold mobile app over pinned TLS on every interface (D-58). Off by default. */
+  mobileAccessEnabled: Schema.Boolean.pipe(Schema.withDecodingDefault(Effect.succeed(false))),
   /** Moving limited threads to another provider: ask first by default, every provider allowed. */
   providerHandoff: ProviderHandoffSettings.pipe(
     Schema.withDecodingDefault(Effect.succeed(DEFAULT_PROVIDER_HANDOFF_SETTINGS)),
@@ -1602,6 +1604,7 @@ export const ServerSettingsPatch = Schema.Struct({
   responseStreamingMode: Schema.optionalKey(ResponseStreamingMode),
   providerHandoff: Schema.optionalKey(ProviderHandoffSettings),
   promptProfiles: Schema.optionalKey(CustomPromptProfiles),
+  mobileAccessEnabled: Schema.optionalKey(Schema.Boolean),
   defaultPromptProfileId: Schema.optionalKey(PromptProfileId),
   enableProviderUpdateChecks: Schema.optionalKey(Schema.Boolean),
   continueThreadsAfterServerUpdate: Schema.optionalKey(Schema.Boolean),
