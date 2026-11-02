@@ -22,6 +22,6 @@ Target: `app-release.apk`, the signed release build, 478 KB. Evidence `ev_d9ac05
 
 ## Inferences and unknowns
 
-Static inventory does not prove runtime behaviour; that is covered by `docs/QA-BETA4.md`. The APK
-is rebuilt for release with the same key, so the published hash differs from this evidence by the
-later source changes noted in the release commit.
+Static inventory does not prove runtime behaviour; that is covered by `docs/QA-BETA4.md`. The
+published APK was rebuilt from the merged code with the same key, adding the licence notices, so
+its SHA-256 (`1c8ae1a3…328a67a6`) differs from the build inspected here.
