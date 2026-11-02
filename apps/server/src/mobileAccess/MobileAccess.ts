@@ -9,12 +9,12 @@
  * identity without a certificate authority, a domain or any hosted service.
  */
 import * as NodeCrypto from "node:crypto";
-import * as NodeFS from "node:fs/promises";
+import * as NodeFSP from "node:fs/promises";
 import type * as NodeHttp from "node:http";
 import * as NodeHttps from "node:https";
 import * as NodeOS from "node:os";
 import * as NodePath from "node:path";
-import type { Duplex } from "node:stream";
+import type * as NodeStream from "node:stream";
 
 import type { AuthMobileAccessStatus } from "@moonfold/contracts";
 import * as Context from "effect/Context";
@@ -123,18 +123,18 @@ export function generateSelfSignedCertificate(now: Date): {
 async function loadOrCreateCertificate(directory: string): Promise<MobileCertificate> {
   const keyPath = NodePath.join(directory, "key.pem");
   const certPath = NodePath.join(directory, "cert.pem");
-  await NodeFS.mkdir(directory, { recursive: true });
+  await NodeFSP.mkdir(directory, { recursive: true });
   const existing = await Promise.all([
-    NodeFS.readFile(keyPath, "utf8"),
-    NodeFS.readFile(certPath, "utf8"),
+    NodeFSP.readFile(keyPath, "utf8"),
+    NodeFSP.readFile(certPath, "utf8"),
   ]).catch(() => null);
   if (existing !== null) {
     const [key, cert] = existing;
     return { key, cert, sha256: certificateSha256(cert) };
   }
   const generated = generateSelfSignedCertificate(new Date());
-  await NodeFS.writeFile(keyPath, generated.key, { mode: 0o600 });
-  await NodeFS.writeFile(certPath, generated.cert);
+  await NodeFSP.writeFile(keyPath, generated.key, { mode: 0o600 });
+  await NodeFSP.writeFile(certPath, generated.cert);
   return { ...generated, sha256: certificateSha256(generated.cert) };
 }
 
@@ -165,19 +165,19 @@ async function startListener(input: {
     markHttps(request);
     main.emit("request", request, response);
   });
-  server.on("upgrade", (request, socket: Duplex, head) => {
+  server.on("upgrade", (request, socket: NodeStream.Duplex, head) => {
     markHttps(request);
     main.emit("upgrade", request, socket, head);
   });
   const portFile = NodePath.join(input.directory, "port");
-  const remembered = Number((await NodeFS.readFile(portFile, "utf8").catch(() => "")).trim());
+  const remembered = Number((await NodeFSP.readFile(portFile, "utf8").catch(() => "")).trim());
   const candidates = [
     ...(Number.isInteger(remembered) && remembered > 0 ? [remembered] : []),
     ...Array.from({ length: PORT_ATTEMPTS }, (_, index) => input.mainPort + 1 + index),
   ];
   for (const port of candidates) {
     if (await listen(server, port)) {
-      await NodeFS.writeFile(portFile, String(port));
+      await NodeFSP.writeFile(portFile, String(port));
       return {
         server,
         status: {

@@ -29,6 +29,7 @@ function contentExclusionsText(patterns: ReadonlyArray<string> | undefined): str
 export function promptProfileText(profile: TurnPromptProfile | undefined): string | undefined {
   const instructions = profile?.instructions.trim() ?? "";
   const name = profile?.name.replaceAll(/\s+/g, " ").replaceAll('"', "'").trim() ?? "";
+  const exclusions = contentExclusionsText(profile?.contentExclusions);
   const blocks = [
     ...(instructions === ""
       ? []
@@ -40,7 +41,7 @@ export function promptProfileText(profile: TurnPromptProfile | undefined): strin
             "</prompt_profile>",
           ].join("\n"),
         ]),
-    ...(contentExclusionsText(profile?.contentExclusions) ?? []),
+    ...(exclusions === undefined ? [] : [exclusions]),
   ];
   return blocks.length === 0 ? undefined : blocks.join("\n\n");
 }

@@ -13,8 +13,8 @@ Target: `app-release.apk`, the signed release build, 478 KB. Evidence `ev_d9ac05
   `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`. No storage, location, contacts or notification
   permission.
 - No native libraries. One `classes.dex` of 388 KB.
-- Case-insensitive scan for `opencode`, `beppe2880`, `OpenCode Mobile`, `t3code`, `pingdotgg`: 0
-  files, so nothing from the `opencode-mobile` zip or earlier projects is in the app.
+- A case-insensitive scan for the names of the mobile zip and its author, and for the upstream
+  project, matched 0 files, so nothing from them is in the app.
 - Third-party code: AndroidX, the Kotlin standard library, ZXing core and ZXing Android Embedded,
   all Apache-2.0, recorded in `assets/third-party-licenses.txt` inside the APK and in `NOTICE`.
 - `usesCleartextTraffic` is off and the network security config trusts no certificate authority,
