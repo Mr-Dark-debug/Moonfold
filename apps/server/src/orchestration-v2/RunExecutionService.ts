@@ -1427,15 +1427,21 @@ export const layer: Layer.Layer<
           // not the turn itself.
           const promptProfile = yield* serverSettings.getSettings.pipe(
             Effect.map((settings) => {
+              const project = resolveProjectSettings(settings, input.appThread.projectId).settings;
               const profile = resolvePromptProfile({
                 customProfiles: settings.promptProfiles,
-                defaultProfileId: resolveProjectSettings(settings, input.appThread.projectId)
-                  .settings.defaultPromptProfileId,
+                defaultProfileId: project.defaultPromptProfileId,
                 threadProfileId: input.appThread.promptProfileId,
               });
-              return profile.instructions.trim() === ""
+              const contentExclusions = project.contentExclusions;
+              return profile.instructions.trim() === "" && contentExclusions.length === 0
                 ? undefined
-                : { id: profile.id, name: profile.name, instructions: profile.instructions };
+                : {
+                    id: profile.id,
+                    name: profile.name,
+                    instructions: profile.instructions,
+                    ...(contentExclusions.length === 0 ? {} : { contentExclusions }),
+                  };
             }),
             Effect.catch((cause) =>
               Effect.logWarning("Failed to read the prompt profile.", { cause }).pipe(

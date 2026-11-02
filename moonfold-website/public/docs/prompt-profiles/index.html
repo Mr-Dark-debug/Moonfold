@@ -72,6 +72,7 @@
                 <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
                 <li><a href="/docs/updating/">Updating Moonfold</a></li>
                 <li><a href="/docs/remote-access/">Remote access</a></li>
+                <li><a href="/docs/mobile-app/">Mobile app</a></li>
                 <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
               </ul>
             </section>
@@ -218,6 +219,24 @@
           </li>
           <li>Slash commands (messages that start with <code>/</code>) are sent unchanged.</li>
         </ul>
+        <h2 id="agent-limits"><a class="anchor" href="#agent-limits">Agent limits</a></h2>
+        <p>
+          <strong>Settings → Prompt Profiles → Agent limits</strong> has two more guardrails. Both
+          can differ per project.
+        </p>
+        <p>
+          <strong>Content exclusions</strong> are paths agents must leave alone, one per line,
+          relative to the project, such as <code>.env</code> or <code>secrets/**</code>. Claude
+          Code&#39;s file tools are blocked from them. Other agents receive them as an instruction,
+          and any agent&#39;s shell commands can still reach them, so keep real secrets out of the
+          project.
+        </p>
+        <p>
+          <strong>Token limit for one run</strong> stops a run once it has added that many tokens to
+          its context, and holds queued messages. Send a message to continue; each message starts
+          with a fresh allowance. It counts what Codex and Claude report during a turn, and agents
+          that report no usage are not limited.
+        </p>
 
         <p class="doc-edit">
           <a
@@ -241,6 +260,7 @@
             <li><a href="#choose-a-profile">Choose a profile</a></li>
             <li><a href="#write-your-own">Write your own</a></li>
             <li><a href="#good-to-know">Good to know</a></li>
+            <li><a href="#agent-limits">Agent limits</a></li>
           </ul>
         </nav>
       </aside>

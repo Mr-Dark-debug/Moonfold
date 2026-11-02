@@ -169,6 +169,17 @@ html[data-mobile-composer-route-transition="true"]::view-transition-old(moonfold
     ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
 }
 
+/* The same neutrals Tailwind ships, as hex. The build minifies its achromatic oklch() to a `none`
+   hue, and Chromium up to 133 renders color-mix() over that as saturated blue, which is what older
+   Android web views and browsers would show for the whole dark theme. */
+@theme {
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-500: #737373;
+  --color-neutral-950: #0a0a0a;
+  --color-zinc-50: #fafafa;
+}
+
 @theme inline {
   /* Two steps below Tailwind's text-xs (12px) for dense UI: metadata rows,
      badges, counters, keyboard hints and diagnostics tables. 2xs is 11px,

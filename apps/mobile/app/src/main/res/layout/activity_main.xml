@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/host_surface">
+
+    <FrameLayout
+        android:id="@+id/webContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/status_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="32dp">
+
+        <ImageView
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:contentDescription="@string/mark_description"
+            android:src="@drawable/moonfold_mark" />
+
+        <TextView
+            android:id="@+id/statusTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:textColor="@color/moonlight"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/statusBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.25"
+            android:textColor="@color/body"
+            android:textSize="16sp" />
+
+        <ProgressBar
+            android:id="@+id/statusProgress"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="28dp"
+            android:indeterminateTint="@color/periwinkle" />
+
+        <Button
+            android:id="@+id/statusAction"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/primary_button"
+            android:textAllCaps="false"
+            android:textColor="@color/moonlight"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</FrameLayout>

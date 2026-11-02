@@ -15,6 +15,7 @@ import {
   AuthBrowserSessionResult,
   AuthClientSession,
   AuthCreatePairingCredentialInput,
+  AuthMobileAccessStatus,
   AuthMcpApprovalDecisionRequest,
   AuthMcpApprovalDetails,
   AuthMcpApprovalError,
@@ -494,6 +495,13 @@ class EnvironmentAuthHttpApi extends HttpApiGroup.make("auth")
       payload: AuthCreatePairingCredentialInput,
       success: AuthPairingCredentialResult,
       error: EnvironmentPairingCredentialErrors,
+    }).middleware(EnvironmentAuthenticatedAuth),
+  )
+  .add(
+    HttpApiEndpoint.get("mobileAccessStatus", "/api/auth/mobile-access", {
+      headers: OptionalBearerHeaders,
+      success: AuthMobileAccessStatus,
+      error: EnvironmentScopedOperationErrors,
     }).middleware(EnvironmentAuthenticatedAuth),
   )
   .add(

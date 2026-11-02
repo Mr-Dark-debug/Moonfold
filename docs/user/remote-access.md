@@ -1,7 +1,8 @@
 # Remote access
 
 Connect a phone, browser, or another desktop app to Moonfold running on a different
-machine. That machine must stay running and reachable while you work.
+machine. That machine must stay running and reachable while you work. For Android, use the
+[mobile app](./mobile-app.md), which pairs with one scan.
 
 ## Moonfold Connect (self-hosted only)
 

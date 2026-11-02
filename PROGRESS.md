@@ -1,5 +1,26 @@
 # Progress
 
+## Beta 4 (2026-11-02)
+
+Done: Moonfold for Android beta 1 (`apps/mobile`, native Kotlin, our own code, nothing from the
+`opencode-mobile` zip), pinned HTTPS listener and QR pairing (D-57, D-58), content exclusions
+(D-59), token limit per run (D-60), dark theme fix for Chromium up to 133. Pull request → thread
+already existed. Gap-analysis items Parallel Drafts, side question, memory, review, deep links and
+OTLP were already shipped.
+
+Decisions: connectors stay out of this release, for curated MCP entries later. iOS is out: it cannot
+be built here. The release key is in `~/.moonfold-release`, outside the repository (D-61). Losing it
+means users must reinstall the app.
+
+Verified: `docs/QA-BETA4.md` (emulator, real production server) and `docs/REA-BETA4.md`.
+
+Open problems: live camera decode, a real phone on real Wi-Fi, Tailscale, a full agent turn on the
+phone and live runs of the two new limits could not be verified here (Codex limited until 19
+November, Claude Code not signed in on this machine). No iOS app. No notifications while the app is
+closed.
+
+Next: try the APK on a real phone, then decide on connectors.
+
 ## Beta 3 (2026-10-28)
 
 Plan: docs/plans/beta-3.md. Decisions: D-53 to D-56. QA: docs/QA-BETA3.md. REA gate:

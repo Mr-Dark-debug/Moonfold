@@ -34,3 +34,16 @@ it can use them. Deleting a profile sends the threads that used it back to the d
   their session started with.
 - A handoff keeps the thread's profile, so the next agent works under the same instructions.
 - Slash commands (messages that start with `/`) are sent unchanged.
+
+## Agent limits
+
+**Settings → Prompt Profiles → Agent limits** has two more guardrails. Both can differ per project.
+
+**Content exclusions** are paths agents must leave alone, one per line, relative to the project,
+such as `.env` or `secrets/**`. Claude Code's file tools are blocked from them. Other agents receive
+them as an instruction, and any agent's shell commands can still reach them, so keep real secrets
+out of the project.
+
+**Token limit for one run** stops a run once it has added that many tokens to its context, and holds
+queued messages. Send a message to continue; each message starts with a fresh allowance. It counts
+what Codex and Claude report during a turn, and agents that report no usage are not limited.

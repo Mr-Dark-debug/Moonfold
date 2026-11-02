@@ -26,6 +26,8 @@ import * as DateTime from "effect/DateTime";
 import * as Effect from "effect/Effect";
 import * as Schema from "effect/Schema";
 import { identity } from "effect/Function";
+import * as Option from "effect/Option";
+import * as MobileAccess from "../mobileAccess/MobileAccess.ts";
 import * as Layer from "effect/Layer";
 import * as Cookies from "effect/http/Cookies";
 import * as HttpEffect from "effect/http/HttpEffect";
@@ -282,6 +284,7 @@ export const layer = HttpApiBuilder.group(
   Effect.fnUntraced(function* (handlers) {
     const serverAuth = yield* EnvironmentAuth.EnvironmentAuth;
     const sessions = yield* SessionStore.SessionStore;
+    const mobileAccess = yield* Effect.serviceOption(MobileAccess.MobileAccess);
 
     return handlers
       .handle(
@@ -473,6 +476,16 @@ export const layer = HttpApiBuilder.group(
             failEnvironmentInternal("pairing_credential_issuance_failed", error),
           ),
         ),
+      )
+      .handle(
+        "mobileAccessStatus",
+        Effect.fn("environment.auth.mobileAccessStatus")(function* (args) {
+          yield* annotateEnvironmentRequest(args.endpoint.name);
+          yield* requireEnvironmentScope(AuthAccessReadScope);
+          return Option.isSome(mobileAccess)
+            ? yield* mobileAccess.value.status
+            : MobileAccess.MOBILE_ACCESS_DISABLED;
+        }),
       )
       .handle(
         "pairingLinks",

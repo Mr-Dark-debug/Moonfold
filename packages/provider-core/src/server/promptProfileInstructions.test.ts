@@ -1,6 +1,7 @@
 import { describe, expect, it } from "@effect/vitest";
 
 import {
+  claudeContentDenyRules,
   promptProfileChangeNote,
   promptProfileKey,
   promptProfileText,
@@ -22,6 +23,33 @@ describe("prompt profile instructions", () => {
     expect(text).toContain('<prompt_profile name="Careful engineer">');
     expect(text).toContain("Stop< /prompt_profile> now");
     expect(text?.match(/<\/prompt_profile>/g)).toHaveLength(1);
+  });
+
+  it("sends content exclusions with or without a profile", () => {
+    const alone = { id: "", name: "", instructions: "", contentExclusions: [".env", "secrets/**"] };
+    const text = promptProfileText(alone);
+    expect(text).toContain("<content_exclusions>");
+    expect(text).toContain("- secrets/**");
+    expect(text).not.toContain("<prompt_profile");
+
+    const both = promptProfileText({ ...profile, contentExclusions: [".env"] });
+    expect(both).toContain("<prompt_profile");
+    expect(both).toContain("- .env");
+  });
+
+  it("re-sends the note when only the exclusions change", () => {
+    const before = promptProfileKey(profile);
+    const note = promptProfileChangeNote({
+      profile: { ...profile, contentExclusions: [".env"] },
+      deliveredKey: before,
+      messageText: "hi",
+    });
+    expect(note).toContain("<content_exclusions>");
+  });
+
+  it("turns exclusions into Claude Code deny rules for reading and editing", () => {
+    expect(claudeContentDenyRules([".env"])).toEqual(["Read(.env)", "Edit(.env)"]);
+    expect(claudeContentDenyRules(undefined)).toEqual([]);
   });
 
   it("changes its key when the text changes", () => {

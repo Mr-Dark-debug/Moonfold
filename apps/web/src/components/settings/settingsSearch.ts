@@ -32,6 +32,7 @@ export type SettingsPath =
   | "/settings/source-control"
   | "/settings/storage"
   | "/settings/connections"
+  | "/settings/mobile"
   | "/settings/archived";
 
 /**
@@ -117,6 +118,7 @@ export const SETTINGS_SECTION_LABELS: Readonly<Record<SettingsPath, string>> = {
   "/settings/source-control": "Source Control",
   "/settings/storage": "Storage",
   "/settings/connections": "Connections",
+  "/settings/mobile": "Mobile App",
   "/settings/archived": "Archive",
 };
 
@@ -1118,6 +1120,26 @@ export const SETTINGS_SEARCH_ITEMS = [
     scope: "project-defaults",
     searchTerms: ["custom prompt profile instructions create edit delete system prompt"],
   },
+  {
+    id: "content-exclusions",
+    title: "Content exclusions",
+    to: "/settings/prompt-profiles",
+    scope: "project-defaults",
+    searchTerms: ["exclude paths ignore secrets private files agents must not read deny"],
+  },
+  {
+    id: "run-token-limit",
+    title: "Token limit for one run",
+    to: "/settings/prompt-profiles",
+    scope: "project-defaults",
+    searchTerms: ["budget stop cost tokens usage limit halt spend"],
+  },
+  {
+    id: "mobile-app",
+    title: "Moonfold on your phone",
+    to: "/settings/mobile",
+    searchTerms: ["mobile phone android app qr code pair scan remote"],
+  },
 ] as const satisfies ReadonlyArray<SettingsSearchItem>;
 
 export type SettingsSearchItemId = (typeof SETTINGS_SEARCH_ITEMS)[number]["id"];
@@ -1140,6 +1162,8 @@ const SETTINGS_CATEGORY_SCOPES: Readonly<Record<SettingsPath, SettingsSearchScop
   "/settings/source-control": "environment-defaults",
   "/settings/storage": "project-defaults",
   "/settings/connections": "connections",
+  // The machine showing this page; the phone pairs with it.
+  "/settings/mobile": null,
   "/settings/scheduled-tasks": null,
   // Picks its own environment; plugins live on the environment's machine.
   "/settings/plugins": null,

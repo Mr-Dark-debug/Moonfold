@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ink">
+
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/scanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:zxing_scanner_layout="@layout/scanner_view" />
+
+    <LinearLayout
+        android:id="@+id/cameraNeeded"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/status_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="32dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/scan_camera_needed"
+            android:textColor="@color/moonlight"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/allowCamera"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/primary_button"
+            android:text="@string/scan_allow_camera"
+            android:textAllCaps="false"
+            android:textColor="@color/moonlight"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</FrameLayout>

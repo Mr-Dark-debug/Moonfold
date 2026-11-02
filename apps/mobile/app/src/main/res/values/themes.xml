@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The web view reads prefers-color-scheme from isLightTheme. -->
+    <style name="Theme.Moonfold" parent="android:Theme.Material.NoActionBar">
+        <item name="android:colorAccent">@color/periwinkle</item>
+        <item name="android:windowBackground">@color/ink</item>
+        <item name="android:isLightTheme">true</item>
+    </style>
+
+    <style name="Theme.Moonfold.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/ink</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.Moonfold</item>
+    </style>
+</resources>
