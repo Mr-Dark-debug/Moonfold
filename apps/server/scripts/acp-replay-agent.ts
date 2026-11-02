@@ -56,9 +56,11 @@ let nextAgentRequestId = 1;
 const pendingClientRequestIds = new Map<string, string | number>();
 const pendingAgentRequestMethods = new Map<string, string>();
 
+// A rename, so a test reading while this process is stopped never sees a half-written file.
 function writeStatus(failure?: unknown): void {
+  const pendingPath = `${replayStatusPath}.pending`;
   NodeFS.writeFileSync(
-    replayStatusPath,
+    pendingPath,
     JSON.stringify({
       scenario: transcript.scenario,
       cursor,
@@ -67,6 +69,7 @@ function writeStatus(failure?: unknown): void {
     }),
     "utf8",
   );
+  NodeFS.renameSync(pendingPath, replayStatusPath);
 }
 
 function stableStringify(value: unknown): string {
