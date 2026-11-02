@@ -19,6 +19,12 @@ phone and live runs of the two new limits could not be verified here (Codex limi
 November, Claude Code not signed in on this machine). No iOS app. No notifications while the app is
 closed.
 
+Published: v0.1.0-beta.4 is Latest, with `Moonfold-Android-0.1.0-beta.1.apk` attached by hand (SHA-256
+`1c8ae1a3c7e9e1db964db9a838055e4722a3d248909bac58ceaa9650328a67a6`). Main CI needed one fix first:
+two server tests failed on date and timing, unrelated to this release. `AcpRegistryAdapterV2.test.ts`
+still fails its real-child-process case on Windows only, because its fixture has no win32
+distribution; CI runs on Linux.
+
 Next: try the APK on a real phone, then decide on connectors.
 
 ## Beta 3 (2026-10-28)
