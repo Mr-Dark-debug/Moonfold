@@ -3,6 +3,22 @@
 Notable changes to Moonfold. Versions follow [Semantic Versioning](https://semver.org); betas
 carry a `-beta.N` suffix. Each release's notes are in `docs/releases/`.
 
+## 0.1.0-beta.4
+
+Notes: [docs/releases/v0.1.0-beta.4.md](docs/releases/v0.1.0-beta.4.md).
+
+### Added
+
+- Moonfold for Android beta 1: pair with one QR scan and no account, over an encrypted connection
+  pinned to your computer's certificate. It reconnects by itself and survives restarts on both sides.
+- Settings → Mobile App, an HTTPS listener that is off by default.
+- Content exclusions per project: Claude Code's file tools are blocked, other agents are instructed.
+- A token limit for one run, for agents that report usage during a turn.
+
+### Fixed
+
+- The dark theme rendered blue on Chromium up to 133.
+
 ## 0.1.0-beta.3
 
 Notes: [docs/releases/v0.1.0-beta.3.md](docs/releases/v0.1.0-beta.3.md).

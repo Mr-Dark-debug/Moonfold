@@ -1121,6 +1121,20 @@ export const SETTINGS_SEARCH_ITEMS = [
     searchTerms: ["custom prompt profile instructions create edit delete system prompt"],
   },
   {
+    id: "content-exclusions",
+    title: "Content exclusions",
+    to: "/settings/prompt-profiles",
+    scope: "project-defaults",
+    searchTerms: ["exclude paths ignore secrets private files agents must not read deny"],
+  },
+  {
+    id: "run-token-limit",
+    title: "Token limit for one run",
+    to: "/settings/prompt-profiles",
+    scope: "project-defaults",
+    searchTerms: ["budget stop cost tokens usage limit halt spend"],
+  },
+  {
     id: "mobile-app",
     title: "Moonfold on your phone",
     to: "/settings/mobile",

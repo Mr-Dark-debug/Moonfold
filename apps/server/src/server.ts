@@ -7,6 +7,7 @@ import * as StorageCleanup from "./storageCleanup.ts";
 import * as PullRequestSyncReactor from "./orchestration-v2/PullRequestSyncReactor.ts";
 import * as PullRequestWatchReactor from "./orchestration-v2/PullRequestWatchReactor.ts";
 import * as DelegatedTaskQuestionReactor from "./orchestration-v2/DelegatedTaskQuestionReactor.ts";
+import * as RunTokenLimitReactor from "./orchestration-v2/RunTokenLimitReactor.ts";
 import * as ProviderThreadArchiveSync from "./orchestration-v2/ProviderThreadArchiveSync.ts";
 // @effect-diagnostics nodeBuiltinImport:off
 import * as NodeHttp from "node:http";
@@ -592,6 +593,12 @@ const layerRuntimeCoreDependenciesBase = Layer.mergeAll(
       yield* service.start();
     }),
   ).pipe(Layer.provide(DelegatedTaskQuestionReactor.layer), Layer.provide(ProjectionStoreV2.layer)),
+  Layer.effectDiscard(
+    Effect.gen(function* () {
+      const service = yield* RunTokenLimitReactor.RunTokenLimitReactor;
+      yield* service.start();
+    }),
+  ).pipe(Layer.provide(RunTokenLimitReactor.layer), Layer.provide(ProjectionStoreV2.layer)),
   Layer.effectDiscard(
     Effect.gen(function* () {
       const service = yield* ProviderThreadArchiveSync.ProviderThreadArchiveSync;

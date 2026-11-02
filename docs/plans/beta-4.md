@@ -13,7 +13,7 @@ analysis, and the `opencode-mobile` zip offered as a mobile idea.
 | Agentic review                                  | Shipped for Codex (`/review`, diff panel); other agents review through ordinary prompts.                |
 | Deep links                                      | Shipped (`moonfold://new`, `moonfold://threads/…`).                                                     |
 | Opt-in OTel                                     | Shipped (OTLP in Settings → General → Diagnostics).                                                     |
-| Session from a pull request                     | Partly: a thread can open beside a pull request; check the entry point while building.                  |
+| Session from a pull request                     | Shipped: the pull request panel starts, hands off to and links threads.                                 |
 | Content exclusion                               | Missing.                                                                                                |
 | Budget stop                                     | Codex goals only.                                                                                       |
 | Cloud runners, credits, enterprise, Slack, Jira | Skipped on purpose, as the analysis says.                                                               |
@@ -43,10 +43,10 @@ names. So it is used as an idea only and **no code, assets or strings are copied
 - The QR carries the addresses, the certificate's SHA-256 and a one-time pairing token. The app
   trusts that certificate only, so nobody on the network can read or impersonate the connection.
 - Paired phones appear in Settings → Connections and can be revoked there.
-- A paired mobile session renews itself, so it does not expire after 30 days of use.
+- A paired mobile session lasts 365 days, so an idle phone is not signed out after 30.
 - Reach: same Wi-Fi, or any network the phone shares with the host (Tailscale, VPN).
 
-### 3. Settings → Connections → Mobile app
+### 3. Settings → Mobile App
 
 Turn it on, see the QR, see paired phones. Off by default, like every network exposure.
 
@@ -54,8 +54,7 @@ Turn it on, see the QR, see paired phones. Off by default, like every network ex
 
 - Content exclusion per project: paths agents must not read. Enforced where Moonfold can enforce
   it (D-59), and stated plainly where a CLI only receives an instruction.
-- Budget stop per thread where usage is reported.
-- Pull request → thread entry point, if the check above shows it is missing.
+- A token limit for one run where usage is reported (D-60).
 
 ### 5. Release
 

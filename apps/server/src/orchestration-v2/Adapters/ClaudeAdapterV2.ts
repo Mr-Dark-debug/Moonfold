@@ -1,4 +1,5 @@
 import {
+  claudeContentDenyRules,
   promptProfileChangeNote,
   promptProfileKey,
   withPromptProfileNote,
@@ -1093,6 +1094,18 @@ function claudeLiveSelectionFlagSettings(
   };
 }
 
+/** The session's tool denials: what the caller passed, plus the project's content exclusions. */
+function withContentDenyRules(
+  disallowedTools: ReadonlyArray<string> | undefined,
+  profile: TurnPromptProfile | undefined,
+): { readonly disallowedTools?: Array<string> } {
+  const denied = [
+    ...(disallowedTools ?? []),
+    ...claudeContentDenyRules(profile?.contentExclusions),
+  ];
+  return disallowedTools === undefined && denied.length === 0 ? {} : { disallowedTools: denied };
+}
+
 export function makeClaudeQueryOptions(input: {
   readonly modelSelection: ModelSelection;
   readonly nativeThreadId: string;
@@ -1174,7 +1187,7 @@ export function makeClaudeQueryOptions(input: {
     ...threadIdentity,
     ...(input.resumeSessionAt === undefined ? {} : { resumeSessionAt: input.resumeSessionAt }),
     ...(input.allowedTools === undefined ? {} : { allowedTools: [...input.allowedTools] }),
-    ...(input.disallowedTools === undefined ? {} : { disallowedTools: [...input.disallowedTools] }),
+    ...withContentDenyRules(input.disallowedTools, input.promptProfile),
     ...(input.canUseTool === undefined ? {} : { canUseTool: input.canUseTool }),
     ...(input.allowDangerouslySkipPermissions === true
       ? { allowDangerouslySkipPermissions: true }

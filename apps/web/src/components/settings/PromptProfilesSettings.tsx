@@ -9,6 +9,7 @@ import {
 import { PlusIcon, Trash2Icon } from "lucide-react";
 import { useState } from "react";
 
+import { parseContentExclusions, parseRunTokenLimit } from "./agentLimits.logic";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Select, SelectItem, SelectPopup, SelectTrigger, SelectValue } from "../ui/select";
@@ -34,6 +35,88 @@ function newProfileId(existing: ReadonlyArray<PromptProfile>): PromptProfile["id
     const id = `custom-${Date.now().toString(36)}${attempt === 0 ? "" : `-${attempt}`}`;
     if (!taken.has(id)) return PromptProfileId.make(id);
   }
+}
+
+/** Paths agents must leave alone (D-59) and the most tokens one run may add (D-60). */
+function AgentLimitsSection() {
+  const { scope } = useSettingsScope();
+  const settings = useScopedSettings();
+  const updateSettings = useUpdateScopedSettings();
+  const exclusionsMixed = useScopedSettingsMixed(["contentExclusions"]);
+  const limitMixed = useScopedSettingsMixed(["runTokenLimit"]);
+  const exclusions = settings.contentExclusions.join("\n");
+  const scopeKey = JSON.stringify(scope);
+
+  return (
+    <SettingsSection id="agent-limits" title="Agent limits">
+      <SettingsRow
+        {...searchableSetting("content-exclusions")}
+        serverScoped
+        settingKeys={["contentExclusions"]}
+        mixed={exclusionsMixed}
+        description="Paths agents must leave alone, one per line, relative to the project. Claude Code's file tools are blocked from them. Other agents get them as an instruction, and any agent's shell commands can still reach them, so keep real secrets out of the project."
+        resetAction={
+          exclusionsMixed || settings.contentExclusions.length > 0 ? (
+            <SettingResetButton
+              label="content exclusions"
+              onClick={() => updateSettings({ contentExclusions: [] })}
+            />
+          ) : null
+        }
+      >
+        <div className="mt-3 max-w-2xl pb-3.5">
+          <Textarea
+            key={`${scopeKey}:${exclusionsMixed}:${exclusions}`}
+            aria-label="Content exclusions"
+            rows={4}
+            defaultValue={exclusionsMixed ? "" : exclusions}
+            placeholder={
+              exclusionsMixed
+                ? "Mixed. Enter paths to apply to all selected targets."
+                : ".env\nsecrets/**"
+            }
+            onBlur={(event) => {
+              const next = parseContentExclusions(event.target.value);
+              if (exclusionsMixed || next.join("\n") !== exclusions) {
+                updateSettings({ contentExclusions: next });
+              }
+            }}
+          />
+        </div>
+      </SettingsRow>
+      <SettingsRow
+        {...searchableSetting("run-token-limit")}
+        serverScoped
+        settingKeys={["runTokenLimit"]}
+        mixed={limitMixed}
+        description="Stops a run once it has added this many tokens to its context, and holds any queued messages. Send a message to continue. It counts what Codex and Claude report during a turn; agents that report no usage are not limited."
+        resetAction={
+          limitMixed || settings.runTokenLimit !== null ? (
+            <SettingResetButton
+              label="token limit"
+              onClick={() => updateSettings({ runTokenLimit: null })}
+            />
+          ) : null
+        }
+        control={
+          <Input
+            key={`${scopeKey}:${limitMixed}:${settings.runTokenLimit}`}
+            aria-label="Token limit for one run"
+            className="w-32"
+            inputMode="numeric"
+            defaultValue={limitMixed ? "" : (settings.runTokenLimit ?? "")}
+            placeholder={limitMixed ? "Mixed" : "No limit"}
+            onBlur={(event) => {
+              const next = parseRunTokenLimit(event.target.value);
+              if (limitMixed || next !== settings.runTokenLimit) {
+                updateSettings({ runTokenLimit: next });
+              }
+            }}
+          />
+        }
+      />
+    </SettingsSection>
+  );
 }
 
 /**
@@ -201,6 +284,7 @@ export function PromptProfilesSettingsPanel() {
           )}
         </SettingsRow>
       </SettingsSection>
+      <AgentLimitsSection />
     </SettingsPageContainer>
   );
 }

@@ -13,6 +13,7 @@ import {
   ForwardCompatibleNullable,
   ForwardCompatibleOptional,
   OmittedWhenNull,
+  PositiveInt,
   ProjectId,
   ThreadId,
   TrimmedNonEmptyString,
@@ -991,6 +992,9 @@ export const WorktreeCleanup = Schema.NullOr(
 );
 export type WorktreeCleanup = typeof WorktreeCleanup.Type;
 
+export const ContentExclusions = Schema.Array(TrimmedNonEmptyString);
+export type ContentExclusions = typeof ContentExclusions.Type;
+
 export const PROJECT_SCOPED_SERVER_SETTING_KEYS = [
   "worktreeCleanup",
   "defaultModelSelection",
@@ -1019,6 +1023,8 @@ export const PROJECT_SCOPED_SERVER_SETTING_KEYS = [
   "responseStreamingMode",
   "providerHandoff",
   "defaultPromptProfileId",
+  "contentExclusions",
+  "runTokenLimit",
 ] as const;
 export type ProjectScopedServerSettingKey = (typeof PROJECT_SCOPED_SERVER_SETTING_KEYS)[number];
 
@@ -1069,6 +1075,8 @@ export const ProjectSettingsOverrides = Schema.Struct({
   responseStreamingMode: Schema.optionalKey(ResponseStreamingMode),
   providerHandoff: Schema.optionalKey(ProviderHandoffSettings),
   defaultPromptProfileId: Schema.optionalKey(PromptProfileId),
+  contentExclusions: Schema.optionalKey(ContentExclusions),
+  runTokenLimit: Schema.optionalKey(Schema.NullOr(PositiveInt)),
   providerInstances: Schema.optionalKey(
     Schema.Record(ProviderInstanceId, ProjectProviderInstanceOverride),
   ),
@@ -1183,6 +1191,10 @@ export const ServerSettings = Schema.Struct({
   defaultPromptProfileId: PromptProfileId.pipe(
     Schema.withDecodingDefault(Effect.succeed(DEFAULT_PROMPT_PROFILE_ID)),
   ),
+  /** Paths agents must leave alone (D-59), gitignore-style and relative to the project. */
+  contentExclusions: ContentExclusions.pipe(Schema.withDecodingDefault(Effect.succeed([]))),
+  /** Stop a run once it has added this many tokens to its context (D-60); null never stops. */
+  runTokenLimit: Schema.NullOr(PositiveInt).pipe(Schema.withDecodingDefault(Effect.succeed(null))),
   /**
    * Whether agents may drive the in-app preview browser. Turning this off
    * withholds the MCP credential, so the `moonfold` server (and with it every
@@ -1606,6 +1618,8 @@ export const ServerSettingsPatch = Schema.Struct({
   promptProfiles: Schema.optionalKey(CustomPromptProfiles),
   mobileAccessEnabled: Schema.optionalKey(Schema.Boolean),
   defaultPromptProfileId: Schema.optionalKey(PromptProfileId),
+  contentExclusions: Schema.optionalKey(ContentExclusions),
+  runTokenLimit: Schema.optionalKey(Schema.NullOr(PositiveInt)),
   enableProviderUpdateChecks: Schema.optionalKey(Schema.Boolean),
   continueThreadsAfterServerUpdate: Schema.optionalKey(Schema.Boolean),
   enableAgentBrowserAccess: Schema.optionalKey(Schema.Boolean),

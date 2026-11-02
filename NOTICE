@@ -13,3 +13,7 @@ compatibility.
 Third-party software bundled with Moonfold is listed, with its license text,
 in the generated notices shipped with each build (Settings > General >
 Open source licenses) and produced by `node scripts/sync-third-party-license-notices.ts`.
+
+Moonfold for Android bundles AndroidX and the Kotlin standard library (Apache-2.0), ZXing and
+ZXing Android Embedded (Apache-2.0). Its notices ship inside the APK as
+assets/third-party-licenses.txt.

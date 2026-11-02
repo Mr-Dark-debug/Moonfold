@@ -88,7 +88,7 @@ export function MobileSettingsPanel() {
                 <div className="rounded-xl border border-border/60 bg-white p-3">
                   <QRCodeSvg
                     value={payload}
-                    size={220}
+                    size={280}
                     level="M"
                     marginSize={2}
                     title="Scan with the Moonfold mobile app"

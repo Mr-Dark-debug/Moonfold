@@ -474,5 +474,32 @@ maintain, which is what "show everything" asks for. No code, assets or strings c
 Pairing stays the existing one-time token; the phone never sees an account. The server adds an
 HTTPS listener for the network with a self-signed certificate, and the QR code carries its SHA-256.
 The app accepts that certificate and no other, which gives encryption and host identity without a
-certificate authority, a domain or a hosted service. Mobile sessions renew while in use. Reaching
-the host needs a shared network (Wi-Fi, Tailscale, VPN); Moonfold runs no relay.
+certificate authority, a domain or a hosted service. A mobile session lasts 365 days instead of 30,
+so an idle phone is not signed out, and it is revoked like any other client. Reaching the host needs
+a shared network (Wi-Fi, Tailscale, VPN); Moonfold runs no relay.
+
+## D-59 Content exclusions are enforced where Moonfold can, and say so where it cannot
+
+A project lists paths agents must leave alone, in Settings → Prompt Profiles → Agent limits. They
+travel with the prompt profile, so every adapter delivers them and a change reaches a running
+session the same way. Claude Code also receives them as its own deny rules, which block its file
+tools outright. Other harnesses have no equivalent Moonfold can set, so for them this is an
+instruction, and no harness stops a shell command. The setting says this plainly rather than
+promising a guarantee. The brief's D-60 (enforced in Moonfold for every provider) would need a
+sandbox around each CLI, which Moonfold does not have.
+
+## D-60 The budget stop counts tokens a run adds to its context
+
+Providers report context size during a turn and cumulative totals only when it ends, so a stop
+that can fire mid-turn counts what the run adds, and ignores the conversation it started from. It
+is a project setting, not a counter on the thread: each message starts a new run with a fresh
+allowance, so the limit stops a runaway task without locking the thread. It reads tokens, not
+money, because subscriptions report no price. Agents that report no usage during a turn are not
+limited, and the setting says so.
+
+## D-61 The Android release key lives outside the repository
+
+Android requires every update to carry the same signature, so the key cannot be replaced later
+without users reinstalling. It was generated for beta 1 on the owner's machine in
+`~/.moonfold-release` with its password beside it, and it is not in the repository or in CI. The
+APK is built locally and attached to the GitHub release.
