@@ -460,3 +460,19 @@ already have tools, approvals and an agent loop. Moonfold writes the endpoint in
 directory it owns for that Pi instance and never edits the user's own `~/.pi` unasked. A local
 model is then an ordinary provider/model pair and can be the last step of the handoff fallback
 order. A native Ollama provider with Moonfold's own agent loop is not planned.
+
+## D-57 The mobile app is our own thin client of the host's web UI
+
+The offered `opencode-mobile` zip is MIT licensed, so shipping any of it would require keeping its
+copyright notice, and its data layer is generated from another product's API. Moonfold's Android
+app is written from scratch instead: a native shell (splash, QR scanner, reconnect screen) around
+the web client the host already serves. Every feature reaches the phone with no second UI to
+maintain, which is what "show everything" asks for. No code, assets or strings come from the zip.
+
+## D-58 Phones connect over pinned TLS with no login
+
+Pairing stays the existing one-time token; the phone never sees an account. The server adds an
+HTTPS listener for the network with a self-signed certificate, and the QR code carries its SHA-256.
+The app accepts that certificate and no other, which gives encryption and host identity without a
+certificate authority, a domain or a hosted service. Mobile sessions renew while in use. Reaching
+the host needs a shared network (Wi-Fi, Tailscale, VPN); Moonfold runs no relay.
