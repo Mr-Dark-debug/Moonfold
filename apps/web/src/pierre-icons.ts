@@ -4,7 +4,9 @@ import {
   type FileTreeIcons,
 } from "@pierre/trees";
 import { VIDEO_FILE_EXTENSIONS } from "@moonfold/shared/video";
-import { fileIconPathForMimeType } from "@moonfold/shared/filePreview";
+import { fileIconPathForMimeType } from "@moonfold/shared/mediaPreview";
+
+import type { ContextChipAccentKind } from "~/lib/contextChipAccents";
 
 export interface PierreIconResolution {
   name: string;
@@ -12,6 +14,14 @@ export interface PierreIconResolution {
 }
 
 const PIERRE_ICON_SPRITE_ID = "moonfold-pierre-file-icon-sprite";
+
+const DOCUMENT_ICON_COLORS: Readonly<Record<string, string>> = {
+  "moonfold-file-icon-pdf": "light-dark(#d52c36, #ff6762)",
+  "moonfold-file-icon-word": "light-dark(#1a85d4, #69b1ff)",
+  "moonfold-file-icon-spreadsheet": "light-dark(#199f43, #5ecc71)",
+  "moonfold-file-icon-slides": "light-dark(#d47628, #ffa359)",
+  "moonfold-file-icon-epub": "light-dark(#693acf, #9d6afb)",
+};
 
 const MOONFOLD_FILE_ICON_SPRITE = `
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true">
@@ -40,6 +50,48 @@ const MOONFOLD_FILE_ICON_SPRITE = `
   <!-- Lucide Code Xml icon, ISC license. -->
   <symbol id="moonfold-file-icon-xml" viewBox="0 0 24 24">
     <path fill="none" style="stroke: light-dark(#d47628, #ffa359)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16" />
+  </symbol>
+  <!-- Lucide File Type, File Text, File Spreadsheet, Presentation and Book Open icons, ISC license. -->
+  <symbol id="moonfold-file-icon-pdf" viewBox="0 0 24 24">
+    <g fill="none" style="stroke: var(--document-icon-stroke, ${DOCUMENT_ICON_COLORS["moonfold-file-icon-pdf"]})" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+      <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+      <path d="M11 18h2" />
+      <path d="M12 12v6" />
+      <path d="M9 13v-.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v.5" />
+    </g>
+  </symbol>
+  <symbol id="moonfold-file-icon-word" viewBox="0 0 24 24">
+    <g fill="none" style="stroke: var(--document-icon-stroke, ${DOCUMENT_ICON_COLORS["moonfold-file-icon-word"]})" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+      <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+      <path d="M10 9H8" />
+      <path d="M16 13H8" />
+      <path d="M16 17H8" />
+    </g>
+  </symbol>
+  <symbol id="moonfold-file-icon-spreadsheet" viewBox="0 0 24 24">
+    <g fill="none" style="stroke: var(--document-icon-stroke, ${DOCUMENT_ICON_COLORS["moonfold-file-icon-spreadsheet"]})" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+      <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+      <path d="M8 13h2" />
+      <path d="M14 13h2" />
+      <path d="M8 17h2" />
+      <path d="M14 17h2" />
+    </g>
+  </symbol>
+  <symbol id="moonfold-file-icon-slides" viewBox="0 0 24 24">
+    <g fill="none" style="stroke: var(--document-icon-stroke, ${DOCUMENT_ICON_COLORS["moonfold-file-icon-slides"]})" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 3h20" />
+      <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" />
+      <path d="m7 21 5-5 5 5" />
+    </g>
+  </symbol>
+  <symbol id="moonfold-file-icon-epub" viewBox="0 0 24 24">
+    <g fill="none" style="stroke: var(--document-icon-stroke, ${DOCUMENT_ICON_COLORS["moonfold-file-icon-epub"]})" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 7v14" />
+      <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+    </g>
   </symbol>
   <!-- Language logos from Simple Icons, CC0. -->
   <symbol id="moonfold-file-icon-csharp" viewBox="0 0 24 24">
@@ -95,7 +147,20 @@ export const MOONFOLD_PIERRE_ICONS = {
     ...Object.fromEntries(
       VIDEO_FILE_EXTENSIONS.map((extension) => [extension, "moonfold-file-icon-video"]),
     ),
-    // Languages the complete set has no icon for.
+    pdf: "moonfold-file-icon-pdf",
+    doc: "moonfold-file-icon-word",
+    docx: "moonfold-file-icon-word",
+    odt: "moonfold-file-icon-word",
+    rtf: "moonfold-file-icon-word",
+    xls: "moonfold-file-icon-spreadsheet",
+    xlsx: "moonfold-file-icon-spreadsheet",
+    ods: "moonfold-file-icon-spreadsheet",
+    csv: "moonfold-file-icon-spreadsheet",
+    tsv: "moonfold-file-icon-spreadsheet",
+    ppt: "moonfold-file-icon-slides",
+    pptx: "moonfold-file-icon-slides",
+    odp: "moonfold-file-icon-slides",
+    epub: "moonfold-file-icon-epub",
     cs: "moonfold-file-icon-csharp",
     csx: "moonfold-file-icon-csharp",
     dart: "moonfold-file-icon-dart",
@@ -104,11 +169,14 @@ export const MOONFOLD_PIERRE_ICONS = {
     ex: "moonfold-file-icon-elixir",
     exs: "moonfold-file-icon-elixir",
     hs: "moonfold-file-icon-haskell",
+    heic: "file-tree-builtin-image",
+    heif: "file-tree-builtin-image",
     lhs: "moonfold-file-icon-haskell",
     java: "moonfold-file-icon-java",
     kt: "moonfold-file-icon-kotlin",
     kts: "moonfold-file-icon-kotlin",
     lua: "moonfold-file-icon-lua",
+    luau: "moonfold-file-icon-lua",
     php: "moonfold-file-icon-php",
     ps1: "moonfold-file-icon-powershell",
     psm1: "moonfold-file-icon-powershell",
@@ -117,6 +185,9 @@ export const MOONFOLD_PIERRE_ICONS = {
     scala: "moonfold-file-icon-scala",
     toml: "moonfold-file-icon-toml",
     xml: "moonfold-file-icon-xml",
+    xsd: "moonfold-file-icon-xml",
+    xsl: "moonfold-file-icon-xml",
+    xslt: "moonfold-file-icon-xml",
   },
 } satisfies FileTreeIcons;
 
@@ -150,7 +221,6 @@ export function basenameOfPath(pathValue: string): string {
   return slashIndex === -1 ? pathValue : pathValue.slice(slashIndex + 1);
 }
 
-/** Languages whose files are recognised by name rather than by extension. */
 const LANGUAGE_FILE_NAMES: Record<string, string> = {
   dockerfile: "Dockerfile",
 };
@@ -170,6 +240,8 @@ export function resolvePierreIconForEntry(
 ): PierreIconResolution | null {
   if (kind === "directory") return null;
   const icon = completeIconResolver.resolveIcon("file-tree-icon-file", pathValue);
+  if (icon?.name === "file-tree-builtin-image" && icon.token === undefined)
+    return { ...icon, token: "image" };
   return icon?.token === "default" && mimeType
     ? completeIconResolver.resolveIcon(
         "file-tree-icon-file",
@@ -178,12 +250,30 @@ export function resolvePierreIconForEntry(
     : icon;
 }
 
+const DOCUMENT_CHIP_KINDS: Readonly<Record<string, ContextChipAccentKind>> = {
+  "moonfold-file-icon-pdf": "doc-pdf",
+  "moonfold-file-icon-word": "doc-word",
+  "moonfold-file-icon-spreadsheet": "doc-spreadsheet",
+  "moonfold-file-icon-slides": "doc-slides",
+  "moonfold-file-icon-epub": "doc-epub",
+};
+
+export function documentChipKindForFileName(fileName: string) {
+  const icon = resolvePierreIconForEntry(fileName, "file");
+  return icon ? DOCUMENT_CHIP_KINDS[icon.name] : undefined;
+}
+
 export function hasSpecificPierreIconForFileName(fileName: string): boolean {
   return resolvePierreIconForEntry(fileName, "file")?.token !== "default";
 }
 
 export function ensurePierreIconSprite(): void {
-  if (typeof document === "undefined" || document.getElementById(PIERRE_ICON_SPRITE_ID)) return;
+  if (
+    typeof document === "undefined" ||
+    !document.body ||
+    document.getElementById(PIERRE_ICON_SPRITE_ID)
+  )
+    return;
   const container = document.createElement("div");
   container.id = PIERRE_ICON_SPRITE_ID;
   container.setAttribute("aria-hidden", "true");

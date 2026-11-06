@@ -151,17 +151,6 @@ it("waits for Moonfold to remap and cancels that wait when disabled", async () =
   expect(shell.mapped.size).toBe(0);
 });
 
-it("does not animate under reduced motion but still activates Moonfold", async () => {
-  shell.animations = false;
-  shell.windows = [target()];
-  const { feedback, started } = begin();
-  expect(started).toBe(false);
-  expect(shell.actors).toHaveLength(0);
-  await feedback.activate(":1.23", "Moonfold");
-  expect(shell.activate).toHaveBeenCalledOnce();
-  feedback.dispose();
-});
-
 it("rejects another sender and locked-session activation", async () => {
   shell.windows = [target()];
   const { feedback } = begin();

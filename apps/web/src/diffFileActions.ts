@@ -1,5 +1,10 @@
 import type { ScopedThreadRef } from "@moonfold/contracts";
-import { isWindowsAbsolutePath, normalizeProjectPathForComparison } from "@moonfold/shared/path";
+import {
+  isAbsolutePath,
+  isWindowsAbsolutePath,
+  normalizeProjectPathForComparison,
+  workspaceRelativeFilePath,
+} from "@moonfold/shared/path";
 
 import { useRightPanelStore } from "./rightPanelStore";
 import { resolvePathLinkTarget } from "@moonfold/shared/fileLinks";
@@ -52,6 +57,13 @@ export function resolveDiffPathForWorkspace(input: {
   readonly workspaceRoot: string | undefined;
   readonly repositoryRoot: string | undefined;
 }): string | null {
+  // Claude and ACP tool-call diffs name files by absolute path.
+  if (isAbsolutePath(input.filePath)) {
+    const relativePath = workspaceRelativeFilePath(input.filePath, input.workspaceRoot);
+    const segments = relativePath === null ? null : normalizedRelativePathSegments(relativePath);
+    return segments ? segments.join("/") : null;
+  }
+
   const fileSegments = normalizedRelativePathSegments(input.filePath);
   if (!fileSegments) return null;
 

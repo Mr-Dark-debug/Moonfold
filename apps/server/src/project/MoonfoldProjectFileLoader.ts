@@ -1,13 +1,3 @@
-/**
- * MoonfoldProjectFileLoader - Effect service that loads the checked-in `moonfold.json`
- * project file from a workspace root.
- *
- * Loading is best-effort: a missing file resolves to `Option.none`, and
- * unreadable or invalid files are logged and treated as absent so callers
- * can fall back to their defaults.
- *
- * @module MoonfoldProjectFileLoader
- */
 import * as Context from "effect/Context";
 import * as Effect from "effect/Effect";
 import * as FileSystem from "effect/FileSystem";
@@ -35,16 +25,10 @@ export class MoonfoldProjectFileLoadError extends Schema.TaggedError<MoonfoldPro
   }
 }
 
-/** Service tag for moonfold.json project file loading. */
 export class MoonfoldProjectFileLoader extends Context.Service<
   MoonfoldProjectFileLoader,
   {
-    /**
-     * Load and decode `moonfold.json` at the workspace root.
-     *
-     * Never fails: missing, unreadable, or invalid files resolve to
-     * `Option.none` (invalid files are logged as warnings).
-     */
+    /** Never fails; missing/unreadable/invalid files return none, with warnings for invalid files. */
     readonly load: (workspaceRoot: string) => Effect.Effect<Option.Option<MoonfoldProjectFile>>;
   }
 >()("moonfold/project/MoonfoldProjectFileLoader") {}
@@ -59,7 +43,7 @@ const logMoonfoldProjectFileLoadError = (error: MoonfoldProjectFileLoadError) =>
     }),
   );
 
-/** @public Service construction is part of the canonical Effect module API. */
+/** @public */
 export const make = Effect.gen(function* () {
   const fileSystem = yield* FileSystem.FileSystem;
   const path = yield* Path.Path;

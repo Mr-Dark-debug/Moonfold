@@ -25,13 +25,15 @@ afterwards, that directory is not on your `PATH` yet; the installer prints the
 line to add. Set `MOONFOLD_VERSION` to pin an exact version, for example
 `MOONFOLD_VERSION=0.1.0-beta.1`.
 
-| Task                                             | Command                                                         |
-| ------------------------------------------------ | --------------------------------------------------------------- |
-| Start the server and open the web app            | `moonfold`                                                      |
-| Start the server without a browser               | `moonfold serve`                                                |
-| Keep it running in the background (macOS, Linux) | `moonfold service install` ([details](./background-service.md)) |
-| Move to the newest release                       | `moonfold update`                                               |
-| Remove it again                                  | `moonfold uninstall`                                            |
+| Task                                             | Command                                                                       |
+| ------------------------------------------------ | ----------------------------------------------------------------------------- |
+| Start the server and open the web app            | `moonfold`                                                                    |
+| Start the server without a browser               | `moonfold serve`                                                              |
+| Use it from your other devices                   | `moonfold up` ([details](./remote-access.md))                                 |
+| Keep it running in the background (macOS, Linux) | `moonfold service install` ([details](./background-service.md))               |
+| Move to the newest release                       | `moonfold update`                                                             |
+| Reclaim database space                           | `moonfold doctor` ([details](./background-service.md#reclaim-database-space)) |
+| Remove it again                                  | `moonfold uninstall`                                                          |
 
 Run `moonfold help` or `moonfold --help` for the full reference. To start in a new working
 directory, use an explicit path such as `moonfold ./my-project`. A bare directory name
@@ -44,7 +46,7 @@ for an independent server.
 ### Intel Macs
 
 There is no `moonfold` executable for Intel Macs (the desktop app is available). To
-run a server there, build it from source with Node.js 24 and `vp`
+run a server there, build it from source with `vp`, which provides the Node version it needs
 ([Install vp](https://github.com/Mr-Dark-debug/Moonfold#install-vp)):
 
 ```bash
@@ -81,10 +83,36 @@ The `.deb` updates itself like the other desktop builds. It asks for your
 password to install each update. If your desktop has no password prompt, the
 update fails. Download the new `.deb` and install it the same way.
 
+The AUR packages currently support x86_64 only; on ARM64, use the AppImage.
+Update AUR installs with your AUR helper, such as `yay -Syu`, instead of the
+in-app updater.
+
+### Nix (nixpkgs)
+
+Moonfold is maintained in [nixpkgs](https://github.com/NixOS/nixpkgs/tree/nixos-unstable/pkgs/by-name/moonfold/moonfold).
+The command above installs from `nixos-unstable` and requires Nix 2.30 or later with
+`nix-command` and `flakes` enabled. Launch the desktop app with `moonfold-desktop`;
+the package also includes the `moonfold` command.
+
+On NixOS, you can instead add the package to your system configuration, using
+a nixpkgs revision that includes `moonfold`:
+
+```nix
+environment.systemPackages = [ pkgs.moonfold ];
+```
+
+Apply the change with `sudo nixos-rebuild switch`. For Home Manager, add
+`pkgs.moonfold` to `home.packages` and run `home-manager switch`.
+
+Update a profile installation with `nix profile upgrade moonfold`. For NixOS or
+Home Manager, update your configuration's nixpkgs input or channel and rebuild.
+Nix manages both the desktop app and the bundled
+`moonfold` command; use Nix to update them instead of the in-app updater or `moonfold update`.
+
 ### The `moonfold` command
 
 The desktop app includes the `moonfold` command-line tool. To run it from any
-terminal, open **Settings → General → About** and choose **Install** next to
+terminal, open **Settings → About** and choose **Install** next to
 **moonfold command**. On macOS and Linux it adds a `moonfold` link to a folder on your
 `PATH`; on Windows it adds the app's command folder to your `PATH`. Open a new
 terminal afterwards. **Remove** takes it off again. If you already have `moonfold`
@@ -92,7 +120,7 @@ from npm, it stays as it is.
 
 ### Windows Subsystem for Linux
 
-Choose a WSL distro in **Settings → Connections** to run agents and projects
+Choose a WSL distro in **Settings → Sharing & access** to run agents and projects
 there. Install the provider CLIs inside that distro. Moonfold installs its own
 server runtime there automatically; the first launch after an app update can
 take longer.
@@ -123,10 +151,12 @@ computer.
 | Claude           | Install [Claude Code](https://claude.com/product/claude-code), then run `claude auth login`.                                                              |
 | Cursor           | Install [Cursor CLI](https://cursor.com/cli), then run `agent login`.                                                                                     |
 | Grok Build       | Install [Grok Build CLI](https://x.ai/cli), then run `grok login`.                                                                                        |
+| Kiro             | Install [Kiro CLI](https://kiro.dev/docs/cli/), then run `kiro-cli login`.                                                                                |
 | OpenCode         | Install [OpenCode](https://opencode.ai), then run `opencode auth login`.                                                                                  |
 | Antigravity      | Install and sign in with Google from Moonfold's provider settings.                                                                                        |
 | Pi               | Install [Pi](./providers-pi.md#set-up-pi) with Node.js 22.19 or newer, then run `pi` and `/login`.                                                        |
 | Muse Code        | Install [Muse Code](https://dev.meta.ai/docs/muse-code) on the server, run `muse login`, then enable it in Settings → Providers.                          |
+| fx               | Install [fx](https://fx.sh) with `curl -fsSL https://fx.sh/setup.sh \| bash`, then run `fx login`.                                                        |
 | DeepSeek Harness | Add it from the agent search in Settings → Providers, then give it a model; see [DeepSeek Harness](./providers-deepseek-harness.md).                      |
 
 Provider CLIs must be on the server's `PATH`. If Moonfold cannot find one, set its
@@ -145,9 +175,10 @@ When a provider CLI is behind its latest release, its provider card shows the
 available version. **Update now** runs the installer that owns the CLI
 (Homebrew, or a global npm, pnpm, Yarn, Bun, Volta, or Vite+ install), or the
 CLI's own update command when Moonfold cannot tell. Update a CLI installed with
-mise through mise. Cursor and Antigravity update with Moonfold. Homebrew installs
-compare against the version Homebrew offers, which can trail the npm release by
-a few hours.
+mise through mise. Cursor and Antigravity update with Moonfold. Homebrew and
+Chocolatey installs compare against the version their package manager offers,
+which can trail the npm release; update Claude installed with Chocolatey
+through Chocolatey.
 
 Add another provider instance for a separate account or configuration. Each
 instance can have its own environment variables, such as API keys or a custom
@@ -156,8 +187,8 @@ their original values.
 
 For provider-specific setup and accounts, see [Codex](./providers-codex.md),
 [Claude](./providers-claude.md), [OpenCode](./providers-opencode.md),
-[Antigravity](./providers-antigravity.md), [Pi](./providers-pi.md), and
-[Muse Code](./providers-muse.md).
+[Antigravity](./providers-antigravity.md), [Kiro](./providers-kiro.md),
+[Pi](./providers-pi.md), [Muse Code](./providers-muse.md), and [fx](./providers-fx.md).
 
 ## Next steps
 
@@ -166,3 +197,4 @@ For provider-specific setup and accounts, see [Codex](./providers-codex.md),
 - [Remote access](./remote-access.md): connect from another device.
 - [Running in the background](./background-service.md): keep a Linux or macOS host available.
 - [Updating Moonfold](./updating.md): update the app and connected servers.
+- [Managed policy](./managed-policy.md): configure Moonfold for everyone on a machine.

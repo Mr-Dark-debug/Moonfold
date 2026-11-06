@@ -1,5 +1,7 @@
 {
   "id": "/",
+  "name": "Moonfold",
+  "short_name": "Moonfold",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

@@ -28,7 +28,8 @@ function ConfiguredMoonfoldConnectSidebarAvatar() {
       appearance={{
         elements: {
           avatarBox: "size-7",
-          userButtonTrigger: "rounded-lg p-1 hover:bg-sidebar-row-hover",
+          // Clerk's unlayered trigger reset (padding, radius, background) beats layered utilities.
+          userButtonTrigger: "mb-1! rounded-lg! p-1! hover:bg-sidebar-row-hover!",
         },
       }}
     >
@@ -48,21 +49,18 @@ function ConfiguredMoonfoldConnectSidebarAvatar() {
 
 function ConfiguredMoonfoldConnectSidebarSignIn() {
   const { isLoaded, isSignedIn } = useAuth();
-  const { authPrompt, openAuthPrompt } = useMoonfoldConnectAuthPrompt();
+  const { openAuthPrompt } = useMoonfoldConnectAuthPrompt();
 
   if (!isLoaded || isSignedIn) return null;
 
   return (
-    <>
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <SidebarMenuButton onClick={openAuthPrompt}>
-            <LogInIcon />
-            <span>Sign in to Moonfold Connect</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      </SidebarMenu>
-      {authPrompt}
-    </>
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <SidebarMenuButton onClick={openAuthPrompt}>
+          <LogInIcon />
+          <span>Sign in to Moonfold Connect</span>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    </SidebarMenu>
   );
 }

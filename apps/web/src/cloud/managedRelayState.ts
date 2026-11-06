@@ -1,25 +1,29 @@
 import { useAtomValue } from "@effect/atom-react";
 import {
   createManagedRelayQueryManager,
+  createManagedRelayMoonfoldChatLinkRequest,
   deregisterManagedRelayEnvironment,
   ManagedRelay,
   managedRelaySessionAtom,
   readManagedRelaySnapshotState,
+  unlinkManagedRelayMoonfoldChat,
 } from "@moonfold/client-runtime/relay";
 import {
   createAtomCommandScheduler,
   createRuntimeCommand,
 } from "@moonfold/client-runtime/state/runtime";
-import type {
-  RelayClientDeviceRecord,
-  RelayClientEnvironmentRecord,
+import {
+  DEFAULT_MANAGED_TUNNEL_LIMIT,
+  MoonfoldCHAT_PLAN_TUNNEL_LIMITS,
+  type RelayClientDeviceRecord,
+  type RelayClientEnvironmentRecord,
+  type RelayMoonfoldChatLinkResponse,
 } from "@moonfold/contracts/relay";
 import type { EnvironmentId } from "@moonfold/contracts";
 import * as Context from "effect/Context";
 import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
 import { AsyncResult, Atom } from "effect/reactivity";
-import { useCallback, useEffect } from "react";
 
 import { runtime } from "../lib/runtime";
 import { appAtomRegistry } from "../rpc/atomRegistry";
@@ -51,6 +55,50 @@ export const deregisterManagedRelayEnvironmentCommand = createRuntimeCommand(
   },
 );
 
+const accountSerial = {
+  mode: "serial",
+  key: (input: { readonly accountId: string }) => input.accountId,
+} as const;
+
+export const createManagedRelayMoonfoldChatLinkRequestCommand = createRuntimeCommand(
+  managedRelayAtomRuntime,
+  {
+    label: "web:managed-relay:create-moonfoldchat-link-request",
+    scheduler: managedRelayMutationScheduler,
+    concurrency: accountSerial,
+    execute: (input: { readonly accountId: string }, registry) =>
+      createManagedRelayMoonfoldChatLinkRequest(registry, input),
+  },
+);
+
+export const unlinkManagedRelayMoonfoldChatCommand = createRuntimeCommand(managedRelayAtomRuntime, {
+  label: "web:managed-relay:unlink-moonfoldchat",
+  scheduler: managedRelayMutationScheduler,
+  concurrency: accountSerial,
+  execute: (input: { readonly accountId: string }, registry) =>
+    unlinkManagedRelayMoonfoldChat(registry, input),
+});
+
+const EMPTY_MoonfoldCHAT_LINK_ATOM = Atom.make(
+  AsyncResult.success<RelayMoonfoldChatLinkResponse>({ available: false, link: null }),
+).pipe(Atom.keepAlive, Atom.withLabel("managed-relay:web:moonfoldchat-link:null"));
+
+export function useManagedRelayMoonfoldChatLink() {
+  const session = useAtomValue(managedRelaySessionAtom);
+  const accountId = session?.accountId ?? null;
+  const atom = accountId
+    ? managedRelayQueryManager.moonfoldChatLinkAtom(accountId)
+    : EMPTY_MoonfoldCHAT_LINK_ATOM;
+  const snapshot = readManagedRelaySnapshotState(useAtomValue(atom));
+  const refresh = () => {
+    if (accountId) {
+      managedRelayQueryManager.refreshMoonfoldChatLink(appAtomRegistry, accountId);
+    }
+  };
+
+  return { ...snapshot, accountId, refresh };
+}
+
 const EMPTY_ENVIRONMENTS_ATOM = Atom.make(
   AsyncResult.success<ReadonlyArray<RelayClientEnvironmentRecord>>([]),
 ).pipe(Atom.keepAlive, Atom.withLabel("managed-relay:web:environments:null"));
@@ -67,19 +115,11 @@ export function useManagedRelayEnvironments() {
     : EMPTY_ENVIRONMENTS_ATOM;
   const result = useAtomValue(atom);
   const snapshot = readManagedRelaySnapshotState(result);
-  useEffect(() => {
-    if (snapshot.error) {
-      console.error("[moonfold-cloud] Relay environment listing failed", {
-        message: snapshot.error,
-        traceId: snapshot.errorTraceId,
-      });
-    }
-  }, [snapshot.error, snapshot.errorTraceId]);
-  const refresh = useCallback(() => {
+  const refresh = () => {
     if (accountId) {
       managedRelayQueryManager.refreshEnvironments(appAtomRegistry, accountId);
     }
-  }, [accountId]);
+  };
 
   return {
     ...snapshot,
@@ -94,23 +134,66 @@ export function useManagedRelayDevices() {
   const atom = accountId ? managedRelayQueryManager.devicesAtom(accountId) : EMPTY_DEVICES_ATOM;
   const result = useAtomValue(atom);
   const snapshot = readManagedRelaySnapshotState(result);
-  useEffect(() => {
-    if (snapshot.error) {
-      console.error("[moonfold-cloud] Relay device listing failed", {
-        message: snapshot.error,
-        traceId: snapshot.errorTraceId,
-      });
-    }
-  }, [snapshot.error, snapshot.errorTraceId]);
-  const refresh = useCallback(() => {
+  const refresh = () => {
     if (accountId) {
       managedRelayQueryManager.refreshDevices(appAtomRegistry, accountId);
     }
-  }, [accountId]);
+  };
 
   return {
     ...snapshot,
     accountId,
     refresh,
+  };
+}
+
+/** How this account can raise its tunnel cap: link Moonfold Chat, or upgrade the linked plan. */
+export type ManagedTunnelUpgrade = "link" | "pro" | "premier" | null;
+
+// Mirrors the relay's cap: a manual override is exact, otherwise the Moonfold Chat plan raises the default.
+function managedTunnelCap(moonfoldChat: RelayMoonfoldChatLinkResponse): {
+  readonly limit: number;
+  readonly upgrade: ManagedTunnelUpgrade;
+} {
+  if (moonfoldChat.maxTunnelsOverride !== undefined) {
+    return { limit: moonfoldChat.maxTunnelsOverride, upgrade: null };
+  }
+  if (!moonfoldChat.available) return { limit: DEFAULT_MANAGED_TUNNEL_LIMIT, upgrade: null };
+  switch (moonfoldChat.link?.plan) {
+    case "premier":
+      return { limit: MoonfoldCHAT_PLAN_TUNNEL_LIMITS.premier, upgrade: null };
+    case "pro":
+      return { limit: MoonfoldCHAT_PLAN_TUNNEL_LIMITS.pro, upgrade: "premier" };
+    case "free":
+      return { limit: DEFAULT_MANAGED_TUNNEL_LIMIT, upgrade: "pro" };
+    case undefined:
+      return { limit: DEFAULT_MANAGED_TUNNEL_LIMIT, upgrade: "link" };
+  }
+}
+
+/** Refetches the account's environments and Moonfold Chat plan after a tunnel changes. */
+export function refreshManagedTunnelUsage() {
+  const accountId = appAtomRegistry.get(managedRelaySessionAtom)?.accountId;
+  if (!accountId) return;
+  managedRelayQueryManager.refreshEnvironments(appAtomRegistry, accountId);
+  managedRelayQueryManager.refreshMoonfoldChatLink(appAtomRegistry, accountId);
+}
+
+/** Managed tunnels on this account and its cap. Null fields are still loading or failed. */
+export function useManagedTunnelUsage() {
+  const environments = useManagedRelayEnvironments();
+  const moonfoldChat = useManagedRelayMoonfoldChatLink();
+  const used =
+    environments.accountId === null
+      ? null
+      : (environments.data?.filter(
+          (environment) => environment.endpoint.providerKind === "cloudflare_tunnel",
+        ).length ?? null);
+  const cap = moonfoldChat.accountId !== null && moonfoldChat.data ? managedTunnelCap(moonfoldChat.data) : null;
+  return {
+    used,
+    limit: cap?.limit ?? null,
+    upgrade: cap?.upgrade ?? null,
+    refresh: refreshManagedTunnelUsage,
   };
 }

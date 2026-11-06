@@ -1,7 +1,8 @@
 import type { DpopFailureReason } from "@moonfold/contracts";
-import type {
-  RelayEnvironmentStatusResponse,
-  RelayProtectedError,
+import {
+  MoonfoldCHAT_PLAN_TUNNEL_LIMITS,
+  type RelayEnvironmentStatusResponse,
+  type RelayProtectedError,
 } from "@moonfold/contracts/relay";
 
 export const DPOP_CLOCK_HINT =
@@ -50,7 +51,7 @@ export function relayProtectedErrorMessage(error: RelayProtectedError): string {
         return "The environment's Moonfold Connect tunnel is still being set up.";
       }
       if (error.reason === "endpoint_provider_not_managed") {
-        return "This environment is linked only to publish agent activity, so it cannot accept connections. On that computer, open Settings > Connections and turn Moonfold Connect on.";
+        return "This environment is linked only to publish agent activity, so it cannot accept connections. On that computer, open Settings > Sharing & access and turn Moonfold Connect on.";
       }
       return error.reason
         ? `Relay rejected the environment connection request (${error.reason}).`
@@ -62,9 +63,13 @@ export function relayProtectedErrorMessage(error: RelayProtectedError): string {
     case "RelayEnvironmentLinkFailedError":
       return `Relay could not link the environment (${error.reason}).`;
     case "RelayEnvironmentLinkUnavailableError":
-      return `Relay cannot provision the managed endpoint (${error.reason}).`;
+      return `Relay cannot provision the managed endpoint (${error.reason}).${
+        error.provisioningStage ? ` Failed stage: ${error.provisioningStage}.` : ""
+      }`;
     case "RelayEnvironmentLinkLimitExceededError":
-      return `Relay refused the link: this account already has its maximum of ${error.maxTunnels} managed tunnels. Unlink an environment to free one up.`;
+      return error.maxTunnels < MoonfoldCHAT_PLAN_TUNNEL_LIMITS.premier
+        ? `Relay refused the link: this account already has its maximum of ${error.maxTunnels} managed tunnels. Unlink an environment, or link a paid Moonfold Chat account in your Moonfold Connect account settings on web or desktop. Pro raises the default limit to ${MoonfoldCHAT_PLAN_TUNNEL_LIMITS.pro} and Premier to ${MoonfoldCHAT_PLAN_TUNNEL_LIMITS.premier}.`
+        : `Relay refused the link: this account already has its maximum of ${error.maxTunnels} managed tunnels. Unlink an environment to free one up.`;
     case "RelayAgentActivityPublishProofExpiredError":
       return "Relay rejected an expired agent activity publish proof.";
     case "RelayAgentActivityPublishProofInvalidError":
@@ -79,11 +84,6 @@ export function relayProtectedErrorMessage(error: RelayProtectedError): string {
 export const RELAY_GATEWAY_TIMEOUT_MESSAGE =
   "Relay timed out before it finished the request (HTTP 504). Try again in a few minutes. If it keeps failing, copy the trace ID when you report it.";
 
-/**
- * User-facing detail for a failed relay request: the relay's typed error, or
- * the HTTP status when the relay sent a response the contract does not declare.
- * Null when the request got no response.
- */
 export function relayRequestFailureDetail(error: {
   readonly relayError?: RelayProtectedError | undefined;
   readonly status?: number | undefined;
@@ -94,13 +94,9 @@ export function relayRequestFailureDetail(error: {
   return null;
 }
 
-// A host with a current build gets a new tunnel on its own within minutes of
-// coming back, which clears this reason. While it is still reported, the host
-// is either still off or running a build too old to do that.
-export const RELAY_TUNNEL_RELEASED_MESSAGE =
+const RELAY_TUNNEL_RELEASED_MESSAGE =
   "Offline for a while, so its Moonfold Connect tunnel was removed. Start Moonfold on that computer and update it to the latest version to reconnect.";
 
-/** User-facing text for an offline status, or null when the relay gave no known reason. */
 export function relayOfflineReasonMessage(
   status: Pick<RelayEnvironmentStatusResponse, "offlineReason">,
 ): string | null {

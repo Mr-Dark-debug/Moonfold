@@ -22,6 +22,7 @@ export type MoonfoldMcpToolSummaryAction =
   | "thread-wait"
   | "thread-interrupt"
   | "workflow-stop"
+  | "background-wait"
   | "thread-configuration"
   | "thread-configure"
   | "thread-fork"
@@ -50,6 +51,9 @@ export type MoonfoldMcpToolSummaryAction =
   | "project-delete"
   | "project-clone"
   | "environment-read"
+  | "environment-links"
+  | "environment-link"
+  | "environment-unlink"
   | "environment-update"
   | "attachment-prepare"
   | "attachment-discard"
@@ -82,17 +86,27 @@ function tool(
   return { displayName, labels, icon, summaryAction };
 }
 
-const MOONFOLD_MCP_SERVER_ALIASES = new Set(["moonfold"]);
+// Codex registers "moonfold-direct" for Moonfold tools kept out of Code Mode.
+const MOONFOLD_MCP_SERVER_ALIASES = new Set(["moonfold", "moonfold-direct", "moonfold_direct"]);
 
-// Cards, activity rows, summaries, and provider identity recovery share this inventory.
 const MOONFOLD_MCP_TOOLS: Readonly<Record<string, MoonfoldMcpToolDefinition>> = {
   link_pull_request: tool(
     ["Link", "Linking", "Linked", "a pull request"],
     "link-pr",
     "pull-request",
   ),
+  link_pull_requests: tool(
+    ["Link", "Linking", "Linked", "pull requests"],
+    "link-pr",
+    "pull-request",
+  ),
   unlink_pull_request: tool(
     ["Unlink", "Unlinking", "Unlinked", "a pull request"],
+    "unlink-pr",
+    "pull-request",
+  ),
+  unlink_pull_requests: tool(
+    ["Unlink", "Unlinking", "Unlinked", "pull requests by state"],
     "unlink-pr",
     "pull-request",
   ),
@@ -107,12 +121,12 @@ const MOONFOLD_MCP_TOOLS: Readonly<Record<string, MoonfoldMcpToolDefinition>> = 
     "pull-request",
   ),
   unwatch_pull_request: tool(
-    ["Stop watching", "Stopping watching", "Stopped watching", "a pull request"],
+    ["Stop watching", "Unwatching", "Stopped watching", "a pull request"],
     "unwatch-pr",
     "pull-request",
   ),
   write_pull_request_guides: tool(
-    ["Write", "Writing", "Started", "review guides"],
+    ["Write", "Writing", "Started writing", "review guides"],
     "write-pr-guides",
     "pull-request",
   ),
@@ -128,13 +142,10 @@ const MOONFOLD_MCP_TOOLS: Readonly<Record<string, MoonfoldMcpToolDefinition>> = 
   delegate_task: tool(["Delegate", "Delegating", "Delegated", "a child task"], "delegate"),
   task_status: tool(["Get", "Getting", "Got", "delegated task status"], "task-status"),
   task_cancel: tool(
-    ["Cancel", "Canceling", "Requested cancellation of", "delegated task"],
+    ["Cancel", "Canceling", "Requested cancellation of", "a delegated task"],
     "task-cancel",
   ),
-  schedule_task: tool(
-    ["Schedule", "Scheduling", "Scheduled", "a recurring task"],
-    "schedule-create",
-  ),
+  schedule_task: tool(["Schedule", "Scheduling", "Scheduled", "a task"], "schedule-create"),
   list_scheduled_tasks: tool(["List", "Listing", "Listed", "scheduled tasks"], "schedule-list"),
   update_scheduled_task: tool(
     ["Update", "Updating", "Updated", "a scheduled task"],
@@ -157,6 +168,10 @@ const MOONFOLD_MCP_TOOLS: Readonly<Record<string, MoonfoldMcpToolDefinition>> = 
   moonfold_workflow_stop: tool(
     ["Stop", "Stopping", "Requested a stop for", "a workflow"],
     "workflow-stop",
+  ),
+  moonfold_background_wait: tool(
+    ["Update", "Updating", "Updated", "background waits"],
+    "background-wait",
   ),
   moonfold_thread_interrupt: tool(
     ["Interrupt", "Interrupting", "Requested an interrupt of", "a Moonfold thread"],
@@ -192,6 +207,7 @@ const MOONFOLD_MCP_TOOLS: Readonly<Record<string, MoonfoldMcpToolDefinition>> = 
     "browser",
     "Snapshot the preview page",
   ),
+  preview_act: tool(["Use", "Using", "Used", "the preview browser"], "browser", "browser"),
   preview_click: tool(
     ["Click", "Clicking", "Clicked", "in the preview browser"],
     "browser",
@@ -274,6 +290,11 @@ const MOONFOLD_MCP_TOOLS: Readonly<Record<string, MoonfoldMcpToolDefinition>> = 
     ["Run", "Running", "Requested a run of", "a scheduled task"],
     "schedule-run",
   ),
+  moonfold_queue: tool(["Manage", "Managing", "Managed", "queued messages"], "queue-edit"),
+  moonfold_pending_request: tool(
+    ["Handle", "Handling", "Handled", "pending questions"],
+    "question-respond",
+  ),
   moonfold_queue_list: tool(["List", "Listing", "Listed", "queued messages"], "queue-list"),
   moonfold_queue_read: tool(["Read", "Reading", "Read", "a queued message"], "queue-read"),
   moonfold_queue_edit: tool(["Edit", "Editing", "Edited", "a queued message"], "queue-edit"),
@@ -305,11 +326,9 @@ const MOONFOLD_MCP_TOOLS: Readonly<Record<string, MoonfoldMcpToolDefinition>> = 
     ["Read", "Reading", "Read", "thread configuration"],
     "thread-configuration",
   ),
-  moonfold_thread_configure: tool(["Set", "Setting", "Set", "thread model"], "thread-configure"),
-  moonfold_thread_fork: tool(
-    ["Fork", "Forking", "Requested a fork of", "this thread"],
-    "thread-fork",
-  ),
+  moonfold_thread_configure: tool(["Use", "Using", "Used", "thread model settings"], "thread-configure"),
+  moonfold_thread_transfer: tool(["Use", "Using", "Used", "thread transfers"], "thread-fork"),
+  moonfold_thread_fork: tool(["Fork", "Forking", "Requested a fork of", "this thread"], "thread-fork"),
   moonfold_thread_merge_back: tool(
     ["Merge", "Merging", "Requested a merge of", "thread context"],
     "thread-merge",
@@ -343,6 +362,18 @@ const MOONFOLD_MCP_TOOLS: Readonly<Record<string, MoonfoldMcpToolDefinition>> = 
   moonfold_environment_read: tool(
     ["Read", "Reading", "Read", "environment preferences"],
     "environment-read",
+  ),
+  moonfold_environment_links: tool(
+    ["List", "Listing", "Listed", "linked environments"],
+    "environment-links",
+  ),
+  moonfold_environment_link: tool(
+    ["Ask to link", "Asking to link", "Asked to link", "an environment"],
+    "environment-link",
+  ),
+  moonfold_environment_unlink: tool(
+    ["Forget", "Forgetting", "Forgot", "a linked environment"],
+    "environment-unlink",
   ),
   moonfold_environment_preferences_update: tool(
     ["Update", "Updating", "Updated", "environment preferences"],
@@ -389,14 +420,24 @@ function normalizeMoonfoldMcpToolLabel(value: string): string {
   return value.replace(/\s+(?:complete|completed)\s*$/i, "").trim();
 }
 
-/**
- * ACP agents disagree on how the injected Moonfold server prefixes its tools:
- * `mcp__moonfold__x` (Claude/Cursor), `moonfold.x` (Codex), plus single
- * underscore, colon, slash, dash, and space separators seen from registry
- * agents. The prefix match is deliberately loose because the display-name
- * inventory is the real gate; unknown tools stay on the generic renderer.
- */
+// Timelines resolve every work row's tool name on each update; names repeat across updates.
+// ACP titles can carry whole commands, so long labels are parsed but not kept.
+const toolNameCache = new Map<string, string | null>();
+const TOOL_NAME_CACHE_LIMIT = 10_000;
+const TOOL_NAME_CACHE_MAX_KEY_LENGTH = 256;
+
 function resolveMoonfoldMcpToolName(value: string): string | null {
+  if (value.length > TOOL_NAME_CACHE_MAX_KEY_LENGTH) return parseMoonfoldMcpToolName(value);
+  const cached = toolNameCache.get(value);
+  if (cached !== undefined) return cached;
+  const name = parseMoonfoldMcpToolName(value);
+  if (toolNameCache.size >= TOOL_NAME_CACHE_LIMIT) toolNameCache.clear();
+  toolNameCache.set(value, name);
+  return name;
+}
+
+// ACP tool prefixes vary; match loosely but require a known display-name entry.
+function parseMoonfoldMcpToolName(value: string): string | null {
   const label = normalizeMoonfoldMcpToolLabel(value);
   const mcpMatch = /^mcp__(?<server>.+?)__(?<tool>.+)$/i.exec(label);
   if (mcpMatch?.groups) {
@@ -408,14 +449,18 @@ function resolveMoonfoldMcpToolName(value: string): string | null {
       : null;
   }
 
-  const namespaceMatch = /^(?<server>moonfold)(?:[.:/]|\s*·\s*)(?<tool>.+)$/i.exec(label);
+  const namespaceMatch = /^(?<server>moonfold(?:[-_]direct)?)(?:[.:/]|\s*·\s*)(?<tool>.+)$/i.exec(
+    label,
+  );
   if (namespaceMatch?.groups) {
     return namespaceMatch.groups.tool ?? null;
   }
 
   // Tool names start with `moonfold_` themselves, so try the bare label before stripping a prefix.
   if (Object.hasOwn(MOONFOLD_MCP_TOOLS, label)) return label;
-  const prefixed = /^(?:mcp[-_]{1,2})?moonfold(?:__|[-_.:/ ])(?<tool>.+)$/i.exec(label);
+  const prefixed = /^(?:mcp[-_]{1,2})?moonfold(?:[-_]direct)?(?:__|[-_.:/ ])(?<tool>.+)$/i.exec(
+    label,
+  );
   const candidate = prefixed?.groups?.tool;
   if (candidate !== undefined && Object.hasOwn(MOONFOLD_MCP_TOOLS, candidate)) return candidate;
   // OpenCode 2 registers one server per thread, `moonfold-<thread>`, and joins
@@ -429,30 +474,66 @@ function resolveMoonfoldMcpToolName(value: string): string | null {
   return longest;
 }
 
-/** The bare Moonfold tool name (`html_render`) for any provider's spelling of it. */
 export function resolveMoonfoldMcpToolId(toolName: string | null | undefined): string | null {
   const name = toolName == null ? null : resolveMoonfoldMcpToolName(toolName);
   return name !== null && Object.hasOwn(MOONFOLD_MCP_TOOLS, name) ? name : null;
 }
 
+type SummaryInput = Readonly<Record<string, unknown>>;
+
+const asSummaryInput = (input: unknown): SummaryInput | undefined =>
+  typeof input === "object" && input !== null ? (input as SummaryInput) : undefined;
+
+/** Action tools present each call as the single-purpose tool its action replaced. */
+const ACTION_TOOLS: Readonly<Record<string, (action: string) => string | undefined>> = {
+  preview_act: (action) => `preview_${action}`,
+  moonfold_queue: (action) => `moonfold_queue_${action}`,
+  moonfold_pending_request: (action) => `moonfold_pending_request_${action}`,
+  moonfold_thread_transfer: (action) =>
+    ({ fork: "moonfold_thread_fork", merge_back: "moonfold_thread_merge_back", status: "moonfold_thread_transfers" })[
+      action
+    ],
+};
+
+/** Pass the call's input so an action tool resolves to the labels and summary of its action. */
 export function resolveMoonfoldMcpToolDefinition(
   toolName: string | null | undefined,
+  input?: unknown,
 ): MoonfoldMcpToolDefinition | null {
   const name = toolName == null ? null : resolveMoonfoldMcpToolName(toolName);
-  return name !== null && Object.hasOwn(MOONFOLD_MCP_TOOLS, name)
-    ? MOONFOLD_MCP_TOOLS[name]!
-    : null;
+  if (name === null || !Object.hasOwn(MOONFOLD_MCP_TOOLS, name)) return null;
+  const action = asSummaryInput(input)?.action;
+  const actionTool = typeof action === "string" ? ACTION_TOOLS[name]?.(action) : undefined;
+  return actionTool !== undefined && Object.hasOwn(MOONFOLD_MCP_TOOLS, actionTool)
+    ? MOONFOLD_MCP_TOOLS[actionTool]!
+    : MOONFOLD_MCP_TOOLS[name]!;
+}
+
+/** Tools whose summary depends on which fields a call sets. */
+const ACTION_SUMMARIES: Readonly<
+  Record<string, (input: SummaryInput) => MoonfoldMcpToolSummaryAction | undefined>
+> = {
+  moonfold_thread_configure: ({ modelSelection }) =>
+    modelSelection === undefined ? "thread-configuration" : "thread-configure",
+  schedule_task: ({ scheduledTaskId }) =>
+    scheduledTaskId === undefined ? "schedule-create" : "schedule-update",
+};
+
+export function resolveMoonfoldMcpSummaryAction(
+  toolName: string | null | undefined,
+  input: unknown,
+): MoonfoldMcpToolSummaryAction | null {
+  const definition = resolveMoonfoldMcpToolDefinition(toolName, input);
+  if (definition === null) return null;
+  const summarize = ACTION_SUMMARIES[resolveMoonfoldMcpToolName(toolName!) ?? ""];
+  const fields = asSummaryInput(input);
+  return (fields && summarize?.(fields)) ?? definition.summaryAction;
 }
 
 export function resolveMoonfoldMcpToolPresentation(
   toolName: string | null | undefined,
+  input?: unknown,
 ): MoonfoldMcpToolPresentation | null {
-  const definition = resolveMoonfoldMcpToolDefinition(toolName);
+  const definition = resolveMoonfoldMcpToolDefinition(toolName, input);
   return definition === null ? null : { displayName: definition.displayName, logo: "moonfold" };
-}
-
-export function resolveMoonfoldMcpToolSummaryAction(
-  toolName: string | null | undefined,
-): MoonfoldMcpToolSummaryAction | null {
-  return resolveMoonfoldMcpToolDefinition(toolName)?.summaryAction ?? null;
 }

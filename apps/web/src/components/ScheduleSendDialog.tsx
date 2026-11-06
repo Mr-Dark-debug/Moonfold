@@ -34,7 +34,6 @@ import {
   fromDateTimeInputs,
   scheduledSendTitle,
   toDateInputValue,
-  toOnceScheduleAt,
   toTimeInputValue,
 } from "./chat/scheduledSend.logic";
 import { Button } from "./ui/button";
@@ -162,11 +161,7 @@ function ScheduleSendDialog({
       title: scheduledSendTitle(text),
       prompt: text.trim(),
       enabled: true,
-      schedule: {
-        type: "once",
-        at: toOnceScheduleAt(at),
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      },
+      schedule: { type: "once", runAt: at.toISOString() },
       projectId: request.projectId,
       threadId: request.threadId,
       workspaceStrategy: { type: "root" },

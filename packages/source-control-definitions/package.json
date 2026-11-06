@@ -1,0 +1,23 @@
+{
+  "name": "@moonfold/source-control-definitions",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./registry": {
+      "types": "./src/registry.ts",
+      "import": "./src/registry.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "effect-tsgo tsrs --noEmit"
+  },
+  "dependencies": {
+    "@moonfold/source-control-azure-devops": "workspace:*",
+    "@moonfold/source-control-bitbucket": "workspace:*",
+    "@moonfold/source-control-core": "workspace:*",
+    "@moonfold/source-control-forgejo": "workspace:*",
+    "@moonfold/source-control-gitcafe": "workspace:*",
+    "@moonfold/source-control-github": "workspace:*",
+    "@moonfold/source-control-gitlab": "workspace:*"
+  }
+}

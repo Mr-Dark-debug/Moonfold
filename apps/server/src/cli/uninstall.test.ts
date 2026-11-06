@@ -1,11 +1,12 @@
 import * as NodeServices from "@effect/platform-node/NodeServices";
 import { assert, it } from "@effect/vitest";
+import * as Config from "effect/Config";
 import * as Effect from "effect/Effect";
 import * as FileSystem from "effect/FileSystem";
 import * as Path from "effect/Path";
 import * as HostProcess from "@moonfold/shared/HostProcess";
 
-import { findOwnedLauncher } from "./uninstall.ts";
+import { findOwnedLauncher, spawnWindowsRemoval } from "./uninstall.ts";
 
 it.layer(NodeServices.layer)("moonfold uninstall launcher", (it) => {
   it.effect("claims only a launcher that points into this home's runtime tree", () =>
@@ -35,3 +36,29 @@ it.layer(NodeServices.layer)("moonfold uninstall launcher", (it) => {
     }).pipe(Effect.scoped, Effect.provideService(HostProcess.Platform, "linux")),
   );
 });
+
+it.live.runIf(HostProcess.Platform.defaultValue() === "win32")(
+  "moonfold uninstall has cmd.exe remove the runtime directory, preserving spaces and literal environment-variable syntax",
+  () =>
+    Effect.gen(function* () {
+      const fs = yield* FileSystem.FileSystem;
+      const path = yield* Path.Path;
+      const root = yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-uninstall-" });
+      const runtimeDir = path.join(root, "moonfold home %COMSPEC% !COMSPEC! & data", "runtime");
+      yield* fs.makeDirectory(path.join(runtimeDir, "versions", "1.0.0"), { recursive: true });
+      yield* fs.writeFileString(path.join(runtimeDir, "versions", "1.0.0", "moonfold.exe"), "");
+
+      const child = spawnWindowsRemoval(
+        yield* Config.String("ComSpec").pipe(Config.withDefault("cmd.exe")),
+        runtimeDir,
+      );
+      yield* Effect.callback<void, Error>((resume) => {
+        child.once("error", (error) => resume(Effect.fail(error)));
+        child.once("exit", (code) =>
+          resume(code === 0 ? Effect.void : Effect.die(`cmd.exe exited with ${code}`)),
+        );
+      });
+
+      assert.isFalse(yield* fs.exists(runtimeDir));
+    }).pipe(Effect.scoped, Effect.provide(NodeServices.layer)),
+);

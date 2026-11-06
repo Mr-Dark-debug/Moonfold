@@ -1,97 +1,85 @@
 import { assert, describe, it } from "@effect/vitest";
 
 import {
+  MOONFOLD_DEVICE_TOOL_INSTRUCTIONS,
+  MOONFOLD_DEVICE_TOOL_INSTRUCTIONS_WITH_TOOL_SEARCH,
   MOONFOLD_ORCHESTRATION_INSTRUCTIONS,
   moonfoldAcpPromptWithInstructions,
-  moonfoldOrchestrationPromptForFirstRun,
+  moonfoldOrchestrationPrompt,
   moonfoldOrchestrationSystemPrompt,
 } from "./orchestrationInstructions.ts";
 
-describe("Moonfold orchestration provider instructions", () => {
-  it("distinguishes delegated subagents from ordinary top-level threads", () => {
-    assert.include(MOONFOLD_ORCHESTRATION_INSTRUCTIONS, "Use `delegate_task`");
-    assert.include(
-      MOONFOLD_ORCHESTRATION_INSTRUCTIONS,
-      "ordinary top-level Moonfold conversations",
-    );
-    assert.include(MOONFOLD_ORCHESTRATION_INSTRUCTIONS, "Never use them merely");
-    assert.include(MOONFOLD_ORCHESTRATION_INSTRUCTIONS, "cross-provider");
-    assert.include(MOONFOLD_ORCHESTRATION_INSTRUCTIONS, "call `delegate_task` again");
-    assert.include(
-      MOONFOLD_ORCHESTRATION_INSTRUCTIONS,
-      "Do not use `moonfold_thread_send` on `childThreadId`",
-    );
-  });
-
-  it("documents structured schedules instead of JSON strings", () => {
-    assert.include(MOONFOLD_ORCHESTRATION_INSTRUCTIONS, "structured object, never as JSON text");
-    assert.include(MOONFOLD_ORCHESTRATION_INSTRUCTIONS, '"everyMs":3600000');
-    assert.include(MOONFOLD_ORCHESTRATION_INSTRUCTIONS, "bindToCurrentThread=false");
-  });
-
-  it("injects prompt fallback only for an MCP-enabled first run", () => {
-    const prompt = "Inspect the repository.";
-    const injected = moonfoldOrchestrationPromptForFirstRun({
-      prompt,
-      runOrdinal: 1,
-      hasMoonfoldMcp: true,
-    });
-
-    assert.include(injected, "<moonfold_orchestration_instructions>");
-    assert.include(injected, `<user_request>\n${prompt}\n</user_request>`);
+describe("Moonfold device instructions", () => {
+  it("route device work through device_open and give Claude the line that loads the tools", () => {
+    for (const intent of ["`device_list`", "`device_open`", "`agent-device`", "ssh", "`hostId`"]) {
+      assert.include(MOONFOLD_DEVICE_TOOL_INSTRUCTIONS, intent);
+    }
+    assert.notInclude(MOONFOLD_DEVICE_TOOL_INSTRUCTIONS, "ToolSearch");
+    const loadLine =
+      " Load them with ToolSearch `select:mcp__moonfold__device_list,mcp__moonfold__device_open,mcp__moonfold__device_screenshot,mcp__moonfold__device_close`.";
+    assert.include(MOONFOLD_DEVICE_TOOL_INSTRUCTIONS_WITH_TOOL_SEARCH, loadLine);
     assert.equal(
-      moonfoldOrchestrationPromptForFirstRun({ prompt, runOrdinal: 2, hasMoonfoldMcp: true }),
-      prompt,
-    );
-    assert.equal(
-      moonfoldOrchestrationPromptForFirstRun({ prompt, runOrdinal: 1, hasMoonfoldMcp: false }),
-      prompt,
+      MOONFOLD_DEVICE_TOOL_INSTRUCTIONS_WITH_TOOL_SEARCH.replace(loadLine, ""),
+      MOONFOLD_DEVICE_TOOL_INSTRUCTIONS,
     );
   });
 
-  it("only exposes the system prompt when the Moonfold MCP server is attached", () => {
-    assert.equal(moonfoldOrchestrationSystemPrompt(false), undefined);
-    assert.equal(moonfoldOrchestrationSystemPrompt(true), MOONFOLD_ORCHESTRATION_INSTRUCTIONS);
-  });
-
-  it("gives ACP sessions provider-neutral mode, browser, and orchestration guidance", () => {
-    const injected = moonfoldAcpPromptWithInstructions({
-      prompt: "Inspect the repository.",
-      state: { interactionMode: "default", hasMoonfoldMcp: true },
-    });
-
-    assert.include(injected, "Moonfold interaction mode: Default");
-    assert.include(injected, "Moonfold collaborative browser");
-    assert.include(injected, "Moonfold orchestration");
-    assert.include(injected, "<user_request>\nInspect the repository.\n</user_request>");
-  });
-
-  it("reinjects ACP guidance only when mode or tool availability changes", () => {
-    const prompt = "Continue.";
-    const defaultState = { interactionMode: "default", hasMoonfoldMcp: true } as const;
-
-    assert.equal(
-      moonfoldAcpPromptWithInstructions({
-        prompt,
-        state: defaultState,
-        previousState: defaultState,
-      }),
-      prompt,
-    );
+  it("open the app before the returned command's snapshots, screenshots and input", () => {
     assert.include(
-      moonfoldAcpPromptWithInstructions({
-        prompt,
-        state: { ...defaultState, interactionMode: "plan" },
-        previousState: defaultState,
-      }),
-      "Moonfold interaction mode: Plan",
+      MOONFOLD_DEVICE_TOOL_INSTRUCTIONS,
+      "its snapshots, screenshots and input need `open <app>` first,",
     );
-    const withoutMcp = moonfoldAcpPromptWithInstructions({
-      prompt,
-      state: { interactionMode: "default", hasMoonfoldMcp: false },
+  });
+
+  it("keep the failure rule from taking over or closing a session another thread holds", () => {
+    // agent-device's DEVICE_IN_USE advice is to rerun with the owner's --session or close it first.
+    assert.include(
+      MOONFOLD_DEVICE_TOOL_INSTRUCTIONS,
+      "follow its advice once, but never reuse or close another session; if it still fails,",
+    );
+  });
+
+  it("reach OpenCode and Cursor only when the session holds device access", () => {
+    assert.include(moonfoldOrchestrationSystemPrompt(true, true), MOONFOLD_DEVICE_TOOL_INSTRUCTIONS);
+    assert.notInclude(moonfoldOrchestrationSystemPrompt(true, false), "## Moonfold devices");
+    assert.isUndefined(moonfoldOrchestrationSystemPrompt(false, true));
+
+    const firstRun = (hasDeviceTools: boolean) =>
+      moonfoldOrchestrationPrompt({
+        prompt: "Check the login screen.",
+        hasMoonfoldMcp: true,
+        hasDeviceTools,
+        orchestrationDelivered: false,
+        deviceInstructionsDelivered: false,
+      });
+    assert.include(firstRun(true), MOONFOLD_DEVICE_TOOL_INSTRUCTIONS);
+    assert.notInclude(firstRun(false), "## Moonfold devices");
+
+    const laterRun = (deviceInstructionsDelivered: boolean) =>
+      moonfoldOrchestrationPrompt({
+        prompt: "Check the login screen.",
+        hasMoonfoldMcp: true,
+        hasDeviceTools: true,
+        orchestrationDelivered: true,
+        deviceInstructionsDelivered,
+      });
+    assert.include(laterRun(false), MOONFOLD_DEVICE_TOOL_INSTRUCTIONS);
+    assert.notInclude(laterRun(false), MOONFOLD_ORCHESTRATION_INSTRUCTIONS.trim());
+    assert.equal(laterRun(true), "Check the login screen.");
+  });
+
+  it("reach ACP agents again when device access changes mid-thread", () => {
+    const state = { interactionMode: "default", hasMoonfoldMcp: true, hasDeviceTools: false } as const;
+    const withDevices = moonfoldAcpPromptWithInstructions({
+      prompt: "Check the login screen.",
+      state: { ...state, hasDeviceTools: true },
+      previousState: state,
     });
-    assert.include(withoutMcp, "Moonfold interaction mode: Default");
-    assert.notInclude(withoutMcp, "Moonfold collaborative browser");
-    assert.notInclude(withoutMcp, "Moonfold orchestration");
+    assert.include(withDevices, MOONFOLD_DEVICE_TOOL_INSTRUCTIONS);
+    assert.equal(
+      moonfoldAcpPromptWithInstructions({ prompt: "Again.", state, previousState: state }),
+      "Again.",
+    );
+    assert.notInclude(moonfoldAcpPromptWithInstructions({ prompt: "Hi.", state }), "## Moonfold devices");
   });
 });

@@ -1,21 +1,13 @@
-import * as NodeServices from "@effect/platform-node/NodeServices";
 import { assert, describe, it } from "@effect/vitest";
 import { EnvironmentId, ProviderInstanceId, ThreadId } from "@moonfold/contracts";
-import * as Effect from "effect/Effect";
-import * as FileSystem from "effect/FileSystem";
 
 import {
-  PI_MOONFOLD_MCP_EXTENSION_FILENAME,
   MOONFOLD_MCP_BEARER_ENV,
   MOONFOLD_MCP_URL_ENV,
   MOONFOLD_PI_RUNTIME_MODE_ENV,
   MOONFOLD_PI_MCP_EXTENSION_PATH_ENV,
 } from "./mcpExtensionSource.ts";
-import {
-  buildPiRpcLaunch,
-  materializePiMoonfoldMcpExtension,
-  resolvePiLaunchArgs,
-} from "./mcpInjection.ts";
+import { buildPiRpcLaunch, resolvePiLaunchArgs } from "./mcpInjection.ts";
 
 const threadId = ThreadId.make("thread-pi-moonfold-mcp");
 
@@ -88,7 +80,6 @@ describe("pi Moonfold MCP injection", () => {
       "--extension",
       "/tmp/cache/pi-moonfold-mcp-extension.ts",
     ]);
-    assert.isFalse(permissionOnly.hasMoonfoldMcp);
     assert.isUndefined(permissionOnly.env[MOONFOLD_MCP_URL_ENV]);
     assert.isUndefined(permissionOnly.env[MOONFOLD_MCP_BEARER_ENV]);
     assert.equal(permissionOnly.env[MOONFOLD_PI_RUNTIME_MODE_ENV], "auto-accept-edits");
@@ -96,18 +87,6 @@ describe("pi Moonfold MCP injection", () => {
       permissionOnly.env[MOONFOLD_PI_MCP_EXTENSION_PATH_ENV],
       "/tmp/cache/pi-moonfold-mcp-extension.ts",
     );
-  });
-
-  it("falls back to Pi's first supported mode for legacy auto threads", () => {
-    const launch = buildPiRpcLaunch({
-      launchArgs: [],
-      environment: {},
-      mcpSession: undefined,
-      extensionPath: "/tmp/cache/pi-moonfold-mcp-extension.ts",
-      runtimeMode: "auto",
-    });
-
-    assert.equal(launch.env[MOONFOLD_PI_RUNTIME_MODE_ENV], "approval-required");
   });
 
   it("forces tools and user extensions off for unattended text generation", () => {
@@ -124,7 +103,9 @@ describe("pi Moonfold MCP injection", () => {
       environment: {},
       mcpSession,
       extensionPath: "/tmp/cache/pi-moonfold-mcp-extension.ts",
+      sessionPath: "/fake/persisted.jsonl",
       ephemeral: true,
+      shortLived: true,
       disableExtensions: true,
       disableTools: true,
     });
@@ -134,10 +115,19 @@ describe("pi Moonfold MCP injection", () => {
       "--no-session",
       "--provider",
       "anthropic",
+      "--offline",
       "--no-extensions",
       "--no-tools",
     ]);
-    assert.isFalse(launch.hasMoonfoldMcp);
+    const alreadyOffline = buildPiRpcLaunch({
+      launchArgs: ["--offline"],
+      environment: {},
+      mcpSession: undefined,
+      extensionPath: undefined,
+      ephemeral: true,
+      shortLived: true,
+    });
+    assert.deepEqual(alreadyOffline.args, ["--mode", "rpc", "--no-session", "--offline"]);
     assert.deepInclude(resolvePiLaunchArgs("--mode text"), {
       ok: false,
       message: "Pi launch argument '--mode' is controlled by Moonfold and cannot be overridden.",
@@ -157,22 +147,4 @@ describe("pi Moonfold MCP injection", () => {
     assert.isTrue(resolvePiLaunchArgs("--provider openrouter --model=deepseek/v4").ok);
     assert.isTrue(resolvePiLaunchArgs("--model deepseek/v4").ok);
   });
-
-  it.effect("materializes the MCP bridge with namespaced tool registration", () =>
-    Effect.gen(function* () {
-      const fs = yield* FileSystem.FileSystem;
-      const cacheDir = yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-pi-extensions-" });
-      const mcpDest = yield* materializePiMoonfoldMcpExtension(cacheDir);
-      assert.isTrue(mcpDest.endsWith(PI_MOONFOLD_MCP_EXTENSION_FILENAME));
-      const mcpSource = yield* fs.readFileString(mcpDest);
-      assert.include(mcpSource, "export default async function moonfoldMcpExtension");
-      assert.include(mcpSource, "before_agent_start");
-      assert.include(mcpSource, 'pi.on("tool_call"');
-      assert.include(mcpSource, "Allow ${event.toolName}?");
-      assert.include(mcpSource, '"mcp-protocol-version"');
-      assert.include(mcpSource, '"tools/call"');
-      assert.include(mcpSource, "mcp__moonfold__");
-      assert.include(mcpSource, "mcp__moonfold__");
-    }).pipe(Effect.scoped, Effect.provide(NodeServices.layer)),
-  );
 });

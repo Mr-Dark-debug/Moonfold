@@ -22,6 +22,8 @@ import {
   RelayMobileRegistrationScope,
   type RelayOkResponse,
   type RelayPublicClientId,
+  type RelayMoonfoldChatLinkRequestResponse,
+  type RelayMoonfoldChatLinkResponse,
   RelayRegisterDeviceEndpoint,
   RelayAgentActivitySnapshotEndpoint,
   RelayRegisterLiveActivityEndpoint,
@@ -96,6 +98,9 @@ export const ManagedRelayRequestAction = Schema.Literals([
   "unregister relay mobile device",
   "register relay live activity",
   "read relay agent activity snapshot",
+  "read linked Moonfold Chat account",
+  "start Moonfold Chat linking",
+  "unlink Moonfold Chat account",
 ]);
 export type ManagedRelayRequestAction = typeof ManagedRelayRequestAction.Type;
 
@@ -112,6 +117,9 @@ export const ManagedRelayRequestActivity = Schema.Literals([
   "Relay mobile device unregistration",
   "Relay Live Activity registration",
   "Relay agent activity snapshot",
+  "Relay Moonfold Chat link lookup",
+  "Relay Moonfold Chat link request",
+  "Relay Moonfold Chat unlinking",
 ]);
 export type ManagedRelayRequestActivity = typeof ManagedRelayRequestActivity.Type;
 
@@ -120,9 +128,6 @@ export class ManagedRelayRequestTimeoutError extends Schema.TaggedError<ManagedR
   {
     activity: ManagedRelayRequestActivity,
     timeoutMs: Schema.Number,
-    // The CLIENT span's trace id. A timed-out request has no server response
-    // to take an id from, but the client span was exported, so carrying its id
-    // makes the failure searchable instead of logging `traceId: null`.
     traceId: Schema.NullOr(Schema.String),
   },
 ) {
@@ -149,7 +154,6 @@ export class ManagedRelayRequestFailedError extends Schema.TaggedError<ManagedRe
     transportFailed: Schema.optionalKey(Schema.Boolean),
     cause: Schema.Defect(),
     relayError: Schema.optional(RelayProtectedError),
-    // HTTP status of a relay response that did not decode as a typed relay error.
     status: Schema.optional(Schema.Number),
     traceId: Schema.optional(Schema.String),
   },
@@ -276,6 +280,15 @@ export class ManagedRelayClient extends Context.Service<
       readonly clerkToken: string;
       readonly environmentId: RelayClientEnvironmentRecord["environmentId"];
     }) => Effect.Effect<RelayOkResponse, ManagedRelayClientError>;
+    readonly getMoonfoldChatLink: (input: {
+      readonly clerkToken: string;
+    }) => Effect.Effect<RelayMoonfoldChatLinkResponse, ManagedRelayClientError>;
+    readonly createMoonfoldChatLinkRequest: (input: {
+      readonly clerkToken: string;
+    }) => Effect.Effect<RelayMoonfoldChatLinkRequestResponse, ManagedRelayClientError>;
+    readonly unlinkMoonfoldChat: (input: {
+      readonly clerkToken: string;
+    }) => Effect.Effect<RelayOkResponse, ManagedRelayClientError>;
     readonly getEnvironmentStatus: (input: {
       readonly clerkToken: string;
       readonly scopes: ReadonlyArray<RelayDpopAccessTokenScope>;
@@ -310,8 +323,6 @@ const isRelayProtectedError = Schema.is(RelayProtectedError);
 
 const TRACEPARENT_TRACE_ID = /^[\da-f]{2}-([\da-f]{32})-[\da-f]{16}-[\da-f]{2}$/i;
 
-// Keeps the status and the relay's traceparent trace ID for a response that
-// carries no typed relay error, such as the relay's request-deadline 504.
 function untypedResponseFields(cause: RelayHttpRequestError) {
   const response = HttpClientError.isHttpClientError(cause) ? cause.response : undefined;
   if (!response) return {};
@@ -397,15 +408,13 @@ function tokenMatches(
   );
 }
 
-function relayAccountId(clerkToken: string): Option.Option<string> {
-  try {
-    return Option.fromNullishOr(decodeRelayJwt(clerkToken).sub).pipe(
-      Option.filter((subject) => subject.length > 0),
-    );
-  } catch {
-    return Option.none();
-  }
-}
+const relayAccountId = Effect.fn("clientRuntime.managedRelay.relayAccountId")(function* (
+  clerkToken: string,
+) {
+  const claims = yield* decodeRelayJwt(clerkToken).pipe(Effect.option);
+  const sub = Option.isSome(claims) ? claims.value.sub : undefined;
+  return typeof sub === "string" && sub.length > 0 ? Option.some(sub) : Option.none<string>();
+});
 
 function bearerHeaders(clerkToken: string) {
   return { authorization: `Bearer ${clerkToken}` };
@@ -432,6 +441,9 @@ function disabledManagedRelayClient(relayUrl: string): ManagedRelayClient["Servi
     ),
     linkEnvironment: unavailable("clientRuntime.managedRelay.linkEnvironment"),
     unlinkEnvironment: unavailable("clientRuntime.managedRelay.unlinkEnvironment"),
+    getMoonfoldChatLink: unavailable("clientRuntime.managedRelay.getMoonfoldChatLink"),
+    createMoonfoldChatLinkRequest: unavailable("clientRuntime.managedRelay.createMoonfoldChatLinkRequest"),
+    unlinkMoonfoldChat: unavailable("clientRuntime.managedRelay.unlinkMoonfoldChat"),
     getEnvironmentStatus: unavailable("clientRuntime.managedRelay.getEnvironmentStatus"),
     connectEnvironment: unavailable("clientRuntime.managedRelay.connectEnvironment"),
     registerDevice: unavailable("clientRuntime.managedRelay.registerDevice"),
@@ -444,7 +456,7 @@ function disabledManagedRelayClient(relayUrl: string): ManagedRelayClient["Servi
   });
 }
 
-/** @public Service construction is part of the canonical Effect module API. */
+/** @public */
 export const make = Effect.fn("ManagedRelayClient.make")(function* (
   options: ManagedRelayClientLayerOptions,
 ) {
@@ -550,7 +562,7 @@ export const make = Effect.fn("ManagedRelayClient.make")(function* (
         "relay.scopes": input.scopes.join(" "),
       });
       const nowMillis = yield* Clock.currentTimeMillis;
-      const accountId = relayAccountId(input.clerkToken);
+      const accountId = yield* relayAccountId(input.clerkToken);
       if (Option.isNone(accountId)) {
         yield* Effect.annotateCurrentSpan({
           "relay.token_cache.result": "bypass",
@@ -575,7 +587,6 @@ export const make = Effect.fn("ManagedRelayClient.make")(function* (
         scopes: input.scopes,
         nowMillis,
       };
-      // Cache hits do not need to wait for an unrelated exchange or store write.
       const cached = (yield* SynchronizedRef.get(cachedTokens)).find((token) =>
         tokenMatches(token, match),
       );
@@ -796,6 +807,42 @@ export const make = Effect.fn("ManagedRelayClient.make")(function* (
           );
       },
       Effect.withSpan("clientRuntime.managedRelay.unlinkEnvironment"),
+      withRelayClientTracing,
+    ),
+    getMoonfoldChatLink: Effect.fnUntraced(
+      function* (input) {
+        return yield* client.client
+          .getMoonfoldChatLink({ headers: bearerHeaders(input.clerkToken) })
+          .pipe(
+            Effect.mapError(relayRequestError("read linked Moonfold Chat account")),
+            timeoutRelayRequest("Relay Moonfold Chat link lookup"),
+          );
+      },
+      Effect.withSpan("clientRuntime.managedRelay.getMoonfoldChatLink"),
+      withRelayClientTracing,
+    ),
+    createMoonfoldChatLinkRequest: Effect.fnUntraced(
+      function* (input) {
+        return yield* client.client
+          .createMoonfoldChatLinkRequest({ headers: bearerHeaders(input.clerkToken) })
+          .pipe(
+            Effect.mapError(relayRequestError("start Moonfold Chat linking")),
+            timeoutRelayRequest("Relay Moonfold Chat link request"),
+          );
+      },
+      Effect.withSpan("clientRuntime.managedRelay.createMoonfoldChatLinkRequest"),
+      withRelayClientTracing,
+    ),
+    unlinkMoonfoldChat: Effect.fnUntraced(
+      function* (input) {
+        return yield* client.client
+          .unlinkMoonfoldChat({ headers: bearerHeaders(input.clerkToken) })
+          .pipe(
+            Effect.mapError(relayRequestError("unlink Moonfold Chat account")),
+            timeoutRelayRequest("Relay Moonfold Chat unlinking"),
+          );
+      },
+      Effect.withSpan("clientRuntime.managedRelay.unlinkMoonfoldChat"),
       withRelayClientTracing,
     ),
     getEnvironmentStatus: Effect.fnUntraced(

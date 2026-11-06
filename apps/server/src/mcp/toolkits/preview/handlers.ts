@@ -1,20 +1,21 @@
 import * as Effect from "effect/Effect";
 import * as FileSystem from "effect/FileSystem";
+import * as Record from "effect/Record";
 import * as Schema from "effect/Schema";
 import {
-  OrchestratorMcpFailure,
   PROVIDER_SEND_TURN_MAX_FILE_BYTES,
   PREVIEW_RECORDING_STOP_TIMEOUT_MS,
   PreviewAutomationRecordingTransferError,
   PreviewAutomationRecordingDesktopUpdateRequiredError,
   PreviewAutomationRecordingArtifact,
+  PreviewAutomationActInputs,
+  OrchestratorMcpFailure,
   type ToolActivityIcon,
   type ThreadId,
   type PreviewAutomationOperation,
   type PreviewAutomationOpenInput,
   type PreviewAutomationRecordingStatus,
   type PreviewAutomationResizeResult,
-  type PreviewAutomationSelectResult,
   type PreviewAutomationSetColorSchemeResult,
   type PreviewAutomationSnapshot,
   type PreviewAutomationStatus,
@@ -36,17 +37,12 @@ import * as McpToolAccess from "../../McpToolAccess.ts";
 import * as PreviewAutomationBroker from "../../PreviewAutomationBroker.ts";
 import { PreviewSnapshotToolkit, PreviewStandardToolkit, PreviewToolkit } from "./tools.ts";
 
-/**
- * Collapses the `show` alias onto `open` and defaults tab reuse.
- *
- * Deliberately leaves an unstated `open` unstated. Whether a preview the agent
+/** Whether a preview the agent
  * said nothing about surfaces is the user's `browserAutoShowFloatingPreview`
  * preference, which is desktop-local and unreadable from here — filling in
  * `true` would silently override it for every `preview_open`.
  */
-export function normalizePreviewOpenInput(
-  input: PreviewAutomationOpenInput,
-): PreviewAutomationOpenInput {
+function normalizePreviewOpenInput(input: PreviewAutomationOpenInput): PreviewAutomationOpenInput {
   const open = input.open ?? input.show;
   return {
     ...input,
@@ -159,6 +155,22 @@ const onAllowedPage = <A, E, R>(
     Effect.tap(() => (navigates ? checkCurrentPage(tabId) : Effect.void)),
   );
 
+const decodeActInput = Record.map(PreviewAutomationActInputs, (schema) =>
+  Schema.decodeUnknownEffect(schema),
+);
+
+/** Page actions that can navigate, so site rules check where the tab ended up too. */
+const ACT_MAY_NAVIGATE: { readonly [A in keyof typeof PreviewAutomationActInputs]: boolean } = {
+  click: true,
+  type: true,
+  hover: false,
+  select: true,
+  drag: true,
+  upload: false,
+  press: true,
+  scroll: false,
+};
+
 const UploadedRecordingArtifact = Schema.Struct({
   ...PreviewAutomationRecordingArtifact.fields,
   uploadedAttachmentId: Schema.optional(Schema.String),
@@ -191,7 +203,6 @@ export const claimPreviewRecording = Effect.fn("PreviewToolkit.claimRecording")(
       threadId,
     });
   }
-  // The same completed upload can be returned to overlapping stop requests.
   const finalId = `${threadSegment}-${uuid}-${extension}`;
   const currentPath = resolveAttachmentRelativePath({
     attachmentsDir: config.attachmentsDir,
@@ -220,7 +231,6 @@ export const claimPreviewRecording = Effect.fn("PreviewToolkit.claimRecording")(
     yield* validateFile(currentPath);
     yield* fileSystem.rename(currentPath, finalPath);
   }).pipe(
-    // Another stop may already have claimed this exact upload for this thread.
     Effect.catchIf(
       (cause) =>
         cause._tag !== "PreviewAutomationRecordingTransferError" &&
@@ -240,14 +250,28 @@ const handlers = {
   preview_status: McpToolAccess.readsAsCaller((input) =>
     invokeTargeted<PreviewAutomationStatus>("status", input ?? {}),
   ),
-  // Both check the address asked for and, after redirects, the page the tab landed on.
-  preview_open: McpToolAccess.actsAsCaller((input) =>
-    checkSite("browse", input.url).pipe(
-      Effect.andThen(
-        invokeTargeted<PreviewAutomationStatus>("open", normalizePreviewOpenInput(input)),
-      ),
-      Effect.tap((status) => checkSite("browse", status.url)),
-    ),
+  // Models often pass a dev server as both `url` and `target`; the target knows the environment.
+  // Site rules check the address asked for and, after redirects, the page the tab landed on.
+  preview_open: McpToolAccess.actsAsCaller(({ target, url, ...input }) =>
+    Effect.gen(function* () {
+      if (target === undefined) yield* checkSite("browse", url);
+      const opened = yield* invokeTargeted<PreviewAutomationStatus>(
+        "open",
+        normalizePreviewOpenInput(
+          target === undefined && url !== undefined ? { ...input, url } : input,
+        ),
+      );
+      if (target === undefined || opened.tabId === null) {
+        yield* checkSite("browse", opened.url);
+        return opened;
+      }
+      const navigated = yield* invokeTargeted<PreviewAutomationStatus>("navigate", {
+        target,
+        tabId: opened.tabId,
+      });
+      yield* checkSite("browse", navigated.url);
+      return navigated;
+    }),
   ),
   preview_navigate: McpToolAccess.actsAsCaller((input) =>
     checkSite("browse", input.url).pipe(
@@ -262,48 +286,37 @@ const handlers = {
     invokeTargeted<PreviewAutomationSetColorSchemeResult>("setColorScheme", input),
   ),
   preview_snapshot: McpToolAccess.readsAsCaller((input) => {
-    // Output selection and saving are MCP-only; the browser still produces a complete snapshot.
     const { includeImage: _includeImage, save: _save, ...operationInput } = input ?? {};
     // A snapshot names the page it read, so it is checked without asking the tab first.
     return invokeTargeted<PreviewAutomationSnapshot>("snapshot", operationInput).pipe(
       Effect.tap((snapshot) => checkSite("browse", snapshot.url)),
     );
   }),
-  preview_click: McpToolAccess.actsAsCaller((input) =>
-    onAllowedPage(input.tabId, invokeTargeted<object>("click", input, input.timeoutMs), true),
-  ),
-  preview_type: McpToolAccess.actsAsCaller((input) =>
-    onAllowedPage(input.tabId, invokeTargeted<object>("type", input, input.timeoutMs), true),
-  ),
-  preview_hover: McpToolAccess.actsAsCaller((input) =>
-    onAllowedPage(input.tabId, invokeTargeted<object>("hover", input, input.timeoutMs)),
-  ),
-  preview_select: McpToolAccess.actsAsCaller((input) =>
-    onAllowedPage(
-      input.tabId,
-      invokeTargeted<PreviewAutomationSelectResult>("select", input, input.timeoutMs),
-      true,
+  preview_act: McpToolAccess.actsAsCaller(({ action, ...input }) =>
+    decodeActInput[action](input).pipe(
+      Effect.mapError(
+        (cause) => new OrchestratorMcpFailure({ code: "invalid_request", message: cause.message }),
+      ),
+      Effect.flatMap((decoded) => {
+        const run = invokeTargeted<object>(
+          action,
+          decoded,
+          "timeoutMs" in decoded ? decoded.timeoutMs : undefined,
+        );
+        if (action === "upload") {
+          return Effect.gen(function* () {
+            // Cancelling a file picker hands the page nothing.
+            if ("paths" in decoded && decoded.paths.length > 0) {
+              const url = yield* currentPage(decoded.tabId);
+              yield* checkSite("browse", url);
+              yield* checkSite("upload", url);
+            }
+            return yield* run;
+          });
+        }
+        return onAllowedPage(decoded.tabId, run, ACT_MAY_NAVIGATE[action]);
+      }),
     ),
-  ),
-  preview_drag: McpToolAccess.actsAsCaller((input) =>
-    onAllowedPage(input.tabId, invokeTargeted<object>("drag", input, input.timeoutMs), true),
-  ),
-  preview_upload: McpToolAccess.actsAsCaller((input) =>
-    Effect.gen(function* () {
-      // Cancelling a file picker hands the page nothing.
-      if (input.paths.length > 0) {
-        const url = yield* currentPage(input.tabId);
-        yield* checkSite("browse", url);
-        yield* checkSite("upload", url);
-      }
-      return yield* invokeTargeted<object>("upload", input, input.timeoutMs);
-    }),
-  ),
-  preview_press: McpToolAccess.actsAsCaller((input) =>
-    onAllowedPage(input.tabId, invokeTargeted<object>("press", input), true),
-  ),
-  preview_scroll: McpToolAccess.actsAsCaller((input) =>
-    onAllowedPage(input.tabId, invokeTargeted<object>("scroll", input)),
   ),
   preview_evaluate: McpToolAccess.actsAsCaller(({ tabId, ...input }) =>
     onAllowedPage(

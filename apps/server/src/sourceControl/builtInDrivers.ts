@@ -1,60 +1,31 @@
-/**
- * The source control drivers this build ships with. Both registries, repository operations and
- * pull requests, iterate this list; a host with no driver here shows up as unsupported.
- *
- * Adding a host means writing its `@moonfold/source-control-<host>` package, adding its driver
- * here, and providing its services' layers in `layer` below.
- *
- * @module sourceControl/builtInDrivers
- */
-import * as AzureDevOpsCli from "@moonfold/source-control-azure-devops/server/AzureDevOpsCli";
-import * as AzureDevOpsPullRequestCli from "@moonfold/source-control-azure-devops/server/AzureDevOpsPullRequestCli";
-import * as AzureDevOpsDriver from "@moonfold/source-control-azure-devops/server/driver";
-import * as BitbucketApi from "@moonfold/source-control-bitbucket/server/BitbucketApi";
-import * as BitbucketPullRequestApi from "@moonfold/source-control-bitbucket/server/BitbucketPullRequestApi";
-import * as BitbucketDriver from "@moonfold/source-control-bitbucket/server/driver";
-import * as ForgejoCli from "@moonfold/source-control-forgejo/server/ForgejoCli";
-import * as ForgejoDriver from "@moonfold/source-control-forgejo/server/driver";
-import * as GitCafeApi from "@moonfold/source-control-gitcafe/server/GitCafeApi";
-import * as GitCafeCredentials from "@moonfold/source-control-gitcafe/server/GitCafeCredentials";
-import * as GitCafeDriver from "@moonfold/source-control-gitcafe/server/driver";
-import * as GitHubApi from "@moonfold/source-control-github/server/GitHubApi";
-import * as GitHubPullRequestApi from "@moonfold/source-control-github/server/GitHubPullRequestApi";
-import * as GitHubDriver from "@moonfold/source-control-github/server/driver";
-import * as GitLabCli from "@moonfold/source-control-gitlab/server/GitLabCli";
-import * as GitLabPullRequestCli from "@moonfold/source-control-gitlab/server/GitLabPullRequestCli";
-import * as GitLabDriver from "@moonfold/source-control-gitlab/server/driver";
-import type { SourceControlDriver } from "@moonfold/source-control-core/server/driver";
+import type {
+  SourceControlDriver,
+  SourceControlDriverInstance,
+} from "@moonfold/source-control-core/server/driver";
+import * as SourceControlRateLimit from "@moonfold/source-control-core/server/SourceControlRateLimit";
+import * as Context from "effect/Context";
+import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
 
 import * as ServerSourceControlHost from "./ServerSourceControlHost.ts";
+import { BUILT_IN_SOURCE_CONTROL_DRIVER_LIST } from "./sourceControlDefinitions.ts";
 
-const drivers = [
-  GitHubDriver.driver,
-  GitLabDriver.driver,
-  AzureDevOpsDriver.driver,
-  BitbucketDriver.driver,
-  ForgejoDriver.driver,
-  GitCafeDriver.driver,
-];
+export interface SourceControlDriverEntry {
+  readonly driver: Pick<SourceControlDriver, "kind" | "definition">;
+  readonly instance: SourceControlDriverInstance;
+}
 
-/** Every service a built-in driver's `make` needs; the server's layers must provide them all. */
-export type BuiltInSourceControlDriversEnv =
-  (typeof drivers)[number] extends SourceControlDriver<infer R> ? R : never;
+/** Every driver's instance, in registry order. Everything that reads a host reads it here. */
+export class SourceControlDrivers extends Context.Service<
+  SourceControlDrivers,
+  ReadonlyArray<SourceControlDriverEntry>
+>()("moonfold/sourceControl/builtInDrivers/SourceControlDrivers") {}
 
-/** Ordered as the hosts appear in discovery. */
-export const BUILT_IN_SOURCE_CONTROL_DRIVERS: ReadonlyArray<
-  SourceControlDriver<BuiltInSourceControlDriversEnv>
-> = drivers;
+const make = Effect.forEach(BUILT_IN_SOURCE_CONTROL_DRIVER_LIST, (driver) =>
+  driver.make.pipe(Effect.map((instance) => ({ driver, instance }))),
+);
 
-/** The services the built-in drivers' packages own, plus the host port they all run against. */
-export const layer = Layer.mergeAll(
-  // `GitHubApi.layerWithDependencies` carries the quota reserve and rate-limit pause every GitHub
-  // reader shares, so the server builds it once, here.
-  GitHubPullRequestApi.layer.pipe(Layer.provideMerge(GitHubApi.layerWithDependencies)),
-  AzureDevOpsPullRequestCli.layer.pipe(Layer.provideMerge(AzureDevOpsCli.layer)),
-  BitbucketPullRequestApi.layer.pipe(Layer.provideMerge(BitbucketApi.layer)),
-  ForgejoCli.layer,
-  GitCafeApi.layer.pipe(Layer.provideMerge(GitCafeCredentials.layer)),
-  GitLabPullRequestCli.layer.pipe(Layer.provideMerge(GitLabCli.layer)),
-).pipe(Layer.provideMerge(ServerSourceControlHost.layer));
+export const layer = Layer.effect(SourceControlDrivers, make).pipe(
+  Layer.provideMerge(ServerSourceControlHost.layer),
+  Layer.provideMerge(SourceControlRateLimit.layer),
+);

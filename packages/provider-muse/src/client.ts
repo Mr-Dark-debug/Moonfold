@@ -1,9 +1,3 @@
-/**
- * Muse Code's client definition: settings form, label, badge, and glyph.
- * Browser- and React Native-safe.
- *
- * @module provider-muse/client
- */
 import { ProviderDriverKind } from "@moonfold/contracts";
 import { defineProviderClient } from "@moonfold/provider-core/client";
 
@@ -12,9 +6,8 @@ import { MuseSettings } from "./settings.ts";
 export const museClient = defineProviderClient({
   driverKind: ProviderDriverKind.make("muse"),
   label: "Muse Code",
+  modelFamilies: ["Muse "],
   settingsSchema: MuseSettings,
-  badgeLabel: "Beta",
-  // Meta's symbol (https://commons.wikimedia.org/wiki/File:Meta_Platforms_Inc._logo_(cropped).svg).
   icon: {
     viewBox: "0 0 287.56 191",
     fill: { light: "#0081fb", dark: "#0081fb" },

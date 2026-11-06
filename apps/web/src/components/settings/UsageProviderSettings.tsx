@@ -53,14 +53,11 @@ export function UsageProviderSettings({
     patch: { cursorKeychainUsageEnabled: boolean } | { claudeResetCreditsEnabled: boolean },
   ) => {
     setUpdatingCursor(true);
-    try {
-      const result = await updateCursorSettings({ environmentId, input: { patch } });
-      if (result._tag === "Success") {
-        await refreshProviders({ environmentId, input: {} });
-      }
-    } finally {
-      setUpdatingCursor(false);
+    const result = await updateCursorSettings({ environmentId, input: { patch } });
+    if (result._tag === "Success") {
+      await refreshProviders({ environmentId, input: {} });
     }
+    setUpdatingCursor(false);
   };
 
   return (
@@ -130,7 +127,6 @@ export function UsageProviderSettings({
   );
 }
 
-/** Removing a hub deletes its stored management key, so it requires confirmation. */
 function RemoveUsageProviderButton({
   label,
   onConfirm,

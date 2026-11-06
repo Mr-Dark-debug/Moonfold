@@ -11,10 +11,6 @@ import {
   TURN_INTERRUPT_PROMPT,
 } from "../shared.ts";
 
-/**
- * Stop while Muse works on a `sleep 30` request: Moonfold sends `turn/interrupt`, Muse
- * ends the turn as cancelled, and the run, every row and the session settle.
- */
 export function assertMuseTurnInterruptOutput(
   result: OrchestratorV2ScenarioResult,
   transcript: ProviderReplayTranscript,

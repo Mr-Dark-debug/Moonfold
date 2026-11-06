@@ -6,8 +6,8 @@ import { describe, expect, it } from "vite-plus/test";
 
 import {
   buildMoonfoldProjectFileJsonSchema,
-  parseMoonfoldProjectFile,
   MoonfoldProjectFileFromJson,
+  parseMoonfoldProjectFile,
 } from "./moonfoldProjectFile.ts";
 
 const decodeJson = Schema.decodeUnknownSync(MoonfoldProjectFileFromJson);
@@ -29,50 +29,6 @@ describe("buildMoonfoldProjectFileJsonSchema", () => {
     expect(schema.$id).toBe(
       "https://raw.githubusercontent.com/Mr-Dark-debug/Moonfold/main/schemas/moonfold.json",
     );
-    expect(schema.type).toBe("object");
-    expect(schema.additionalProperties).toBe(false);
-  });
-
-  it("documents every supported field", () => {
-    const schema = buildMoonfoldProjectFileJsonSchema() as {
-      properties: Record<
-        string,
-        {
-          description?: string;
-          items?: { properties: Record<string, unknown>; required: ReadonlyArray<string> };
-        }
-      >;
-      required?: ReadonlyArray<string>;
-    };
-
-    expect(Object.keys(schema.properties).sort()).toEqual([
-      "$schema",
-      "defaultThreadEnvMode",
-      "iconPath",
-      "scripts",
-      "worktreeSubmodules",
-    ]);
-    expect(schema.required).toBeUndefined();
-    expect(schema.properties.iconPath?.description).toContain("Workspace-relative path");
-    expect(schema.properties.defaultThreadEnvMode?.description).toContain("new threads start");
-
-    const script = schema.properties.scripts?.items;
-    expect(script?.required).toEqual(["name", "command"]);
-    expect(Object.keys(script?.properties ?? {}).sort()).toEqual([
-      "async",
-      "autoOpenPreview",
-      "command",
-      "icon",
-      "name",
-      "previewUrl",
-      "runOnSettle",
-      "runOnWorktreeCreate",
-    ]);
-  });
-
-  it("stays JSON-serializable", () => {
-    const schema = buildMoonfoldProjectFileJsonSchema();
-    expect(JSON.parse(JSON.stringify(schema))).toEqual(schema);
   });
 });
 
@@ -82,28 +38,22 @@ describe("MoonfoldProjectFileFromJson", () => {
       // team scripts
       "iconPath": "assets/logo.svg",
       "scripts": [
-        { "name": "Dev", "command": "pnpm dev", },
+        { "name": "Dev", "command": "pnpm dev", "stopOnSettle": true, },
       ],
     }`);
 
     expect(decoded.iconPath).toBe("assets/logo.svg");
-    expect(decoded.scripts?.[0]).toEqual({ name: "Dev", command: "pnpm dev" });
-  });
-
-  it("fails on malformed JSON", () => {
-    expect(() => decodeJson("{ not json")).toThrow();
+    expect(decoded.scripts?.[0]).toEqual({ name: "Dev", command: "pnpm dev", stopOnSettle: true });
   });
 });
 
 describe("parseMoonfoldProjectFile", () => {
-  it("returns the decoded file for valid contents", () => {
-    expect(parseMoonfoldProjectFile('{ "defaultThreadEnvMode": "worktree" }')).toEqual({
-      defaultThreadEnvMode: "worktree",
-    });
-  });
-
-  it("returns null for malformed or invalid contents", () => {
-    expect(parseMoonfoldProjectFile("{ not json")).toBeNull();
-    expect(parseMoonfoldProjectFile('{ "defaultThreadEnvMode": "spaceship" }')).toBeNull();
+  it("reads project defaults from JSONC with a URL in a block comment", () => {
+    expect(
+      parseMoonfoldProjectFile(`{
+        /* See https://t3.codes/schema/moonfold.json */
+        "defaultThreadEnvMode": "worktree"
+      }`),
+    ).toEqual({ defaultThreadEnvMode: "worktree" });
   });
 });

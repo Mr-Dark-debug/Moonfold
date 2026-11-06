@@ -1,5 +1,11 @@
 import { useAtomValue } from "@effect/atom-react";
-import { CLI_RELEASE_CHECKSUMS_FILE, cliReleaseTagApiUrl } from "@moonfold/shared/cliRelease";
+import type { DesktopUpdateChannel } from "@moonfold/contracts";
+import {
+  CLI_RELEASE_CHECKSUMS_FILE,
+  cliReleaseIndexPageUrl,
+  cliReleaseTagApiUrl,
+  newestCliReleaseVersion,
+} from "@moonfold/shared/cliRelease";
 import * as Effect from "effect/Effect";
 import * as Option from "effect/Option";
 import * as Schema from "effect/Schema";
@@ -55,3 +61,40 @@ export function useCliReleasePublished(version: string | null): boolean {
   const result = useAtomValue(version ? cliReleasePublishedAtom(version) : NO_VERSION_ATOM);
   return AsyncResult.getOrElse(result, () => false);
 }
+
+const decodeReleaseIndex = Schema.decodeUnknownOption(
+  Schema.Array(
+    Schema.Struct({ tag_name: Schema.String, draft: Schema.optional(Schema.Boolean) }),
+  ),
+);
+
+/** Newest-first pages to read before giving up on a track. */
+const RELEASE_INDEX_PAGES = 3;
+
+/**
+ * The newest Moonfold release on a desktop update track, from GitHub Releases (where servers and
+ * desktop apps update from), or null when the track has none. GitHub releases carry no database
+ * migration number, so `databaseMigration` is undefined and a track switch that would cross
+ * databases stays blocked until the release can prove it is safe.
+ */
+export const cliChannelReleaseAtom = Atom.family((channel: DesktopUpdateChannel) =>
+  Atom.make(
+    Effect.gen(function* () {
+      const releaseChannel = channel === "nightly" ? "nightly" : "stable";
+      for (let page = 1; page <= RELEASE_INDEX_PAGES; page += 1) {
+        const response = yield* HttpClient.get(cliReleaseIndexPageUrl(page));
+        const body = yield* HttpClientResponse.filterStatusOk(response).pipe(
+          Effect.flatMap((ok) => ok.json),
+        );
+        const releases = Option.getOrElse(decodeReleaseIndex(body), () => []);
+        const version = newestCliReleaseVersion(releases, releaseChannel);
+        if (version !== undefined) return { version, databaseMigration: undefined };
+        if (releases.length < 100) break;
+      }
+      return null;
+    }).pipe(
+      Effect.provideService(HttpClient.TracerPropagationEnabled, false),
+      Effect.provide(FetchHttpClient.layer),
+    ),
+  ).pipe(Atom.withLabel(`cli-channel-release:${channel}`)),
+);

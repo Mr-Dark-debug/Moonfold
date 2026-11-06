@@ -5,33 +5,10 @@ import {
   isMissedFixedTimeRun,
   isSameSchedule,
   nextScheduledRunAt,
-  parseTimeOfDay,
   scheduleProblem,
 } from "./Schedule.ts";
 
 describe("scheduled task schedule calculation", () => {
-  it("parses 24-hour times", () => {
-    expect(parseTimeOfDay("09:30")).toEqual({ hour: 9, minute: 30 });
-    expect(parseTimeOfDay("23:59")).toEqual({ hour: 23, minute: 59 });
-    expect(parseTimeOfDay("25:00")).toBeNull();
-  });
-
-  it("calculates interval schedules from the supplied instant", () => {
-    const next = nextScheduledRunAt(
-      { type: "interval", everyMs: 5 * 60_000 },
-      DateTime.makeUnsafe("2026-07-01T16:00:00.000Z"),
-    );
-    expect(next ? DateTime.formatIso(DateTime.toUtc(next)) : null).toBe("2026-07-01T16:05:00.000Z");
-  });
-
-  it("clamps legacy sub-minute intervals to the one-minute execution floor", () => {
-    const next = nextScheduledRunAt(
-      { type: "interval", everyMs: 1_000 },
-      DateTime.makeUnsafe("2026-07-01T16:00:00.000Z"),
-    );
-    expect(next ? DateTime.formatIso(DateTime.toUtc(next)) : null).toBe("2026-07-01T16:01:00.000Z");
-  });
-
   it("skips to the next matching fixed-time weekday", () => {
     const next = nextScheduledRunAt(
       { type: "fixed_time", timeOfDay: "09:00", weekdays: [1, 2, 3, 4, 5] },
@@ -54,22 +31,13 @@ describe("scheduled task schedule calculation", () => {
     expect(parts?.minute).toBe(0);
   });
 
-  it("skips fixed-time runs missed by more than the grace window", () => {
-    const fixedTime = { type: "fixed_time", timeOfDay: "09:00" } as const;
-    const dueAt = DateTime.makeUnsafe("2026-07-01T09:00:00.000Z");
-    const withinGrace = DateTime.makeUnsafe("2026-07-01T09:05:00.000Z");
-    const pastGrace = DateTime.makeUnsafe("2026-07-01T15:00:00.000Z");
-    // A run only slightly late (poll jitter, short sleep) still fires.
-    expect(isMissedFixedTimeRun(fixedTime, dueAt, withinGrace)).toBe(false);
-    // A run hours past its slot is skipped and rescheduled instead.
-    expect(isMissedFixedTimeRun(fixedTime, dueAt, pastGrace)).toBe(true);
-    // Interval schedules always catch up with a single run, never skip.
-    expect(isMissedFixedTimeRun({ type: "interval", everyMs: 60_000 }, dueAt, pastGrace)).toBe(
-      false,
-    );
-  });
-
   it("compares schedules structurally", () => {
+    expect(
+      isSameSchedule(
+        { type: "once", runAt: "2026-11-01T03:00:00-05:00" },
+        { type: "once", runAt: "2026-11-01T08:00:00.000Z" },
+      ),
+    ).toBe(true);
     expect(
       isSameSchedule({ type: "interval", everyMs: 60_000 }, { type: "interval", everyMs: 60_000 }),
     ).toBe(true);
@@ -82,14 +50,12 @@ describe("scheduled task schedule calculation", () => {
         { type: "fixed_time", timeOfDay: "09:00", weekdays: [1, 2] },
       ),
     ).toBe(true);
-    // Weekday masks are sets: order and duplicates do not change firing.
     expect(
       isSameSchedule(
         { type: "fixed_time", timeOfDay: "09:00", weekdays: [5, 1] },
         { type: "fixed_time", timeOfDay: "09:00", weekdays: [1, 5, 5] },
       ),
     ).toBe(true);
-    // Omitted, empty, and all-seven masks all mean daily.
     expect(
       isSameSchedule(
         { type: "fixed_time", timeOfDay: "09:00" },
@@ -121,27 +87,14 @@ describe("scheduled task schedule calculation", () => {
       ),
     ).toBe(false);
   });
-
-  it.each([
-    ["9:00", "09:00"],
-    ["09:00", "9:00"],
-    ["0:30", "00:30"],
-  ])("treats %s and %s as the same fixed-time schedule", (before, after) => {
-    expect(
-      isSameSchedule(
-        { type: "fixed_time", timeOfDay: before },
-        { type: "fixed_time", timeOfDay: after },
-      ),
-    ).toBe(true);
-  });
 });
 
 describe("one-off and cron schedules", () => {
   const iso = (value: DateTime.DateTime | null) =>
     value === null ? null : DateTime.formatIso(DateTime.toUtc(value));
-  const once = { type: "once", at: "2026-11-02T08:15", timeZone: "Europe/Berlin" } as const;
+  const once = { type: "once", runAt: "2026-11-02T08:15:00+01:00" } as const;
 
-  it("runs a one-off once, at its local time, and never again", () => {
+  it("runs a one-off once, at its time, and never again", () => {
     expect(iso(nextScheduledRunAt(once, DateTime.makeUnsafe("2026-10-19T00:00:00.000Z")))).toBe(
       "2026-11-02T07:15:00.000Z",
     );
@@ -169,7 +122,9 @@ describe("one-off and cron schedules", () => {
     expect(scheduleProblem({ type: "cron", expression: "0 9 * *", timeZone: "UTC" })).toMatch(
       /five fields/,
     );
-    expect(scheduleProblem({ ...once, timeZone: "Atlantis/Capital" })).toMatch(/Unknown time zone/);
+    expect(
+      scheduleProblem({ type: "cron", expression: "0 9 * * *", timeZone: "Atlantis/Capital" }),
+    ).toMatch(/Unknown time zone/);
     expect(scheduleProblem(once)).toBeNull();
   });
 

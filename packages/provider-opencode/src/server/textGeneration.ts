@@ -1,7 +1,7 @@
 import * as Effect from "effect/Effect";
 import * as Schema from "effect/Schema";
 
-import { NonNegativeInt, TextGenerationError } from "@moonfold/contracts";
+import { NonNegativeInt, settingsSecretLiteral, TextGenerationError } from "@moonfold/contracts";
 import type { OpenCodeSettings } from "../settings.ts";
 import { getModelSelectionStringOptionValue } from "@moonfold/shared/model";
 
@@ -10,6 +10,8 @@ import * as TextGenerationOperations from "@moonfold/provider-core/server/textGe
 import * as OpenCodeRuntime from "./OpenCodeRuntime.ts";
 import * as OpenCodeServerOwner from "./OpenCodeServerOwner.ts";
 
+const GENERATION_TIMEOUT = "3 minutes";
+
 const OpenCodeTextGenerationOperation = Schema.Literals([
   "generateCommitMessage",
   "generatePrContent",
@@ -17,6 +19,7 @@ const OpenCodeTextGenerationOperation = Schema.Literals([
   "generateThreadTitle",
   "generateReviewGuide",
   "answerSideQuestion",
+  "generateTranscriptionPostProcessing",
 ]);
 
 const openCodeTextGenerationErrorContext = {
@@ -69,13 +72,38 @@ export class OpenCodeTextGenerationPromptResponseError extends Schema.TaggedErro
   {
     ...openCodePromptErrorContext,
     providerErrorName: Schema.optional(Schema.String),
-    providerMessage: Schema.String,
+    statusCode: Schema.optional(Schema.Int),
+    cause: Schema.Defect(),
   },
 ) {
   override get message(): string {
     const providerError = this.providerErrorName ? ` ${this.providerErrorName}` : "";
-    return `OpenCode prompt${providerError} failed for ${this.operation} in ${this.cwd} using ${this.providerId}/${this.modelId} (session ${this.sessionId}): ${this.providerMessage}`;
+    const status = this.statusCode === undefined ? "" : `, HTTP ${this.statusCode}`;
+    return `OpenCode prompt${providerError} failed for ${this.operation} in ${this.cwd} using ${this.providerId}/${this.modelId} (session ${this.sessionId}${status}).`;
   }
+}
+
+function openCodePromptResponseErrorDetail(error: OpenCodeTextGenerationPromptResponseError) {
+  if (
+    error.providerErrorName === "ProviderAuthError" ||
+    error.statusCode === 401 ||
+    error.statusCode === 403
+  ) {
+    return "The model provider rejected the credentials. Check the provider's sign-in or API key in OpenCode.";
+  }
+  if (error.statusCode === 429) {
+    return "The model provider's usage or rate limit was reached. Try again later.";
+  }
+  if (error.providerErrorName === "ContextOverflowError") {
+    return "The prompt is too long for the selected model's context window.";
+  }
+  if (error.providerErrorName === "MessageAbortedError") {
+    return "OpenCode stopped the generation.";
+  }
+  if (error.statusCode !== undefined) {
+    return `The model provider failed the request (HTTP ${error.statusCode}).`;
+  }
+  return "OpenCode could not generate the text.";
 }
 
 export class OpenCodeTextGenerationEmptyOutputError extends Schema.TaggedError<OpenCodeTextGenerationEmptyOutputError>()(
@@ -93,7 +121,7 @@ export class OpenCodeTextGenerationEmptyOutputError extends Schema.TaggedError<O
 
 interface OpenCodePromptFailure {
   readonly name?: string;
-  readonly message: string;
+  readonly statusCode?: number;
 }
 
 interface OpenCodeTextPart {
@@ -110,26 +138,21 @@ function getOpenCodePromptFailure(error: unknown): OpenCodePromptFailure | null 
     "name" in error && typeof error.name === "string" && error.name.trim().length > 0
       ? error.name.trim()
       : undefined;
-  const message =
-    "data" in error &&
-    error.data &&
-    typeof error.data === "object" &&
-    "message" in error.data &&
-    typeof error.data.message === "string"
-      ? error.data.message.trim()
-      : "";
-  if (message.length > 0) {
-    return {
-      ...(name ? { name } : {}),
-      message,
-    };
+  const data = "data" in error && error.data && typeof error.data === "object" ? error.data : {};
+  const statusCode =
+    "statusCode" in data && typeof data.statusCode === "number" && Number.isInteger(data.statusCode)
+      ? data.statusCode
+      : undefined;
+  const hasMessage =
+    "message" in data && typeof data.message === "string" && data.message.trim().length > 0;
+  if (!name && statusCode === undefined && !hasMessage) {
+    return null;
   }
 
-  if (name) {
-    return { name, message: name };
-  }
-
-  return null;
+  return {
+    ...(name ? { name } : {}),
+    ...(statusCode !== undefined ? { statusCode } : {}),
+  };
 }
 
 function isOpenCodeTextPart(part: unknown): part is OpenCodeTextPart {
@@ -187,11 +210,18 @@ export const makeOpenCodeTextGeneration = Effect.fn("makeOpenCodeTextGeneration"
           ...(server.serverPassword !== undefined ? { serverPassword: server.serverPassword } : {}),
         });
         const session = yield* Effect.tryPromise({
-          try: () =>
-            client.session.create({
-              title: `Moonfold ${input.operation}`,
-              permission: [{ permission: "*", pattern: "*", action: "deny" }],
-            }),
+          try: (signal) =>
+            client.session.create(
+              {
+                title: `Moonfold ${input.operation}`,
+                // OpenCode Zen refuses free-model requests that carry no tools, so keep read.
+                permission: [
+                  { permission: "*", pattern: "*", action: "deny" },
+                  { permission: "read", pattern: "*", action: "allow" },
+                ],
+              },
+              { signal },
+            ),
           catch: (cause) =>
             new OpenCodeTextGenerationSessionRequestError({
               operation: input.operation,
@@ -205,6 +235,11 @@ export const makeOpenCodeTextGeneration = Effect.fn("makeOpenCodeTextGeneration"
             cwd: input.cwd,
           });
         }
+        yield* Effect.addFinalizer(() =>
+          OpenCodeRuntime.runOpenCodeSdk("session.delete", (signal) =>
+            client.session.delete({ sessionID: session.data.id }, { signal }),
+          ).pipe(Effect.timeout("5 seconds"), Effect.ignore({ log: "Warn" })),
+        );
         const selectedAgent = getModelSelectionStringOptionValue(input.modelSelection, "agent");
         const selectedVariant = getModelSelectionStringOptionValue(input.modelSelection, "variant");
         const promptContext = {
@@ -216,26 +251,50 @@ export const makeOpenCodeTextGeneration = Effect.fn("makeOpenCodeTextGeneration"
         };
 
         const result = yield* Effect.tryPromise({
-          try: () =>
-            client.session.prompt({
-              sessionID: session.data.id,
-              model: parsedModel,
-              ...(selectedAgent ? { agent: selectedAgent } : {}),
-              ...(selectedVariant ? { variant: selectedVariant } : {}),
-              parts: [{ type: "text", text: input.prompt }, ...fileParts],
-            }),
+          try: (signal) =>
+            client.session.prompt(
+              {
+                sessionID: session.data.id,
+                model: parsedModel,
+                ...(selectedAgent ? { agent: selectedAgent } : {}),
+                ...(selectedVariant ? { variant: selectedVariant } : {}),
+                parts: [{ type: "text", text: input.prompt }, ...fileParts],
+              },
+              { signal },
+            ),
           catch: (cause) =>
             new OpenCodeTextGenerationPromptRequestError({
               ...promptContext,
               cause,
             }),
-        });
-        const promptFailure = getOpenCodePromptFailure(result.data?.info?.error);
+        }).pipe(
+          // Disconnecting the HTTP request does not stop work in a shared or external server.
+          Effect.onInterrupt(() =>
+            OpenCodeRuntime.runOpenCodeSdk("session.abort", (signal) =>
+              client.session.abort({ sessionID: session.data.id }, { signal }),
+            ).pipe(
+              Effect.interruptible,
+              Effect.timeout("10 seconds"),
+              Effect.catch(() =>
+                Effect.logWarning(
+                  "Failed to stop cancelled OpenCode text generation.",
+                  promptContext,
+                ),
+              ),
+              Effect.asVoid,
+            ),
+          ),
+        );
+        const promptError = result.data?.info?.error;
+        const promptFailure = getOpenCodePromptFailure(promptError);
         if (promptFailure) {
           return yield* new OpenCodeTextGenerationPromptResponseError({
             ...promptContext,
             ...(promptFailure.name ? { providerErrorName: promptFailure.name } : {}),
-            providerMessage: promptFailure.message,
+            ...(promptFailure.statusCode !== undefined
+              ? { statusCode: promptFailure.statusCode }
+              : {}),
+            cause: promptError,
           });
         }
         const responseParts = result.data?.parts ?? [];
@@ -249,6 +308,7 @@ export const makeOpenCodeTextGeneration = Effect.fn("makeOpenCodeTextGeneration"
         }
         return rawText;
       },
+      Effect.scoped,
       Effect.catchTags({
         OpenCodeTextGenerationSessionRequestError: (cause) =>
           Effect.fail(
@@ -278,7 +338,7 @@ export const makeOpenCodeTextGeneration = Effect.fn("makeOpenCodeTextGeneration"
           Effect.fail(
             new TextGenerationError({
               operation: cause.operation,
-              detail: cause.providerMessage,
+              detail: openCodePromptResponseErrorDetail(cause),
               cause,
             }),
           ),
@@ -300,13 +360,23 @@ export const makeOpenCodeTextGeneration = Effect.fn("makeOpenCodeTextGeneration"
               binaryPath: openCodeSettings.binaryPath,
               directory: input.cwd,
               serverUrl: openCodeSettings.serverUrl,
-              ...(openCodeSettings.serverPassword
-                ? { serverPassword: openCodeSettings.serverPassword }
+              ...(settingsSecretLiteral(openCodeSettings.serverPassword)
+                ? { serverPassword: settingsSecretLiteral(openCodeSettings.serverPassword) }
                 : {}),
             })
             .pipe(Effect.flatMap(runAgainstServer), Effect.scoped)
         : serverOwner.withServer(runAgainstServer);
     const rawOutput = yield* serverOutput.pipe(
+      Effect.timeoutOrElse({
+        duration: GENERATION_TIMEOUT,
+        orElse: () =>
+          Effect.fail(
+            new TextGenerationError({
+              operation: input.operation,
+              detail: "OpenCode did not finish generating in time.",
+            }),
+          ),
+      }),
       Effect.catchTags({
         OpenCodeRuntimeError: (cause) =>
           Effect.fail(

@@ -10,7 +10,6 @@ import PullRequestFilesViewed from "./Migrations/053_PullRequestFilesViewed.ts";
 import RemoveRedundantProjectionIndexes from "./Migrations/056_RemoveRedundantProjectionIndexes.ts";
 import OrchestrationV2 from "./Migrations/055_OrchestrationV2.ts";
 
-// The V2 schema is unchanged from the published September 15–16 previews.
 const seedPreview = Effect.gen(function* () {
   const sql = yield* SqlClient.SqlClient;
   yield* runMigrations({ toMigrationInclusive: 52 });
@@ -43,10 +42,28 @@ describe("V2 preview upgrade", () => {
         [60, "ThreadSnapshotWindowIndexes"],
         [61, "PullRequestReviewGuides"],
         [62, "ThreadFailureLookupIndex"],
-        [63, "ScheduledTaskRuns"],
-        [64, "Memories"],
-        [65, "BrowserSiteRules"],
-        [66, "ComputerUse"],
+        [63, "DropUnusedV1Projections"],
+        [64, "CanonicalizeThreadPullRequestLinks"],
+        [65, "CodexUsageNativeTurnIndex"],
+        [66, "RepairClientSettlementTimestamps"],
+        [67, "WebhookDedupe"],
+        [68, "ShellStopRequestIndex"],
+        [69, "ThreadMessageSearch"],
+        [70, "PeerLinks"],
+        [71, "PeerLinkFence"],
+        [72, "WaitingLinkRequestIndex"],
+        [73, "ActiveTurnItemIndexes"],
+        [74, "ExcludeAttachmentPlaceholdersFromSearch"],
+        [75, "SubagentDeliveryState"],
+        [76, "ProjectionProjectsPinArchive"],
+        [77, "RepairBooleanSettledOverride"],
+        [78, "DropOrchestrationEventCorrelationIndex"],
+        [79, "DelegatedRecoveryIndexes"],
+        [80, "ScheduledTaskThreadMode"],
+        [81, "ScheduledTaskRuns"],
+        [82, "Memories"],
+        [83, "BrowserSiteRules"],
+        [84, "ComputerUse"],
       ]);
       assert.deepStrictEqual(yield* runMigrations(), []);
       assert.deepStrictEqual(yield* sql`SELECT * FROM orchestration_v2_legacy_imports`, imports);
@@ -132,10 +149,28 @@ describe("V2 preview upgrade", () => {
         [60, "ThreadSnapshotWindowIndexes"],
         [61, "PullRequestReviewGuides"],
         [62, "ThreadFailureLookupIndex"],
-        [63, "ScheduledTaskRuns"],
-        [64, "Memories"],
-        [65, "BrowserSiteRules"],
-        [66, "ComputerUse"],
+        [63, "DropUnusedV1Projections"],
+        [64, "CanonicalizeThreadPullRequestLinks"],
+        [65, "CodexUsageNativeTurnIndex"],
+        [66, "RepairClientSettlementTimestamps"],
+        [67, "WebhookDedupe"],
+        [68, "ShellStopRequestIndex"],
+        [69, "ThreadMessageSearch"],
+        [70, "PeerLinks"],
+        [71, "PeerLinkFence"],
+        [72, "WaitingLinkRequestIndex"],
+        [73, "ActiveTurnItemIndexes"],
+        [74, "ExcludeAttachmentPlaceholdersFromSearch"],
+        [75, "SubagentDeliveryState"],
+        [76, "ProjectionProjectsPinArchive"],
+        [77, "RepairBooleanSettledOverride"],
+        [78, "DropOrchestrationEventCorrelationIndex"],
+        [79, "DelegatedRecoveryIndexes"],
+        [80, "ScheduledTaskThreadMode"],
+        [81, "ScheduledTaskRuns"],
+        [82, "Memories"],
+        [83, "BrowserSiteRules"],
+        [84, "ComputerUse"],
       ]);
     }).pipe(Effect.provide(NodeSqliteClient.layer({ filename: ":memory:" }))),
   );

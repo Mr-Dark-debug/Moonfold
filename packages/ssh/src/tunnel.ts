@@ -2,19 +2,17 @@ import type {
   DesktopSshEnvironmentBootstrap,
   DesktopSshEnvironmentTarget,
 } from "@moonfold/contracts";
-import {
-  describeReadinessCause,
-  waitForHttpReady as waitForHttpReadyShared,
-} from "@moonfold/shared/httpReadiness";
+import { waitForHttpReady as waitForHttpReadyShared } from "@moonfold/shared/httpReadiness";
 import { cliReleaseDownloadBaseUrl } from "@moonfold/shared/cliRelease";
 import * as KeyedLock from "@moonfold/shared/KeyedLock";
 import * as NetService from "@moonfold/shared/Net";
 import { extractJsonObject, fromLenientJson } from "@moonfold/shared/schemaJson";
 import { satisfiesSemverRange } from "@moonfold/shared/semver";
 import * as Context from "effect/Context";
-import * as Crypto from "effect/Crypto";
+import * as Digest from "effect/crypto/Digest";
 import * as Effect from "effect/Effect";
 import * as Exit from "effect/Exit";
+import * as Fiber from "effect/Fiber";
 import * as FileSystem from "effect/FileSystem";
 import * as Layer from "effect/Layer";
 import * as Path from "effect/Path";
@@ -28,12 +26,12 @@ import * as SshAuth from "./auth.ts";
 import {
   baseSshArgs,
   buildSshHostSpecEffect,
-  collectProcessOutput,
   getLastNonEmptyOutputLine,
   remoteStateKey,
   resolveSshCommand,
   resolveSshTarget,
   runSshCommand,
+  sshTargetLogFields,
   targetConnectionKey,
 } from "./command.ts";
 import {
@@ -51,14 +49,12 @@ const REMOTE_PORT_SCAN_WINDOW = 200;
 const SSH_READY_TIMEOUT_MS = 20_000;
 const SSH_READY_PROBE_TIMEOUT_MS = 1_000;
 const TUNNEL_SHUTDOWN_TIMEOUT_MS = 2_000;
+const TUNNEL_STDERR_TAIL_CHARS = 16_384;
 const REMOTE_READY_TIMEOUT_MS = 60_000;
 const REMOTE_LAUNCH_TIMEOUT_MS = 90_000;
-// A cold archive launch also downloads and unpacks a ~70 MB release archive
-// and may wait on another installer's lock. The budgets nest: the checksum
-// file is tiny and the archive download is bounded; a waiter outlasts both
-// downloads plus extraction so it can reuse the result; and the SSH command
-// outlasts an install (own or waited-for) plus readiness, with slack for
-// verification and extraction, which have no timeout of their own.
+// Cold archive launches download and extract ~70 MB and may wait on an install lock.
+// Lock waits must outlast both downloads and extraction; SSH must outlast install or wait plus readiness.
+// Leave slack for verification and extraction, which have no timeout.
 const REMOTE_ARCHIVE_CHECKSUMS_SECONDS = 30;
 const REMOTE_ARCHIVE_DOWNLOAD_SECONDS = 240;
 const REMOTE_ARCHIVE_LOCK_WAIT_SECONDS = 360;
@@ -66,17 +62,8 @@ const REMOTE_ARCHIVE_LAUNCH_TIMEOUT_MS = 900_000;
 const REMOTE_REUSE_READY_TIMEOUT_MS = 2_000;
 
 export interface RemoteMoonfoldRunnerOptions {
-  /**
-   * Dev mode: run `node <path>` on the remote instead of a release archive.
-   * The only mode that needs Node on the remote.
-   */
   readonly nodeScriptPath?: string | null;
   readonly nodeEngineRange?: string | null;
-  /**
-   * Exact version whose self-contained release archive the remote installs
-   * and runs. Required unless `nodeScriptPath` is set; the remote then needs
-   * neither Node nor npm.
-   */
   readonly archiveVersion?: string | null;
   readonly releaseBaseUrl?: string | null;
 }
@@ -99,7 +86,7 @@ interface SshTunnelEntry {
 
 type SshEnvironmentEffectContext =
   | ChildProcessSpawner.ChildProcessSpawner
-  | Crypto.Crypto
+  | Digest.Digest
   | FileSystem.FileSystem
   | Path.Path
   | HttpClient.HttpClient
@@ -114,15 +101,6 @@ type SshEnvironmentEffectError =
   | SshReadinessError
   | SshPasswordPromptError
   | NetService.NetError;
-
-function sshTargetLogFields(target: DesktopSshEnvironmentTarget) {
-  return {
-    alias: target.alias,
-    hostname: target.hostname,
-    username: target.username,
-    port: target.port,
-  };
-}
 
 function isNodeScriptRunner(runner: RemoteMoonfoldRunnerOptions | undefined): boolean {
   return Boolean(runner?.nodeScriptPath?.trim());
@@ -246,11 +224,7 @@ function applyScriptPlaceholders(
   return result;
 }
 
-// Re-exported from the shared HTTP readiness module so existing importers
-// (notably tunnel.test.ts) keep resolving it from here.
-export { describeReadinessCause };
-
-export const REMOTE_PICK_PORT_SCRIPT = `const fs = require("node:fs");
+const REMOTE_PICK_PORT_SCRIPT = `const fs = require("node:fs");
 const net = require("node:net");
 const filePath = process.argv[2] ?? "";
 const defaultPort = Number.parseInt(process.argv[3] ?? "", 10);
@@ -471,21 +445,13 @@ moonfold_runtime_ready() {
 }
 if ! moonfold_runtime_ready; then
   mkdir -p "$HOME/.moonfold/runtime/versions"
-  # Concurrent launches (two clients, a retry racing a slow first run) must
-  # not both install: mkdir is the atomic lock and the ready check repeats
-  # under it.
   MOONFOLD_LOCK="$HOME/.moonfold/runtime/versions/.$MOONFOLD_ARCHIVE_VERSION.install.lock"
-  # mkdir is the only portable atomic exclusive create (mv would silently
-  # nest a candidate inside an existing lock). The owner publishes its pid
-  # right after, so a lock with a live owner is never reclaimed however
-  # slow its download is, and a lock whose owner is dead is reclaimed at
-  # once. A lock with no pid at all is a crash between mkdir and the pid
-  # write; it is reclaimed after a short grace so a live owner has time to
-  # publish.
+  # uutils mkdir can report success on EEXIST, so use shell noclobber.
+  # An empty lock gets a short grace period for its owner to publish a PID.
   MOONFOLD_LOCK_WAITED=0
   MOONFOLD_LOCK_UNOWNED=0
-  while ! mkdir "$MOONFOLD_LOCK" 2>/dev/null; do
-    MOONFOLD_LOCK_OWNER="$(cat "$MOONFOLD_LOCK/pid" 2>/dev/null || true)"
+  while ! (set -C; printf '%s\\n' "$$" > "$MOONFOLD_LOCK") 2>/dev/null; do
+    MOONFOLD_LOCK_OWNER="$(cat "$MOONFOLD_LOCK" 2>/dev/null || true)"
     if [ -n "$MOONFOLD_LOCK_OWNER" ]; then
       MOONFOLD_LOCK_UNOWNED=0
       if ! kill -0 "$MOONFOLD_LOCK_OWNER" 2>/dev/null; then
@@ -506,7 +472,6 @@ if ! moonfold_runtime_ready; then
     sleep 1
     MOONFOLD_LOCK_WAITED=$((MOONFOLD_LOCK_WAITED + 1))
   done
-  printf '%s\\n' "$$" > "$MOONFOLD_LOCK/pid.tmp" && mv "$MOONFOLD_LOCK/pid.tmp" "$MOONFOLD_LOCK/pid"
   trap 'rm -rf "$MOONFOLD_LOCK"' EXIT
 fi
 if ! moonfold_runtime_ready; then
@@ -834,7 +799,6 @@ export function buildRemoteMoonfoldRunnerScript(input?: RemoteMoonfoldRunnerOpti
   if (archiveVersion !== "" && !EXACT_ARCHIVE_VERSION.test(archiveVersion)) {
     throw new SshInvalidArchiveVersionError({ archiveVersion });
   }
-  // Strip the `/v<version>` the helper appends: the script builds URLs itself.
   const releaseBaseUrl = cliReleaseDownloadBaseUrl("", input?.releaseBaseUrl ?? undefined).replace(
     /\/v$/u,
     "",
@@ -861,7 +825,7 @@ export function buildRemoteNodeEnvScript(input?: RemoteMoonfoldRunnerOptions): s
   );
 }
 
-export function buildRemoteLaunchScript(input?: RemoteMoonfoldRunnerOptions): string {
+function buildRemoteLaunchScript(input?: RemoteMoonfoldRunnerOptions): string {
   return applyScriptPlaceholders(REMOTE_LAUNCH_SCRIPT, {
     MOONFOLD_ARCHIVE_MODE: isNodeScriptRunner(input) ? "0" : "1",
     MOONFOLD_NODE_ENV_SCRIPT: buildRemoteNodeEnvScript(input),
@@ -876,17 +840,14 @@ export function buildRemoteLaunchScript(input?: RemoteMoonfoldRunnerOptions): st
   });
 }
 
-export function buildRemotePairingScript(
-  stateKey: string,
-  input?: RemoteMoonfoldRunnerOptions,
-): string {
+function buildRemotePairingScript(stateKey: string, input?: RemoteMoonfoldRunnerOptions): string {
   return applyScriptPlaceholders(REMOTE_PAIRING_SCRIPT, {
     MOONFOLD_STATE_KEY: stateKey,
     MOONFOLD_RUNNER_SCRIPT: stripTrailingNewlines(buildRemoteMoonfoldRunnerScript(input)),
   });
 }
 
-export function buildRemoteStopScript(stateKey: string): string {
+function buildRemoteStopScript(stateKey: string): string {
   return applyScriptPlaceholders(REMOTE_STOP_SCRIPT, {
     MOONFOLD_STATE_KEY: stateKey,
   });
@@ -906,7 +867,7 @@ export const launchOrReuseRemoteServer = Effect.fn("ssh/tunnel.launchOrReuseRemo
   ): Effect.fn.Return<
     { readonly remotePort: number; readonly remoteServerKind: "external" | "managed" | null },
     SshCommandError | SshInvalidTargetError | SshLaunchError,
-    ChildProcessSpawner.ChildProcessSpawner | Crypto.Crypto | FileSystem.FileSystem | Path.Path
+    ChildProcessSpawner.ChildProcessSpawner | Digest.Digest | FileSystem.FileSystem | Path.Path
   > {
     const stateKey = yield* remoteStateKey(target);
     yield* Effect.logInfo("ssh.remoteServer.launch.start", {
@@ -968,7 +929,7 @@ export const issueRemotePairingToken = Effect.fn("ssh/tunnel.issueRemotePairingT
     readonly credential: string;
   },
   SshCommandError | SshInvalidTargetError | SshPairingError,
-  ChildProcessSpawner.ChildProcessSpawner | Crypto.Crypto | FileSystem.FileSystem | Path.Path
+  ChildProcessSpawner.ChildProcessSpawner | Digest.Digest | FileSystem.FileSystem | Path.Path
 > {
   const stateKey = yield* remoteStateKey(target);
   yield* Effect.logDebug("ssh.remoteServer.pairingToken.start", {
@@ -978,8 +939,6 @@ export const issueRemotePairingToken = Effect.fn("ssh/tunnel.issueRemotePairingT
   const result = yield* runSshCommand(target, {
     remoteCommandArgs: ["sh", "-s"],
     stdin: buildRemotePairingScript(stateKey, runner),
-    // Pairing may be the first command on a cold remote, so it can install
-    // the archive on the way.
     ...(isNodeScriptRunner(runner) ? {} : { timeoutMs: REMOTE_ARCHIVE_LAUNCH_TIMEOUT_MS }),
     ...(input?.authSecret === undefined ? {} : { authSecret: input.authSecret }),
     ...(input?.batchMode === undefined ? {} : { batchMode: input.batchMode }),
@@ -1022,7 +981,7 @@ const stopRemoteServer = Effect.fn("ssh/tunnel.stopRemoteServer")(function* (
 ): Effect.fn.Return<
   void,
   SshCommandError | SshInvalidTargetError,
-  ChildProcessSpawner.ChildProcessSpawner | Crypto.Crypto | FileSystem.FileSystem | Path.Path
+  ChildProcessSpawner.ChildProcessSpawner | Digest.Digest | FileSystem.FileSystem | Path.Path
 > {
   const stateKey = yield* remoteStateKey(target);
   yield* Effect.logInfo("ssh.remoteServer.stop.start", {
@@ -1048,7 +1007,7 @@ const readRemoteServerLogTail = Effect.fn("ssh/tunnel.readRemoteServerLogTail")(
 ): Effect.fn.Return<
   string,
   SshCommandError | SshInvalidTargetError,
-  ChildProcessSpawner.ChildProcessSpawner | Crypto.Crypto | FileSystem.FileSystem | Path.Path
+  ChildProcessSpawner.ChildProcessSpawner | Digest.Digest | FileSystem.FileSystem | Path.Path
 > {
   const result = yield* runSshCommand(target, {
     remoteCommandArgs: ["sh", "-s"],
@@ -1061,7 +1020,7 @@ const readRemoteServerLogTail = Effect.fn("ssh/tunnel.readRemoteServerLogTail")(
   return result.stdout.trim();
 });
 
-export const waitForHttpReady = (input: {
+const waitForHttpReady = (input: {
   readonly baseUrl: string;
   readonly timeoutMs?: number;
   readonly intervalMs?: number;
@@ -1151,7 +1110,7 @@ const startSshTunnel = Effect.fn("ssh/tunnel.startSshTunnel")(function* (input: 
   SshTunnelEntry,
   SshCommandError | SshInvalidTargetError | SshReadinessError,
   | ChildProcessSpawner.ChildProcessSpawner
-  | Crypto.Crypto
+  | Digest.Digest
   | FileSystem.FileSystem
   | Path.Path
   | HttpClient.HttpClient
@@ -1197,6 +1156,7 @@ const startSshTunnel = Effect.fn("ssh/tunnel.startSshTunnel")(function* (input: 
     "-N",
     "-L",
     `${input.localPort}:127.0.0.1:${input.remotePort}`,
+    "--",
     hostSpec,
   ];
   const sshCommand = yield* resolveSshCommand;
@@ -1257,8 +1217,21 @@ const startSshTunnel = Effect.fn("ssh/tunnel.startSshTunnel")(function* (input: 
     process: child,
     scope,
   };
+  // Readiness cancels the exit waiter, but diagnostics must drain until the tunnel closes.
+  let stderrTail = "";
+  const stderrDrain = yield* child.stderr.pipe(
+    Stream.decodeText(),
+    Stream.runForEach((chunk) =>
+      Effect.sync(() => {
+        stderrTail = (stderrTail + chunk).slice(-TUNNEL_STDERR_TAIL_CHARS);
+      }),
+    ),
+    // Diagnostics are best-effort: a failed read must not hide the real exit.
+    Effect.ignore,
+    Effect.forkIn(scope),
+  );
   const exitFailure = Effect.all(
-    [collectProcessOutput(child.stderr), child.exitCode.pipe(Effect.map(Number))],
+    [Fiber.join(stderrDrain), child.exitCode.pipe(Effect.map(Number))],
     { concurrency: "unbounded" },
   ).pipe(
     Effect.mapError(
@@ -1274,7 +1247,8 @@ const startSshTunnel = Effect.fn("ssh/tunnel.startSshTunnel")(function* (input: 
           cause,
         }),
     ),
-    Effect.flatMap(([stderr, exitCode]) => {
+    Effect.flatMap(([, exitCode]) => {
+      const stderr = stderrTail;
       const error = new SshCommandError({
         command: tunnelCommand,
         exitCode,
@@ -1439,7 +1413,7 @@ const makeSshEnvironmentManager = Effect.fn("ssh/tunnel.SshEnvironmentManager.ma
       attempt,
       destination: target.alias.trim() || target.hostname.trim(),
       username: target.username,
-      prompt: `Enter the SSH password for ${hostSpec}.`,
+      prompt: `Enter the SSH password or verification code for ${hostSpec}.`,
     });
     if (password === null) {
       yield* Effect.logWarning("ssh.auth.passwordPrompt.cancelled", {
@@ -1480,7 +1454,7 @@ const makeSshEnvironmentManager = Effect.fn("ssh/tunnel.SshEnvironmentManager.ma
       if (input.authSecret !== null) {
         authSecrets.delete(input.key);
       }
-      if (input.promptCount >= 2) {
+      if (input.promptCount >= 2 || SshAuth.isSshAgentSigningFailure(input.error)) {
         return yield* input.error;
       }
 
@@ -1581,7 +1555,7 @@ const makeSshEnvironmentManager = Effect.fn("ssh/tunnel.SshEnvironmentManager.ma
     );
     tunnels.set(input.key, tunnelEntry);
     const spawnerService = yield* ChildProcessSpawner.ChildProcessSpawner;
-    const cryptoService = yield* Crypto.Crypto;
+    const digestService = yield* Digest.Digest;
     const fileSystemService = yield* FileSystem.FileSystem;
     const pathService = yield* Path.Path;
     yield* Scope.addFinalizer(
@@ -1621,7 +1595,7 @@ const makeSshEnvironmentManager = Effect.fn("ssh/tunnel.SshEnvironmentManager.ma
               },
         ).pipe(
           Effect.provideService(ChildProcessSpawner.ChildProcessSpawner, spawnerService),
-          Effect.provideService(Crypto.Crypto, cryptoService),
+          Effect.provideService(Digest.Digest, digestService),
           Effect.provideService(FileSystem.FileSystem, fileSystemService),
           Effect.provideService(Path.Path, pathService),
         );
@@ -1804,7 +1778,7 @@ const makeSshEnvironmentManager = Effect.fn("ssh/tunnel.SshEnvironmentManager.ma
 });
 
 /**
- * @effect-expect-leaking ChildProcessSpawner | Crypto | FileSystem | HttpClient | NetService | Path | SshPasswordPrompt
+ * @effect-expect-leaking ChildProcessSpawner | Digest | FileSystem | HttpClient | NetService | Path | SshPasswordPrompt
  */
 export class SshEnvironmentManager extends Context.Service<
   SshEnvironmentManager,

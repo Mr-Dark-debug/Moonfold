@@ -6,7 +6,6 @@ import {
   isTimedCommand,
   parseTimedCommand,
   scheduledSendTitle,
-  toOnceScheduleAt,
 } from "./scheduledSend.logic";
 
 // Tuesday 2026-10-27, 10:20 local time.
@@ -75,10 +74,9 @@ describe("parseTimedCommand", () => {
 });
 
 describe("schedule helpers", () => {
-  it("round-trips the date and time inputs into a once schedule", () => {
+  it("reads the date and time inputs as a local time", () => {
     const at = fromDateTimeInputs("2026-10-28", "09:05");
     expect(at).toEqual(local(28, 9, 5));
-    expect(toOnceScheduleAt(at!)).toBe("2026-10-28T09:05");
     expect(fromDateTimeInputs("2026-10-28", "")).toBeNull();
   });
 

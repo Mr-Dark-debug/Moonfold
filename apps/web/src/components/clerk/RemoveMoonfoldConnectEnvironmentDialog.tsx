@@ -1,5 +1,8 @@
+import { Discovery } from "@moonfold/client-runtime/relay";
+import type { EnvironmentId } from "@moonfold/contracts";
 import { useState } from "react";
 
+import { useRelayEnvironmentDiscovery } from "../../state/environments";
 import {
   AlertDialog,
   AlertDialogClose,
@@ -12,26 +15,42 @@ import {
 import { Button, InlineButton } from "../ui/button";
 import { useMoonfoldConnectAccountPage } from "./MoonfoldConnectAccountPages";
 
-/**
- * Confirms removing a Moonfold Connect environment from this device. Removal here
- * leaves the account registration (and its host space) in place, so the dialog
- * says so and links to the account page where it can be deregistered.
- */
 export function RemoveMoonfoldConnectEnvironmentDialog({
   environmentLabel,
+  environmentId,
   onCancel,
   onConfirm,
 }: {
-  /** The environment awaiting confirmation; null keeps the dialog closed. */
   readonly environmentLabel: string | null;
+  readonly environmentId: EnvironmentId | null;
   readonly onCancel: () => void;
   readonly onConfirm: () => void;
 }) {
   const accountPage = useMoonfoldConnectAccountPage();
-  // Keep the label through the close animation.
-  const [shownLabel, setShownLabel] = useState(environmentLabel);
-  if (environmentLabel !== null && environmentLabel !== shownLabel) setShownLabel(environmentLabel);
+  const discovery = useRelayEnvironmentDiscovery();
+  const registration = environmentId
+    ? Discovery.relayEnvironmentRegistration(discovery, environmentId)
+    : "unknown";
+  const [shown, setShown] = useState({ label: environmentLabel, registration });
+  if (
+    environmentLabel !== null &&
+    (environmentLabel !== shown.label || registration !== shown.registration)
+  ) {
+    setShown({ label: environmentLabel, registration });
+  }
   const openAccountPage = accountPage.open;
+  const accountPageLink = openAccountPage ? (
+    <InlineButton
+      onClick={() => {
+        onCancel();
+        openAccountPage();
+      }}
+    >
+      Moonfold Connect settings
+    </InlineButton>
+  ) : (
+    "Moonfold Connect settings"
+  );
 
   return (
     <>
@@ -43,25 +62,24 @@ export function RemoveMoonfoldConnectEnvironmentDialog({
       >
         <AlertDialogPopup>
           <AlertDialogHeader>
-            <AlertDialogTitle>Remove {shownLabel} from this device?</AlertDialogTitle>
+            <AlertDialogTitle>Remove {shown.label} from this device?</AlertDialogTitle>
             <AlertDialogDescription>
               This forgets its pairing, credentials, and cached threads here.
             </AlertDialogDescription>
             <AlertDialogDescription>
-              It stays on your Moonfold Connect account and keeps its host space. Deregister it in{" "}
-              {openAccountPage ? (
-                <InlineButton
-                  onClick={() => {
-                    onCancel();
-                    openAccountPage();
-                  }}
-                >
-                  Moonfold Connect settings
-                </InlineButton>
+              {shown.registration === "registered" ? (
+                <>
+                  It stays on your Moonfold Connect account and keeps its host space. Deregister it in{" "}
+                  {accountPageLink} to free it.
+                </>
+              ) : shown.registration === "unregistered" ? (
+                "It's no longer on your Moonfold Connect account."
               ) : (
-                "Moonfold Connect settings"
-              )}{" "}
-              to free it.
+                <>
+                  This doesn't change your Moonfold Connect account. To deregister it there, use{" "}
+                  {accountPageLink}.
+                </>
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

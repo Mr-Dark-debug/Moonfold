@@ -25,10 +25,8 @@ export interface PromptLinkPullRequest extends PromptLinkRepository {
   readonly number: number;
 }
 
-/** A prompt as it arrived, after hidden characters were removed. */
 export interface LinkedPrompt {
   readonly text: string;
-  /** How many invisible characters were removed. Any count above zero is a warning sign. */
   readonly hiddenCharacters: number;
 }
 
@@ -37,7 +35,6 @@ export type NewThreadLink =
       readonly kind: "new";
       readonly prompt: LinkedPrompt;
       readonly repository: PromptLinkRepository | null;
-      /** A provider driver kind such as `codex`. Users map it to one of their own instances. */
       readonly provider: string | null;
       readonly model: string | null;
     }
@@ -51,22 +48,17 @@ export type PromptLinkResult<T> =
   | { readonly ok: true; readonly value: T }
   | { readonly ok: false; readonly error: string };
 
-// Zero-width and bidi controls, tag and variation-selector blocks, and other characters that
-// render as nothing. A model reads them; the person checking the draft cannot see them, which
-// makes them the usual way to hide instructions in a prompt. U+FE0E/U+FE0F stay: emoji use them.
-// Line and paragraph separators become plain newlines, so the draft shows the break the model reads.
+// Hidden characters let models read instructions invisible to the person reviewing the prompt.
 const HIDDEN_CHARACTERS =
-  // oxlint-disable-next-line no-control-regex, no-misleading-character-class -- these are the characters it removes.
+  // oxlint-disable-next-line no-misleading-character-class -- these are the characters it removes.
   /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F\u00AD\u034F\u061C\u115F\u1160\u17B4\u17B5\u180B-\u180F\u200B\u200C\u200E\u200F\u202A-\u202E\u2060-\u206F\u3164\uFE00-\uFE0D\uFEFF\uFFA0\uFFF0-\uFFFB\u{1BCA0}-\u{1BCA3}\u{1D173}-\u{1D17A}\u{E0000}-\u{E0FFF}]/gu;
-// Emoji and the pieces emoji sequences are built from: pictographs, symbols, skin tones, and the
-// emoji presentation selector. Numeric ranges, because Hermes lacks Unicode property escapes.
+// Numeric emoji ranges because Hermes lacks Unicode property escapes.
 const isEmojiPart = (codePoint: number | undefined) =>
   codePoint !== undefined &&
   ((codePoint >= 0x1f000 && codePoint <= 0x1faff) ||
     (codePoint >= 0x2190 && codePoint <= 0x2bff) ||
     codePoint === 0xfe0f);
 
-/** Removes characters a reader cannot see, and counts them. */
 export function sanitizeLinkedPrompt(raw: string): LinkedPrompt {
   let hiddenCharacters = 0;
   const visible = Array.from(
@@ -75,7 +67,6 @@ export function sanitizeLinkedPrompt(raw: string): LinkedPrompt {
       return "";
     }),
   );
-  // A zero-width joiner is visible work only inside an emoji sequence, such as a family.
   const text = visible
     .filter((character, index) => {
       if (character !== "\u200D") return true;
@@ -98,7 +89,6 @@ function repositoryOf(owner: string, name: string): PromptLinkRepository | null 
   return { owner, name: trimmedName };
 }
 
-/** `owner/name`, or a GitHub repository URL. */
 export function parsePromptLinkRepository(value: string): PromptLinkRepository | null {
   const trimmed = value.trim();
   const url = /^https?:\/\/(?:www\.)?github\.com\/([^/?#]+)\/([^/?#]+)\/?$/i.exec(trimmed);
@@ -107,7 +97,6 @@ export function parsePromptLinkRepository(value: string): PromptLinkRepository |
   return match?.[1] && match[2] ? repositoryOf(match[1], match[2]) : null;
 }
 
-/** `owner/name/123`, `owner/name#123`, or a GitHub pull request URL. */
 function parsePromptLinkPullRequest(value: string): PromptLinkPullRequest | null {
   const trimmed = value.trim();
   const match =
@@ -122,7 +111,6 @@ function parsePromptLinkPullRequest(value: string): PromptLinkPullRequest | null
     : null;
 }
 
-/** The pull request's page on GitHub, the reference `preparePullRequestThread` takes. */
 export function promptLinkPullRequestUrl(pullRequest: PromptLinkPullRequest): string {
   return `https://github.com/${pullRequest.owner}/${pullRequest.name}/pull/${pullRequest.number}`;
 }
@@ -149,7 +137,6 @@ function readPrompt(params: URLSearchParams): PromptLinkResult<LinkedPrompt | nu
 
 const optionalParam = (params: URLSearchParams, key: string) => params.get(key)?.trim() || null;
 
-/** Reads the query of a `/new` link. */
 export function parseNewThreadLink(search: string): PromptLinkResult<NewThreadLink> {
   const params = new URLSearchParams(search);
   const prompt = readPrompt(params);
@@ -180,12 +167,10 @@ export function parseNewThreadLink(search: string): PromptLinkResult<NewThreadLi
   };
 }
 
-/** Reads the `prompt` of a thread link. Null when the link carries none. */
 export function parseThreadLinkPrompt(search: string): PromptLinkResult<LinkedPrompt | null> {
   return readPrompt(new URLSearchParams(search));
 }
 
-/** Drops the link's own parameters from a query, keeping anything else the route uses. */
 export function withoutPromptLinkParams(search: string): string {
   const params = new URLSearchParams(search);
   for (const key of ["prompt", "repo", "pr", "provider", "model"]) params.delete(key);
@@ -238,13 +223,15 @@ export function promptLinkAppPath(
   if (hostedAppUrl === null || !URL.canParse(hostedAppUrl)) return null;
   if (url.origin !== new URL(hostedAppUrl).origin) return null;
   if (url.pathname === "/new") return `/new${url.search}`;
-  // Hosted thread links only open in the app when they carry a prompt. A plain one is just a
-  // page on the hosted app.
-  const thread = url.searchParams.has("prompt") ? THREAD_PATH.exec(url.pathname) : null;
+  // The web app's own thread route is a link only with a prompt, so reloading a tab never asks.
+  const thread = url.pathname.startsWith("/threads/")
+    ? THREAD_PATH.exec(url.pathname.slice("/threads".length))
+    : url.searchParams.has("prompt")
+      ? THREAD_PATH.exec(url.pathname)
+      : null;
   return thread ? `/${thread[1]}/${thread[2]}${url.search}` : null;
 }
 
-/** The `moonfold://` link that hands an in-app path to an installed desktop or mobile app. */
 export function promptLinkDeepLink(appPath: string, scheme = "moonfold"): string {
   const url = new URL(appPath, "https://app.invalid");
   const host = url.pathname === "/new" ? "new" : `threads${url.pathname}`;
