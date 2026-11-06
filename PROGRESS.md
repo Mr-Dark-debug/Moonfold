@@ -1,5 +1,17 @@
 # Progress
 
+## Next work planned (2026-11-06)
+
+Plans only, no code yet:
+
+- **UI refresh** (docs/plans/ui-refresh.md, D-62): port upstream's design overhaul (pingdotgg/t3code#24865,
+  the work behind Theo's "Agents Sucked At UI (Until Today)") and score Moonfold's own screens with
+  the same review loop.
+- **Cassandre** (docs/plans/cassandre.md, D-63): a brand kit from one prompt in `.moonfold/brand/`.
+
+Waiting on the owner: Cassandre's name and how it may gather references from Pinterest and
+Dribbble. Next: start `ui-refresh` step 1.
+
 ## Beta 4 (2026-11-02)
 
 Done: Moonfold for Android beta 1 (`apps/mobile`, native Kotlin, our own code, nothing from the
