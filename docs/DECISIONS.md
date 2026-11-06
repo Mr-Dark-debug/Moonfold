@@ -503,3 +503,23 @@ Android requires every update to carry the same signature, so the key cannot be 
 without users reinstalling. It was generated for beta 1 on the owner's machine in
 `~/.moonfold-release` with its password beside it, and it is not in the repository or in CI. The
 APK is built locally and attached to the GitHub release.
+
+## D-62 Port upstream's design overhaul, with the new look on by default
+
+Upstream T3 Code's pull request 24865 (25 October 2026) came after our base, so Moonfold has none
+of it. It is MIT and we are its fork, so the code is ported, crediting the PR in each commit.
+Foundations (font, radius, icon stroke, contrast) ship to everyone. The sidebar, composer and panel
+changes sit behind Settings → Appearance → New design, as upstream did, but on by default: Moonfold
+is in beta, the new look scored higher in upstream's reviews, and the toggle is the way back. Files
+upstream added after our base are rebuilt by intent on our own components. Moonfold-only screens
+go through the same scored review loop. Plan: docs/plans/ui-refresh.md.
+
+## D-63 Cassandre: a brand kit is files in the project, built by a skill and checked by a service
+
+The brand kit feature is a built-in skill that any provider can follow, plus a `BrandKitService`
+for the exact parts (validation, contrast, exports, rendering) reached through MCP tools. The kit
+lives in `.moonfold/brand/` with a DTCG `tokens.json` as the source of truth, and exports are
+generated from it, never written by hand. References inform principles and are never copied. Sites
+whose terms forbid automated collection (Pinterest) are browsed by the user with the agent
+assisting, not by the agent alone, and kept screenshots stay out of git. Plan:
+docs/plans/cassandre.md.
