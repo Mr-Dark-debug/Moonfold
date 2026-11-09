@@ -2043,6 +2043,18 @@ code {
   }
 }
 
+/* The home background fades in once when the new-thread screen mounts, which
+   hides the moment the image decodes. Same one-shot opacity pattern as above. */
+@media (prefers-reduced-motion: no-preference) {
+  .home-background-layer {
+    transition: opacity 400ms ease-out;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+}
+
 /* Diagnostics-style tables: row separators only, uppercase headers, and a
    scroll-fade container for horizontal overflow. The root chat-markdown
    wrapping rules (overflow-wrap: anywhere) would let columns shrink to single

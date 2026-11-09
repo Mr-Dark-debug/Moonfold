@@ -3,6 +3,14 @@
 Notable changes to Moonfold. Versions follow [Semantic Versioning](https://semver.org); betas
 carry a `-beta.N` suffix. Each release's notes are in `docs/releases/`.
 
+## Unreleased
+
+### Added
+
+- Home screen backgrounds: Settings → Appearance → Home screen puts artwork behind the new thread
+  prompt. Choose Moonfold, Golden hour or Purple wind, drawn as ASCII text that follows your theme
+  or as an image. Off by default.
+
 ## 0.1.0-beta.4
 
 Notes: [docs/releases/v0.1.0-beta.4.md](docs/releases/v0.1.0-beta.4.md).

@@ -1,5 +1,49 @@
 # Progress
 
+## Home screen backgrounds (2026-11-09)
+
+Branch `feat/home-backgrounds`, worktree `D:\projects\moonfold-home-backgrounds`, based on `main`
+and not merged. Your `sync-upstream` working tree was left untouched. Decision: D-64.
+
+### Done
+
+- Settings → Appearance → Home screen: **Background** (None, Moonfold, Golden hour, Purple wind)
+  and **Background style** (ASCII text or Image), each with a reset button, in Restore defaults, and
+  in settings search. Two client settings (`homeBackground`, `homeBackgroundStyle`), default None
+  and ASCII.
+- The artwork shows behind the new thread screen only (`isDraftHeroState` in `ChatView.tsx`). ASCII is
+  SVG text: exact grid width through `textLength`, four ink strengths so the picture survives in
+  one colour, and the tones mirrored for light themes. Images use the owner's PNGs unmodified; the
+  logo PNG is blended so its black frame disappears on any theme.
+- A live thumbnail beside the Background dropdown uses the same component as the real screen.
+- Art is split into lazy chunks, so an unused scene never loads.
+
+### Verified (real output, Windows, 2026-11-09)
+
+- `vp test run` on `home-background/`, `settingsSearch.test.ts`, `packages/contracts/src/settings.test.ts`:
+  all pass (7 new logic tests, 1 search assertion, 1 contract block). `DesktopClientSettings.test.ts`:
+  11 of 12 pass; the failing one ("saves through a symlinked client settings file") compares Windows
+  temp paths and has nothing to do with this change.
+- Typecheck of `@moonfold/contracts`, `@moonfold/web`, `@moonfold/desktop`: 0 errors.
+- `vp fmt --check`: clean. `vp run knip:check`: clean (it caught two unused exports first, now fixed).
+  `node scripts/check-brand.ts`: clean. Lint: no warnings in the new files.
+- `vp run --filter @moonfold/web build`: succeeds; the scene chunks and PNGs are emitted.
+- Looks: checked on a mock page that applies the same constants and logic to the real art files,
+  dark and light, both styles, all three scenes.
+
+### Not verified
+
+- The real app: not launched, so the Settings rows, the dropdowns and the screen inside the real
+  layout are untested by eye. Needs one pass in a real client (web and desktop).
+- Phones and very short windows. The scrim and sizing were tuned on a 1.6 : 1 window only.
+- Provenance of the two landscape sources (see D-64): owner to confirm the right to ship them.
+
+### Next step
+
+Run the app on this branch and check Settings → Appearance → Home screen on web and desktop, then
+decide whether the default should stay None, and merge once `sync-upstream` has landed so the
+two do not collide in `settings.ts` and `SettingsPanels.tsx`.
+
 ## Next work planned (2026-11-06)
 
 Plans only, no code yet:

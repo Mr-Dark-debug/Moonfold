@@ -169,6 +169,16 @@ export const EnvironmentIdentificationMode = Schema.Literals(["artwork", "pill",
 export type EnvironmentIdentificationMode = typeof EnvironmentIdentificationMode.Type;
 export const DEFAULT_ENVIRONMENT_IDENTIFICATION_MODE: EnvironmentIdentificationMode = "artwork";
 
+/** Artwork behind the new-thread home screen. "none" keeps the plain surface. */
+export const HomeBackground = Schema.Literals(["none", "moonfold", "golden-hour", "purple-wind"]);
+export type HomeBackground = typeof HomeBackground.Type;
+const DEFAULT_HOME_BACKGROUND: HomeBackground = "none";
+
+/** How the artwork is drawn: live text that follows the theme, or the bundled PNG. */
+export const HomeBackgroundStyle = Schema.Literals(["ascii", "image"]);
+export type HomeBackgroundStyle = typeof HomeBackgroundStyle.Type;
+const DEFAULT_HOME_BACKGROUND_STYLE: HomeBackgroundStyle = "ascii";
+
 export const SnapShotKeyChord = KeybindingShortcut.check(
   Schema.makeFilter(
     (shortcut) =>
@@ -409,6 +419,12 @@ export const ClientSettingsSchema = Schema.Struct({
   ),
   glassOpacity: GlassOpacity.pipe(
     Schema.withDecodingDefault(Effect.succeed(DEFAULT_GLASS_OPACITY)),
+  ),
+  homeBackground: HomeBackground.pipe(
+    Schema.withDecodingDefault(Effect.succeed(DEFAULT_HOME_BACKGROUND)),
+  ),
+  homeBackgroundStyle: HomeBackgroundStyle.pipe(
+    Schema.withDecodingDefault(Effect.succeed(DEFAULT_HOME_BACKGROUND_STYLE)),
   ),
   fontSizeInterface: InterfaceFontSize.pipe(
     Schema.withDecodingDefault(Effect.succeed(DEFAULT_INTERFACE_FONT_SIZE)),
@@ -1795,6 +1811,8 @@ export const ClientSettingsPatch = Schema.Struct({
   diffLayout: Schema.optionalKey(DiffLayout),
   environmentIdentificationMode: Schema.optionalKey(EnvironmentIdentificationMode),
   glassOpacity: Schema.optionalKey(GlassOpacity),
+  homeBackground: Schema.optionalKey(HomeBackground),
+  homeBackgroundStyle: Schema.optionalKey(HomeBackgroundStyle),
   onboardingCompletedAt: Schema.optionalKey(Schema.NullOr(Schema.String)),
   fontSizeInterface: Schema.optionalKey(InterfaceFontSize),
   fontSizePrompt: Schema.optionalKey(PromptFontSize),

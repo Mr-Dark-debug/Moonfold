@@ -523,3 +523,21 @@ generated from it, never written by hand. References inform principles and are n
 whose terms forbid automated collection (Pinterest) are browsed by the user with the agent
 assisting, not by the agent alone, and kept screenshots stay out of git. Plan:
 docs/plans/cassandre.md.
+
+## D-64 Home screen backgrounds ship in the app, off by default
+
+The owner asked for a more engaging new-thread screen than a bare prompt. Settings → Appearance →
+Home screen picks a background (None, Moonfold, Golden hour, Purple wind) and a style (ASCII text or
+image). Two client settings, saved per device like the other appearance settings, no server change.
+The default is None so existing installs look the same after updating; changing it is one constant
+in `packages/contracts/src/settings.ts`. The artwork is bundled with the web client and loaded only
+when chosen, so it works the same over remote connections.
+
+The ASCII text is the owner's own conversion of each picture, drawn as SVG text so it scales to any
+window and follows light and dark themes (the tones are mirrored for light themes, and four ink
+strengths keep the picture readable). The PNGs are the owner's coloured renderings of the same
+conversion, used unmodified.
+
+Provenance: the owner supplied all three scenes. The Moonfold mark is ours. The two landscape
+pictures were converted from source images whose origin and licence this repository does not
+record; the owner confirms the right to redistribute them before a release that includes them.

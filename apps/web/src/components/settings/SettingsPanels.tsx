@@ -29,6 +29,8 @@ import {
   type ChatWidth,
   type DiffLayout,
   type EnvironmentIdentificationMode,
+  HomeBackground,
+  HomeBackgroundStyle,
   MAX_APPEARANCE_CONTRAST,
   MAX_CODE_FONT_SIZE,
   MAX_GLASS_OPACITY,
@@ -172,11 +174,24 @@ import {
 import { searchableSetting } from "./settingsSearch";
 import { ProjectFavicon } from "../ProjectFavicon";
 import { PanelAnimationsPreview } from "./PanelAnimationsPreview";
+import { HomeBackgroundCanvas } from "../home-background/HomeBackground";
 
 const ENVIRONMENT_IDENTIFICATION_LABELS: Record<EnvironmentIdentificationMode, string> = {
   artwork: "Artwork",
   pill: "Version pill",
   none: "None",
+};
+
+const HOME_BACKGROUND_LABELS: Record<HomeBackground, string> = {
+  none: "None",
+  moonfold: "Moonfold",
+  "golden-hour": "Golden hour",
+  "purple-wind": "Purple wind",
+};
+
+const HOME_BACKGROUND_STYLE_LABELS: Record<HomeBackgroundStyle, string> = {
+  ascii: "ASCII text",
+  image: "Image",
 };
 
 const RESPONSE_STREAMING_MODE_LABELS: Record<ResponseStreamingMode, string> = {
@@ -542,6 +557,12 @@ export function useSettingsRestore(onRestored?: () => void) {
         ? ["Contrast"]
         : []),
       ...(settings.glassOpacity !== DEFAULT_UNIFIED_SETTINGS.glassOpacity ? ["Glass opacity"] : []),
+      ...(settings.homeBackground !== DEFAULT_UNIFIED_SETTINGS.homeBackground
+        ? ["Home background"]
+        : []),
+      ...(settings.homeBackgroundStyle !== DEFAULT_UNIFIED_SETTINGS.homeBackgroundStyle
+        ? ["Home background style"]
+        : []),
       ...(settings.diffColorScheme !== DEFAULT_UNIFIED_SETTINGS.diffColorScheme
         ? ["Diff colors"]
         : []),
@@ -705,6 +726,8 @@ export function useSettingsRestore(onRestored?: () => void) {
       settings.fontSizePrompt,
       settings.fontSizeTerminal,
       settings.glassOpacity,
+      settings.homeBackground,
+      settings.homeBackgroundStyle,
       settings.panelAnimationDurationMs,
       settings.responseStreamingMode,
       settings.persistComposerContextStrip,
@@ -813,6 +836,8 @@ export function useSettingsRestore(onRestored?: () => void) {
       contextWindowMeterEnabled: DEFAULT_UNIFIED_SETTINGS.contextWindowMeterEnabled,
       environmentIdentificationMode: DEFAULT_UNIFIED_SETTINGS.environmentIdentificationMode,
       glassOpacity: DEFAULT_UNIFIED_SETTINGS.glassOpacity,
+      homeBackground: DEFAULT_UNIFIED_SETTINGS.homeBackground,
+      homeBackgroundStyle: DEFAULT_UNIFIED_SETTINGS.homeBackgroundStyle,
       panelAnimationDurationMs: DEFAULT_UNIFIED_SETTINGS.panelAnimationDurationMs,
       sidebarThreadPreviewCount: DEFAULT_UNIFIED_SETTINGS.sidebarThreadPreviewCount,
       sidebarProjectGroupingMode: DEFAULT_UNIFIED_SETTINGS.sidebarProjectGroupingMode,
@@ -1462,6 +1487,98 @@ export function AppearanceSettingsPanel() {
                 </SelectPopup>
               </Select>
             </div>
+          }
+        />
+      </SettingsSection>
+
+      <SettingsSection id="appearance-home" title="Home screen">
+        <SettingsRow
+          {...searchableSetting("home-background")}
+          description="Artwork behind the new thread screen, so it is more than a prompt box."
+          resetAction={
+            settings.homeBackground !== DEFAULT_UNIFIED_SETTINGS.homeBackground ? (
+              <SettingResetButton
+                label="home background"
+                onClick={() =>
+                  updateSettings({ homeBackground: DEFAULT_UNIFIED_SETTINGS.homeBackground })
+                }
+              />
+            ) : null
+          }
+          control={
+            <div className="flex w-full items-center gap-3 sm:w-auto">
+              {settings.homeBackground !== "none" ? (
+                <div className="relative hidden h-14 w-24 shrink-0 overflow-hidden rounded-md border border-border sm:block">
+                  <HomeBackgroundCanvas
+                    appearance={resolvedTheme}
+                    scene={settings.homeBackground}
+                    style={settings.homeBackgroundStyle}
+                  />
+                </div>
+              ) : null}
+              <Select
+                value={settings.homeBackground}
+                onValueChange={(value) => {
+                  if (Schema.is(HomeBackground)(value)) updateSettings({ homeBackground: value });
+                }}
+              >
+                <SelectTrigger size="sm" className="w-full sm:w-40" aria-label="Home background">
+                  <SelectValue>{HOME_BACKGROUND_LABELS[settings.homeBackground]}</SelectValue>
+                </SelectTrigger>
+                <SelectPopup align="end" alignItemWithTrigger={false}>
+                  {Object.entries(HOME_BACKGROUND_LABELS).map(([value, label]) => (
+                    <SelectItem hideIndicator key={value} value={value}>
+                      {label}
+                    </SelectItem>
+                  ))}
+                </SelectPopup>
+              </Select>
+            </div>
+          }
+        />
+
+        <SettingsRow
+          {...searchableSetting("home-background-style")}
+          description="Draw the artwork as ASCII text that follows your theme, or as the bundled image."
+          resetAction={
+            settings.homeBackgroundStyle !== DEFAULT_UNIFIED_SETTINGS.homeBackgroundStyle ? (
+              <SettingResetButton
+                label="home background style"
+                onClick={() =>
+                  updateSettings({
+                    homeBackgroundStyle: DEFAULT_UNIFIED_SETTINGS.homeBackgroundStyle,
+                  })
+                }
+              />
+            ) : null
+          }
+          control={
+            <Select
+              disabled={settings.homeBackground === "none"}
+              value={settings.homeBackgroundStyle}
+              onValueChange={(value) => {
+                if (Schema.is(HomeBackgroundStyle)(value)) {
+                  updateSettings({ homeBackgroundStyle: value });
+                }
+              }}
+            >
+              <SelectTrigger
+                size="sm"
+                className="w-full sm:w-40"
+                aria-label="Home background style"
+              >
+                <SelectValue>
+                  {HOME_BACKGROUND_STYLE_LABELS[settings.homeBackgroundStyle]}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectPopup align="end" alignItemWithTrigger={false}>
+                {Object.entries(HOME_BACKGROUND_STYLE_LABELS).map(([value, label]) => (
+                  <SelectItem hideIndicator key={value} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectPopup>
+            </Select>
           }
         />
       </SettingsSection>

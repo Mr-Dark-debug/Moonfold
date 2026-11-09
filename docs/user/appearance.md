@@ -19,6 +19,20 @@ The controls retreat as the composer docks after you send the first message.
 Turn on **Composer context** to keep those controls visible after the thread starts. This preference
 applies to the web and desktop clients.
 
+## Home screen background
+
+The new thread screen can show artwork behind the prompt. Open **Settings → Appearance → Home
+screen** and choose a **Background**: Moonfold, Golden hour, Purple wind, or None, which is the
+default. **Background style** picks how it is drawn:
+
+- **ASCII text** draws the artwork as live text in the scene's colors. On a light theme the picture
+  is mirrored so light areas stay light.
+- **Image** shows the bundled picture.
+
+The artwork sits behind the prompt and only shows while a thread has no messages. It goes away when
+you send the first one. Both choices are saved separately on each device or browser, so a phone and
+a desktop can differ.
+
 ## Motion
 
 The main sidebar, right panel, and terminal drawer open and close immediately by default. Move the

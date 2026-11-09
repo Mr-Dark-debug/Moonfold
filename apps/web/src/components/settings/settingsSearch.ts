@@ -307,6 +307,20 @@ export const SETTINGS_SEARCH_ITEMS = [
     searchTerms: ["transparent transparency solid menus dialogs composer"],
   },
   {
+    id: "home-background",
+    title: "Home background",
+    to: "/settings/appearance",
+    searchTerms: [
+      "home screen new thread wallpaper artwork picture moonfold golden hour purple wind logo none",
+    ],
+  },
+  {
+    id: "home-background-style",
+    title: "Home background style",
+    to: "/settings/appearance",
+    searchTerms: ["ascii text image png wallpaper artwork home screen"],
+  },
+  {
     id: "diff-color-scheme",
     title: "Diff colors",
     to: "/settings/appearance",

@@ -337,6 +337,10 @@ describe("searchSettings", () => {
       to: "/settings/appearance",
       targetId: "appearance-interface",
     });
+    expect(searchSettings("wallpaper")[0]).toMatchObject({
+      id: "home-background",
+      to: "/settings/appearance",
+    });
   });
 
   it("routes conditional window capture settings to the stable toggle row", () => {
