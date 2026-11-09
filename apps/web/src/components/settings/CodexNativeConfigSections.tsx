@@ -4,7 +4,6 @@ import {
   type ProjectId,
   type ProviderAccountUsage,
   type ProviderAgentImportItem,
-  type ProviderHookEntry,
   type ProviderHookList,
   type ProviderInstanceId,
   type ProviderMcpServer,
@@ -263,12 +262,14 @@ function McpServerSignIn(props: {
   const { onDone, name } = props;
 
   // The desktop app can open the browser itself; a web page needs the user's click.
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- asks the desktop shell to open the sign-in page once the login stream reports its URL
   useEffect(() => {
     if (url !== null && window.desktopBridge && !remote) {
       void ensureLocalApi().shell.openExternal(url);
     }
   }, [url, remote]);
 
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- shows the sign-in result toast once the login stream ends and tells the parent that it finished
   useEffect(() => {
     if (completed === null && !failed) return;
     const success = completed?.success === true;

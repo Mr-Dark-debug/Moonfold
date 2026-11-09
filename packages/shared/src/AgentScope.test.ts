@@ -29,7 +29,9 @@ describe.skipIf(HostProcess.Platform.defaultValue() !== "linux")("agentScopeComm
     expect(Number(score)).toBe(AGENT_OOM_SCORE_ADJ);
     expect(args).toEqual(["a b", "$HOME"]);
 
-    const directory = NodeFS.mkdtempSync(NodePath.join(NodeOS.tmpdir(), "moonfold-agent-launcher-"));
+    const directory = NodeFS.mkdtempSync(
+      NodePath.join(NodeOS.tmpdir(), "moonfold-agent-launcher-"),
+    );
     try {
       const launcher = NodePath.join(directory, "launch's");
       NodeFS.writeFileSync(launcher, agentScopeLauncherScript(launch), { mode: 0o700 });

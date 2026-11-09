@@ -1908,7 +1908,8 @@ export const make = Effect.fn("AcpSessionRuntime.make")(function* (
       meta !== null &&
       typeof meta === "object" &&
       !Array.isArray(meta) &&
-      (meta as { readonly moonfoldSessionLoadReady?: unknown }).moonfoldSessionLoadReady === "replay_idle";
+      (meta as { readonly moonfoldSessionLoadReady?: unknown }).moonfoldSessionLoadReady ===
+        "replay_idle";
     const extractedModelConfigId = extractModelConfigId(sessionSetupResult);
     const nextModelConfigId =
       extractedModelConfigId ?? (syntheticReplayIdle ? current.modelConfigId : undefined);

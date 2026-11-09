@@ -412,8 +412,8 @@ know renders as a label that opens nothing. Older `moonfold-thread://v1/<threadI
 links name no environment: clients resolve them in the message's environment,
 then by a unique match in another enabled environment. An outside OAuth client,
 one that is not a linked environment, cannot render `moonfold-thread://` links, so it
-gets the link Copy thread copies, `https://app.t3.codes/threads/<environmentId>/<threadId>`
-on the server's `MOONFOLD_HOSTED_APP_URL`, for threads in this environment. The
+gets the link Copy thread copies, `https://<hosted app>/threads/<environmentId>/<threadId>`
+on the server's `MOONFOLD_HOSTED_APP_URL` (Moonfold ships none), for threads in this environment. The
 hosted app offers the desktop app, the mobile app, or itself.
 
 List and read results report `snoozed` and `snoozedUntil`, and

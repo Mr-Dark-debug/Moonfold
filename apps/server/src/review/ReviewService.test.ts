@@ -245,7 +245,9 @@ describe("ReviewService", () => {
   it.effect("allows a thread's worktree linked from a managed folder to a checkout elsewhere", () =>
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
-      const workspaceRoot = yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-review-workspace-" });
+      const workspaceRoot = yield* fs.makeTempDirectoryScoped({
+        prefix: "moonfold-review-workspace-",
+      });
       const baseDir = yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-review-base-" });
       const managed = yield* fs.realPath(
         yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-review-worktrees-" }),

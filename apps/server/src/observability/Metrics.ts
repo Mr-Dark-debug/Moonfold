@@ -19,9 +19,12 @@ export const orchestrationCommandsTotal = Metric.counter("moonfold_orchestration
   description: "Total orchestration commands dispatched, by outcome.",
 });
 
-export const orchestrationCommandDuration = Metric.timer("moonfold_orchestration_command_duration", {
-  description: "Orchestration command handling duration, excluding thread dispatch lock wait.",
-});
+export const orchestrationCommandDuration = Metric.timer(
+  "moonfold_orchestration_command_duration",
+  {
+    description: "Orchestration command handling duration, excluding thread dispatch lock wait.",
+  },
+);
 
 export const orchestrationEffectClaimsTotal = Metric.counter(
   "moonfold_orchestration_effect_claims_total",

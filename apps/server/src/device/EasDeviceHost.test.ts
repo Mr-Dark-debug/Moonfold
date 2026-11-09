@@ -310,9 +310,9 @@ describe("EAS Simulator host", () => {
       ).toBeNull();
 
       yield* Scope.close(scope, Exit.void);
-      expect(expo.named("MoonfoldStopEasSimulatorSession").map((call) => call.variables.id)).toEqual([
-        "session-1",
-      ]);
+      expect(
+        expo.named("MoonfoldStopEasSimulatorSession").map((call) => call.variables.id),
+      ).toEqual(["session-1"]);
     }).pipe(Effect.scoped, Effect.provide(layer)),
   );
 

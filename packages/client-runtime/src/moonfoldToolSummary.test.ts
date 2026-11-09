@@ -51,7 +51,9 @@ describe("summarizeMoonfoldToolCalls", () => {
       "Unlinked 3 pull requests",
     );
     const uncounted = completed({ states: ["merged"] }, { isError: false });
-    expect(summarizeMoonfoldToolCalls("unlink-pr", [uncounted]).label).toBe("Unlinked pull requests");
+    expect(summarizeMoonfoldToolCalls("unlink-pr", [uncounted]).label).toBe(
+      "Unlinked pull requests",
+    );
   });
 
   it("excludes failed and unfinished sends even if the provider reports completed", () => {

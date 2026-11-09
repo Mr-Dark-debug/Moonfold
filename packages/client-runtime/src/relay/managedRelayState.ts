@@ -213,22 +213,26 @@ export const deregisterManagedRelayEnvironment = Effect.fn(
 export const createManagedRelayMoonfoldChatLinkRequest = Effect.fn(
   "clientRuntime.managedRelaySession.createMoonfoldChatLinkRequest",
 )(function* (registry: AtomRegistry.AtomRegistry, input: { readonly accountId: string }) {
-  const clerkToken = yield* requireSessionClerkToken(registry, input.accountId, "linking Moonfold Chat");
+  const clerkToken = yield* requireSessionClerkToken(
+    registry,
+    input.accountId,
+    "linking Moonfold Chat",
+  );
   const relay = yield* ManagedRelay.ManagedRelayClient;
   return (yield* relay.createMoonfoldChatLinkRequest({ clerkToken })).url;
 });
 
-export const unlinkManagedRelayMoonfoldChat = Effect.fn("clientRuntime.managedRelaySession.unlinkMoonfoldChat")(
-  function* (registry: AtomRegistry.AtomRegistry, input: { readonly accountId: string }) {
-    const clerkToken = yield* requireSessionClerkToken(
-      registry,
-      input.accountId,
-      "unlinking Moonfold Chat",
-    );
-    const relay = yield* ManagedRelay.ManagedRelayClient;
-    yield* relay.unlinkMoonfoldChat({ clerkToken });
-  },
-);
+export const unlinkManagedRelayMoonfoldChat = Effect.fn(
+  "clientRuntime.managedRelaySession.unlinkMoonfoldChat",
+)(function* (registry: AtomRegistry.AtomRegistry, input: { readonly accountId: string }) {
+  const clerkToken = yield* requireSessionClerkToken(
+    registry,
+    input.accountId,
+    "unlinking Moonfold Chat",
+  );
+  const relay = yield* ManagedRelay.ManagedRelayClient;
+  yield* relay.unlinkMoonfoldChat({ clerkToken });
+});
 
 function requireClerkToken(
   get: Atom.AtomContext,

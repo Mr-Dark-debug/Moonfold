@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
-import { DEFAULT_SPEECH_TRANSCRIPTION_OPTIONS, SPEECH_MAX_OPTIONS_BYTES } from "@moonfold/contracts";
+import {
+  DEFAULT_SPEECH_TRANSCRIPTION_OPTIONS,
+  SPEECH_MAX_OPTIONS_BYTES,
+} from "@moonfold/contracts";
 
 import {
   decodeSpeechPcmRequest,

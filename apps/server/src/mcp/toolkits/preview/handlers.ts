@@ -119,21 +119,23 @@ const invokeTargeted = <A extends object>(
  * check the page the tab is on, before acting and again after anything that can navigate, so a
  * redirect, link or script cannot carry the agent onto a blocked site and keep working there.
  */
-const checkSite = (capability: BrowserSiteCapability, url: string | null | undefined) =>
-  Effect.gen(function* () {
-    if (url === null || url === undefined) return;
-    const scope = yield* McpInvocationContext.McpInvocationContext;
-    if (scope.thread === undefined) return;
-    const sites = yield* BrowserSitePermissions.BrowserSitePermissions;
-    yield* sites
-      .check({ threadId: scope.thread.threadId, url, capability })
-      .pipe(
-        Effect.mapError(
-          (denied) =>
-            new OrchestratorMcpFailure({ code: "capability_denied", message: denied.message }),
-        ),
-      );
-  });
+const checkSite = Effect.fn("checkSite")(function* (
+  capability: BrowserSiteCapability,
+  url: string | null | undefined,
+) {
+  if (url === null || url === undefined) return;
+  const scope = yield* McpInvocationContext.McpInvocationContext;
+  if (scope.thread === undefined) return;
+  const sites = yield* BrowserSitePermissions.BrowserSitePermissions;
+  yield* sites
+    .check({ threadId: scope.thread.threadId, url, capability })
+    .pipe(
+      Effect.mapError(
+        (denied) =>
+          new OrchestratorMcpFailure({ code: "capability_denied", message: denied.message }),
+      ),
+    );
+});
 
 /** The page the targeted tab shows now, or null when there is no tab yet. */
 const currentPage = (tabId: PreviewTabId | undefined) =>

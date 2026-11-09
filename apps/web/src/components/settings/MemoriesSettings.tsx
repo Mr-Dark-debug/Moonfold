@@ -1,7 +1,7 @@
 import { useAtomValue } from "@effect/atom-react";
 import { BookmarkIcon, PencilIcon, PlusIcon, Trash2Icon } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   type EnvironmentId,
   MAX_MEMORY_LENGTH,
@@ -142,10 +142,7 @@ function MemoryEnvironmentSection({
   const [editing, setEditing] = useState<Memory | null>(null);
   const [busy, setBusy] = useState(false);
   const allProjects = useProjects();
-  const projects = useMemo(
-    () => allProjects.filter((project) => project.environmentId === environmentId),
-    [allProjects, environmentId],
-  );
+  const projects = allProjects.filter((project) => project.environmentId === environmentId);
   const data = memoriesQuery.data;
 
   const toggle = async () => {
@@ -327,10 +324,7 @@ function MemoryEditorDialog({
   readonly onClose: () => void;
 }) {
   const allProjects = useProjects();
-  const projects = useMemo(
-    () => allProjects.filter((project) => project.environmentId === environmentId),
-    [allProjects, environmentId],
-  );
+  const projects = allProjects.filter((project) => project.environmentId === environmentId);
   // The same query the list reads, so saving refreshes the list.
   const memoriesQuery = useEnvironmentQuery(
     serverEnvironment.memories({ environmentId, input: {} }),

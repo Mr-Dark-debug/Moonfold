@@ -51,7 +51,7 @@ describe("parseMoonfoldProjectFile", () => {
   it("reads project defaults from JSONC with a URL in a block comment", () => {
     expect(
       parseMoonfoldProjectFile(`{
-        /* See https://t3.codes/schema/moonfold.json */
+        /* See the moonfold.json schema */
         "defaultThreadEnvMode": "worktree"
       }`),
     ).toEqual({ defaultThreadEnvMode: "worktree" });

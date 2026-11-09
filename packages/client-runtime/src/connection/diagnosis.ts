@@ -276,7 +276,9 @@ function helpSection(
         ? "sign-in-account-or-link-problems"
         : "this-device-cant-reach-moonfold-connect";
     case "tunnel":
-      return onThisDevice ? "this-device-cant-reach-moonfold-connect" : "the-hosts-tunnel-is-offline";
+      return onThisDevice
+        ? "this-device-cant-reach-moonfold-connect"
+        : "the-hosts-tunnel-is-offline";
     case "server":
       return failure?.reason === "authentication" || failure?.reason === "permission"
         ? "sign-in-account-or-link-problems"

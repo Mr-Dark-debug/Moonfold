@@ -1017,14 +1017,9 @@ export function parseCodexGoalCommand(
 export type CodexReviewTarget = CodexSchema.V2ReviewStartParams__ReviewTarget;
 
 /**
- * Parses a `/review` message into a Codex review target:
- *
- *   /review                     uncommitted changes
- *   /review branch <name>       changes against a base branch (also `base <name>`)
- *   /review commit <sha>        one commit
- *   /review <instructions>      a custom review prompt
- *
- * Returns null for every other message.
+ * Parses a `/review` message into a Codex review target: `/review` (uncommitted changes),
+ * `/review branch|base <name>` (against a base branch), `/review commit <sha>`, or
+ * `/review <instructions>` (a custom prompt). Returns null for every other message.
  */
 export function parseCodexReviewCommand(text: string): CodexReviewTarget | null {
   const match = /^\/review(?:\s+([\s\S]*))?$/u.exec(text.trim());
@@ -1574,7 +1569,10 @@ export function codexThreadRuntimeParams(input: {
         ? {}
         : {
             // Override only Moonfold's servers so launch-argument MCP servers survive.
-            "mcp_servers.moonfold": { ...moonfoldServer, disabled_tools: [CODEX_DIRECT_ONLY_MOONFOLD_TOOL] },
+            "mcp_servers.moonfold": {
+              ...moonfoldServer,
+              disabled_tools: [CODEX_DIRECT_ONLY_MOONFOLD_TOOL],
+            },
             // Code Mode runs a blocking wait as a nested call, and the model keeps working
             // around it. A second, direct-only registration makes it a plain tool call.
             [`mcp_servers.${CODEX_MOONFOLD_DIRECT_MCP_SERVER}`]: {
@@ -5030,56 +5028,57 @@ export const makeCodexAdapterV2 = Effect.fn("makeCodexAdapterV2")(function* (
          * One notice per hook run, updated from running to its outcome. Runs outside a turn
          * (session start, for example) have nowhere to show and are skipped.
          */
-        const emitHookRunNotice = (payload: CodexSchema.V2HookCompletedNotification) =>
-          Effect.gen(function* () {
-            if (payload.turnId == null) return;
-            const resolved = yield* resolveItemEventContext(payload.turnId);
-            if (resolved === undefined) return;
-            const { context } = resolved;
-            const { run } = payload;
-            const nativeItemId = `hook:${run.id}`;
-            const now = yield* DateTime.now;
-            const { ordinal, startedAt } = yield* resolveItemPosition(context, nativeItemId);
-            const status = CODEX_HOOK_STATUSES[run.status];
-            const output = run.entries
-              .map((entry) => entry.text.trim())
-              .filter((text) => text.length > 0)
-              .join("\n")
-              .slice(0, CODEX_HOOK_OUTPUT_LIMIT);
-            const summary =
-              run.status === "blocked"
-                ? `The ${run.eventName} hook blocked the action.`
-                : run.status === "running"
-                  ? `Running the ${run.eventName} hook.`
-                  : `The ${run.eventName} hook ${run.status}.`;
-            yield* emitProviderEvent({
-              type: "turn_item.updated",
-              driver: CODEX_PROVIDER,
-              turnItem: {
-                id: idAllocator.derive.turnItemFromProviderItem({
-                  driver: CODEX_PROVIDER,
-                  nativeItemId,
-                }),
-                threadId: context.projectionThreadId,
-                runId: context.projectionRunId,
-                nodeId: context.providerNodeId,
-                providerThreadId: context.providerThread.id,
-                providerTurnId: context.providerTurnId,
-                nativeItemRef: codexNativeItemRef(nativeItemId),
-                parentItemId: null,
-                ordinal,
-                type: "system_notice",
-                status,
-                title: `Hook: ${run.eventName}`,
-                message: [summary, run.statusMessage?.trim(), output]
-                  .filter((part) => part !== undefined && part !== null && part.length > 0)
-                  .join("\n"),
-                startedAt,
-                completedAt: status === "running" ? null : now,
-                updatedAt: now,
-              },
-            });
+        const emitHookRunNotice = Effect.fn("emitHookRunNotice")(function* (
+          payload: CodexSchema.V2HookCompletedNotification,
+        ) {
+          if (payload.turnId == null) return;
+          const resolved = yield* resolveItemEventContext(payload.turnId);
+          if (resolved === undefined) return;
+          const { context } = resolved;
+          const { run } = payload;
+          const nativeItemId = `hook:${run.id}`;
+          const now = yield* DateTime.now;
+          const { ordinal, startedAt } = yield* resolveItemPosition(context, nativeItemId);
+          const status = CODEX_HOOK_STATUSES[run.status];
+          const output = run.entries
+            .map((entry) => entry.text.trim())
+            .filter((text) => text.length > 0)
+            .join("\n")
+            .slice(0, CODEX_HOOK_OUTPUT_LIMIT);
+          const summary =
+            run.status === "blocked"
+              ? `The ${run.eventName} hook blocked the action.`
+              : run.status === "running"
+                ? `Running the ${run.eventName} hook.`
+                : `The ${run.eventName} hook ${run.status}.`;
+          yield* emitProviderEvent({
+            type: "turn_item.updated",
+            driver: CODEX_PROVIDER,
+            turnItem: {
+              id: idAllocator.derive.turnItemFromProviderItem({
+                driver: CODEX_PROVIDER,
+                nativeItemId,
+              }),
+              threadId: context.projectionThreadId,
+              runId: context.projectionRunId,
+              nodeId: context.providerNodeId,
+              providerThreadId: context.providerThread.id,
+              providerTurnId: context.providerTurnId,
+              nativeItemRef: codexNativeItemRef(nativeItemId),
+              parentItemId: null,
+              ordinal,
+              type: "system_notice",
+              status,
+              title: `Hook: ${run.eventName}`,
+              message: [summary, run.statusMessage?.trim(), output]
+                .filter((part) => part !== undefined && part !== null && part.length > 0)
+                .join("\n"),
+              startedAt,
+              completedAt: status === "running" ? null : now,
+              updatedAt: now,
+            },
           });
+        });
         yield* client.handleServerNotification("hook/started", emitHookRunNotice);
         yield* client.handleServerNotification("hook/completed", emitHookRunNotice);
         // Unloading an idle thread kills its terminals without completing
@@ -7041,11 +7040,11 @@ export const makeCodexAdapterV2 = Effect.fn("makeCodexAdapterV2")(function* (
          * Starts a native review turn. `review/start` answers like `turn/start`, so the turn is
          * registered the same way and its items stream through the usual handlers.
          */
-        const startNativeReview = (
-          turnInput: ProviderAdapter.ProviderAdapterV2TurnInput,
-          target: CodexReviewTarget,
-        ) =>
-          Effect.gen(function* () {
+        const startNativeReview = Effect.fn("CodexAdapterV2.startNativeReview")(
+          function* (
+            turnInput: ProviderAdapter.ProviderAdapterV2TurnInput,
+            target: CodexReviewTarget,
+          ) {
             const threadId = yield* getNativeThreadId(turnInput.providerThread);
             yield* Ref.update(pendingRootTurns, (current) => {
               const updated = new Map(current);
@@ -7063,18 +7062,21 @@ export const makeCodexAdapterV2 = Effect.fn("makeCodexAdapterV2")(function* (
               startedAt: codexTimestamp(started.turn.startedAt),
               waitForNativeStart: started.turn.startedAt === null,
             });
-          }).pipe(
-            Effect.ensuring(
-              Effect.flatMap(getNativeThreadId(turnInput.providerThread), (threadId) =>
-                Ref.update(pendingRootTurns, (current) => {
-                  if (current.get(threadId) !== turnInput) return current;
-                  const updated = new Map(current);
-                  updated.delete(threadId);
-                  return updated;
-                }),
-              ).pipe(Effect.ignore),
+          },
+          (effect, turnInput) =>
+            effect.pipe(
+              Effect.ensuring(
+                Effect.flatMap(getNativeThreadId(turnInput.providerThread), (threadId) =>
+                  Ref.update(pendingRootTurns, (current) => {
+                    if (current.get(threadId) !== turnInput) return current;
+                    const updated = new Map(current);
+                    updated.delete(threadId);
+                    return updated;
+                  }),
+                ).pipe(Effect.ignore),
+              ),
             ),
-          );
+        );
 
         // Codex refuses to resume a session archived elsewhere until it is unarchived.
         const resumeNativeThread = Effect.fn("CodexAdapterV2.resumeNativeThread")(function* (

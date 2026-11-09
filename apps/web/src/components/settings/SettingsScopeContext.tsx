@@ -1,4 +1,8 @@
-import { type EnvironmentId, MOONFOLD_PROJECT_FILE_NAME, type MoonfoldProjectFile } from "@moonfold/contracts";
+import {
+  type EnvironmentId,
+  MOONFOLD_PROJECT_FILE_NAME,
+  type MoonfoldProjectFile,
+} from "@moonfold/contracts";
 import { parseMoonfoldProjectFile } from "@moonfold/shared/moonfoldProjectFile";
 import { useAtomValue } from "@effect/atom-react";
 import { AsyncResult, Atom } from "effect/reactivity";

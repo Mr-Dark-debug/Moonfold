@@ -314,6 +314,9 @@ export function summarizeMoonfoldToolCalls(
     case "secret-request":
       label = phrase("Asked for", "ask for", quantity(selected.length, "secret"));
       break;
+    case "question-ask":
+      label = phrase("Asked", "ask", quantity(selected.length, "question card"));
+      break;
     case "worktree-handoff":
       label = phrase(
         "Handed off to",

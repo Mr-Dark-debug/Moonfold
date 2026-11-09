@@ -631,7 +631,9 @@ setInterval(() => {}, 1_000);
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const root = yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-service-launcher-orphan-" });
+      const root = yield* fs.makeTempDirectoryScoped({
+        prefix: "moonfold-service-launcher-orphan-",
+      });
       const databasePath = path.join(root, "state.sqlite");
       yield* writeSparseFile(databasePath, 10 * 1024 ** 3);
       const backupRoot = path.join(root, "runtime", "db-backup");

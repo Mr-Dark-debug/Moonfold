@@ -121,7 +121,9 @@ const browserSetupCommand = Command.make("setup", { baseDir: baseDirFlag }).pipe
       // sudo resets the environment, so a chosen home has to be on the command line.
       const setupCommand = yield* resolveRootCliCommand(
         PreviewBrowserHost.SETUP_SUBCOMMAND,
-        Option.isSome(baseDir) || env.MOONFOLD_HOME !== undefined ? ["--base-dir", baseDirPath] : [],
+        Option.isSome(baseDir) || env.MOONFOLD_HOME !== undefined
+          ? ["--base-dir", baseDirPath]
+          : [],
       );
       // Root, unless sudo came from another user, is likely the server's own account.
       const rootWarning =

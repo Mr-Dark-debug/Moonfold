@@ -46,11 +46,11 @@ Every user on the machine can read the policy, so do not put credentials in it.
 
 Use one of these per machine:
 
-| OS      | Native policy                                                                                        | Policy file                                       |
-| ------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| macOS   | Configuration profile for `dev.moonfold.app`                                                       | `/Library/Application Support/Moonfold/policy.json` |
+| OS      | Native policy                                                                                           | Policy file                                         |
+| ------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| macOS   | Configuration profile for `dev.moonfold.app`                                                            | `/Library/Application Support/Moonfold/policy.json` |
 | Windows | Group Policy template, or a `Policy` JSON value (both under `HKLM\SOFTWARE\Policies\Moonfold\Moonfold`) | `C:\Program Files\Moonfold\policy.json`             |
-| Linux   |                                                                                                      | `/etc/moonfold/policy.json`                         |
+| Linux   |                                                                                                         | `/etc/moonfold/policy.json`                         |
 
 Moonfold does not merge sources. If a machine has both a native policy and a policy file, Moonfold
 refuses to start until you remove one.
@@ -218,7 +218,7 @@ The limit decides which modes Moonfold asks the provider for. It is not a sandbo
 
 - `desktop`: as the desktop app's own server.
 - `local-browser`: as a server only browsers on this machine reach, such as `npx moonfold`.
-- `remote`: reachable from phones, other computers, and app.t3.codes over the network.
+- `remote`: reachable from phones and other computers over the network.
 
 `remote` is the line that matters. A server reachable from the network also accepts browsers on
 this machine, and the two local kinds differ only in how Moonfold was started. On machines with the
@@ -251,8 +251,7 @@ so restart Moonfold after that.
 - `browserCookieImport: false`: users cannot import cookies from another browser into Moonfold's
   browser.
 - `telemetry: false`: the server and desktop app send no [product usage data](./telemetry.md) or
-  relay connection traces. A policy cannot turn them on. A browser that opens the server, such as
-  app.t3.codes, still sends its own relay traces.
+  relay connection traces. A policy cannot turn them on.
 
 ### Providers
 

@@ -331,7 +331,9 @@ it.effect(
           },
           Services: {
             "svc:moonfold": {
-              Web: { "moonfold:443": { Handlers: { "/moonfold": { Proxy: "http://127.0.0.1:3773" } } } },
+              Web: {
+                "moonfold:443": { Handlers: { "/moonfold": { Proxy: "http://127.0.0.1:3773" } } },
+              },
             },
           },
         }),

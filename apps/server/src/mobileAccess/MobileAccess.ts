@@ -2,11 +2,9 @@
 /**
  * Mobile access (D-58): an HTTPS listener for the Moonfold Android app.
  *
- * While the `mobileAccessEnabled` setting is on, the server also listens on every interface over
- * TLS with a self-signed certificate. Requests and WebSocket upgrades go to the same handlers as
- * the main HTTP server, so auth, scopes and every route behave the same. The QR code carries the
- * certificate's SHA-256 and the app trusts that certificate only, which gives encryption and host
- * identity without a certificate authority, a domain or any hosted service.
+ * While `mobileAccessEnabled` is on, the server also listens over TLS with a self-signed
+ * certificate and serves the same handlers. The QR code carries the certificate's SHA-256 and
+ * the app trusts only that certificate.
  */
 import * as NodeCrypto from "node:crypto";
 import * as NodeFSP from "node:fs/promises";
@@ -21,6 +19,7 @@ import * as Context from "effect/Context";
 import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
 import * as Ref from "effect/Ref";
+import * as Schema from "effect/Schema";
 import * as Stream from "effect/Stream";
 
 import * as ServerConfig from "../config.ts";
@@ -205,6 +204,12 @@ export const MOBILE_ACCESS_DISABLED: AuthMobileAccessStatus = {
   addresses: [],
 };
 
+/** The second listener could not start: its certificate or port was unavailable. */
+class MobileAccessStartError extends Schema.TaggedError<MobileAccessStartError>()(
+  "MobileAccessStartError",
+  { cause: Schema.Defect() },
+) {}
+
 export class MobileAccess extends Context.Service<
   MobileAccess,
   { readonly status: Effect.Effect<AuthMobileAccessStatus> }
@@ -225,21 +230,22 @@ export const layer = Layer.effect(
       const current = yield* Ref.getAndSet(running, null);
       if (current !== null) yield* Effect.promise(() => closeListener(current.server));
     });
-    const apply = (enabled: boolean) =>
-      Effect.gen(function* () {
+    const apply = Effect.fn("MobileAccess.apply")(
+      function* (enabled: boolean) {
         const current = yield* Ref.get(running);
         if (enabled === (current !== null)) return;
         if (!enabled) return yield* stop;
-        const started = yield* Effect.tryPromise(() =>
-          startListener({ directory, mainPort: config.port }),
-        );
+        const started = yield* Effect.tryPromise({
+          try: () => startListener({ directory, mainPort: config.port }),
+          catch: (cause) => new MobileAccessStartError({ cause }),
+        });
         yield* Ref.set(running, started);
         yield* Effect.logInfo("Mobile access listening", { port: started.status.port });
-      }).pipe(
-        Effect.catch((cause) =>
-          Effect.logWarning("Mobile access could not start.", { cause: String(cause) }),
-        ),
-      );
+      },
+      Effect.catch((error) =>
+        Effect.logWarning("Mobile access could not start.", { cause: String(error.cause) }),
+      ),
+    );
 
     yield* Effect.addFinalizer(() => stop);
     // Starts a beat later than the server: the main listener must exist to receive requests.

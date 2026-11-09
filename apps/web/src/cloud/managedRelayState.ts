@@ -189,7 +189,10 @@ export function useManagedTunnelUsage() {
       : (environments.data?.filter(
           (environment) => environment.endpoint.providerKind === "cloudflare_tunnel",
         ).length ?? null);
-  const cap = moonfoldChat.accountId !== null && moonfoldChat.data ? managedTunnelCap(moonfoldChat.data) : null;
+  const cap =
+    moonfoldChat.accountId !== null && moonfoldChat.data
+      ? managedTunnelCap(moonfoldChat.data)
+      : null;
   return {
     used,
     limit: cap?.limit ?? null,

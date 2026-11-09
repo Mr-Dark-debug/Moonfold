@@ -212,7 +212,9 @@ const openClaudeReplaySession = Effect.fn("openClaudeReplaySession")(function* (
   const fileSystem = yield* FileSystem.FileSystem;
   const path = yield* Path.Path;
   const childProcessSpawner = yield* ChildProcessSpawner.ChildProcessSpawner;
-  const replayDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-lifecycle-" });
+  const replayDir = yield* fileSystem.makeTempDirectoryScoped({
+    prefix: "moonfold-claude-lifecycle-",
+  });
   const transcript = yield* decodeAcpReplayTranscript(
     {
       provider: ACP_REGISTRY_PROVIDER,
@@ -1254,10 +1256,13 @@ describe("AcpRegistryAdapterV2", () => {
         new: stdio("Bearer opened-token"),
         load: stdio("Bearer rotated-token"),
       });
-      assert.deepEqual(yield* sessionMcpServers({ agentId: "gemini" }, { MOONFOLD_ACP_MCP_HTTP: "1" }), {
-        new: stdio("Bearer opened-token"),
-        load: stdio("Bearer rotated-token"),
-      });
+      assert.deepEqual(
+        yield* sessionMcpServers({ agentId: "gemini" }, { MOONFOLD_ACP_MCP_HTTP: "1" }),
+        {
+          new: stdio("Bearer opened-token"),
+          load: stdio("Bearer rotated-token"),
+        },
+      );
     }).pipe(Effect.provide(layerTest), Effect.scoped),
   );
 
@@ -1355,7 +1360,11 @@ describe("AcpRegistryAdapterV2", () => {
               ordinal === 1
                 ? moonfoldAcpPromptWithInstructions({
                     prompt: "test prompt",
-                    state: { interactionMode: "default", hasMoonfoldMcp: false, hasDeviceTools: false },
+                    state: {
+                      interactionMode: "default",
+                      hasMoonfoldMcp: false,
+                      hasDeviceTools: false,
+                    },
                   })
                 : "test prompt",
           },
@@ -1880,7 +1889,8 @@ describe("AcpRegistryAdapterV2", () => {
               ...update("grandchild", {
                 sessionUpdate: "terminal_update",
                 terminalId: "nested-terminal",
-                command: "/usr/bin/node /srv/moonfold/bin.ts acp-mcp-call orchestrator_capabilities {}",
+                command:
+                  "/usr/bin/node /srv/moonfold/bin.ts acp-mcp-call orchestrator_capabilities {}",
               }),
               label: "nested-output",
             },
@@ -2322,7 +2332,9 @@ describe("AcpRegistryAdapterV2", () => {
       const childProcessSpawner = yield* ChildProcessSpawner.ChildProcessSpawner;
       const fileSystem = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const replayDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-copilot-lost-" });
+      const replayDir = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "moonfold-copilot-lost-",
+      });
       const scriptPath = yield* path.fromFileUrl(
         new URL("../../../scripts/acp-replay-agent.ts", import.meta.url),
       );

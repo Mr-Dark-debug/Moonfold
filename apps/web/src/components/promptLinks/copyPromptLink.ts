@@ -29,7 +29,11 @@ export function promptLinkFor(
 ): string | null {
   const trimmed = isAttachmentOnlyBootstrapPrompt(prompt) ? "" : prompt.trim();
   if (trimmed.length === 0 || trimmed.length > PROMPT_LINK_MAX_PROMPT_LENGTH) return null;
-  return buildNewThreadLink({ prompt: trimmed, ...context, origin: configuredHostedAppUrl() });
+  return buildNewThreadLink({
+    prompt: trimmed,
+    ...context,
+    origin: configuredHostedAppUrl() ?? null,
+  });
 }
 
 export function promptLinkRepositoryOf(

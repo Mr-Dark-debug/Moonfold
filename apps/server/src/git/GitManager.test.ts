@@ -4063,7 +4063,10 @@ it.layer(layerGitManagerTest)("GitManager", (it) => {
         yield* runGit(repoDir, ["push", "origin", "refs/heads/upstream/release"]);
 
         const driver = yield* GitVcsDriver.GitVcsDriver;
-        const worktreePath = NodePath.join(yield* makeTempDir("moonfold-git-worktrees-"), "feature");
+        const worktreePath = NodePath.join(
+          yield* makeTempDir("moonfold-git-worktrees-"),
+          "feature",
+        );
         yield* driver.createWorktree({
           cwd: repoDir,
           path: worktreePath,
@@ -4139,7 +4142,10 @@ it.layer(layerGitManagerTest)("GitManager", (it) => {
         ]);
 
         const driver = yield* GitVcsDriver.GitVcsDriver;
-        const worktreePath = NodePath.join(yield* makeTempDir("moonfold-git-worktrees-"), "feature");
+        const worktreePath = NodePath.join(
+          yield* makeTempDir("moonfold-git-worktrees-"),
+          "feature",
+        );
         yield* driver.createWorktree({
           cwd: repoDir,
           path: worktreePath,

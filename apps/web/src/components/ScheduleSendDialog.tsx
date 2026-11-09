@@ -15,16 +15,12 @@ import {
   squashAtomCommandFailure,
 } from "@moonfold/client-runtime/state/runtime";
 import { CalendarClockIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { create } from "zustand";
 
 import { useEnvironmentSettings } from "../hooks/useSettings";
 import { getCustomModelOptionsByInstance } from "../modelSelection";
-import {
-  applyProviderInstanceSettings,
-  deriveProviderInstanceEntries,
-  sortProviderInstanceEntries,
-} from "../providerInstances";
+import { providerInstanceEntriesFor } from "../providerInstances";
 import { EMPTY_SERVER_PROVIDERS, serverEnvironment } from "../state/server";
 import { readEnvironmentScope } from "../state/session";
 import { useAtomCommand } from "../state/use-atom-command";
@@ -99,17 +95,7 @@ function ScheduleSendDialog({
   const providers =
     useAtomValue(serverEnvironment.providersValueAtom(request.environmentId)) ??
     EMPTY_SERVER_PROVIDERS;
-  const instanceEntries = useMemo(
-    () =>
-      sortProviderInstanceEntries(
-        applyProviderInstanceSettings(
-          deriveProviderInstanceEntries(providers),
-          settings,
-          request.projectId,
-        ),
-      ),
-    [providers, settings, request.projectId],
-  );
+  const instanceEntries = providerInstanceEntriesFor(providers, settings, request.projectId);
   // Read once: rendering must not depend on the clock.
   const [openedAt] = useState(() => new Date());
   const initialAt = request.at ?? defaultScheduledSendTime(openedAt);
@@ -118,10 +104,11 @@ function ScheduleSendDialog({
   const [time, setTime] = useState(toTimeInputValue(initialAt));
   const [selection, setSelection] = useState<ModelSelection>(request.modelSelection);
   const [saving, setSaving] = useState(false);
-  const modelOptionsByInstance = useMemo(
-    () =>
-      getCustomModelOptionsByInstance(settings, providers, selection.instanceId, selection.model),
-    [settings, providers, selection],
+  const modelOptionsByInstance = getCustomModelOptionsByInstance(
+    settings,
+    providers,
+    selection.instanceId,
+    selection.model,
   );
   const upsertTask = useAtomCommand(serverEnvironment.upsertScheduledTask, {
     label: "schedule send",

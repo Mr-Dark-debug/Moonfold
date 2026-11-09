@@ -37,16 +37,19 @@ const emitBackgroundToolDuringAnswer =
 const emitMcpToolApprovalElicitation =
   process.env.MOONFOLD_ACP_EMIT_MCP_TOOL_APPROVAL_ELICITATION === "1";
 const grokKillTaskShape = process.env.MOONFOLD_ACP_GROK_KILL_TASK_SHAPE;
-const emitGrokBackgroundTaskPoll = process.env.MOONFOLD_ACP_GROK_BACKGROUND_TASK_COMPLETION === "poll";
+const emitGrokBackgroundTaskPoll =
+  process.env.MOONFOLD_ACP_GROK_BACKGROUND_TASK_COMPLETION === "poll";
 const emitForeignSessionUpdates = process.env.MOONFOLD_ACP_EMIT_FOREIGN_SESSION_UPDATES === "1";
 const omitInitializeModelState = process.env.MOONFOLD_ACP_OMIT_INITIALIZE_MODEL_STATE === "1";
-const completeFirstPromptOnCancel = process.env.MOONFOLD_ACP_COMPLETE_FIRST_PROMPT_ON_CANCEL === "1";
+const completeFirstPromptOnCancel =
+  process.env.MOONFOLD_ACP_COMPLETE_FIRST_PROMPT_ON_CANCEL === "1";
 const floodStderr = process.env.MOONFOLD_ACP_FLOOD_STDERR === "1";
 const hangPromptForever = process.env.MOONFOLD_ACP_HANG_PROMPT_FOREVER === "1";
 const agentVersion = process.env.MOONFOLD_ACP_AGENT_VERSION ?? "0.0.0";
 const geminiApiKey = process.env.GEMINI_API_KEY;
 const idleError = process.env.MOONFOLD_ACP_IDLE_ERROR;
-const emitTrackedToolCallKindThenHang = process.env.MOONFOLD_ACP_EMIT_TRACKED_TOOL_CALL_KIND_THEN_HANG;
+const emitTrackedToolCallKindThenHang =
+  process.env.MOONFOLD_ACP_EMIT_TRACKED_TOOL_CALL_KIND_THEN_HANG;
 const clientFsProbePath = process.env.MOONFOLD_ACP_CLIENT_FS_PROBE_PATH;
 const clientFsProbeLogPath = process.env.MOONFOLD_ACP_CLIENT_FS_PROBE_LOG_PATH;
 const encodeJson = Schema.encodeSync(Schema.fromJsonString(Schema.Unknown));
@@ -63,7 +66,8 @@ const compactionPromptOrdinals = new Set(
   (process.env.MOONFOLD_ACP_COMPACTION_PROMPT_ORDINALS ?? "").split(",").map(Number),
 );
 const failSetModeConfigOption = process.env.MOONFOLD_ACP_FAIL_SET_MODE_CONFIG_OPTION === "1";
-const emitEmptyDefaultAgentOption = process.env.MOONFOLD_ACP_EMIT_EMPTY_DEFAULT_AGENT_OPTION === "1";
+const emitEmptyDefaultAgentOption =
+  process.env.MOONFOLD_ACP_EMIT_EMPTY_DEFAULT_AGENT_OPTION === "1";
 const promptResponseText = process.env.MOONFOLD_ACP_PROMPT_RESPONSE_TEXT;
 const promptDelayMs = Number(process.env.MOONFOLD_ACP_PROMPT_DELAY_MS ?? "0");
 const terminalOutputBytes = Number(process.env.MOONFOLD_ACP_EMIT_TERMINAL_OUTPUT_BYTES ?? "0");

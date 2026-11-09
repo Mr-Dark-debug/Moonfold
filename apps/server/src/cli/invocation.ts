@@ -67,7 +67,9 @@ export const resolveServerInstallation = Effect.gen(function* () {
   const path = yield* Path.Path;
   const platform = yield* HostProcess.Platform;
   const entry = yield* fs.realPath(yield* resolveEntryPath);
-  const match = /^(.*)\/lib\/node_modules\/moonfold\/(?:dist\/bin\.mjs|bin\/moonfold\.mjs)$/.exec(entry);
+  const match = /^(.*)\/lib\/node_modules\/moonfold\/(?:dist\/bin\.mjs|bin\/moonfold\.mjs)$/.exec(
+    entry,
+  );
   if (!match) {
     const runner = detectCliRunner(entry);
     return runner === null

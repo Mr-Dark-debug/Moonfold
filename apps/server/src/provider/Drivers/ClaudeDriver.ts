@@ -258,7 +258,7 @@ export const ClaudeDriver: ProviderDriver<ClaudeSettings, ClaudeDriverEnv, Path.
                           Effect.provideService(FileSystem.FileSystem, fileSystem),
                           Effect.provideService(Path.Path, path),
                         )
-                      : Effect.succeed(undefined),
+                      : Effect.undefined,
                   ),
                 ),
             ),

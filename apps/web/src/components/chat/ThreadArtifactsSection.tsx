@@ -1,6 +1,6 @@
 import type { EnvironmentId, ThreadId } from "@moonfold/contracts";
 import { FileIcon, PaperclipIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { useRightPanelStore } from "../../rightPanelStore";
 import { useThreadVisibleTurnItems } from "../../state/entities";
@@ -19,12 +19,9 @@ export function ThreadArtifactsSection(props: {
   readonly environmentId: EnvironmentId;
   readonly threadId: ThreadId;
 }) {
-  const threadRef = useMemo(
-    () => ({ environmentId: props.environmentId, threadId: props.threadId }),
-    [props.environmentId, props.threadId],
-  );
+  const threadRef = { environmentId: props.environmentId, threadId: props.threadId };
   const items = useThreadVisibleTurnItems(threadRef);
-  const artifacts = useMemo(() => threadArtifacts(items), [items]);
+  const artifacts = threadArtifacts(items);
   const [expanded, setExpanded] = useState(false);
   if (artifacts.length === 0) return null;
   const shown = expanded ? artifacts : artifacts.slice(0, COLLAPSED_COUNT);

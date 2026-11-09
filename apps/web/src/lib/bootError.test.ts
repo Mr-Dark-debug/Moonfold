@@ -1,4 +1,8 @@
-import type { DesktopBridge, DesktopCliCommandState, DesktopUpdateState } from "@moonfold/contracts";
+import type {
+  DesktopBridge,
+  DesktopCliCommandState,
+  DesktopUpdateState,
+} from "@moonfold/contracts";
 import { describe, expect, it, vi } from "vite-plus/test";
 
 import {
@@ -21,7 +25,9 @@ const notOnPath = (launcherPath: string | null): DesktopCliCommandState => ({
 describe("resolveTriageCommand", () => {
   it("prefers moonfold on PATH, then the desktop launcher", async () => {
     const onPath = { ...notOnPath("/home/me/.moonfold/bin/moonfold"), onPath: true };
-    await expect(resolveTriageCommand(desktopWith(async () => onPath))).resolves.toBe("moonfold triage");
+    await expect(resolveTriageCommand(desktopWith(async () => onPath))).resolves.toBe(
+      "moonfold triage",
+    );
     await expect(
       resolveTriageCommand(desktopWith(async () => notOnPath("/home/me/.moonfold/bin/moonfold"))),
     ).resolves.toBe("/home/me/.moonfold/bin/moonfold triage");
@@ -29,10 +35,14 @@ describe("resolveTriageCommand", () => {
 
   it("quotes launcher paths for the shell that runs them", async () => {
     await expect(
-      resolveTriageCommand(desktopWith(async () => notOnPath("/Users/O'Neil/.moonfold/bin/moonfold"))),
+      resolveTriageCommand(
+        desktopWith(async () => notOnPath("/Users/O'Neil/.moonfold/bin/moonfold")),
+      ),
     ).resolves.toBe(`'/Users/O'"'"'Neil/.moonfold/bin/moonfold' triage`);
     await expect(
-      resolveTriageCommand(desktopWith(async () => notOnPath("C:\\Users\\Me\\.moonfold\\bin\\moonfold.cmd"))),
+      resolveTriageCommand(
+        desktopWith(async () => notOnPath("C:\\Users\\Me\\.moonfold\\bin\\moonfold.cmd")),
+      ),
     ).resolves.toBe("C:\\Users\\Me\\.moonfold\\bin\\moonfold.cmd triage");
     await expect(
       resolveTriageCommand(

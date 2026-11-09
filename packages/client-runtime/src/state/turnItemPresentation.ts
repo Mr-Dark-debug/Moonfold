@@ -48,7 +48,7 @@ export function workspacePreparationRetryRunIds(
  */
 export function retryableFailedRun(
   runs: ReadonlyArray<Pick<OrchestrationV2Run, "id" | "ordinal" | "status" | "userMessageId">>,
-  items: ReadonlyArray<OrchestrationV2TurnItem>,
+  items: ReadonlyArray<ThreadStructureTurnItem>,
 ): Pick<OrchestrationV2Run, "id" | "userMessageId"> | null {
   const latest = runs.reduce<(typeof runs)[number] | null>(
     (current, run) => (current === null || run.ordinal > current.ordinal ? run : current),
@@ -56,7 +56,7 @@ export function retryableFailedRun(
   );
   if (latest === null || latest.status !== "failed") return null;
   const failure = items.find(
-    (item): item is Extract<OrchestrationV2TurnItem, { type: "error" }> =>
+    (item): item is Extract<ThreadStructureTurnItem, { type: "error" }> =>
       item.type === "error" && item.status === "failed" && item.runId === latest.id,
   );
   if (

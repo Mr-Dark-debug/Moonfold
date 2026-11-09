@@ -946,7 +946,10 @@ it.layer(NodeServices.layer)("AgentSessionScanner", (it) => {
 
           const input = { claudeHomePath, codexHomePath, configBaseDir };
           const result = yield* runScan(input);
-          const git = { remoteKey: "github.com/moonfold-dev/moonfold", repository: "moonfold-dev/moonfold" };
+          const git = {
+            remoteKey: "github.com/moonfold-dev/moonfold",
+            repository: "moonfold-dev/moonfold",
+          };
           expect(
             result.candidates.map((candidate) => ({ path: candidate.path, git: candidate.git })),
           ).toEqual([
@@ -961,21 +964,23 @@ it.layer(NodeServices.layer)("AgentSessionScanner", (it) => {
         }),
     );
 
-    it.effect("excludes sandboxes under the configured worktrees dir without .moonfold in the path", () =>
-      Effect.gen(function* () {
-        const path = yield* Path.Path;
-        const claudeHomePath = yield* makeTempDir("moonfold-claude-home-");
-        const codexHomePath = yield* makeTempDir("moonfold-codex-home-");
-        const configBaseDir = yield* makeTempDir("moonfold-scanner-base-");
-        const fileSystem = yield* FileSystem.FileSystem;
+    it.effect(
+      "excludes sandboxes under the configured worktrees dir without .moonfold in the path",
+      () =>
+        Effect.gen(function* () {
+          const path = yield* Path.Path;
+          const claudeHomePath = yield* makeTempDir("moonfold-claude-home-");
+          const codexHomePath = yield* makeTempDir("moonfold-codex-home-");
+          const configBaseDir = yield* makeTempDir("moonfold-scanner-base-");
+          const fileSystem = yield* FileSystem.FileSystem;
 
-        const worktreeCwd = path.join(configBaseDir, "worktrees", "moonfold", "wt-2");
-        yield* fileSystem.makeDirectory(worktreeCwd, { recursive: true });
-        yield* writeTranscript({
-          filePath: path.join(claudeHomePath, "projects", "-slug", "a.jsonl"),
-          contents: claudeSessionLine(worktreeCwd),
-          mtimeMs: Date.parse("2026-01-01T00:00:00.000Z"),
-        });
+          const worktreeCwd = path.join(configBaseDir, "worktrees", "moonfold", "wt-2");
+          yield* fileSystem.makeDirectory(worktreeCwd, { recursive: true });
+          yield* writeTranscript({
+            filePath: path.join(claudeHomePath, "projects", "-slug", "a.jsonl"),
+            contents: claudeSessionLine(worktreeCwd),
+            mtimeMs: Date.parse("2026-01-01T00:00:00.000Z"),
+          });
 
           const result = yield* runScan({ claudeHomePath, codexHomePath, configBaseDir });
 
@@ -2097,12 +2102,18 @@ describe.skipIf(HostProcess.Platform.defaultValue() === "win32")(
           ).toEqual([
             {
               path: repos[2],
-              git: { remoteKey: "github.com/moonfold-dev/repo-2", repository: "moonfold-dev/repo-2" },
+              git: {
+                remoteKey: "github.com/moonfold-dev/repo-2",
+                repository: "moonfold-dev/repo-2",
+              },
             },
             { path: repos[1], git: { remoteKey: null, repository: null } },
             {
               path: repos[0],
-              git: { remoteKey: "github.com/moonfold-dev/repo-0", repository: "moonfold-dev/repo-0" },
+              git: {
+                remoteKey: "github.com/moonfold-dev/repo-0",
+                repository: "moonfold-dev/repo-0",
+              },
             },
           ]);
         }
@@ -2256,7 +2267,10 @@ describe.skipIf(HostProcess.Platform.defaultValue() === "win32")(
 
           yield* TestClock.adjust("10 minutes");
           expect(yield* gitOfScan(scanner.scan)).toEqual([
-            { remoteKey: "github.com/moonfold-dev/unblocked", repository: "moonfold-dev/unblocked" },
+            {
+              remoteKey: "github.com/moonfold-dev/unblocked",
+              repository: "moonfold-dev/unblocked",
+            },
           ]);
         }).pipe(Effect.provide(layerScannerTest({ claudeHomePath, codexHomePath })));
       }).pipe(Effect.scoped, Effect.provide(NodeServices.layer)),

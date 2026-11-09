@@ -1,10 +1,7 @@
 /**
- * Recognizes OpenCode's terminal quota/rate-limit failures.
- *
- * OpenCode can surface the same condition as an SDK error (HTTP 429), a
- * provider error code, or a message such as "Rate limit exceeded. Please try
- * again later." Inspect nested response bodies too, since some providers wrap
- * the original error in a generic API error.
+ * Recognizes OpenCode's terminal quota/rate-limit failures: an SDK error (HTTP 429), a provider
+ * error code, or a rate-limit message. Nested response bodies are inspected too, since some
+ * providers wrap the original error.
  */
 export function openCodeFailureClass(input: unknown): "usage_limit" | "provider_error" {
   const seen = new Set<object>();

@@ -1245,82 +1245,84 @@ describe("KiroAdapterV2 MCP tools", () => {
   // Probed live on Kiro 2.33.1 against a stdio MCP server named moonfold, without
   // the permission round trip. Kiro titles the call "@moonfold/html_render", names
   // it in `tool_id`, and keeps only the result's text.
-  it.effect("shows Moonfold's html_render as Moonfold's tool with the page Moonfold published", () =>
-    Effect.gen(function* () {
-      const mcpSessions = yield* McpProviderSessions.McpProviderSessions;
-      const toolCallId = "tooluse_4N3LnlI9PRlphUtzdBQGDD";
-      const args = { html: "<p>hi</p>", title: "Probe", height: 120 };
-      const rawInput = { tool_id: "moonfold::html_render", arguments: args };
-      const kiroMeta = { kiro: { serverName: "moonfold", toolOrigin: "default" } };
-      const page = { attachmentId: "kiro-mcp-html-render-page", title: "Probe", height: 120 };
-      yield* runKiroScript({
-        scenario: "mcp-html-render",
-        frames: [
-          ...openSessionFrames({
-            initialize: KIRO_V3_INITIALIZE,
-            configOptions: [modeOption, autopilotOption("on")],
-          }),
-          turnPrompt,
-          update({
-            sessionUpdate: "tool_call",
-            toolCallId,
-            title: "@moonfold/html_render",
-            kind: "other",
-            status: "pending",
-            rawInput,
-            _meta: kiroMeta,
-          }),
-          update({
-            sessionUpdate: "tool_call_update",
-            toolCallId,
-            status: "in_progress",
-            rawInput,
-            _meta: kiroMeta,
-          }),
-          update({
-            sessionUpdate: "tool_call_update",
-            toolCallId,
-            status: "completed",
-            title: "@moonfold/html_render",
-            rawInput,
-            rawOutput: { response: "Rendered.", imageBase64Urls: [], message: "Rendered." },
-            content: [{ type: "content", content: { type: "text", text: "Rendered." } }],
-            _meta: kiroMeta,
-          }),
-          answer("session/prompt", { stopReason: "end_turn" }),
-          ...closeSession,
-        ],
-        drive: ({ events, startTurn }) =>
-          Effect.gen(function* () {
-            // Moonfold's MCP server records the page when Kiro calls html_render.
-            yield* mcpSessions.recordHtmlRender(
-              ThreadId.make("thread-kiro-mcp-html-render"),
-              args,
-              page,
-            );
-            yield* startTurn;
-            const turn = yield* collectTurn(events);
-            const items = turn.flatMap((event) =>
-              event.type === "turn_item.updated" &&
-              event.turnItem.type === "dynamic_tool" &&
-              event.turnItem.nativeItemRef?.nativeId === toolCallId
-                ? [event.turnItem]
-                : [],
-            );
-            const completed = items.at(-1);
-            assert.deepEqual(
-              items.map((item) => item.toolName),
-              items.map(() => "moonfold.html_render"),
-            );
-            assert.equal(completed?.status, "completed");
-            assert.deepEqual(completed?.input, args);
-            assert.deepEqual(
-              completed === undefined ? undefined : htmlRenderFromToolItem(completed),
-              page,
-            );
-          }),
-      });
-    }).pipe(Effect.provide(testLayer), Effect.scoped),
+  it.effect(
+    "shows Moonfold's html_render as Moonfold's tool with the page Moonfold published",
+    () =>
+      Effect.gen(function* () {
+        const mcpSessions = yield* McpProviderSessions.McpProviderSessions;
+        const toolCallId = "tooluse_4N3LnlI9PRlphUtzdBQGDD";
+        const args = { html: "<p>hi</p>", title: "Probe", height: 120 };
+        const rawInput = { tool_id: "moonfold::html_render", arguments: args };
+        const kiroMeta = { kiro: { serverName: "moonfold", toolOrigin: "default" } };
+        const page = { attachmentId: "kiro-mcp-html-render-page", title: "Probe", height: 120 };
+        yield* runKiroScript({
+          scenario: "mcp-html-render",
+          frames: [
+            ...openSessionFrames({
+              initialize: KIRO_V3_INITIALIZE,
+              configOptions: [modeOption, autopilotOption("on")],
+            }),
+            turnPrompt,
+            update({
+              sessionUpdate: "tool_call",
+              toolCallId,
+              title: "@moonfold/html_render",
+              kind: "other",
+              status: "pending",
+              rawInput,
+              _meta: kiroMeta,
+            }),
+            update({
+              sessionUpdate: "tool_call_update",
+              toolCallId,
+              status: "in_progress",
+              rawInput,
+              _meta: kiroMeta,
+            }),
+            update({
+              sessionUpdate: "tool_call_update",
+              toolCallId,
+              status: "completed",
+              title: "@moonfold/html_render",
+              rawInput,
+              rawOutput: { response: "Rendered.", imageBase64Urls: [], message: "Rendered." },
+              content: [{ type: "content", content: { type: "text", text: "Rendered." } }],
+              _meta: kiroMeta,
+            }),
+            answer("session/prompt", { stopReason: "end_turn" }),
+            ...closeSession,
+          ],
+          drive: ({ events, startTurn }) =>
+            Effect.gen(function* () {
+              // Moonfold's MCP server records the page when Kiro calls html_render.
+              yield* mcpSessions.recordHtmlRender(
+                ThreadId.make("thread-kiro-mcp-html-render"),
+                args,
+                page,
+              );
+              yield* startTurn;
+              const turn = yield* collectTurn(events);
+              const items = turn.flatMap((event) =>
+                event.type === "turn_item.updated" &&
+                event.turnItem.type === "dynamic_tool" &&
+                event.turnItem.nativeItemRef?.nativeId === toolCallId
+                  ? [event.turnItem]
+                  : [],
+              );
+              const completed = items.at(-1);
+              assert.deepEqual(
+                items.map((item) => item.toolName),
+                items.map(() => "moonfold.html_render"),
+              );
+              assert.equal(completed?.status, "completed");
+              assert.deepEqual(completed?.input, args);
+              assert.deepEqual(
+                completed === undefined ? undefined : htmlRenderFromToolItem(completed),
+                page,
+              );
+            }),
+        });
+      }).pipe(Effect.provide(testLayer), Effect.scoped),
   );
 });
 

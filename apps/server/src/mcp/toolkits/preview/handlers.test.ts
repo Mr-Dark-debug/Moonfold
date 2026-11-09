@@ -19,6 +19,7 @@ import {
   createPendingAttachmentId,
   parseThreadSegmentFromAttachmentId,
 } from "../../../attachmentStore.ts";
+import * as BrowserSitePermissions from "../../../browser/BrowserSitePermissions.ts";
 import * as ServerConfig from "../../../config.ts";
 import * as McpInvocationContext from "../../McpInvocationContext.ts";
 import * as McpToolAccess from "../../McpToolAccess.ts";
@@ -96,9 +97,12 @@ it.effect("preview_open navigates the opened tab to a dev server in one tool cal
         issuedAt: 1,
       }),
       Effect.provide(
-        Layer.mergeAll(PreviewAutomationBroker.layer, liveThreadsLayer).pipe(
-          Layer.provide(Layer.mergeAll(NodeServices.layer, NodeCrypto.layer)),
-        ),
+        Layer.mergeAll(
+          PreviewAutomationBroker.layer,
+          liveThreadsLayer,
+          // Every site is allowed here; the site rules have their own tests.
+          Layer.mock(BrowserSitePermissions.BrowserSitePermissions)({ check: () => Effect.void }),
+        ).pipe(Layer.provide(Layer.mergeAll(NodeServices.layer, NodeCrypto.layer))),
       ),
     ),
   ),

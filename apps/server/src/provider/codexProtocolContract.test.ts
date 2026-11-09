@@ -6,11 +6,10 @@ import * as NodeURL from "node:url";
 import { describe, expect, it } from "vite-plus/test";
 
 /**
- * Contract between Moonfold's Codex integration and the app-server protocol of the pinned Codex
- * CLI (docs/PROTOCOL.md). The schema in docs/protocol/codex-json is generated from that CLI with
- * `codex app-server generate-json-schema`. Every method Moonfold sends, and every server message
- * it handles, must exist there, and none may be one the schema marks as experimental or under
- * development unless it is listed below with the reason it is safe.
+ * Contract between Moonfold's Codex integration and the pinned Codex CLI's app-server schema in
+ * docs/protocol/codex-json (docs/PROTOCOL.md). Every method Moonfold sends and every server
+ * message it handles must exist there, and none may be experimental or under development
+ * unless listed below with the reason it is safe.
  */
 const repoRoot = NodePath.resolve(
   NodePath.dirname(NodeURL.fileURLToPath(import.meta.url)),

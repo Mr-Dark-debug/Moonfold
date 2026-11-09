@@ -64,7 +64,10 @@ describe("markdownTaskMarkerOffset", () => {
     // Android cuts it to "Similar", which both tasks could be.
     expect(markdownTaskMarkerOffset(similar, 0, "Similar", true)).toBeNull();
 
-    for (const label of ["Similar [docs](https://github.com/moonfold-dev/moonfold)", "Similar $x$"]) {
+    for (const label of [
+      "Similar [docs](https://github.com/moonfold-dev/moonfold)",
+      "Similar $x$",
+    ]) {
       const attachment = similar.replace("Similar<br>different", label);
       expect(markdownTaskMarkerOffset(attachment, 0, "Similar \uFFFC", true)).toBeNull();
     }

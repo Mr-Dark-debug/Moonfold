@@ -7,11 +7,12 @@ import {
   isAtomCommandInterrupted,
   squashAtomCommandFailure,
 } from "@moonfold/client-runtime/state/runtime";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useAtomValue } from "@effect/atom-react";
+import { AsyncResult, Atom } from "effect/reactivity";
+import { useRef, useState } from "react";
 
 import { useThreadShells } from "../state/entities";
-import { useEnvironments } from "../state/environments";
-import { useEnvironmentQuery } from "../state/query";
+import { environmentPresentations } from "../state/presentation";
 import { serverEnvironment } from "../state/server";
 import { useAtomCommand } from "../state/use-atom-command";
 import { Button } from "./ui/button";
@@ -31,68 +32,31 @@ interface PendingEntry {
   readonly request: BrowserSitePermissionRequest;
 }
 
+/** The oldest question across every connected environment, or null when nothing is waiting. */
+const firstPendingAtom = Atom.make((get) => {
+  const all: Array<PendingEntry> = [];
+  for (const [environmentId, presentation] of get(environmentPresentations.presentationsAtom)) {
+    if (presentation.connection.phase !== "connected") continue;
+    const pending = AsyncResult.getOrElse(
+      get(serverEnvironment.browserSitePending({ environmentId, input: {} })),
+      () => null,
+    );
+    for (const request of pending?.requests ?? []) all.push({ environmentId, request });
+  }
+  return (
+    all.toSorted((left, right) =>
+      left.request.createdAt.localeCompare(right.request.createdAt),
+    )[0] ?? null
+  );
+}).pipe(Atom.withLabel("web-browser-site-first-pending"));
+
 /**
  * Asks the user when an agent wants to open a site or upload files to one and the site rules say
  * to ask. One question at a time, oldest first, across every connected environment.
  */
 export function BrowserSitePermissionPrompts() {
-  const { environments } = useEnvironments();
-  const connected = environments.filter((entry) => entry.connection.phase === "connected");
-  const [pendingByEnvironment, setPendingByEnvironment] = useState<
-    ReadonlyMap<EnvironmentId, ReadonlyArray<BrowserSitePermissionRequest>>
-  >(new Map());
-  const report = useCallback(
-    (environmentId: EnvironmentId, requests: ReadonlyArray<BrowserSitePermissionRequest>) =>
-      setPendingByEnvironment((current) => {
-        if ((current.get(environmentId) ?? []).length === 0 && requests.length === 0)
-          return current;
-        const next = new Map(current);
-        next.set(environmentId, requests);
-        return next;
-      }),
-    [],
-  );
-  const first = useMemo(() => {
-    const all: Array<PendingEntry> = [];
-    for (const [environmentId, requests] of pendingByEnvironment) {
-      for (const request of requests) all.push({ environmentId, request });
-    }
-    return all.toSorted((left, right) =>
-      left.request.createdAt.localeCompare(right.request.createdAt),
-    )[0];
-  }, [pendingByEnvironment]);
-
-  return (
-    <>
-      {connected.map((entry) => (
-        <EnvironmentPendingRequests
-          key={entry.environmentId}
-          environmentId={entry.environmentId}
-          onChange={report}
-        />
-      ))}
-      {first ? <PermissionDialog key={first.request.id} entry={first} /> : null}
-    </>
-  );
-}
-
-function EnvironmentPendingRequests(props: {
-  readonly environmentId: EnvironmentId;
-  readonly onChange: (
-    environmentId: EnvironmentId,
-    requests: ReadonlyArray<BrowserSitePermissionRequest>,
-  ) => void;
-}) {
-  const { environmentId, onChange } = props;
-  const pending = useEnvironmentQuery(
-    serverEnvironment.browserSitePending({ environmentId, input: {} }),
-  );
-  const requests = pending.data?.requests;
-  useEffect(() => {
-    onChange(environmentId, requests ?? []);
-  }, [environmentId, onChange, requests]);
-  useEffect(() => () => onChange(environmentId, []), [environmentId, onChange]);
-  return null;
+  const first = useAtomValue(firstPendingAtom);
+  return first ? <PermissionDialog key={first.request.id} entry={first} /> : null;
 }
 
 function PermissionDialog({ entry }: { readonly entry: PendingEntry }) {

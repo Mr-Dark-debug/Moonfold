@@ -669,7 +669,11 @@ describe("DesktopBrowserHost", () => {
       yield* raw({ id: 1, method: "Target.attachToTarget", params: { targetId: "GUEST" } });
       expect(yield* Queue.take(replies)).toBe(1);
       yield* raw({ id: 2, method: "Page.startScreencast", sessionId: "moonfold-preview-page-1" });
-      yield* raw({ id: 3, method: "Input.dispatchMouseEvent", sessionId: "moonfold-preview-page-1" });
+      yield* raw({
+        id: 3,
+        method: "Input.dispatchMouseEvent",
+        sessionId: "moonfold-preview-page-1",
+      });
       yield* settle;
       debuggee.release();
       yield* raw({

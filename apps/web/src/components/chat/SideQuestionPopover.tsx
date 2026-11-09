@@ -4,7 +4,7 @@ import {
   squashAtomCommandFailure,
 } from "@moonfold/client-runtime/state/runtime";
 import { MessageCircleQuestionIcon } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { serverEnvironment } from "../../state/server";
 import { useEnvironmentScope } from "../../state/session";
@@ -16,6 +16,7 @@ import { Textarea } from "../ui/textarea";
 import { Tooltip, TooltipPopup, TooltipTrigger } from "../ui/tooltip";
 
 interface SideExchange {
+  readonly id: number;
   readonly question: string;
   readonly answer: string | null;
   readonly error: string | null;
@@ -37,6 +38,7 @@ export function SideQuestionPopover(props: { readonly threadRef: ScopedThreadRef
   const [draft, setDraft] = useState("");
   const [exchanges, setExchanges] = useState<ReadonlyArray<SideExchange>>([]);
   const [pending, setPending] = useState(false);
+  const nextExchangeId = useRef(0);
   if (!canOperate) return null;
 
   const ask = async () => {
@@ -44,7 +46,10 @@ export function SideQuestionPopover(props: { readonly threadRef: ScopedThreadRef
     if (question.length === 0 || pending) return;
     setDraft("");
     setPending(true);
-    setExchanges((current) => [...current, { question, answer: null, error: null }]);
+    setExchanges((current) => [
+      ...current,
+      { id: nextExchangeId.current++, question, answer: null, error: null },
+    ]);
     const result = await askSideQuestion({
       environmentId: props.threadRef.environmentId,
       input: { threadId: props.threadRef.threadId, question },
@@ -97,8 +102,8 @@ export function SideQuestionPopover(props: { readonly threadRef: ScopedThreadRef
               exchanges.length > 0 ? "min-h-0 flex-1 space-y-3 overflow-y-auto" : "sr-only"
             }
           >
-            {exchanges.map((exchange, index) => (
-              <div key={index} className="space-y-1.5">
+            {exchanges.map((exchange) => (
+              <div key={exchange.id} className="space-y-1.5">
                 <p className="text-sm font-medium">{exchange.question}</p>
                 {exchange.answer !== null ? (
                   <div className="text-sm">

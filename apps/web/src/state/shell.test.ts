@@ -3,7 +3,10 @@ import {
   PrimaryConnectionTarget,
 } from "@moonfold/client-runtime/connection";
 import type { EnvironmentCatalogState } from "@moonfold/client-runtime/state/connections";
-import { EMPTY_SHELL_STATE, type EnvironmentShellState } from "@moonfold/client-runtime/state/shell";
+import {
+  EMPTY_SHELL_STATE,
+  type EnvironmentShellState,
+} from "@moonfold/client-runtime/state/shell";
 import { EnvironmentId } from "@moonfold/contracts";
 import * as Option from "effect/Option";
 import { Atom, AtomRegistry } from "effect/reactivity";

@@ -444,8 +444,7 @@ function ConnectionStep({
       ) : null}
       <div className="mt-6 flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <p className="min-w-0 text-xs leading-relaxed text-muted-foreground">
-          {telemetryOff ??
-            "Moonfold collects no usage data unless you set up telemetry yourself."}{" "}
+          {telemetryOff ?? "Moonfold collects no usage data unless you set up telemetry yourself."}{" "}
           To read what it would send and where, see our{" "}
           <a
             className="underline underline-offset-2 hover:text-foreground"
@@ -654,7 +653,8 @@ function PairingForm({
             </p>
             <CommandBlock command="npx moonfold pair" className="mt-2" />
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              On a tailnet, run <code className="font-mono">npx moonfold pair --tailscale</code> instead.
+              On a tailnet, run <code className="font-mono">npx moonfold pair --tailscale</code>{" "}
+              instead.
             </p>
           </CollapsiblePanel>
         </Collapsible>

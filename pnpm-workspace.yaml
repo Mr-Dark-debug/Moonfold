@@ -220,6 +220,10 @@ peerDependencyRules:
     - vite
   allowedVersions:
     vite: "*"
+    # ws 7 only calls isValidUTF8, unchanged in v6.
+    "ws@7>utf-8-validate": "6"
+    # Pulled into infra/relay through alchemy's optional tooling; a patch-level mismatch.
+    "@react-native/community-cli-plugin>@react-native/metro-config": "0.88"
 
 # pnpm 12 links agent skills that dependencies ship into .claude/skills once
 # approved. We curate our own skills, so deny these to keep installs quiet.

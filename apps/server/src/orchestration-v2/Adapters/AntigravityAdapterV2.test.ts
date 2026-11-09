@@ -257,7 +257,9 @@ describe("AntigravityAdapterV2 client file system", () => {
       // effect-acp keeps the last handler registered per method; so does this.
       let readTextFile: Parameters<RuntimeService["handleReadTextFile"]>[0] | undefined;
       let writeTextFile: Parameters<RuntimeService["handleWriteTextFile"]>[0] | undefined;
-      const logs = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-antigravity-log-" });
+      const logs = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "moonfold-antigravity-log-",
+      });
       const requestLog = path.join(logs, "requests.ndjson");
       const crypto = yield* SecureRandom.SecureRandom;
       const instanceId = ProviderInstanceId.make("antigravity-containment-test");
@@ -840,210 +842,212 @@ describe("AntigravityAdapterV2 html_render pages", () => {
 });
 
 describe("AntigravityAdapterV2 subagent reads", () => {
-  it.effect("completes a read Moonfold served when the agent later fails it with a step error", () =>
-    Effect.gen(function* () {
-      const childProcessSpawner = yield* ChildProcessSpawner.ChildProcessSpawner;
-      const fileSystem = yield* FileSystem.FileSystem;
-      const path = yield* Path.Path;
-      const crypto = yield* SecureRandom.SecureRandom;
-      const mockAgentPath = yield* path.fromFileUrl(
-        new URL("../../../scripts/acp-mock-agent.ts", import.meta.url),
-      );
-      const workspace = yield* fileSystem.makeTempDirectoryScoped({
-        prefix: "moonfold-antigravity-reads-",
-      });
-      const outside = yield* fileSystem.makeTempDirectoryScoped({
-        prefix: "moonfold-antigravity-reads-outside-",
-      });
-      const served = path.join(workspace, "served.ts");
-      yield* fileSystem.writeFileString(served, "export {};");
-      const denied = path.join(outside, "secret.txt");
-      yield* fileSystem.writeFileString(denied, "secret");
-      const unseen = path.join(workspace, "unseen.ts");
-      const retried = path.join(workspace, "retried.ts");
-      const stepError = 'Model produced invalid output. ("model output error")';
-      type RuntimeService = AcpSessionRuntime.AcpSessionRuntime["Service"];
-      let sessionUpdate: Parameters<RuntimeService["handleSessionUpdate"]>[0] | undefined;
-      let readTextFile: Parameters<RuntimeService["handleReadTextFile"]>[0] | undefined;
-      const instanceId = ProviderInstanceId.make("antigravity-subagent-reads-test");
-      const threadId = ThreadId.make("thread-antigravity-subagent-reads");
-      const adapter = yield* makeAntigravityAdapterV2({
-        instanceId,
-        selfInvocation: yield* resolveSelfInvocation(),
-        makeRuntime: (input) =>
-          makeAntigravityAcpRuntime({
-            ...input,
-            childProcessSpawner,
-            spawn: {
-              command: process.execPath,
-              args: [mockAgentPath],
-              cwd: input.cwd,
-              env: { MOONFOLD_ACP_ANTIGRAVITY: "1" },
-            },
-          }).pipe(
-            Effect.provideService(SecureRandom.SecureRandom, crypto),
-            Effect.map((runtime): RuntimeService => ({
-              ...runtime,
-              handleSessionUpdate: (handler) =>
-                Effect.sync(() => {
-                  sessionUpdate = handler;
-                }).pipe(Effect.andThen(runtime.handleSessionUpdate(handler))),
-              handleReadTextFile: (handler) =>
-                Effect.sync(() => {
-                  readTextFile = handler;
-                }).pipe(Effect.andThen(runtime.handleReadTextFile(handler))),
-              // agy_acp_server announces a subagent's client_view_file on the parent session,
-              // never completes it, then fails every open call with the next step error.
-              prompt: () =>
-                Effect.gen(function* () {
-                  if (sessionUpdate === undefined || readTextFile === undefined) {
-                    return yield* Effect.die("the adapter must handle updates and reads");
-                  }
-                  const send = sessionUpdate;
-                  const handleRead = readTextFile;
-                  const update = (update: EffectAcpSchema.SessionUpdate) =>
-                    send(
-                      normalizeAntigravitySessionUpdate({ sessionId: "mock-session-1", update }),
-                    );
-                  // The agent's own view_file never reaches Moonfold, so it must not take a served read.
-                  const reads = [
-                    ["call_native", served, "Running view_file"],
-                    ["call_served", served, "Running client_view_file"],
-                    ["call_missing", retried, "Running client_view_file"],
-                    ["call_retried", retried, "Running client_view_file"],
-                    ["call_denied", denied, "Running client_view_file"],
-                    ["call_unseen", unseen, "Running client_view_file"],
-                  ] as const;
-                  for (const [toolCallId, target, title] of reads) {
-                    yield* update({
-                      sessionUpdate: "tool_call",
-                      toolCallId,
-                      title,
-                      kind: "read",
-                      status: "in_progress",
-                      rawInput: { absolute_path: target },
-                      locations: [{ path: target }],
-                    });
-                  }
-                  const serve = (target: string) =>
-                    handleRead(
-                      { sessionId: "subagent-conversation", path: target },
-                      { requestId: `read-${target}`, method: "fs/read_text_file" },
-                    ).pipe(Effect.exit);
-                  yield* serve(served);
-                  yield* serve(retried);
-                  yield* fileSystem.writeFileString(retried, "export {};").pipe(Effect.orDie);
-                  yield* serve(retried);
-                  yield* serve(denied);
-                  for (const [toolCallId] of reads) {
-                    yield* update({
-                      sessionUpdate: "tool_call_update",
-                      toolCallId,
-                      status: "failed",
-                      rawOutput: stepError,
-                    });
-                  }
-                  return { stopReason: "end_turn" as const };
-                }),
-            })),
-          ),
-        withProcess: (_stop, task) => task,
-        defaultModel: Effect.undefined,
-      });
-      const runtimePolicy = ProviderAdapter.ProviderAdapterV2RuntimePolicy.make({
-        runtimeMode: "full-access",
-        interactionMode: "default",
-        cwd: workspace,
-      });
-      const modelSelection = { instanceId, model: "gemini-test-low" } as const;
-      const session = yield* adapter.openSession({
-        threadId,
-        providerSessionId: ProviderSessionId.make("provider-session-antigravity-subagent-reads"),
-        modelSelection,
-        runtimePolicy,
-      });
-      const providerThread = yield* session.ensureThread({
-        threadId,
-        modelSelection,
-        runtimePolicy,
-      });
-      const now = yield* DateTime.now;
-      yield* session.startTurn({
-        appThread: {
-          createdBy: "user",
-          creationSource: "web",
-          id: threadId,
-          projectId: ProjectId.make("project-antigravity-subagent-reads"),
-          title: "Antigravity subagent reads",
-          providerInstanceId: instanceId,
-          modelSelection,
+  it.effect(
+    "completes a read Moonfold served when the agent later fails it with a step error",
+    () =>
+      Effect.gen(function* () {
+        const childProcessSpawner = yield* ChildProcessSpawner.ChildProcessSpawner;
+        const fileSystem = yield* FileSystem.FileSystem;
+        const path = yield* Path.Path;
+        const crypto = yield* SecureRandom.SecureRandom;
+        const mockAgentPath = yield* path.fromFileUrl(
+          new URL("../../../scripts/acp-mock-agent.ts", import.meta.url),
+        );
+        const workspace = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-antigravity-reads-",
+        });
+        const outside = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-antigravity-reads-outside-",
+        });
+        const served = path.join(workspace, "served.ts");
+        yield* fileSystem.writeFileString(served, "export {};");
+        const denied = path.join(outside, "secret.txt");
+        yield* fileSystem.writeFileString(denied, "secret");
+        const unseen = path.join(workspace, "unseen.ts");
+        const retried = path.join(workspace, "retried.ts");
+        const stepError = 'Model produced invalid output. ("model output error")';
+        type RuntimeService = AcpSessionRuntime.AcpSessionRuntime["Service"];
+        let sessionUpdate: Parameters<RuntimeService["handleSessionUpdate"]>[0] | undefined;
+        let readTextFile: Parameters<RuntimeService["handleReadTextFile"]>[0] | undefined;
+        const instanceId = ProviderInstanceId.make("antigravity-subagent-reads-test");
+        const threadId = ThreadId.make("thread-antigravity-subagent-reads");
+        const adapter = yield* makeAntigravityAdapterV2({
+          instanceId,
+          selfInvocation: yield* resolveSelfInvocation(),
+          makeRuntime: (input) =>
+            makeAntigravityAcpRuntime({
+              ...input,
+              childProcessSpawner,
+              spawn: {
+                command: process.execPath,
+                args: [mockAgentPath],
+                cwd: input.cwd,
+                env: { MOONFOLD_ACP_ANTIGRAVITY: "1" },
+              },
+            }).pipe(
+              Effect.provideService(SecureRandom.SecureRandom, crypto),
+              Effect.map((runtime): RuntimeService => ({
+                ...runtime,
+                handleSessionUpdate: (handler) =>
+                  Effect.sync(() => {
+                    sessionUpdate = handler;
+                  }).pipe(Effect.andThen(runtime.handleSessionUpdate(handler))),
+                handleReadTextFile: (handler) =>
+                  Effect.sync(() => {
+                    readTextFile = handler;
+                  }).pipe(Effect.andThen(runtime.handleReadTextFile(handler))),
+                // agy_acp_server announces a subagent's client_view_file on the parent session,
+                // never completes it, then fails every open call with the next step error.
+                prompt: () =>
+                  Effect.gen(function* () {
+                    if (sessionUpdate === undefined || readTextFile === undefined) {
+                      return yield* Effect.die("the adapter must handle updates and reads");
+                    }
+                    const send = sessionUpdate;
+                    const handleRead = readTextFile;
+                    const update = (update: EffectAcpSchema.SessionUpdate) =>
+                      send(
+                        normalizeAntigravitySessionUpdate({ sessionId: "mock-session-1", update }),
+                      );
+                    // The agent's own view_file never reaches Moonfold, so it must not take a served read.
+                    const reads = [
+                      ["call_native", served, "Running view_file"],
+                      ["call_served", served, "Running client_view_file"],
+                      ["call_missing", retried, "Running client_view_file"],
+                      ["call_retried", retried, "Running client_view_file"],
+                      ["call_denied", denied, "Running client_view_file"],
+                      ["call_unseen", unseen, "Running client_view_file"],
+                    ] as const;
+                    for (const [toolCallId, target, title] of reads) {
+                      yield* update({
+                        sessionUpdate: "tool_call",
+                        toolCallId,
+                        title,
+                        kind: "read",
+                        status: "in_progress",
+                        rawInput: { absolute_path: target },
+                        locations: [{ path: target }],
+                      });
+                    }
+                    const serve = (target: string) =>
+                      handleRead(
+                        { sessionId: "subagent-conversation", path: target },
+                        { requestId: `read-${target}`, method: "fs/read_text_file" },
+                      ).pipe(Effect.exit);
+                    yield* serve(served);
+                    yield* serve(retried);
+                    yield* fileSystem.writeFileString(retried, "export {};").pipe(Effect.orDie);
+                    yield* serve(retried);
+                    yield* serve(denied);
+                    for (const [toolCallId] of reads) {
+                      yield* update({
+                        sessionUpdate: "tool_call_update",
+                        toolCallId,
+                        status: "failed",
+                        rawOutput: stepError,
+                      });
+                    }
+                    return { stopReason: "end_turn" as const };
+                  }),
+              })),
+            ),
+          withProcess: (_stop, task) => task,
+          defaultModel: Effect.undefined,
+        });
+        const runtimePolicy = ProviderAdapter.ProviderAdapterV2RuntimePolicy.make({
           runtimeMode: "full-access",
           interactionMode: "default",
-          branch: null,
-          worktreePath: workspace,
-          activeProviderThreadId: providerThread.id,
-          lineage: { parentThreadId: null, relationshipToParent: null, rootThreadId: threadId },
-          forkedFrom: null,
-          createdAt: now,
-          updatedAt: now,
-          archivedAt: null,
-          settledOverride: null,
-          settledAt: null,
-          lastVisitedAt: null,
-          deletedAt: null,
-        },
-        threadId,
-        runId: RunId.make("run-antigravity-subagent-reads"),
-        runOrdinal: 1,
-        providerTurnOrdinal: 1,
-        attemptId: RunAttemptId.make("attempt-antigravity-subagent-reads"),
-        rootNodeId: NodeId.make("node-antigravity-subagent-reads"),
-        providerThread,
-        message: {
-          createdBy: "user",
-          creationSource: "web",
-          messageId: MessageId.make("message-antigravity-subagent-reads"),
-          text: "review the codebase",
-          attachments: [],
-        },
-        modelSelection,
-        runtimePolicy,
-      });
-      const events = Array.from(
-        yield* session.events.pipe(
-          Stream.takeUntil((event) => event.type === "turn.terminal"),
-          Stream.runCollect,
-        ),
-      );
-      const read = (nativeId: string) => {
-        const event = events.findLast(
-          (event) =>
-            event.type === "turn_item.updated" &&
-            event.turnItem.nativeItemRef?.nativeId === nativeId,
+          cwd: workspace,
+        });
+        const modelSelection = { instanceId, model: "gemini-test-low" } as const;
+        const session = yield* adapter.openSession({
+          threadId,
+          providerSessionId: ProviderSessionId.make("provider-session-antigravity-subagent-reads"),
+          modelSelection,
+          runtimePolicy,
+        });
+        const providerThread = yield* session.ensureThread({
+          threadId,
+          modelSelection,
+          runtimePolicy,
+        });
+        const now = yield* DateTime.now;
+        yield* session.startTurn({
+          appThread: {
+            createdBy: "user",
+            creationSource: "web",
+            id: threadId,
+            projectId: ProjectId.make("project-antigravity-subagent-reads"),
+            title: "Antigravity subagent reads",
+            providerInstanceId: instanceId,
+            modelSelection,
+            runtimeMode: "full-access",
+            interactionMode: "default",
+            branch: null,
+            worktreePath: workspace,
+            activeProviderThreadId: providerThread.id,
+            lineage: { parentThreadId: null, relationshipToParent: null, rootThreadId: threadId },
+            forkedFrom: null,
+            createdAt: now,
+            updatedAt: now,
+            archivedAt: null,
+            settledOverride: null,
+            settledAt: null,
+            lastVisitedAt: null,
+            deletedAt: null,
+          },
+          threadId,
+          runId: RunId.make("run-antigravity-subagent-reads"),
+          runOrdinal: 1,
+          providerTurnOrdinal: 1,
+          attemptId: RunAttemptId.make("attempt-antigravity-subagent-reads"),
+          rootNodeId: NodeId.make("node-antigravity-subagent-reads"),
+          providerThread,
+          message: {
+            createdBy: "user",
+            creationSource: "web",
+            messageId: MessageId.make("message-antigravity-subagent-reads"),
+            text: "review the codebase",
+            attachments: [],
+          },
+          modelSelection,
+          runtimePolicy,
+        });
+        const events = Array.from(
+          yield* session.events.pipe(
+            Stream.takeUntil((event) => event.type === "turn.terminal"),
+            Stream.runCollect,
+          ),
         );
-        return event?.type === "turn_item.updated" && event.turnItem.type === "dynamic_tool"
-          ? { status: event.turnItem.status, output: event.turnItem.output }
-          : undefined;
-      };
+        const read = (nativeId: string) => {
+          const event = events.findLast(
+            (event) =>
+              event.type === "turn_item.updated" &&
+              event.turnItem.nativeItemRef?.nativeId === nativeId,
+          );
+          return event?.type === "turn_item.updated" && event.turnItem.type === "dynamic_tool"
+            ? { status: event.turnItem.status, output: event.turnItem.output }
+            : undefined;
+        };
 
-      const firstEvent = (nativeId: string, status: string) =>
-        events.findIndex(
-          (event) =>
-            event.type === "turn_item.updated" &&
-            event.turnItem.nativeItemRef?.nativeId === nativeId &&
-            event.turnItem.status === status,
-        );
-      // Moonfold completes a served read itself instead of leaving it running until the flush.
-      assert.isAbove(firstEvent("call_served", "completed"), -1);
-      assert.isBelow(firstEvent("call_served", "completed"), firstEvent("call_native", "failed"));
-      const failed = { status: "failed" as const, output: stepError };
-      assert.deepEqual(read("call_served"), { status: "completed", output: undefined });
-      assert.deepEqual(read("call_retried"), { status: "completed", output: undefined });
-      assert.deepEqual(read("call_native"), failed);
-      assert.deepEqual(read("call_missing"), failed);
-      assert.deepEqual(read("call_denied"), failed);
-      assert.deepEqual(read("call_unseen"), failed);
-    }).pipe(Effect.provide(layerSession), Effect.scoped),
+        const firstEvent = (nativeId: string, status: string) =>
+          events.findIndex(
+            (event) =>
+              event.type === "turn_item.updated" &&
+              event.turnItem.nativeItemRef?.nativeId === nativeId &&
+              event.turnItem.status === status,
+          );
+        // Moonfold completes a served read itself instead of leaving it running until the flush.
+        assert.isAbove(firstEvent("call_served", "completed"), -1);
+        assert.isBelow(firstEvent("call_served", "completed"), firstEvent("call_native", "failed"));
+        const failed = { status: "failed" as const, output: stepError };
+        assert.deepEqual(read("call_served"), { status: "completed", output: undefined });
+        assert.deepEqual(read("call_retried"), { status: "completed", output: undefined });
+        assert.deepEqual(read("call_native"), failed);
+        assert.deepEqual(read("call_missing"), failed);
+        assert.deepEqual(read("call_denied"), failed);
+        assert.deepEqual(read("call_unseen"), failed);
+      }).pipe(Effect.provide(layerSession), Effect.scoped),
   );
 });
 
@@ -1125,7 +1129,9 @@ describe("AntigravityAdapterV2 session system prompt", () => {
         const mockAgentPath = yield* path.fromFileUrl(
           new URL("../../../scripts/acp-mock-agent.ts", import.meta.url),
         );
-        const logs = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-antigravity-log-" });
+        const logs = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-antigravity-log-",
+        });
         const requestLog = path.join(logs, "requests.ndjson");
         type RuntimeService = AcpSessionRuntime.AcpSessionRuntime["Service"];
         const promptReceived = yield* Deferred.make<Parameters<RuntimeService["prompt"]>[0]>();

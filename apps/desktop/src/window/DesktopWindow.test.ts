@@ -781,7 +781,7 @@ describe("DesktopWindow", () => {
         const state = yield* DesktopState.DesktopState;
         yield* Ref.set(state.quitting, true);
 
-        yield* windows.showConnectingSplash;
+        yield* windows.showConnectingSplash("Starting Moonfold…");
         yield* windows.handleBackendReady(new URL("http://127.0.0.1:3773"));
         yield* windows.activate;
         yield* windows.dispatchMenuAction("open-settings");
@@ -826,7 +826,7 @@ describe("DesktopWindow", () => {
           const state = yield* DesktopState.DesktopState;
           const fiber = yield* (
             kind === "splash"
-              ? windows.showConnectingSplash
+              ? windows.showConnectingSplash("Starting Moonfold…")
               : windows.handleBackendReady(new URL("http://127.0.0.1:3773"))
           ).pipe(Effect.forkChild({ startImmediately: true }));
           yield* Deferred.await(creationStarted);

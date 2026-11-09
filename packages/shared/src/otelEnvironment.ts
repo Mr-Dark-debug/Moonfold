@@ -324,7 +324,8 @@ export const isRelayTracingEnabled = (env: Readonly<Record<string, string | unde
     telemetry: flag("MOONFOLD_TELEMETRY_ENABLED", MOONFOLD_TRUE, MOONFOLD_FALSE, String),
   }).pipe(
     Effect.map(
-      ({ telemetry, moonfold, spec }) => telemetry.value !== false && !(moonfold.value ?? spec.value ?? false),
+      ({ telemetry, moonfold, spec }) =>
+        telemetry.value !== false && !(moonfold.value ?? spec.value ?? false),
     ),
     Effect.provide(ConfigProvider.layer(ConfigProvider.fromEnvRecord(env))),
     Effect.orDie,
@@ -373,7 +374,11 @@ export const resolveSignalEndpoint = (
       // the desktop's own.
       const url = blankAsUnset(fallback.bootstrapUrl) ?? settingsUrl;
       if (url === undefined) return undefined;
-      return { url, export: moonfold.export, source: url === settingsUrl ? "settings" : "bootstrap" };
+      return {
+        url,
+        export: moonfold.export,
+        source: url === settingsUrl ? "settings" : "bootstrap",
+      };
     },
   });
 };

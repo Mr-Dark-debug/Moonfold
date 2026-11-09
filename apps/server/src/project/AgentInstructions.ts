@@ -2,10 +2,9 @@
 import * as NodeCrypto from "node:crypto";
 
 /**
- * The instruction files agents read on their own (`AGENTS.md`, `CLAUDE.md`,
- * project and user level), for the Personalization settings. Only these four
- * files can be read or written, and a save from an outdated revision is
- * refused so an edit made elsewhere is never overwritten.
+ * The instruction files agents read on their own (`AGENTS.md`, `CLAUDE.md`, project and user
+ * level), for the Personalization settings. Only these four files can be read or written, and a
+ * save from an outdated revision is refused so an edit made elsewhere is never overwritten.
  *
  * @module project/AgentInstructions
  */
@@ -77,52 +76,56 @@ const make = Effect.gen(function* () {
       ),
     );
 
-  const pathFor = (id: AgentInstructionsFileId, projectId: ProjectId | undefined) =>
-    Effect.gen(function* () {
-      switch (id) {
-        case "user-codex":
-          return path.join(codexHome, "AGENTS.md");
-        case "user-claude":
-          return path.join(claudeHome, "CLAUDE.md");
-        case "project-agents":
-        case "project-claude": {
-          if (projectId === undefined) {
-            return yield* new AgentInstructionsError({
-              reason: "project_not_found",
-              detail: "Choose a project to edit its instructions.",
-            });
-          }
-          const root = yield* projectRoot(projectId);
-          return path.join(root, id === "project-agents" ? "AGENTS.md" : "CLAUDE.md");
+  const pathFor = Effect.fn("AgentInstructions.pathFor")(function* (
+    id: AgentInstructionsFileId,
+    projectId: ProjectId | undefined,
+  ) {
+    switch (id) {
+      case "user-codex":
+        return path.join(codexHome, "AGENTS.md");
+      case "user-claude":
+        return path.join(claudeHome, "CLAUDE.md");
+      case "project-agents":
+      case "project-claude": {
+        if (projectId === undefined) {
+          return yield* new AgentInstructionsError({
+            reason: "project_not_found",
+            detail: "Choose a project to edit its instructions.",
+          });
         }
+        const root = yield* projectRoot(projectId);
+        return path.join(root, id === "project-agents" ? "AGENTS.md" : "CLAUDE.md");
       }
-    });
+    }
+  });
 
-  const readFile = (id: AgentInstructionsFileId, filePath: string) =>
-    Effect.gen(function* () {
-      if (!(yield* fileSystem.exists(filePath).pipe(Effect.orElseSucceed(() => false)))) {
-        return { id, path: filePath, contents: null, revision: null, tooLarge: false };
-      }
-      const info = yield* fileSystem
-        .stat(filePath)
-        .pipe(Effect.mapError(ioError(`Could not read ${filePath}.`)));
-      if (Number(info.size) > AGENT_INSTRUCTIONS_MAX_BYTES) {
-        return { id, path: filePath, contents: null, revision: null, tooLarge: true };
-      }
-      const contents = yield* fileSystem
-        .readFileString(filePath)
-        .pipe(Effect.mapError(ioError(`Could not read ${filePath}.`)));
-      return {
-        id,
-        path: filePath,
-        contents,
-        revision: instructionsRevision(contents),
-        tooLarge: false,
-      } satisfies AgentInstructionsFile;
-    });
+  const readFile = Effect.fn("AgentInstructions.readFile")(function* (
+    id: AgentInstructionsFileId,
+    filePath: string,
+  ) {
+    if (!(yield* fileSystem.exists(filePath).pipe(Effect.orElseSucceed(() => false)))) {
+      return { id, path: filePath, contents: null, revision: null, tooLarge: false };
+    }
+    const info = yield* fileSystem
+      .stat(filePath)
+      .pipe(Effect.mapError(ioError(`Could not read ${filePath}.`)));
+    if (Number(info.size) > AGENT_INSTRUCTIONS_MAX_BYTES) {
+      return { id, path: filePath, contents: null, revision: null, tooLarge: true };
+    }
+    const contents = yield* fileSystem
+      .readFileString(filePath)
+      .pipe(Effect.mapError(ioError(`Could not read ${filePath}.`)));
+    return {
+      id,
+      path: filePath,
+      contents,
+      revision: instructionsRevision(contents),
+      tooLarge: false,
+    } satisfies AgentInstructionsFile;
+  });
 
-  const list: AgentInstructions["Service"]["list"] = (input) =>
-    Effect.gen(function* () {
+  const list: AgentInstructions["Service"]["list"] = Effect.fn("AgentInstructions.list")(
+    function* (input) {
       const ids: ReadonlyArray<AgentInstructionsFileId> =
         input.projectId === undefined
           ? ["user-codex", "user-claude"]
@@ -131,10 +134,11 @@ const make = Effect.gen(function* () {
         pathFor(id, input.projectId).pipe(Effect.flatMap((filePath) => readFile(id, filePath))),
       );
       return { files };
-    });
+    },
+  );
 
-  const write: AgentInstructions["Service"]["write"] = (input) =>
-    Effect.gen(function* () {
+  const write: AgentInstructions["Service"]["write"] = Effect.fn("AgentInstructions.write")(
+    function* (input) {
       if (new TextEncoder().encode(input.contents).byteLength > AGENT_INSTRUCTIONS_MAX_BYTES) {
         return yield* new AgentInstructionsError({
           reason: "too_large",
@@ -156,7 +160,8 @@ const make = Effect.gen(function* () {
         .writeFileString(filePath, input.contents)
         .pipe(Effect.mapError(ioError(`Could not write ${filePath}.`)));
       return { revision: instructionsRevision(input.contents) };
-    });
+    },
+  );
 
   return AgentInstructions.of({ list, write });
 });

@@ -18,7 +18,7 @@ import {
 } from "@moonfold/contracts";
 import type { TurnMemories } from "@moonfold/provider-core/server/memoryInstructions";
 import * as Context from "effect/Context";
-import * as Crypto from "effect/Crypto";
+import * as SecureRandom from "effect/crypto/SecureRandom";
 import * as DateTime from "effect/DateTime";
 import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
@@ -91,7 +91,7 @@ export class MemoryStore extends Context.Service<
 
 const make = Effect.gen(function* () {
   const sql = yield* SqlClient.SqlClient;
-  const crypto = yield* Crypto.Crypto;
+  const random = yield* SecureRandom.SecureRandom;
   const now = DateTime.now.pipe(Effect.map(DateTime.formatIso));
 
   // Memories are on until the user turns them off; nothing is delivered until one exists.
@@ -116,7 +116,7 @@ const make = Effect.gen(function* () {
         message: `Moonfold keeps up to ${MAX_MEMORIES} memories. Delete one before adding another.`,
       });
     }
-    const id = yield* crypto.randomUUIDv4().pipe(Effect.orDie);
+    const id = yield* random.uuidV4();
     const timestamp = yield* now;
     yield* sql`
       INSERT INTO memories (memory_id, text, project_id, source, thread_id, created_at, updated_at)
@@ -133,8 +133,8 @@ const make = Effect.gen(function* () {
     return { enabled: yield* readEnabled, memories: rows.map(toMemory) };
   }).pipe(Effect.mapError(memoryError("Could not read memories.")));
 
-  const upsert: MemoryStore["Service"]["upsert"] = (input) =>
-    Effect.gen(function* () {
+  const upsert: MemoryStore["Service"]["upsert"] = Effect.fn("MemoryStore.upsert")(
+    function* (input) {
       if (input.id === undefined) {
         return yield* insert({
           text: input.text,
@@ -159,12 +159,12 @@ const make = Effect.gen(function* () {
         return yield* new MemoryError({ message: "This memory no longer exists." });
       }
       return toMemory(row);
-    }).pipe(
-      Effect.catchTags({
-        SqlError: (cause) =>
-          Effect.fail(new MemoryError({ message: "Could not save the memory.", cause })),
-      }),
-    );
+    },
+    Effect.catchTags({
+      SqlError: (cause) =>
+        Effect.fail(new MemoryError({ message: "Could not save the memory.", cause })),
+    }),
+  );
 
   const remove: MemoryStore["Service"]["remove"] = (id) =>
     sql`DELETE FROM memories WHERE memory_id = ${id}`.pipe(
@@ -189,8 +189,10 @@ const make = Effect.gen(function* () {
       Effect.mapError(memoryError("Could not read the thread's memory setting.")),
     );
 
-  const setThreadOptOut: MemoryStore["Service"]["setThreadOptOut"] = (input) =>
-    Effect.gen(function* () {
+  const setThreadOptOut: MemoryStore["Service"]["setThreadOptOut"] = Effect.fn(
+    "MemoryStore.setThreadOptOut",
+  )(
+    function* (input) {
       if (input.optedOut) {
         yield* sql`
           INSERT INTO memory_thread_opt_outs (thread_id, created_at)
@@ -201,10 +203,12 @@ const make = Effect.gen(function* () {
         yield* sql`DELETE FROM memory_thread_opt_outs WHERE thread_id = ${input.threadId}`;
       }
       return { threadId: input.threadId, optedOut: input.optedOut };
-    }).pipe(Effect.mapError(memoryError("Could not change the thread's memory setting.")));
+    },
+    Effect.mapError(memoryError("Could not change the thread's memory setting.")),
+  );
 
-  const remember: MemoryStore["Service"]["remember"] = (input) =>
-    Effect.gen(function* () {
+  const remember: MemoryStore["Service"]["remember"] = Effect.fn("MemoryStore.remember")(
+    function* (input) {
       if (!(yield* readEnabled)) {
         return yield* new MemoryError({
           message:
@@ -217,15 +221,15 @@ const make = Effect.gen(function* () {
         });
       }
       return yield* insert({ ...input, source: "agent" });
-    }).pipe(
-      Effect.catchTags({
-        SqlError: (cause) =>
-          Effect.fail(new MemoryError({ message: "Could not save the memory.", cause })),
-      }),
-    );
+    },
+    Effect.catchTags({
+      SqlError: (cause) =>
+        Effect.fail(new MemoryError({ message: "Could not save the memory.", cause })),
+    }),
+  );
 
-  const forTurn: MemoryStore["Service"]["forTurn"] = (input) =>
-    Effect.gen(function* () {
+  const forTurn: MemoryStore["Service"]["forTurn"] = Effect.fn("MemoryStore.forTurn")(
+    function* (input) {
       if (!(yield* readEnabled) || (yield* isOptedOut(input.threadId))) return undefined;
       // Memories for every project first, then this project's, oldest first: a stable order
       // lets providers that resend context only on change skip unchanged turns.
@@ -239,7 +243,9 @@ const make = Effect.gen(function* () {
         user: withinBudget(rows.filter((row) => row.source !== "agent").map((row) => row.text)),
         agent: withinBudget(rows.filter((row) => row.source === "agent").map((row) => row.text)),
       };
-    }).pipe(Effect.mapError(memoryError("Could not read memories.")));
+    },
+    Effect.mapError(memoryError("Could not read memories.")),
+  );
 
   return MemoryStore.of({
     list,
@@ -265,7 +271,7 @@ export class ThreadMemories extends Context.Reference<{
     readonly projectId: ProjectId;
   }) => Effect.Effect<TurnMemories | undefined>;
 }>("moonfold/memories/ThreadMemories", {
-  defaultValue: () => ({ forTurn: () => Effect.succeed(undefined) }),
+  defaultValue: () => ({ forTurn: () => Effect.undefined }),
 }) {}
 
 /** Turns read the store; a failed read costs the turn its memories, not the turn itself. */
@@ -274,16 +280,15 @@ export const layerThreadMemories = Layer.effect(
   Effect.gen(function* () {
     const store = yield* MemoryStore;
     return {
-      forTurn: (input: { readonly threadId: ThreadId; readonly projectId: ProjectId }) =>
-        store
-          .forTurn(input)
-          .pipe(
-            Effect.catch((error) =>
-              Effect.logWarning("Could not read memories for a turn", { error }).pipe(
-                Effect.as(undefined),
-              ),
-            ),
+      forTurn: Effect.fn("ThreadMemories.forTurn")(
+        (input: { readonly threadId: ThreadId; readonly projectId: ProjectId }) =>
+          store.forTurn(input),
+        Effect.catch((error) =>
+          Effect.logWarning("Could not read memories for a turn", { error }).pipe(
+            Effect.as(undefined),
           ),
+        ),
+      ),
     };
   }),
 );

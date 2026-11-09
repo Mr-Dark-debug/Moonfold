@@ -260,7 +260,10 @@ it.effect.each([false, true])(
       response: () =>
         Response.json({
           ...bitbucketPullRequest,
-          source: { ...bitbucketPullRequest.source, repository: { full_name: "moonfold-dev/moonfold" } },
+          source: {
+            ...bitbucketPullRequest.source,
+            repository: { full_name: "moonfold-dev/moonfold" },
+          },
         }),
     });
     return Effect.gen(function* () {

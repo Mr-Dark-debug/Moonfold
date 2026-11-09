@@ -92,7 +92,9 @@ export function TunnelLimitAlert({
     ) : upgrade === "pro" || upgrade === "premier" ? (
       <Button
         size="sm"
-        render={<a href={MoonfoldCHAT_SUBSCRIPTION_URL} target="_blank" rel="noopener noreferrer" />}
+        render={
+          <a href={MoonfoldCHAT_SUBSCRIPTION_URL} target="_blank" rel="noopener noreferrer" />
+        }
       >
         Upgrade on Moonfold Chat
       </Button>

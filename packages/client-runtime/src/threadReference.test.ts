@@ -99,7 +99,7 @@ describe("resolveThreadReferenceCopyTarget", () => {
       ],
     });
     // The plain text opens the thread anywhere and pastes back as the copied record's chip.
-    expect(target!.value).toBe("https://app.t3.codes/threads/env-1/thread-1");
+    expect(target!.value).toBe("<moonfold-thread://v2/env-1/thread-1>");
     expect(threadLinkContextReferences(target!.value, pasted!.records, () => undefined)).toEqual({
       text: `[Fix the login flow](moonfold-context://v1/thread/${pasted!.records[0]!.contextId})`,
       records: pasted!.records,
@@ -108,8 +108,8 @@ describe("resolveThreadReferenceCopyTarget", () => {
 
   it("links through the build's hosted app", () => {
     expect(
-      resolveThreadReferenceCopyTarget({ ...thread, hostedAppUrl: "https://preview.t3.codes" })
+      resolveThreadReferenceCopyTarget({ ...thread, hostedAppUrl: "https://preview.example.org" })
         ?.value,
-    ).toBe("https://preview.t3.codes/threads/env-1/thread-1");
+    ).toBe("https://preview.example.org/threads/env-1/thread-1");
   });
 });

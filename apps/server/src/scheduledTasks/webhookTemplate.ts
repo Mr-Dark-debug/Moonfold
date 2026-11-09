@@ -49,7 +49,8 @@ const PLACEHOLDER = /\{\{([^{}]*)\}\}/g;
 
 // Break mentions before provider CLI parsing, including currency signs, embedded @, commands, context links and frame tags.
 // Checked with Claude Code 2.1.296, Codex 0.162.1, Pi 1.2.0 and dsh 0.2.0-rc.2; others may parse more.
-const MENTION = /[\p{Sc}@]|(?<=^|\s)\/(?=[^\s/]+(?:\s|$))|moonfold-context(?=:)|webhook(?=-data)/giu;
+const MENTION =
+  /[\p{Sc}@]|(?<=^|\s)\/(?=[^\s/]+(?:\s|$))|moonfold-context(?=:)|webhook(?=-data)/giu;
 
 function parseBody(request: WebhookRequest): unknown {
   const contentType = (request.headers["content-type"] ?? "").toLowerCase();

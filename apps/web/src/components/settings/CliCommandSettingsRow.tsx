@@ -26,7 +26,8 @@ export function CliCommandSettingsRow() {
         toastManager.add(
           stackedThreadToast({
             type: "error",
-            title: action === "install" ? "Could not install moonfold" : "Could not remove moonfold",
+            title:
+              action === "install" ? "Could not install moonfold" : "Could not remove moonfold",
             description: error instanceof Error ? error.message : "Something went wrong.",
           }),
         );

@@ -29,8 +29,9 @@ const make = Effect.gen(function* () {
   const projections = yield* ProjectionStore.ProjectionStoreV2;
   const providerInstances = yield* ProviderInstanceRegistry.ProviderInstanceRegistry;
 
-  const handle: ProviderThreadArchiveSync["Service"]["handle"] = (event) =>
-    Effect.gen(function* () {
+  // Runs for every domain event; most events return before any work is needed.
+  const handle: ProviderThreadArchiveSync["Service"]["handle"] = Effect.fnUntraced(
+    function* (event) {
       if (event.type !== "thread.archived" && event.type !== "thread.unarchived") return;
       const archived = event.type === "thread.archived";
       const { providerThreads } = yield* projections.getThreadRecords(event.threadId, [
@@ -52,14 +53,17 @@ const make = Effect.gen(function* () {
           ),
         );
       }
-    }).pipe(
-      Effect.catchCause((cause) =>
-        Effect.logWarning("syncing archive state to the provider failed", {
-          threadId: event.threadId,
-          cause,
-        }),
+    },
+    (effect, event) =>
+      effect.pipe(
+        Effect.catchCause((cause) =>
+          Effect.logWarning("syncing archive state to the provider failed", {
+            threadId: event.threadId,
+            cause,
+          }),
+        ),
       ),
-    );
+  );
 
   const start: ProviderThreadArchiveSync["Service"]["start"] = () =>
     forkParked(

@@ -388,7 +388,8 @@ const toolResult = (id: string, content: unknown): Block => ({
 });
 const texts = (content: typeof Content.Type) =>
   typeof content === "string" ? [content] : content.flatMap((block) => block.text ?? []);
-const isMoonfoldName = (name: string) => name.startsWith(MOONFOLD_PREFIX) || name.startsWith("mcp__moonfold__");
+const isMoonfoldName = (name: string) =>
+  name.startsWith(MOONFOLD_PREFIX) || name.startsWith("mcp__moonfold__");
 const hasTool = (tools: ReadonlyArray<ApiTool>, name: string) =>
   tools.some((tool) => tool.name === name);
 
@@ -501,7 +502,7 @@ const claudeQueryOptions = (model: Model, device = true) => {
     nativeThreadId: "mcp-tool-use-eval",
     resume: false,
     cwd: null,
-    mcpServers: { "moonfold": { type: "http", url: "http://127.0.0.1/mcp" } },
+    mcpServers: { moonfold: { type: "http", url: "http://127.0.0.1/mcp" } },
     deviceToolsAvailable: device,
   };
   return makeClaudeQueryOptions(input);
@@ -552,7 +553,10 @@ export const moonfoldSubagentContext = async (model: Model, device = true) => {
  */
 const moonfoldContextReport = (model: Model) => {
   const size = (chars: number) => `${chars} chars (~${Math.round(chars / 4)} tokens)`;
-  const descriptions = moonfoldTools.reduce((sum, tool) => sum + valueText(tool.description).length, 0);
+  const descriptions = moonfoldTools.reduce(
+    (sum, tool) => sum + valueText(tool.description).length,
+    0,
+  );
   const schemas = JSON.stringify(moonfoldTools).length;
   return [
     `- Moonfold context: system text ${size((isCodex(model) ? JSON.stringify(buildCodexAdditionalContext({ model }, { browser: true, device: true })) : moonfoldSystemAppend(model)).length)}`,
@@ -984,7 +988,9 @@ export const buildMessages = (sample: Sample) => {
       const tool = findTool(base, call.tool);
       if (tool === undefined) throw new Error(`${testCase.id}: unknown prior tool ${call.tool}.`);
       if (call.result === "default" && isDeviceTool(call.tool) && !sample.priorResults.has(call)) {
-        throw new Error(`${testCase.id}: prior ${call.tool} needs Moonfold's result; run withDevices.`);
+        throw new Error(
+          `${testCase.id}: prior ${call.tool} needs Moonfold's result; run withDevices.`,
+        );
       }
       return { ...call, id: `toolu_prior_${nextId++}`, name: tool.name, tool, prior: call };
     });

@@ -167,43 +167,43 @@ const makeTildeProviderFixtures = Effect.fn(
 describe("ProviderInstanceRegistry — multi-instance codex slice", () => {
   const makeLayerBaseDeps = (settings: Parameters<typeof ServerSettings.layerTest>[0] = {}) =>
     ServerConfig.layerTest(process.cwd(), {
-    prefix: "provider-instance-registry-test",
-  }).pipe(
-    Layer.provideMerge(
-      Layer.mock(CodexManagedTokenBroker.CodexManagedTokenBroker)({
-        endpoint: Effect.succeed("unused-private-pipe"),
-      }),
-    ),
-    Layer.provideMerge(Layer.mergeAll(NodeServices.layer, NodeCrypto.layer)),
-    Layer.provideMerge(
-      Layer.mock(CodexInstallation.CodexInstallation)({
-        managedDirectory: "unused-managed-installation",
-      }),
-    ),
-    Layer.provideMerge(Layer.mock(ServerSecretStore.ServerSecretStore)({})),
-    Layer.provideMerge(Layer.mock(SecretResolver.SecretResolver)({})),
-    Layer.provideMerge(
-      Layer.succeed(ServerEnvironment.ServerEnvironmentIdentity, {
-        getEnvironmentId: Effect.succeed(
-          EnvironmentId.make("00000000-0000-4000-8000-000000000001"),
-        ),
-      }),
-    ),
-    Layer.provideMerge(layerBackgroundPolicyAlwaysRun),
-    Layer.provideMerge(ServerSettings.layerTest(settings)),
-    Layer.provideMerge(layerTestHttpClient),
-    Layer.provideMerge(ServerSettings.layerTest(settings)),
-    Layer.provideMerge(
-      Layer.succeed(
-        ProviderEventLoggers.ProviderEventLoggers,
-        ProviderEventLoggers.NoOpProviderEventLoggers,
+      prefix: "provider-instance-registry-test",
+    }).pipe(
+      Layer.provideMerge(
+        Layer.mock(CodexManagedTokenBroker.CodexManagedTokenBroker)({
+          endpoint: Effect.succeed("unused-private-pipe"),
+        }),
       ),
-    ),
-    Layer.provideMerge(ProviderLatestVersions.layer),
-    Layer.provideMerge(McpProviderSessions.layer),
-    Layer.provideMerge(ModelManifest.layerTest),
-    Layer.provideMerge(ResetCreditCoordinator.layerTest),
-  );
+      Layer.provideMerge(Layer.mergeAll(NodeServices.layer, NodeCrypto.layer)),
+      Layer.provideMerge(
+        Layer.mock(CodexInstallation.CodexInstallation)({
+          managedDirectory: "unused-managed-installation",
+        }),
+      ),
+      Layer.provideMerge(Layer.mock(ServerSecretStore.ServerSecretStore)({})),
+      Layer.provideMerge(Layer.mock(SecretResolver.SecretResolver)({})),
+      Layer.provideMerge(
+        Layer.succeed(ServerEnvironment.ServerEnvironmentIdentity, {
+          getEnvironmentId: Effect.succeed(
+            EnvironmentId.make("00000000-0000-4000-8000-000000000001"),
+          ),
+        }),
+      ),
+      Layer.provideMerge(layerBackgroundPolicyAlwaysRun),
+      Layer.provideMerge(ServerSettings.layerTest(settings)),
+      Layer.provideMerge(layerTestHttpClient),
+      Layer.provideMerge(ServerSettings.layerTest(settings)),
+      Layer.provideMerge(
+        Layer.succeed(
+          ProviderEventLoggers.ProviderEventLoggers,
+          ProviderEventLoggers.NoOpProviderEventLoggers,
+        ),
+      ),
+      Layer.provideMerge(ProviderLatestVersions.layer),
+      Layer.provideMerge(McpProviderSessions.layer),
+      Layer.provideMerge(ModelManifest.layerTest),
+      Layer.provideMerge(ResetCreditCoordinator.layerTest),
+    );
   // The provider host reads settings from the layer it is built with, so a test that needs other
   // settings gets its own layer.
   const makeLayerTest = (settings: Parameters<typeof ServerSettings.layerTest>[0] = {}) =>
@@ -457,7 +457,9 @@ describe("ProviderInstanceRegistry — multi-instance codex slice", () => {
             driver: ProviderDriverKind.make("claudeAgent"),
             enabled: true,
             // Packaged desktop starts in $HOME, where some claude wrappers refuse to run.
-            environment: [{ name: "MOONFOLD_CLAUDE_REQUIRED_CWD", value: stateDir, sensitive: false }],
+            environment: [
+              { name: "MOONFOLD_CLAUDE_REQUIRED_CWD", value: stateDir, sensitive: false },
+            ],
             config: makeClaudeConfig({
               enabled: true,
               binaryPath: fixtures.claudeBinaryPath,

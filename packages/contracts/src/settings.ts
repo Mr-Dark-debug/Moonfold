@@ -1303,15 +1303,9 @@ export const ServerSettings = Schema.Struct({
   /** Stop a run once it has added this many tokens to its context (D-60); null never stops. */
   runTokenLimit: Schema.NullOr(PositiveInt).pipe(Schema.withDecodingDefault(Effect.succeed(null))),
   /**
-   * Whether agents may drive the in-app preview browser. Turning this off
-   * withholds the MCP credential, so the `moonfold` server (and with it every
-   * `preview_*` tool) is never attached to a provider session, and the prompt
-   * text describing those tools is dropped along with them. The user's own
-   * browser panel is unaffected — this gates agent access only.
-   *
-   * Server-authoritative rather than client-local: tool injection and prompt
-   * construction both happen on the server, and the answer must not differ
-   * between a desktop window and a phone attached to the same server.
+   * Whether agents may drive the in-app preview browser. Off withholds the MCP credential, so no
+   * `preview_*` tool or its prompt text reaches a provider session; the user's own browser panel
+   * is unaffected. Server-authoritative so a desktop window and a phone on one server agree.
    */
   enableAgentBrowserAccess: Schema.Boolean.pipe(Schema.withDecodingDefault(Effect.succeed(true))),
   speechModelId: Schema.String.pipe(

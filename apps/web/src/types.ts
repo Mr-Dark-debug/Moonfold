@@ -12,7 +12,6 @@ import type {
   ProjectScript as ContractProjectScript,
   ProviderInteractionMode,
   RunId,
-  RuntimeMode,
   ScheduledTaskId,
   ThreadId,
 } from "@moonfold/contracts";

@@ -326,7 +326,10 @@ function normalizeEntries(input: {
 const DEFAULT_FX_SETTINGS = Schema.decodeSync(FxSettings)({});
 
 const RecorderEnv = Config.all({
-  MOONFOLD_FX_BIN: Config.String("MOONFOLD_FX_BIN").pipe(Config.option, Config.map(Option.getOrUndefined)),
+  MOONFOLD_FX_BIN: Config.String("MOONFOLD_FX_BIN").pipe(
+    Config.option,
+    Config.map(Option.getOrUndefined),
+  ),
   HOME: Config.String("HOME").pipe(Config.option, Config.map(Option.getOrUndefined)),
   USER: Config.String("USER").pipe(Config.option, Config.map(Option.getOrUndefined)),
   AI_GATEWAY_API_KEY: Config.String("AI_GATEWAY_API_KEY").pipe(

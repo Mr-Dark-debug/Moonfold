@@ -15,7 +15,11 @@ import {
 } from "../../cloud/managedRelayState";
 import { relayEnvironmentDiscovery } from "../../state/relay";
 import { useAtomCommand } from "../../state/use-atom-command";
-import { MoonfoldCHAT_SUBSCRIPTION_URL, TunnelUsageMeter, tunnelUpgradeCopy } from "../cloud/TunnelUsage";
+import {
+  MoonfoldCHAT_SUBSCRIPTION_URL,
+  TunnelUsageMeter,
+  tunnelUpgradeCopy,
+} from "../cloud/TunnelUsage";
 import { Button, InlineButton } from "../ui/button";
 import { Collapsible, CollapsiblePanel, CollapsibleTrigger } from "../ui/collapsible";
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "../ui/empty";
@@ -140,7 +144,10 @@ function MoonfoldConnectTunnelUsage() {
             <>
               {tunnelUpgradeCopy(usage.upgrade)}{" "}
               {usage.upgrade === "link" ? (
-                <InlineButton disabled={moonfoldChat.pending !== null} onClick={() => void moonfoldChat.link()}>
+                <InlineButton
+                  disabled={moonfoldChat.pending !== null}
+                  onClick={() => void moonfoldChat.link()}
+                >
                   {moonfoldChat.pending === "link" ? "Opening…" : "Link Moonfold Chat"}
                 </InlineButton>
               ) : (

@@ -164,7 +164,9 @@ it.layer(NodeServices.layer)("ensurePinnedRuntimeInstalled", (it) => {
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const baseDir = yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-pinned-archive-missing-" });
+      const baseDir = yield* fs.makeTempDirectoryScoped({
+        prefix: "moonfold-pinned-archive-missing-",
+      });
       const checksums = yield* validChecksums;
       const failsWith = (status: number) =>
         ensurePinnedRuntimeInstalled({
@@ -316,7 +318,9 @@ it.layer(NodeServices.layer)("ensurePinnedRuntimeInstalled", (it) => {
     Effect.gen(function* () {
       const fs = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
-      const baseDir = yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-pinned-runtime-mirror-" });
+      const baseDir = yield* fs.makeTempDirectoryScoped({
+        prefix: "moonfold-pinned-runtime-mirror-",
+      });
       const cached = pinnedRuntimePaths(path, baseDir, version, "linux");
       yield* fs.makeDirectory(path.dirname(cached.entryPath), { recursive: true });
       yield* fs.writeFileString(cached.entryPath, "#!/bin/sh\n");
@@ -456,9 +460,15 @@ it.layer(NodeServices.layer)("prunePinnedRuntimes", (it) => {
       yield* fs.makeDirectory(binDir);
       yield* fs.makeDirectory(customBinDir);
       // Chained: the launcher reaches its runtime through a second link.
-      yield* fs.symlink(path.join(versionsDir, "1.2.0", "moonfold"), path.join(baseDir, "alias-moonfold"));
+      yield* fs.symlink(
+        path.join(versionsDir, "1.2.0", "moonfold"),
+        path.join(baseDir, "alias-moonfold"),
+      );
       yield* fs.symlink(path.join(baseDir, "alias-moonfold"), path.join(binDir, "moonfold"));
-      yield* fs.symlink(path.join(versionsDir, "1.2.5", "moonfold"), path.join(customBinDir, "moonfold"));
+      yield* fs.symlink(
+        path.join(versionsDir, "1.2.5", "moonfold"),
+        path.join(customBinDir, "moonfold"),
+      );
       yield* fs.writeFileString(
         path.join(baseDir, "runtime", "launchers"),
         `${path.join(customBinDir, "moonfold")}\n`,

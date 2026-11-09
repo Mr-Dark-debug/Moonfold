@@ -489,7 +489,9 @@ function MoonfoldConnectTunnelUsage({ tunnelLimit }: { readonly tunnelLimit: num
         action={
           // At the cap the alert below carries the same action.
           usage.upgrade && openAccountPage && !showLimitAlert ? (
-            <InlineButton onClick={() => openAccountPage("moonfold-chat")}>Get more tunnels</InlineButton>
+            <InlineButton onClick={() => openAccountPage("moonfold-chat")}>
+              Get more tunnels
+            </InlineButton>
           ) : null
         }
       />

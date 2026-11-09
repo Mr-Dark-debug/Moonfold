@@ -8,8 +8,7 @@ export const THREAD_LINK_PROTOCOL = "moonfold-thread";
 const V1_PREFIX = `${THREAD_LINK_PROTOCOL}://v1/`;
 const V2_PREFIX = `${THREAD_LINK_PROTOCOL}://v2/`;
 // Moonfold has no hosted app by default, so without one only `moonfold-thread://` links parse.
-const HOSTED_PREFIX =
-  DEFAULT_HOSTED_APP_URL === "" ? null : `${DEFAULT_HOSTED_APP_URL}/threads/`;
+const HOSTED_PREFIX = DEFAULT_HOSTED_APP_URL === "" ? null : `${DEFAULT_HOSTED_APP_URL}/threads/`;
 const HOSTED_SEGMENT = "[A-Za-z0-9_%-]+";
 // `(?!)` never matches, which drops the hosted alternatives from the pattern below.
 const HOSTED_LINK =

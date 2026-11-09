@@ -16,6 +16,13 @@ import { Route as ConnectAgentRouteImport } from './routes/connect-agent'
 import { Route as ConnectRouteImport } from './routes/connect'
 import { Route as ChatRouteImport } from './routes/_chat'
 import { Route as ChatIndexRouteImport } from './routes/_chat.index'
+import { Route as SettingsPromptProfilesRouteImport } from './routes/settings.prompt-profiles'
+import { Route as SettingsPluginsRouteImport } from './routes/settings.plugins'
+import { Route as SettingsPersonalizationRouteImport } from './routes/settings.personalization'
+import { Route as SettingsMobileRouteImport } from './routes/settings.mobile'
+import { Route as SettingsMemoriesRouteImport } from './routes/settings.memories'
+import { Route as SettingsHandoffRouteImport } from './routes/settings.handoff'
+import { Route as SettingsComputerUseRouteImport } from './routes/settings.computer-use'
 import { Route as ProjectsProjectKeyRouteImport } from './routes/projects.$projectKey'
 import { Route as ChatUsageRouteImport } from './routes/_chat.usage'
 import { Route as ChatSettingsRouteImport } from './routes/_chat.settings'
@@ -85,6 +92,41 @@ const ChatIndexRoute = ChatIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ChatRoute,
+} as any)
+const SettingsPromptProfilesRoute = SettingsPromptProfilesRouteImport.update({
+  id: '/settings/prompt-profiles',
+  path: '/settings/prompt-profiles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsPluginsRoute = SettingsPluginsRouteImport.update({
+  id: '/settings/plugins',
+  path: '/settings/plugins',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsPersonalizationRoute = SettingsPersonalizationRouteImport.update({
+  id: '/settings/personalization',
+  path: '/settings/personalization',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsMobileRoute = SettingsMobileRouteImport.update({
+  id: '/settings/mobile',
+  path: '/settings/mobile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsMemoriesRoute = SettingsMemoriesRouteImport.update({
+  id: '/settings/memories',
+  path: '/settings/memories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsHandoffRoute = SettingsHandoffRouteImport.update({
+  id: '/settings/handoff',
+  path: '/settings/handoff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsComputerUseRoute = SettingsComputerUseRouteImport.update({
+  id: '/settings/computer-use',
+  path: '/settings/computer-use',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsProjectKeyRoute = ProjectsProjectKeyRouteImport.update({
   id: '/projects/$projectKey',
@@ -280,6 +322,13 @@ export interface FileRoutesByFullPath {
   '/settings': typeof ChatSettingsRouteWithChildren
   '/usage': typeof ChatUsageRoute
   '/projects/$projectKey': typeof ProjectsProjectKeyRoute
+  '/settings/computer-use': typeof SettingsComputerUseRoute
+  '/settings/handoff': typeof SettingsHandoffRoute
+  '/settings/memories': typeof SettingsMemoriesRoute
+  '/settings/mobile': typeof SettingsMobileRoute
+  '/settings/personalization': typeof SettingsPersonalizationRoute
+  '/settings/plugins': typeof SettingsPluginsRoute
+  '/settings/prompt-profiles': typeof SettingsPromptProfilesRoute
   '/$environmentId/$threadId': typeof ChatEnvironmentIdThreadIdRoute
   '/draft/$draftId': typeof ChatDraftDraftIdRoute
   '/settings/about': typeof ChatSettingsAboutRoute
@@ -322,6 +371,13 @@ export interface FileRoutesByTo {
   '/settings': typeof ChatSettingsRouteWithChildren
   '/usage': typeof ChatUsageRoute
   '/projects/$projectKey': typeof ProjectsProjectKeyRoute
+  '/settings/computer-use': typeof SettingsComputerUseRoute
+  '/settings/handoff': typeof SettingsHandoffRoute
+  '/settings/memories': typeof SettingsMemoriesRoute
+  '/settings/mobile': typeof SettingsMobileRoute
+  '/settings/personalization': typeof SettingsPersonalizationRoute
+  '/settings/plugins': typeof SettingsPluginsRoute
+  '/settings/prompt-profiles': typeof SettingsPromptProfilesRoute
   '/': typeof ChatIndexRoute
   '/$environmentId/$threadId': typeof ChatEnvironmentIdThreadIdRoute
   '/draft/$draftId': typeof ChatDraftDraftIdRoute
@@ -367,6 +423,13 @@ export interface FileRoutesById {
   '/_chat/settings': typeof ChatSettingsRouteWithChildren
   '/_chat/usage': typeof ChatUsageRoute
   '/projects/$projectKey': typeof ProjectsProjectKeyRoute
+  '/settings/computer-use': typeof SettingsComputerUseRoute
+  '/settings/handoff': typeof SettingsHandoffRoute
+  '/settings/memories': typeof SettingsMemoriesRoute
+  '/settings/mobile': typeof SettingsMobileRoute
+  '/settings/personalization': typeof SettingsPersonalizationRoute
+  '/settings/plugins': typeof SettingsPluginsRoute
+  '/settings/prompt-profiles': typeof SettingsPromptProfilesRoute
   '/_chat/': typeof ChatIndexRoute
   '/_chat/$environmentId/$threadId': typeof ChatEnvironmentIdThreadIdRoute
   '/_chat/draft/$draftId': typeof ChatDraftDraftIdRoute
@@ -413,6 +476,13 @@ export interface FileRouteTypes {
     | '/settings'
     | '/usage'
     | '/projects/$projectKey'
+    | '/settings/computer-use'
+    | '/settings/handoff'
+    | '/settings/memories'
+    | '/settings/mobile'
+    | '/settings/personalization'
+    | '/settings/plugins'
+    | '/settings/prompt-profiles'
     | '/$environmentId/$threadId'
     | '/draft/$draftId'
     | '/settings/about'
@@ -455,6 +525,13 @@ export interface FileRouteTypes {
     | '/settings'
     | '/usage'
     | '/projects/$projectKey'
+    | '/settings/computer-use'
+    | '/settings/handoff'
+    | '/settings/memories'
+    | '/settings/mobile'
+    | '/settings/personalization'
+    | '/settings/plugins'
+    | '/settings/prompt-profiles'
     | '/'
     | '/$environmentId/$threadId'
     | '/draft/$draftId'
@@ -499,6 +576,13 @@ export interface FileRouteTypes {
     | '/_chat/settings'
     | '/_chat/usage'
     | '/projects/$projectKey'
+    | '/settings/computer-use'
+    | '/settings/handoff'
+    | '/settings/memories'
+    | '/settings/mobile'
+    | '/settings/personalization'
+    | '/settings/plugins'
+    | '/settings/prompt-profiles'
     | '/_chat/'
     | '/_chat/$environmentId/$threadId'
     | '/_chat/draft/$draftId'
@@ -540,6 +624,13 @@ export interface RootRouteChildren {
   PairRoute: typeof PairRoute
   WelcomeRoute: typeof WelcomeRoute
   ProjectsProjectKeyRoute: typeof ProjectsProjectKeyRoute
+  SettingsComputerUseRoute: typeof SettingsComputerUseRoute
+  SettingsHandoffRoute: typeof SettingsHandoffRoute
+  SettingsMemoriesRoute: typeof SettingsMemoriesRoute
+  SettingsMobileRoute: typeof SettingsMobileRoute
+  SettingsPersonalizationRoute: typeof SettingsPersonalizationRoute
+  SettingsPluginsRoute: typeof SettingsPluginsRoute
+  SettingsPromptProfilesRoute: typeof SettingsPromptProfilesRoute
   ThreadsEnvironmentIdThreadIdRoute: typeof ThreadsEnvironmentIdThreadIdRoute
 }
 
@@ -593,6 +684,55 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof ChatIndexRouteImport
       parentRoute: typeof ChatRoute
+    }
+    '/settings/prompt-profiles': {
+      id: '/settings/prompt-profiles'
+      path: '/settings/prompt-profiles'
+      fullPath: '/settings/prompt-profiles'
+      preLoaderRoute: typeof SettingsPromptProfilesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/plugins': {
+      id: '/settings/plugins'
+      path: '/settings/plugins'
+      fullPath: '/settings/plugins'
+      preLoaderRoute: typeof SettingsPluginsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/personalization': {
+      id: '/settings/personalization'
+      path: '/settings/personalization'
+      fullPath: '/settings/personalization'
+      preLoaderRoute: typeof SettingsPersonalizationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/mobile': {
+      id: '/settings/mobile'
+      path: '/settings/mobile'
+      fullPath: '/settings/mobile'
+      preLoaderRoute: typeof SettingsMobileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/memories': {
+      id: '/settings/memories'
+      path: '/settings/memories'
+      fullPath: '/settings/memories'
+      preLoaderRoute: typeof SettingsMemoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/handoff': {
+      id: '/settings/handoff'
+      path: '/settings/handoff'
+      fullPath: '/settings/handoff'
+      preLoaderRoute: typeof SettingsHandoffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/computer-use': {
+      id: '/settings/computer-use'
+      path: '/settings/computer-use'
+      fullPath: '/settings/computer-use'
+      preLoaderRoute: typeof SettingsComputerUseRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/projects/$projectKey': {
       id: '/projects/$projectKey'
@@ -936,6 +1076,13 @@ const rootRouteChildren: RootRouteChildren = {
   PairRoute: PairRoute,
   WelcomeRoute: WelcomeRoute,
   ProjectsProjectKeyRoute: ProjectsProjectKeyRoute,
+  SettingsComputerUseRoute: SettingsComputerUseRoute,
+  SettingsHandoffRoute: SettingsHandoffRoute,
+  SettingsMemoriesRoute: SettingsMemoriesRoute,
+  SettingsMobileRoute: SettingsMobileRoute,
+  SettingsPersonalizationRoute: SettingsPersonalizationRoute,
+  SettingsPluginsRoute: SettingsPluginsRoute,
+  SettingsPromptProfilesRoute: SettingsPromptProfilesRoute,
   ThreadsEnvironmentIdThreadIdRoute: ThreadsEnvironmentIdThreadIdRoute,
 }
 export const routeTree = rootRouteImport

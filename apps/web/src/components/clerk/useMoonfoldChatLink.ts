@@ -37,7 +37,9 @@ export function useMoonfoldChatLink() {
   const createLinkRequest = useAtomCommand(createManagedRelayMoonfoldChatLinkRequestCommand, {
     reportFailure: false,
   });
-  const unlinkCommand = useAtomCommand(unlinkManagedRelayMoonfoldChatCommand, { reportFailure: false });
+  const unlinkCommand = useAtomCommand(unlinkManagedRelayMoonfoldChatCommand, {
+    reportFailure: false,
+  });
   const [pending, setPending] = useState<"link" | "unlink" | null>(null);
   // Kept so a blocked popup still leaves the user a link to open.
   const [linkUrl, setLinkUrl] = useState<string | null>(null);

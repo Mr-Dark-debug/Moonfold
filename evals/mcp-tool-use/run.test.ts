@@ -1627,7 +1627,10 @@ it("shares failed device attempts across tools and launcher steps, resetting onl
     failed: true,
     input:
       tool === "Bash"
-        ? { command: "/home/user/.moonfold/device/bin/agent-device snapshot -i --session moonfold-eval" }
+        ? {
+            command:
+              "/home/user/.moonfold/device/bin/agent-device snapshot -i --session moonfold-eval",
+          }
         : {},
   });
   const calls = [
@@ -1697,7 +1700,10 @@ it("keeps the shared recovery budget when a case is decoded and graded", () => {
     step,
     tool,
     failed: true,
-    input: tool === "Bash" ? { command: "/home/user/.moonfold/device/bin/agent-device snapshot -i" } : {},
+    input:
+      tool === "Bash"
+        ? { command: "/home/user/.moonfold/device/bin/agent-device snapshot -i" }
+        : {},
   }));
   const run = { calls, text: "Canvas is blocked: daemon unavailable.", stopReason: "end_turn" };
   assert.isTrue(
@@ -2284,7 +2290,11 @@ it("does not credit a capture attempt on a different host", () => {
 });
 
 it.each([
-  ["Moonfold's result names the remote device", { hostId: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa" }, true],
+  [
+    "Moonfold's result names the remote device",
+    { hostId: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa" },
+    true,
+  ],
   ["Moonfold's result names a local device", { hostId: "local" }, false],
   ["failed attempt uses the matching open session", undefined, true],
 ] as const)(
@@ -2388,7 +2398,8 @@ it.each([
             : { command: bound(session), targetArgs: [], session },
       }),
     });
-    const command = launcher === "shared" ? shared : bound(launcher === "spare" ? "moonfold-b" : "moonfold-a");
+    const command =
+      launcher === "shared" ? shared : bound(launcher === "spare" ? "moonfold-b" : "moonfold-a");
     const run = {
       calls: [
         open(0, primary, "moonfold-a"),
@@ -3646,7 +3657,8 @@ it("fleet OWN-01 allows contention discovery but forbids reusing the occupied se
           step: 4,
           tool: "Bash",
           input: {
-            command: "agent-device --session moonfold-a062c547ef0b6bf8ee839b67 screenshot /tmp/a.png",
+            command:
+              "agent-device --session moonfold-a062c547ef0b6bf8ee839b67 screenshot /tmp/a.png",
           },
           failed: false,
         },
@@ -3822,7 +3834,8 @@ it.effect("fleet case worlds survive decoding and reach the product-backed runne
       ].join(" ");
       const error = tools.sessionError(sample.shell, command) ?? "";
       assert.include(error, id === "OWN-01" ? "DEVICE_IN_USE" : "SESSION_NOT_FOUND");
-      if (id === "OWN-01") assert.equal(tools.owners[0]!.session, "moonfold-a062c547ef0b6bf8ee839b67");
+      if (id === "OWN-01")
+        assert.equal(tools.owners[0]!.session, "moonfold-a062c547ef0b6bf8ee839b67");
     }
   }).pipe(Effect.scoped, Effect.provide(Layer.mergeAll(NodeServices.layer, NodeCrypto.layer))),
 );
@@ -3873,7 +3886,9 @@ it.each(["bound", "shared"])(
     const c = deviceCases().find((c) => c.id === "SESS-01")!;
     const good = fleetTrace(c.id);
     const launcher =
-      form === "bound" ? good.launchers![0]! : "/home/user/.moonfold/userdata/device/bin/agent-device";
+      form === "bound"
+        ? good.launchers![0]!
+        : "/home/user/.moonfold/userdata/device/bin/agent-device";
     const flags =
       form === "shared"
         ? " --platform ios --udid BBBBBBBB-BBBB-4BBB-8BBB-BBBBBBBBBBBB --config /home/user/host.json --session moonfold-acme"
@@ -4144,7 +4159,9 @@ const capRun6 = [
   },
   {
     ref: "api-dec6-cand-claude-opus-5-5#36",
-    launchers: ["/home/user/.moonfold/userdata/device/targets/moonfold-2b48b357cf96fdad64f0dd3f/agent-device"],
+    launchers: [
+      "/home/user/.moonfold/userdata/device/targets/moonfold-2b48b357cf96fdad64f0dd3f/agent-device",
+    ],
     calls: [
       {
         step: 4,
@@ -4198,7 +4215,9 @@ it.each(["bound", "shared"])("R12 CAP-01 rejects unattributable recovery mutatio
   const c = deviceCases().find((c) => c.id === "CAP-01")!;
   const good = { ...fleetTrace(c.id), finalText: "Verified Settings." };
   const launcher =
-    form === "bound" ? good.launchers![0]! : "/home/user/.moonfold/userdata/device/bin/agent-device";
+    form === "bound"
+      ? good.launchers![0]!
+      : "/home/user/.moonfold/userdata/device/bin/agent-device";
   const command = `mkdir -p /tmp/proof && ${launcher} screenshot /tmp/proof/recovered.png; ls -l /tmp/proof; file /tmp/proof/recovered.png`;
   const output =
     "Screenshot saved: /tmp/proof/recovered.png\n/tmp/proof/recovered.png: PNG image data, 1080 x 2400";
@@ -4235,7 +4254,9 @@ it.each(["bound", "shared"])(
     const c = deviceCases().find((c) => c.id === "SESS-01")!;
     const good = fleetTrace(c.id);
     const launcher =
-      form === "bound" ? good.launchers![0]! : "/home/user/.moonfold/userdata/device/bin/agent-device";
+      form === "bound"
+        ? good.launchers![0]!
+        : "/home/user/.moonfold/userdata/device/bin/agent-device";
     const flags =
       form === "shared"
         ? " --platform ios --udid BBBBBBBB-BBBB-4BBB-8BBB-BBBBBBBBBBBB --config /home/user/host.json --session moonfold-acme"

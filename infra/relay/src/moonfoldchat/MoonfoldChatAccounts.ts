@@ -65,7 +65,10 @@ export class MoonfoldChatAccounts extends Context.Service<
     }) => Effect.Effect<string, MoonfoldChatNotConfigured | ClerkUserLookupFailed>;
     readonly getLink: (input: {
       readonly userId: string;
-    }) => Effect.Effect<RelayMoonfoldChatLink | null, MoonfoldChatNotConfigured | MoonfoldChatRequestFailed>;
+    }) => Effect.Effect<
+      RelayMoonfoldChatLink | null,
+      MoonfoldChatNotConfigured | MoonfoldChatRequestFailed
+    >;
     readonly unlink: (input: {
       readonly userId: string;
     }) => Effect.Effect<void, MoonfoldChatNotConfigured | MoonfoldChatRequestFailed>;
@@ -113,27 +116,27 @@ export const make = Effect.gen(function* () {
     );
   });
 
-  const lookupClerkPrimaryEmail = Effect.fn("relay.moonfoldchat.lookup_clerk_primary_email")(function* (
-    userId: string,
-  ) {
-    return yield* Effect.tryPromise({
-      try: async () => {
-        const user = await createClerkClient({
-          secretKey: Redacted.value(config.clerkSecretKey),
-          publishableKey: config.clerkPublishableKey,
-        }).users.getUser(userId);
-        const email = user.primaryEmailAddress?.emailAddress;
-        if (!email) throw new Error("Clerk user has no primary email address.");
-        return email;
-      },
-      catch: (cause) => new ClerkUserLookupFailed({ cause }),
-    }).pipe(
-      Effect.timeoutOrElse({
-        duration: MoonfoldCHAT_REQUEST_TIMEOUT,
-        orElse: () => Effect.fail(new ClerkUserLookupFailed({ cause: "timed out" })),
-      }),
-    );
-  });
+  const lookupClerkPrimaryEmail = Effect.fn("relay.moonfoldchat.lookup_clerk_primary_email")(
+    function* (userId: string) {
+      return yield* Effect.tryPromise({
+        try: async () => {
+          const user = await createClerkClient({
+            secretKey: Redacted.value(config.clerkSecretKey),
+            publishableKey: config.clerkPublishableKey,
+          }).users.getUser(userId);
+          const email = user.primaryEmailAddress?.emailAddress;
+          if (!email) throw new Error("Clerk user has no primary email address.");
+          return email;
+        },
+        catch: (cause) => new ClerkUserLookupFailed({ cause }),
+      }).pipe(
+        Effect.timeoutOrElse({
+          duration: MoonfoldCHAT_REQUEST_TIMEOUT,
+          orElse: () => Effect.fail(new ClerkUserLookupFailed({ cause: "timed out" })),
+        }),
+      );
+    },
+  );
 
   return MoonfoldChatAccounts.of({
     available: settings !== undefined,

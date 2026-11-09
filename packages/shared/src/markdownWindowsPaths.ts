@@ -35,28 +35,12 @@ function keepWindowsPathEscape(this: EscapeCompileContext) {
   }
 }
 
-function keepWindowsProsePathEscape(this: EscapeCompileContext) {
-  // Destinations, titles, and labels are buffered in a fragment.
-  if (this.stack.at(-1)?.type !== "fragment") keepWindowsPathEscape.call(this);
-}
-
-/**
- * Keeps escapes inside drive paths in prose only, for parsers that already escape Windows
- * destinations themselves. Prose paths end at whitespace: past that, nothing tells a path
- * from a sentence, and `C:\x and \*this\*` must still read `*this*`.
- */
-export function remarkKeepWindowsProsePaths(this: Processor) {
-  (this.data().fromMarkdownExtensions ??= []).push({
-    exit: { characterEscape: keepWindowsProsePathEscape },
-  });
-}
-
 /**
  * CommonMark reads the `\.` in `C:\me\.moonfold\shot.png` as an escape. Every backslash in a
  * Windows path is a separator, so link, image, and definition destinations that are
  * Windows paths keep the text as written, and so do escapes inside drive paths.
  */
-export function remarkKeepWindowsPaths(this: Processor) {
+function keepWindowsPathsPlugin(this: Processor) {
   (this.data().fromMarkdownExtensions ??= []).push({
     exit: {
       resourceDestinationString: keepWindowsPathDestination,
@@ -65,3 +49,6 @@ export function remarkKeepWindowsPaths(this: Processor) {
     },
   });
 }
+
+// `this` is the unified Processor, so the plugin is declared above and exported as a binding.
+export const remarkKeepWindowsPaths = keepWindowsPathsPlugin;

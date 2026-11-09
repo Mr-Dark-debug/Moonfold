@@ -27,7 +27,9 @@ it.each([1])("blocks legacy launcher protocol %i with exact recovery steps", (la
   const reason = result.status === "blocked" ? result.reason : "";
   expect(reason).toMatch(new RegExp(`\\b${launcherProtocol}\\b`));
   expect(reason).toMatch(new RegExp(`\\b${SERVICE_LAUNCHER_PROTOCOL}\\b`));
-  expect(reason).toContain("curl -fsSL https://t3.codes/install.sh | MOONFOLD_VERSION=9.8.7 sh");
+  expect(reason).toContain(
+    "curl -fsSL https://raw.githubusercontent.com/Mr-Dark-debug/Moonfold/main/scripts/install.sh | MOONFOLD_VERSION=9.8.7 sh",
+  );
   expect(reason).toContain("~/.local/bin/moonfold service install");
   expect(reason).toContain("moonfold --version");
   expect(reason).toContain("which -a moonfold");

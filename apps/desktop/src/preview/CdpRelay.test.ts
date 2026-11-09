@@ -323,7 +323,11 @@ describe("CDP relay payload budget", () => {
       JSON.stringify({ id: 1, method: "DOM.getDocument", sessionId: "moonfold-preview-page" }),
     );
     relay.receive(
-      JSON.stringify({ id: 2, method: "Page.captureScreenshot", sessionId: "moonfold-preview-page" }),
+      JSON.stringify({
+        id: 2,
+        method: "Page.captureScreenshot",
+        sessionId: "moonfold-preview-page",
+      }),
     );
     await settle();
 

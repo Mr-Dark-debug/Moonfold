@@ -1,8 +1,7 @@
 /**
  * BrowserSitePermissions - what agents may do on each website through Moonfold's browser tools:
- * open or navigate to it, and upload files to it. A rule allows, asks or blocks; a site without
- * a rule follows the defaults. An "ask" waits for the user to answer in any connected client.
- * Local dev servers and non-web pages are always allowed.
+ * open it and upload files to it. A rule allows, asks or blocks; a site without one follows the
+ * defaults. An "ask" waits for an answer in any connected client. Local dev servers are allowed.
  *
  * @module browser/BrowserSitePermissions
  */
@@ -20,8 +19,7 @@ import {
   type ThreadId,
 } from "@moonfold/contracts";
 import * as Context from "effect/Context";
-import * as Crypto from "effect/Crypto";
-import * as Data from "effect/Data";
+import * as SecureRandom from "effect/crypto/SecureRandom";
 import * as DateTime from "effect/DateTime";
 import * as Deferred from "effect/Deferred";
 import * as Duration from "effect/Duration";
@@ -44,9 +42,10 @@ const ASK_TIMEOUT = Duration.minutes(5);
 const DEFAULTS_ROW = "*";
 
 /** Why an agent may not use a site; the message is written for the agent. */
-export class BrowserSiteDenied extends Data.TaggedError("BrowserSiteDenied")<{
-  readonly message: string;
-}> {}
+export class BrowserSiteDenied extends Schema.TaggedError<BrowserSiteDenied>()(
+  "BrowserSiteDenied",
+  { message: Schema.String },
+) {}
 
 const isSiteHost = Schema.is(BrowserSiteHost);
 const isDecision = (value: string): value is BrowserSiteDecision =>
@@ -136,7 +135,7 @@ interface RuleRow {
 
 const make = Effect.gen(function* () {
   const sql = yield* SqlClient.SqlClient;
-  const crypto = yield* Crypto.Crypto;
+  const random = yield* SecureRandom.SecureRandom;
   const now = DateTime.now.pipe(Effect.map(DateTime.formatIso));
   const pendingRef = yield* SubscriptionRef.make<ReadonlyArray<BrowserSitePermissionRequest>>([]);
   const waiting = new Map<string, Deferred.Deferred<BrowserSiteAnswerInput["answer"]>>();
@@ -175,8 +174,8 @@ const make = Effect.gen(function* () {
     Effect.mapError(siteError("Could not read the site rules.")),
   );
 
-  const writeRow = (site: string, decisions: BrowserSiteDecisions) =>
-    Effect.gen(function* () {
+  const writeRow = Effect.fn("BrowserSitePermissions.writeRow")(
+    function* (site: string, decisions: BrowserSiteDecisions) {
       yield* sql`
         INSERT INTO browser_site_rules (site, browse, upload, updated_at)
         VALUES (${site}, ${decisions.browse}, ${decisions.upload}, ${yield* now})
@@ -184,12 +183,12 @@ const make = Effect.gen(function* () {
           browse = excluded.browse, upload = excluded.upload, updated_at = excluded.updated_at
       `;
       return yield* readPolicy;
-    }).pipe(
-      Effect.catchTags({
-        SqlError: (cause) =>
-          Effect.fail(new BrowserSiteError({ message: "Could not save the site rule.", cause })),
-      }),
-    );
+    },
+    Effect.catchTags({
+      SqlError: (cause) =>
+        Effect.fail(new BrowserSiteError({ message: "Could not save the site rule.", cause })),
+    }),
+  );
 
   const setRule: BrowserSitePermissions["Service"]["setRule"] = (input) =>
     writeRow(input.site, { browse: input.browse, upload: input.upload });
@@ -208,24 +207,21 @@ const make = Effect.gen(function* () {
       requests.filter((request) => request.id !== id),
     ).pipe(Effect.andThen(Effect.sync(() => waiting.delete(id))));
 
-  const answer: BrowserSitePermissions["Service"]["answer"] = (input) =>
-    Effect.gen(function* () {
-      const deferred = waiting.get(input.id);
-      if (deferred === undefined) {
-        return yield* new BrowserSiteError({
-          message: "This request is no longer waiting for an answer.",
-        });
-      }
-      yield* Deferred.succeed(deferred, input.answer);
-    });
+  const answer: BrowserSitePermissions["Service"]["answer"] = Effect.fn(
+    "BrowserSitePermissions.answer",
+  )(function* (input) {
+    const deferred = waiting.get(input.id);
+    if (deferred === undefined) {
+      return yield* new BrowserSiteError({
+        message: "This request is no longer waiting for an answer.",
+      });
+    }
+    yield* Deferred.succeed(deferred, input.answer);
+  });
 
   /** Keeps a site's rule for the other capability while changing this one. */
-  const rememberDecision = (
-    site: string,
-    capability: BrowserSiteCapability,
-    decision: BrowserSiteDecision,
-  ) =>
-    Effect.gen(function* () {
+  const rememberDecision = Effect.fn("BrowserSitePermissions.rememberDecision")(
+    function* (site: string, capability: BrowserSiteCapability, decision: BrowserSiteDecision) {
       const policy = yield* readPolicy;
       const current = policy.rules.find((rule) => rule.site === site) ?? policy.defaults;
       yield* writeRow(site, {
@@ -233,99 +229,97 @@ const make = Effect.gen(function* () {
         upload: current.upload,
         [capability]: decision,
       });
-    }).pipe(
-      Effect.catch((error) =>
-        Effect.logWarning("Could not remember a site permission answer", { error }),
-      ),
-    );
+    },
+    Effect.catch((error) =>
+      Effect.logWarning("Could not remember a site permission answer", { error }),
+    ),
+  );
 
-  const ask = (input: {
+  const ask = Effect.fn("BrowserSitePermissions.ask")(function* (input: {
     readonly threadId: ThreadId;
     readonly url: string;
     readonly site: string;
     readonly capability: BrowserSiteCapability;
-  }) =>
-    Effect.gen(function* () {
-      const id = yield* crypto.randomUUIDv4().pipe(Effect.orDie);
-      const deferred = yield* Deferred.make<BrowserSiteAnswerInput["answer"]>();
-      const createdAt = yield* now;
-      waiting.set(id, deferred);
-      yield* SubscriptionRef.update(pendingRef, (requests) => [
-        ...requests,
-        {
-          id,
-          threadId: input.threadId,
-          site: input.site,
-          capability: input.capability,
-          url: input.url,
-          createdAt,
-        },
-      ]);
-      return yield* Deferred.await(deferred).pipe(
-        Effect.timeoutOption(ASK_TIMEOUT),
-        // Answered, timed out or abandoned: the request stops waiting either way.
-        Effect.ensuring(removePending(id)),
-      );
-    });
+  }) {
+    const id = yield* random.uuidV4();
+    const deferred = yield* Deferred.make<BrowserSiteAnswerInput["answer"]>();
+    const createdAt = yield* now;
+    waiting.set(id, deferred);
+    yield* SubscriptionRef.update(pendingRef, (requests) => [
+      ...requests,
+      {
+        id,
+        threadId: input.threadId,
+        site: input.site,
+        capability: input.capability,
+        url: input.url,
+        createdAt,
+      },
+    ]);
+    return yield* Deferred.await(deferred).pipe(
+      Effect.timeoutOption(ASK_TIMEOUT),
+      // Answered, timed out or abandoned: the request stops waiting either way.
+      Effect.ensuring(removePending(id)),
+    );
+  });
 
-  const check: BrowserSitePermissions["Service"]["check"] = (input) =>
-    Effect.gen(function* () {
-      const target = siteOfUrl(input.url);
-      if (target.kind === "exempt") return;
-      if (target.kind === "invalid") {
+  const check: BrowserSitePermissions["Service"]["check"] = Effect.fn(
+    "BrowserSitePermissions.check",
+  )(function* (input) {
+    const target = siteOfUrl(input.url);
+    if (target.kind === "exempt") return;
+    if (target.kind === "invalid") {
+      return yield* new BrowserSiteDenied({
+        message: `Moonfold cannot tell which site "${input.url.slice(0, 200)}" is, so it was not opened. Use a full https:// address.`,
+      });
+    }
+    const site = target.site;
+    // Hosts a rule cannot name (IP literals, underscores) follow the defaults, and an "always"
+    // answer for them applies once.
+    const ruleable = isSiteHost(site);
+    const policy = yield* readPolicy.pipe(
+      // A rule store that cannot be read must not open every site: treat it as asking.
+      Effect.orElseSucceed((): BrowserSitePolicy => ({
+        defaults: { browse: "ask", upload: "ask" },
+        rules: [],
+      })),
+    );
+    const decision = (ruleFor(policy.rules, site) ?? policy.defaults)[input.capability];
+    const verb = VERBS[input.capability];
+    if (decision === "allow") return;
+    if (decision === "block") {
+      return yield* new BrowserSiteDenied({
+        message: `The user blocks agents from ${verb} ${site}. Do not retry; they can change this in Settings → Integrations → Browser.`,
+      });
+    }
+    const key = `${input.threadId}|${input.capability}|${site}`;
+    if ((yield* Ref.get(threadAllows)).has(key)) return;
+    const answered = yield* ask({ ...input, site });
+    if (Option.isNone(answered)) {
+      return yield* new BrowserSiteDenied({
+        message: `The user did not answer whether you may continue ${verb} ${site}. Ask them in chat before trying again.`,
+      });
+    }
+    switch (answered.value) {
+      case "allow_once":
+        return;
+      case "allow_thread":
+        yield* Ref.update(threadAllows, (current) => new Set([...current, key]));
+        return;
+      case "always_allow":
+        if (ruleable) yield* rememberDecision(site, input.capability, "allow");
+        return;
+      case "always_block":
+        if (ruleable) yield* rememberDecision(site, input.capability, "block");
         return yield* new BrowserSiteDenied({
-          message: `Moonfold cannot tell which site "${input.url.slice(0, 200)}" is, so it was not opened. Use a full https:// address.`,
+          message: `The user blocked agents from ${verb} ${site}. Do not retry.`,
         });
-      }
-      const site = target.site;
-      // Hosts a rule cannot name (IP literals, underscores) follow the defaults, and an "always"
-      // answer for them applies once.
-      const ruleable = isSiteHost(site);
-      const policy = yield* readPolicy.pipe(
-        // A rule store that cannot be read must not open every site: treat it as asking.
-        Effect.catch(() =>
-          Effect.succeed({
-            defaults: { browse: "ask", upload: "ask" },
-            rules: [],
-          } as BrowserSitePolicy),
-        ),
-      );
-      const decision = (ruleFor(policy.rules, site) ?? policy.defaults)[input.capability];
-      const verb = VERBS[input.capability];
-      if (decision === "allow") return;
-      if (decision === "block") {
+      case "deny":
         return yield* new BrowserSiteDenied({
-          message: `The user blocks agents from ${verb} ${site}. Do not retry; they can change this in Settings → Integrations → Browser.`,
+          message: `The user declined ${verb} ${site} this time.`,
         });
-      }
-      const key = `${input.threadId}|${input.capability}|${site}`;
-      if ((yield* Ref.get(threadAllows)).has(key)) return;
-      const answered = yield* ask({ ...input, site });
-      if (Option.isNone(answered)) {
-        return yield* new BrowserSiteDenied({
-          message: `The user did not answer whether you may continue ${verb} ${site}. Ask them in chat before trying again.`,
-        });
-      }
-      switch (answered.value) {
-        case "allow_once":
-          return;
-        case "allow_thread":
-          yield* Ref.update(threadAllows, (current) => new Set([...current, key]));
-          return;
-        case "always_allow":
-          if (ruleable) yield* rememberDecision(site, input.capability, "allow");
-          return;
-        case "always_block":
-          if (ruleable) yield* rememberDecision(site, input.capability, "block");
-          return yield* new BrowserSiteDenied({
-            message: `The user blocked agents from ${verb} ${site}. Do not retry.`,
-          });
-        case "deny":
-          return yield* new BrowserSiteDenied({
-            message: `The user declined ${verb} ${site} this time.`,
-          });
-      }
-    });
+    }
+  });
 
   return BrowserSitePermissions.of({
     policy: readPolicy,

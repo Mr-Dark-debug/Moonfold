@@ -354,7 +354,9 @@ interface PendingRequest {
 const rule = (action: string, effect: Rule["effect"]): Rule => ({ action, resource: "*", effect });
 
 /** OpenCode hides tools for names over 64 chars and rejects names over 100; hash long thread IDs. */
-export const moonfoldMcpServerName = Effect.fn("moonfoldMcpServerName")(function* (threadId: string) {
+export const moonfoldMcpServerName = Effect.fn("moonfoldMcpServerName")(function* (
+  threadId: string,
+) {
   const name = `moonfold-${threadId.replaceAll(/[^a-zA-Z0-9_-]/g, "_")}`;
   if (name.length <= 64) return name;
   const crypto = yield* Digest.Digest;
@@ -3139,7 +3141,10 @@ export const make = Effect.fn("OpenCode2Adapter.make")(function* (instanceId: Pr
           model: turnInput.modelSelection.model,
           promptProfile: turnInput.promptProfile,
         }),
-        moonfoldOrchestrationSystemPrompt(mcpAvailable, mcpSession?.capabilities?.has("device") === true),
+        moonfoldOrchestrationSystemPrompt(
+          mcpAvailable,
+          mcpSession?.capabilities?.has("device") === true,
+        ),
       ]
         .filter((part) => part !== undefined && part.length > 0)
         .join("\n\n");

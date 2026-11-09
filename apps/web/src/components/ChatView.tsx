@@ -1259,6 +1259,7 @@ export default function ChatView(props: ChatViewProps) {
   // thread; otherwise the next message would quietly switch it back.
   const lastThreadProviderRef = useRef<{ threadId: string; instanceId: string } | null>(null);
   const threadModelSelection = activeThread?.modelSelection ?? null;
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- follows a server-side handoff by moving the composer draft's model to the provider the thread now runs on, which no local event reports
   useEffect(() => {
     const last = lastThreadProviderRef.current;
     if (threadModelSelection === null) {
@@ -2689,7 +2690,7 @@ export default function ChatView(props: ChatViewProps) {
       : handoffUsageWarning(
           activeProviderStatus?.usageLimits,
           limitHandoff.warnAtUsagePercent,
-          Date.now(),
+          Date.parse(`${nowMinute}:00Z`),
         );
   const usageHandoffKey =
     usageHandoffWindow === null

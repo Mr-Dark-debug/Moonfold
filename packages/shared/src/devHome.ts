@@ -54,13 +54,15 @@ export const resolveGitWorktreePath = Effect.fn("devHome.resolveGitWorktreePath"
  * Deliberately does not require the directory to exist yet: falling back
  * because it is missing would send callers at the shared home.
  */
-export const resolveWorktreeMoonfoldHome = Effect.fn("devHome.resolveWorktreeMoonfoldHome")(function* (
-  cwd: string,
-): Effect.fn.Return<string | undefined, never, FileSystem.FileSystem | Path.Path> {
-  const worktreePath = yield* resolveGitWorktreePath(cwd);
-  if (worktreePath === undefined) {
-    return undefined;
-  }
-  const path = yield* Path.Path;
-  return path.join(worktreePath, ".moonfold");
-});
+export const resolveWorktreeMoonfoldHome = Effect.fn("devHome.resolveWorktreeMoonfoldHome")(
+  function* (
+    cwd: string,
+  ): Effect.fn.Return<string | undefined, never, FileSystem.FileSystem | Path.Path> {
+    const worktreePath = yield* resolveGitWorktreePath(cwd);
+    if (worktreePath === undefined) {
+      return undefined;
+    }
+    const path = yield* Path.Path;
+    return path.join(worktreePath, ".moonfold");
+  },
+);

@@ -114,7 +114,9 @@ const authorizeCli = Effect.fn("cloud.cli.authorize")(function* (options: {
   const existing = yield* tokens.getExisting.pipe(
     Effect.catchTags({
       CloudCliCredentialRefreshError: () =>
-        Console.log("Moonfold Connect sign-in expired. Sign in again.").pipe(Effect.as(Option.none())),
+        Console.log("Moonfold Connect sign-in expired. Sign in again.").pipe(
+          Effect.as(Option.none()),
+        ),
     }),
   );
   if (Option.isSome(existing)) {

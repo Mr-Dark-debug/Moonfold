@@ -26,7 +26,12 @@ describe("OtelEnvironment", () => {
       disabled: false,
       warnings: [specIgnored("1")],
     },
-    { name: "moonfold 1", env: { MOONFOLD_OTEL_SDK_DISABLED: "1" }, disabled: true, warnings: [MOONFOLD_OFF] },
+    {
+      name: "moonfold 1",
+      env: { MOONFOLD_OTEL_SDK_DISABLED: "1" },
+      disabled: true,
+      warnings: [MOONFOLD_OFF],
+    },
     {
       name: "moonfold false overrides spec true",
       env: { MOONFOLD_OTEL_SDK_DISABLED: "false", OTEL_SDK_DISABLED: "true" },

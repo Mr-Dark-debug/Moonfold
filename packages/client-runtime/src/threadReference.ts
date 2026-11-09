@@ -31,9 +31,12 @@ export function threadChipCopyTarget(
   hostedAppUrl?: string,
 ): ThreadReferenceCopyTarget {
   const record = threadContextRecord(threadRef, title);
+  const link = hostedThreadLink(threadRef, hostedAppUrl);
   return {
     kind: "thread",
-    value: hostedThreadLink(threadRef, hostedAppUrl),
+    // Without a hosted app the link is `moonfold-thread://`, which pasted text only reads as a
+    // link inside angle brackets.
+    value: link.startsWith("moonfold-thread:") ? `<${link}>` : link,
     description: record.title,
     fragment: { version: 1, source: { environmentId: threadRef.environmentId }, records: [record] },
     clipboardTarget: "thread",

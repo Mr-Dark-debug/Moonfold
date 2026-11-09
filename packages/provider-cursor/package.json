@@ -50,7 +50,6 @@
   },
   "dependencies": {
     "@cursor/sdk": "1.2.0",
-    "@napi-rs/keyring": "^1.3.0",
     "@moonfold/contracts": "workspace:*",
     "@moonfold/provider-core": "workspace:*",
     "@moonfold/shared": "workspace:*",

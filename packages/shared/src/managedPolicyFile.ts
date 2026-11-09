@@ -95,8 +95,7 @@ export const readManagedPolicyFile = Effect.fn("readManagedPolicyFile")(function
 });
 
 /** Where a configuration profile's managed preferences land on macOS. */
-export const MACOS_MANAGED_PREFERENCES_PATH =
-  "/Library/Managed Preferences/dev.moonfold.app.plist";
+export const MACOS_MANAGED_PREFERENCES_PATH = "/Library/Managed Preferences/dev.moonfold.app.plist";
 const WINDOWS_POLICY_SUBKEY = "SOFTWARE\\Policies\\Moonfold\\Moonfold";
 /**
  * The registry key Group Policy and Intune write to on Windows. It holds either the Group Policy

@@ -11,7 +11,6 @@ import * as NodeReadline from "node:readline";
 
 import * as HostProcess from "@moonfold/shared/HostProcess";
 import * as Context from "effect/Context";
-import * as Data from "effect/Data";
 import * as Duration from "effect/Duration";
 import * as Effect from "effect/Effect";
 import * as FileSystem from "effect/FileSystem";
@@ -24,9 +23,10 @@ import * as ServerConfig from "../config.ts";
 import { WINDOWS_HELPER_SCRIPT } from "./windowsHelperScript.ts";
 
 /** A request the helper could not do; the message is written for the agent. */
-export class ComputerUseHelperError extends Data.TaggedError("ComputerUseHelperError")<{
-  readonly message: string;
-}> {}
+export class ComputerUseHelperError extends Schema.TaggedError<ComputerUseHelperError>()(
+  "ComputerUseHelperError",
+  { message: Schema.String },
+) {}
 
 const encodeRequest = Schema.encodeSync(Schema.fromJsonString(Schema.Unknown));
 
@@ -135,8 +135,8 @@ const make = Effect.gen(function* () {
       ),
     );
 
-  const request: ComputerUseHelper["Service"]["request"] = (op, args = {}) =>
-    Effect.gen(function* () {
+  const request: ComputerUseHelper["Service"]["request"] = Effect.fn("ComputerUseHelper.request")(
+    function* (op, args = {}) {
       if (!supported) {
         return yield* new ComputerUseHelperError({
           message: "Computer use is not available on this operating system yet.",
@@ -173,7 +173,8 @@ const make = Effect.gen(function* () {
         });
       }
       return response.result;
-    });
+    },
+  );
 
   const stop = Effect.sync(() => {
     stopped = true;

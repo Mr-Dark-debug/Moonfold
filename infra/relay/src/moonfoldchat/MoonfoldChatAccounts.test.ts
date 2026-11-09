@@ -110,7 +110,9 @@ describe("MoonfoldChatAccounts", () => {
   );
 
   it.effect("asks Moonfold Chat for the link with the shared secret", () => {
-    const moonfoldChat = fakeMoonfoldChat({ link: { email: "theo@t3.chat", plan: "premier", linkedAt: 1 } });
+    const moonfoldChat = fakeMoonfoldChat({
+      link: { email: "theo@t3.chat", plan: "premier", linkedAt: 1 },
+    });
     return Effect.gen(function* () {
       const accounts = yield* MoonfoldChatAccounts.MoonfoldChatAccounts;
       const link = yield* accounts.getLink({ userId: "user_1" });

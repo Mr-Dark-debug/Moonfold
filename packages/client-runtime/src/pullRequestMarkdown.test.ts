@@ -191,8 +191,8 @@ describe("change request media urls", () => {
     ["https://example.com/a.png", "https://example.com/a.png"],
     ["docs/a.png", "docs/a.png"],
   ])("resolves %s against the forge", (url, expected) => {
-    expect(resolveChangeRequestMediaUrl(url, "https://git.cafe/moonfold-dev/moonfold/pulls/31251")).toBe(
-      expected,
-    );
+    expect(
+      resolveChangeRequestMediaUrl(url, "https://git.cafe/moonfold-dev/moonfold/pulls/31251"),
+    ).toBe(expected);
   });
 });

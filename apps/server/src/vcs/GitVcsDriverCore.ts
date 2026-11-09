@@ -1870,7 +1870,10 @@ export const makeGitVcsDriverCore = Effect.fn("makeGitVcsDriverCore")(function* 
       readonly knownOriginDefaultBranch?: string | null;
     },
   ) {
-    const configuredBaseRef = yield* readConfigValue(cwd, `branch.${refName}.moonfold-merge-base-ref`);
+    const configuredBaseRef = yield* readConfigValue(
+      cwd,
+      `branch.${refName}.moonfold-merge-base-ref`,
+    );
     if (
       configuredBaseRef?.startsWith("refs/heads/") ||
       configuredBaseRef?.startsWith("refs/remotes/")

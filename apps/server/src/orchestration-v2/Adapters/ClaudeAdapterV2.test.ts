@@ -775,7 +775,7 @@ describe("ClaudeAdapterV2 device instructions", () => {
       resume: false,
       cwd: "/workspace",
       ...(input.mcp
-        ? { mcpServers: { "moonfold": { type: "http" as const, url: "http://127.0.0.1/mcp" } } }
+        ? { mcpServers: { moonfold: { type: "http" as const, url: "http://127.0.0.1/mcp" } } }
         : {}),
       deviceToolsAvailable: input.deviceToolsAvailable,
       environment: {},
@@ -1124,7 +1124,9 @@ describe("ClaudeAdapterV2 append-system-prompt-file launch argument", () => {
       instanceId: ClaudeAdapterV2.CLAUDE_DEFAULT_INSTANCE_ID,
       settings: { ...DEFAULT_CLAUDE_SETTINGS, launchArgs },
       environment: {},
-      attachmentsDir: yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-append-" }),
+      attachmentsDir: yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "moonfold-claude-append-",
+      }),
       fileSystem,
       path: yield* Path.Path,
       random: yield* SecureRandom.SecureRandom,
@@ -1195,7 +1197,9 @@ describe("ClaudeAdapterV2 append-system-prompt-file launch argument", () => {
     Effect.scoped(
       Effect.gen(function* () {
         const fileSystem = yield* FileSystem.FileSystem;
-        const cwd = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-append-cwd-" });
+        const cwd = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-append-cwd-",
+        });
         yield* fileSystem.writeFileString(NodePath.join(cwd, "rules.md"), "File sentinel\n");
         const plain = yield* startTurnWithLaunchArgs("", cwd);
         const { exit, opened } = yield* startTurnWithLaunchArgs(
@@ -1232,7 +1236,9 @@ describe("ClaudeAdapterV2 append-system-prompt-file launch argument", () => {
     Effect.scoped(
       Effect.gen(function* () {
         const fileSystem = yield* FileSystem.FileSystem;
-        const cwd = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-settings-" });
+        const cwd = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-settings-",
+        });
         yield* fileSystem.writeFileString(
           NodePath.join(cwd, "user-settings.json"),
           '{"skillOverrides":{"lint":"off"},"showThinkingSummaries":false}',
@@ -1304,7 +1310,9 @@ describe("ClaudeAdapterV2 append-system-prompt-file launch argument", () => {
     Effect.scoped(
       Effect.gen(function* () {
         const fileSystem = yield* FileSystem.FileSystem;
-        const cwd = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-append-cwd-" });
+        const cwd = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-append-cwd-",
+        });
         const { exit, opened } = yield* startTurnWithLaunchArgs(launchArgs, cwd);
         assert.lengthOf(opened, 0);
         assert.isTrue(Exit.isFailure(exit));
@@ -3901,8 +3909,12 @@ describe("ClaudeAdapterV2 background wake turns", () => {
       Effect.gen(function* () {
         const fileSystem = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const home = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-remote-" });
-        const cwd = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-remote-cwd-" });
+        const home = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-remote-",
+        });
+        const cwd = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-remote-cwd-",
+        });
         const remoteFile = path.join(home, "remote-settings.json");
         const sdk = yield* Effect.promise(() =>
           vi.importActual<typeof ClaudeSdk>("@anthropic-ai/claude-agent-sdk"),
@@ -3997,8 +4009,12 @@ describe("ClaudeAdapterV2 background wake turns", () => {
     it.effect("drops false bypass switches from --settings before they reach the SDK", () =>
       Effect.gen(function* () {
         const fileSystem = yield* FileSystem.FileSystem;
-        const home = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-launch-" });
-        const cwd = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-launch-cwd-" });
+        const home = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-launch-",
+        });
+        const cwd = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-launch-cwd-",
+        });
         const sdk = yield* Effect.promise(() =>
           vi.importActual<typeof ClaudeSdk>("@anthropic-ai/claude-agent-sdk"),
         );
@@ -4563,7 +4579,9 @@ describe("ClaudeAdapterV2 background wake turns", () => {
         // POSIX resolves local settings at the repository root; Windows uses cwd.
         // Local settings beat user settings wherever they are found.
         const repo = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-repo-" });
-        const worktree = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-wt-" });
+        const worktree = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-wt-",
+        });
         const worktreeGitDir = path.join(repo, ".git", "worktrees", "wt");
         yield* fileSystem.makeDirectory(worktreeGitDir, { recursive: true });
         yield* fileSystem.writeFileString(path.join(worktreeGitDir, "commondir"), "../..\n");
@@ -4598,7 +4616,9 @@ describe("ClaudeAdapterV2 background wake turns", () => {
         );
 
         // Project settings beat user settings, and the process env applies only when no file sets it.
-        const project = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-project-" });
+        const project = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-project-",
+        });
         yield* fileSystem.makeDirectory(path.join(project, ".claude"));
         yield* fileSystem.writeFileString(
           path.join(project, ".claude", "settings.json"),
@@ -4856,7 +4876,9 @@ describe("ClaudeAdapterV2 background wake turns", () => {
       Effect.gen(function* () {
         const fs = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const homePath = yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-claude-skill-dispatch-" });
+        const homePath = yield* fs.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-skill-dispatch-",
+        });
         for (const [name, userOnly] of [
           ["interrogate", true],
           ["implement", true],
@@ -8118,8 +8140,12 @@ describe("ClaudeAdapterV2 background wake turns", () => {
       Effect.gen(function* () {
         const fileSystem = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const home = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-compact-" });
-        const project = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-compact-" });
+        const home = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-compact-",
+        });
+        const project = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-compact-",
+        });
         if (userSettings !== undefined) {
           yield* fileSystem.writeFileString(path.join(home, "settings.json"), userSettings);
         }
@@ -8202,7 +8228,9 @@ describe("ClaudeAdapterV2 background wake turns", () => {
       const path = yield* Path.Path;
       const home = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-home-" });
       const first = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-first-" });
-      const second = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-second-" });
+      const second = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "moonfold-claude-second-",
+      });
       for (const [directory, window] of [
         [first, 150_000],
         [second, 180_000],

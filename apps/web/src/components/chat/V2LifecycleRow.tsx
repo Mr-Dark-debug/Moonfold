@@ -94,11 +94,6 @@ export function V2LifecycleRow(props: {
         endpoints={resolveHandoffEndpoints(item, props.runs)}
         failed={item.status === "failed"}
         reason={item.reason}
-        time={
-          item.reason === undefined
-            ? undefined
-            : formatShortTimestamp(props.createdAt, props.timestampFormat)
-        }
         onViewBrief={
           item.reason === undefined
             ? undefined

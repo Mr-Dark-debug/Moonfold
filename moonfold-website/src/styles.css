@@ -1561,10 +1561,7 @@ body.demo-modal-open {
     padding 0.4s;
   -webkit-text-stroke-color: transparent;
   -webkit-text-stroke-width: var(--kt-stroke-w);
-  will-change:
-    font-weight,
-    -webkit-text-stroke-width,
-    padding;
+  will-change: font-weight, -webkit-text-stroke-width, padding;
 }
 @media (prefers-reduced-motion: no-preference) {
   .manifesto-title .kt-letter:hover {
@@ -2152,15 +2149,8 @@ body.demo-modal-open {
   flex: none;
   vertical-align: top;
   font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    "SF Pro Text",
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
+    ui-sans-serif, system-ui, -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   isolation: isolate;

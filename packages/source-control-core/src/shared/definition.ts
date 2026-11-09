@@ -156,15 +156,6 @@ export interface SourceControlIconPath {
   readonly strokeWidth?: number;
 }
 
-/** Whether the mark is drawn in the text colour alone, so a client may tint it. */
-export function isMonochromeSourceControlIcon(icon: SourceControlIcon): boolean {
-  return icon.paths.every(
-    (path) =>
-      (path.fill === undefined || path.fill === "currentColor") &&
-      (path.stroke === undefined || path.stroke === "currentColor"),
-  );
-}
-
 /**
  * For a host whose server signs in per hostname, with a saved token or one of a CLI's logins.
  * Its `settings` include `hostCredentialSettingsFields`, and clients show controls for those

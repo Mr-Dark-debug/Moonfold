@@ -13,7 +13,7 @@ function normalizeTitleSeed(value: string): string {
   return assistantCitationsToPlainText(value).trim().replace(/\s+/gu, " ");
 }
 
-export function threadTitleTextFromPrompt(value: string): string {
+function threadTitleTextFromPrompt(value: string): string {
   const imageIds = new Set<string>();
   const prose = replaceComposerContextReferences(value, (reference) => {
     if (reference.kind === "image") {

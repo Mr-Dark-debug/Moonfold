@@ -1,8 +1,7 @@
 /**
  * HandoffWorker - in `auto` mode, moves a thread whose turn stopped at a usage limit to the first
- * available provider in the fallback order. It runs on the shared scheduler, reads only persisted
- * state, and keys each move by the stopped run, so a restart or a second sweep never moves a
- * thread twice for the same stop.
+ * available provider in the fallback order. It reads only persisted state and keys each move by
+ * the stopped run, so a restart or second sweep never moves a thread twice for one stop.
  *
  * @module handoff/HandoffWorker
  */

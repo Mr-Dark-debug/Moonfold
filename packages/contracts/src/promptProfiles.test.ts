@@ -11,6 +11,9 @@ import {
 } from "./promptProfiles.ts";
 import { ServerSettings } from "./settings.ts";
 
+const decodeServerSettings = Schema.decodeSync(ServerSettings);
+const decodePromptProfileId = Schema.decodeSync(PromptProfileId);
+
 const custom = (id: string, instructions = "Custom text"): PromptProfile => ({
   id: PromptProfileId.make(id),
   name: `Profile ${id}`,
@@ -20,7 +23,7 @@ const custom = (id: string, instructions = "Custom text"): PromptProfile => ({
 
 describe("prompt profiles", () => {
   it("decodes settings without profiles to the Moonfold default", () => {
-    const settings = Schema.decodeUnknownSync(ServerSettings)({});
+    const settings = decodeServerSettings({});
     expect(settings.promptProfiles).toEqual([]);
     expect(settings.defaultPromptProfileId).toBe(DEFAULT_PROMPT_PROFILE_ID);
   });
@@ -69,6 +72,6 @@ describe("prompt profiles", () => {
   });
 
   it("rejects ids that are not lowercase slugs", () => {
-    expect(() => Schema.decodeUnknownSync(PromptProfileId)("Has Spaces")).toThrow();
+    expect(() => decodePromptProfileId("Has Spaces")).toThrow();
   });
 });

@@ -196,7 +196,9 @@ describe("RelayClient", () => {
   it.effect.each(["live owner", "recent legacy"] as const)("keeps a lock with a %s", (kind) =>
     Effect.gen(function* () {
       const fileSystem = yield* FileSystem.FileSystem;
-      const baseDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-cloudflared-test-" });
+      const baseDir = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "moonfold-cloudflared-test-",
+      });
       const lockPath = `${baseDir}/tools/cloudflared/${RelayClient.CLOUDFLARED_VERSION}/linux-x64/cloudflared.lock`;
       const owner = `${process.pid}-still-running`;
       yield* fileSystem.makeDirectory(lockPath.slice(0, lockPath.lastIndexOf("/")), {
@@ -285,7 +287,9 @@ describe("RelayClient", () => {
   it.effect("keeps a replacement lock when a stale contender resumes cleanup", () =>
     Effect.gen(function* () {
       const fileSystem = yield* FileSystem.FileSystem;
-      const baseDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-cloudflared-test-" });
+      const baseDir = yield* fileSystem.makeTempDirectoryScoped({
+        prefix: "moonfold-cloudflared-test-",
+      });
       const lockPath = `${baseDir}/tools/cloudflared/${RelayClient.CLOUDFLARED_VERSION}/linux-x64/cloudflared.lock`;
       const abandoned = "2147483647-exited-installer";
       const replacement = `${process.pid}-replacement`;

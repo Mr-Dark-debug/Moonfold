@@ -40,7 +40,10 @@ describe("Moonfold device instructions", () => {
   });
 
   it("reach OpenCode and Cursor only when the session holds device access", () => {
-    assert.include(moonfoldOrchestrationSystemPrompt(true, true), MOONFOLD_DEVICE_TOOL_INSTRUCTIONS);
+    assert.include(
+      moonfoldOrchestrationSystemPrompt(true, true),
+      MOONFOLD_DEVICE_TOOL_INSTRUCTIONS,
+    );
     assert.notInclude(moonfoldOrchestrationSystemPrompt(true, false), "## Moonfold devices");
     assert.isUndefined(moonfoldOrchestrationSystemPrompt(false, true));
 
@@ -69,7 +72,11 @@ describe("Moonfold device instructions", () => {
   });
 
   it("reach ACP agents again when device access changes mid-thread", () => {
-    const state = { interactionMode: "default", hasMoonfoldMcp: true, hasDeviceTools: false } as const;
+    const state = {
+      interactionMode: "default",
+      hasMoonfoldMcp: true,
+      hasDeviceTools: false,
+    } as const;
     const withDevices = moonfoldAcpPromptWithInstructions({
       prompt: "Check the login screen.",
       state: { ...state, hasDeviceTools: true },
@@ -80,6 +87,9 @@ describe("Moonfold device instructions", () => {
       moonfoldAcpPromptWithInstructions({ prompt: "Again.", state, previousState: state }),
       "Again.",
     );
-    assert.notInclude(moonfoldAcpPromptWithInstructions({ prompt: "Hi.", state }), "## Moonfold devices");
+    assert.notInclude(
+      moonfoldAcpPromptWithInstructions({ prompt: "Hi.", state }),
+      "## Moonfold devices",
+    );
   });
 });

@@ -54,7 +54,7 @@ function AgentLimitsSection() {
         serverScoped
         settingKeys={["contentExclusions"]}
         mixed={exclusionsMixed}
-        description="Paths agents must leave alone, one per line, relative to the project. Claude Code's file tools are blocked from them. Other agents get them as an instruction, and any agent's shell commands can still reach them, so keep real secrets out of the project."
+        description="Paths agents must leave alone, one per line, relative to the project. Claude Code's file tools are blocked from them; others are told to skip them. Shell can still reach them, so keep secrets out."
         resetAction={
           exclusionsMixed || settings.contentExclusions.length > 0 ? (
             <SettingResetButton
@@ -89,7 +89,7 @@ function AgentLimitsSection() {
         serverScoped
         settingKeys={["runTokenLimit"]}
         mixed={limitMixed}
-        description="Stops a run once it has added this many tokens to its context, and holds any queued messages. Send a message to continue. It counts what Codex and Claude report during a turn; agents that report no usage are not limited."
+        description="Stops a run once it has added this many tokens to its context and holds queued messages. Send a message to continue. Counts what Codex and Claude report; agents that report no usage are not limited."
         resetAction={
           limitMixed || settings.runTokenLimit !== null ? (
             <SettingResetButton

@@ -64,7 +64,8 @@ async function download(url, file) {
 async function install(dir, key) {
   const archive = `moonfold-${version}-${key}.${process.platform === "win32" ? "zip" : "tar.gz"}`;
   const base = (
-    process.env.MOONFOLD_RELEASE_BASE_URL || "https://github.com/Mr-Dark-debug/Moonfold/releases/download"
+    process.env.MOONFOLD_RELEASE_BASE_URL ||
+    "https://github.com/Mr-Dark-debug/Moonfold/releases/download"
   ).replace(/\/+$/, "");
   const sums = await (await get(`${base}/v${version}/SHA256SUMS`)).text();
   const expected = /^([0-9a-f]{64})\s+\*?(.+)$/im;

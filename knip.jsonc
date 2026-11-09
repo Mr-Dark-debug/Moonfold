@@ -36,8 +36,11 @@
         "brand-codemod.ts",
         "export-project-schema.ts",
         "smoke-cli-archive.ts",
+        // release-smoke.ts runs it by path.
+        "resolve-nightly-release.ts",
       ],
-      "ignoreDependencies": ["agent-device", "esbuild"],
+      // dev-runner.ts names @moonfold/contracts in a --filter argument.
+      "ignoreDependencies": ["agent-device", "esbuild", "@moonfold/contracts"],
       // The `moonfold` npm package's files: copied into the package, never imported.
       // knip-schemas.test.ts writes a throwaway project to .knip-test-*, which a
       // knip run beside it in check:changed must not report.
@@ -96,7 +99,12 @@
     "apps/web": {
       // Worktree setup (scripts/setup-worktree.ts) runs this directly, and evidence
       // fixtures run under node.
-      "entry": ["scripts/warm-dep-cache.ts", "test/fixtures/**/*.mjs"],
+      // verify-built-boot.ts is run by hand after a web build to boot the production bundle.
+      "entry": [
+        "scripts/warm-dep-cache.ts",
+        "scripts/verify-built-boot.ts",
+        "test/fixtures/**/*.mjs",
+      ],
       // UI component modules are copied and adapted as cohesive sets. Keep their
       // named subcomponents even before they have callers; the file audit still
       // reports an entire component module when nothing imports it.

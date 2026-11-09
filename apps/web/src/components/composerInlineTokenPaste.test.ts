@@ -1,5 +1,9 @@
 import { threadChipCopyTarget } from "@moonfold/client-runtime/thread-reference";
-import { type ComposerContextClipboardFragment, EnvironmentId, ThreadId } from "@moonfold/contracts";
+import {
+  type ComposerContextClipboardFragment,
+  EnvironmentId,
+  ThreadId,
+} from "@moonfold/contracts";
 import {
   COMPOSER_CONTEXT_CLIPBOARD_MIME,
   encodeComposerContextFragment,
@@ -51,7 +55,7 @@ describe("importPastedComposerText", () => {
   });
 
   it("keeps the link when the composer cannot take the thread", () => {
-    const pasted = "https://app.t3.codes/threads/env-1/thread-1";
+    const pasted = "https://app.example.org/threads/env-1/thread-1";
     expect(importPastedComposerText(clipboard({ "text/plain": pasted }), () => new Map())).toBe(
       pasted,
     );

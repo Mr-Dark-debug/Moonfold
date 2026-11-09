@@ -9,7 +9,6 @@ import type { ServerSettings, SourceControlAppAccessInput } from "@moonfold/cont
 import { parseGitRemoteRepository } from "@moonfold/shared/git";
 
 export {
-  isMonochromeSourceControlIcon,
   UNKNOWN_SOURCE_CONTROL_CLIENT,
   type ChangeRequestLink,
   type ChangeRequestTerminology,

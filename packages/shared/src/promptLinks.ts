@@ -1,16 +1,7 @@
 /**
- * Prompt links open Moonfold from outside it with a prompt ready to send. They never send it:
- * a link from a stranger fills a draft, and the user reads it and presses Send. A link also
- * cannot pick a runtime mode, branch, or worktree. Those stay the user's own defaults.
- *
- * A build with a hosted web app shares https links on it, because that is what Twitter and
- * GitHub make clickable. Without one, links use the `moonfold://` scheme, which the desktop app
- * opens directly. Both carry the same paths:
- *
- *   https://<hosted-app>/new?prompt=…&repo=owner/name&provider=codex&model=gpt-5
- *   https://<hosted-app>/new?pr=owner/name/123&prompt=…
- *   https://<hosted-app>/<environmentId>/<threadId>?prompt=…
- *   moonfold://new?…   moonfold://threads/<environmentId>/<threadId>?…
+ * Prompt links fill a draft and never send it or pick a mode, branch, or worktree. Paths:
+ * `/new?prompt=…&repo=owner/name&provider=codex&model=gpt-5`, `/new?pr=owner/name/123&prompt=…`,
+ * `/<environmentId>/<threadId>?prompt=…`, on the hosted app's origin or as `moonfold://new?…`.
  */
 
 /** URLs stay well under the limits browsers and link shorteners apply. */

@@ -697,7 +697,14 @@ export const makeDeviceTools = Effect.fn("evaluateMcpToolUse.makeDeviceTools")(f
       const path = yield* Path.Path;
       const digest = yield* Digest.Digest;
       const { stateDir } = yield* ServerConfig.ServerConfig;
-      const agentEntry = path.join(home, ".moonfold", "tools", "agent-device", "bin", "agent-device.mjs");
+      const agentEntry = path.join(
+        home,
+        ".moonfold",
+        "tools",
+        "agent-device",
+        "bin",
+        "agent-device.mjs",
+      );
       const hosts = new Map<DeviceHostId, DeviceHost.DeviceHost["Service"]>([
         [
           LOCAL_DEVICE_HOST_ID,
@@ -824,7 +831,8 @@ export const makeDeviceTools = Effect.fn("evaluateMcpToolUse.makeDeviceTools")(f
     failure?: DeviceError,
   ) {
     const entry = tools.find((tool) => tool.tool.name === name);
-    if (entry === undefined) return yield* Effect.die(new Error(`Moonfold has no device tool ${name}.`));
+    if (entry === undefined)
+      return yield* Effect.die(new Error(`Moonfold has no device tool ${name}.`));
     const result = yield* entry.handle(input).pipe(
       Effect.provideService(McpInvocationContext.McpInvocationContext, scope),
       Effect.provideService(McpSchema.McpRequestContext, request),

@@ -87,7 +87,9 @@ it.layer(Layer.mergeAll(NodeServices.layer, NodeCrypto.layer, NetService.layer))
         }
 
         const fs = yield* FileSystem.FileSystem;
-        const baseDir = yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-connect-unlink-test-" });
+        const baseDir = yield* fs.makeTempDirectoryScoped({
+          prefix: "moonfold-connect-unlink-test-",
+        });
         const state = yield* makePersistedServerRuntimeState({
           config: { host: "127.0.0.1", devUrl: undefined },
           port: address.port,

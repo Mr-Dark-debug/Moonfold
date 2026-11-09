@@ -1,4 +1,7 @@
-import { MoonfoldCHAT_PLAN_TUNNEL_LIMITS, type RelayMoonfoldChatLink } from "@moonfold/contracts/relay";
+import {
+  MoonfoldCHAT_PLAN_TUNNEL_LIMITS,
+  type RelayMoonfoldChatLink,
+} from "@moonfold/contracts/relay";
 import { MessageSquareIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -13,7 +16,12 @@ import {
 import { useMoonfoldChatLink } from "./useMoonfoldChatLink";
 
 const upgradeLink = (
-  <a className="underline" href={MoonfoldCHAT_SUBSCRIPTION_URL} target="_blank" rel="noopener noreferrer">
+  <a
+    className="underline"
+    href={MoonfoldCHAT_SUBSCRIPTION_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
     Upgrade on Moonfold Chat
   </a>
 );
@@ -36,7 +44,13 @@ function planLabel(link: RelayMoonfoldChatLink): ReactNode {
 
 /** Links a Moonfold Chat account so paid subscribers get more tunnels. */
 export function MoonfoldChatUserProfilePage() {
-  const { linkState, pending, linkUrl, link: handleLink, unlink: handleUnlink } = useMoonfoldChatLink();
+  const {
+    linkState,
+    pending,
+    linkUrl,
+    link: handleLink,
+    unlink: handleUnlink,
+  } = useMoonfoldChatLink();
   const usage = useManagedTunnelUsage();
 
   const data = linkState.data;
@@ -56,7 +70,9 @@ export function MoonfoldChatUserProfilePage() {
     >
       {linkState.error ? (
         <div className="border-t py-3 text-xs" role="alert">
-          <p className="font-medium text-destructive-foreground">Could not load Moonfold Chat link</p>
+          <p className="font-medium text-destructive-foreground">
+            Could not load Moonfold Chat link
+          </p>
           <p className="mt-0.5 text-muted-foreground">{linkState.error}</p>
         </div>
       ) : data === null ? null : !data.available ? (

@@ -102,7 +102,9 @@ export const makeCursorTextGeneration = Effect.fn("makeCursorTextGeneration")(fu
       }
       const cwd = yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-cursor-text-" });
       // Only store disposal releases SDK SQLite handles; keep state outside the empty workspace.
-      const stateRoot = yield* fs.makeTempDirectoryScoped({ prefix: "moonfold-cursor-text-state-" });
+      const stateRoot = yield* fs.makeTempDirectoryScoped({
+        prefix: "moonfold-cursor-text-state-",
+      });
       const store = yield* Effect.acquireRelease(
         Effect.tryPromise({
           try: () => sdk.loadSqlite().SqliteLocalAgentStore.open({ workspaceRef: cwd, stateRoot }),

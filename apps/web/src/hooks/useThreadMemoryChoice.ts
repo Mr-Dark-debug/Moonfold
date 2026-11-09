@@ -1,6 +1,5 @@
 import { isAtomCommandInterrupted } from "@moonfold/client-runtime/state/runtime";
 import type { ScopedThreadRef } from "@moonfold/contracts";
-import { useCallback, useMemo } from "react";
 
 import { serverEnvironment } from "../state/server";
 import { useAtomCommand } from "../state/use-atom-command";
@@ -21,28 +20,22 @@ export function useThreadMemoryChoice() {
     label: "change thread memory choice",
   });
 
-  const read = useCallback(
-    (threadRef: ScopedThreadRef): Promise<boolean | null> =>
-      Promise.race([
-        readStatus({
-          environmentId: threadRef.environmentId,
-          input: { threadId: threadRef.threadId },
-        }).then((result) => (result._tag === "Success" ? result.value.optedOut : null)),
-        new Promise<null>((resolve) => setTimeout(() => resolve(null), STATUS_WAIT_MS)),
-      ]),
-    [readStatus],
-  );
-
-  const choose = useCallback(
-    async (threadRef: ScopedThreadRef, optedOut: boolean): Promise<boolean> => {
-      const result = await setOptOut({
+  const read = (threadRef: ScopedThreadRef): Promise<boolean | null> =>
+    Promise.race([
+      readStatus({
         environmentId: threadRef.environmentId,
-        input: { threadId: threadRef.threadId, optedOut },
-      });
-      return result._tag === "Success" || isAtomCommandInterrupted(result);
-    },
-    [setOptOut],
-  );
+        input: { threadId: threadRef.threadId },
+      }).then((result) => (result._tag === "Success" ? result.value.optedOut : null)),
+      new Promise<null>((resolve) => setTimeout(() => resolve(null), STATUS_WAIT_MS)),
+    ]);
 
-  return useMemo(() => ({ read, choose }), [read, choose]);
+  const choose = async (threadRef: ScopedThreadRef, optedOut: boolean): Promise<boolean> => {
+    const result = await setOptOut({
+      environmentId: threadRef.environmentId,
+      input: { threadId: threadRef.threadId, optedOut },
+    });
+    return result._tag === "Success" || isAtomCommandInterrupted(result);
+  };
+
+  return { read, choose };
 }

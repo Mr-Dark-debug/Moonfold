@@ -81,7 +81,8 @@ function withFakeClaudeEnv<A, E, R>(
       MOONFOLD_FAKE_CLAUDE_REJECTS_NO_SESSION_PERSISTENCE: input.rejectsNoSessionPersistence
         ? "1"
         : undefined,
-      MOONFOLD_FAKE_CLAUDE_EXIT_CODE: input.exitCode === undefined ? undefined : String(input.exitCode),
+      MOONFOLD_FAKE_CLAUDE_EXIT_CODE:
+        input.exitCode === undefined ? undefined : String(input.exitCode),
       MOONFOLD_FAKE_CLAUDE_STDERR: input.stderr,
       MOONFOLD_FAKE_CLAUDE_ARGS_MUST_CONTAIN: input.argsMustContain,
       MOONFOLD_FAKE_CLAUDE_ARGS_MUST_NOT_CONTAIN: input.argsMustNotContain,

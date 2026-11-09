@@ -635,7 +635,9 @@ it.layer(NodeServices.layer)("DesktopLinuxUrlHandler theme icons", (it) => {
 
       yield* registerWithRealFileSystem(run);
 
-      assert.isTrue(yield* fileSystem.exists(path.join(fixture.appsDir, "dev.moonfold.Moonfold.png")));
+      assert.isTrue(
+        yield* fileSystem.exists(path.join(fixture.appsDir, "dev.moonfold.Moonfold.png")),
+      );
       assert.equal(iconCacheRuns(run), 1);
     }).pipe(Effect.scoped),
   );

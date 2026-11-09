@@ -10,7 +10,10 @@ import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 import { ne } from "drizzle-orm";
 import { PgDialect } from "drizzle-orm/pg-core";
-import { DEFAULT_MANAGED_TUNNEL_LIMIT, type RelayMoonfoldChatPlan } from "@moonfold/contracts/relay";
+import {
+  DEFAULT_MANAGED_TUNNEL_LIMIT,
+  type RelayMoonfoldChatPlan,
+} from "@moonfold/contracts/relay";
 
 import * as RelayDb from "../db.ts";
 import { relayManagedEndpointAllocations } from "../persistence/schema.ts";

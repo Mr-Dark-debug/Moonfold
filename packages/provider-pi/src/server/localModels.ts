@@ -1,11 +1,6 @@
 /**
- * Local models for Pi (D-56): models served on this machine by Ollama or LM Studio, offered
- * through Pi's own agent loop.
- *
- * Moonfold looks for the servers on loopback only, with a short timeout, and never downloads,
- * starts or configures them. When the Pi instance's "Local models" switch is on, a small
- * Moonfold-owned Pi extension registers each running server as a Pi provider for that process
- * (`pi.registerProvider`), so the user's own `~/.pi` files are never edited.
+ * Local models for Pi (D-56): Ollama and LM Studio servers on this machine, probed on loopback
+ * only and never started or configured. A Moonfold-owned Pi extension registers them per process.
  *
  * @module provider-pi/server/localModels
  */
@@ -57,29 +52,26 @@ export function parseOpenAiModelList(body: unknown): ReadonlyArray<string> {
  * The local servers that answer right now, with their models. A server that is not running,
  * answers slowly or returns something unexpected is simply absent.
  */
-export const detectLocalModelServers = (
+export const detectLocalModelServers = Effect.fn("detectLocalModelServers")(function* (
   servers: ReadonlyArray<LocalModelServerDefinition> = LOCAL_MODEL_SERVERS,
-): Effect.Effect<ReadonlyArray<LocalModelServer>, never, HttpClient.HttpClient> =>
-  Effect.gen(function* () {
-    const http = yield* HttpClient.HttpClient;
-    const found = yield* Effect.forEach(
-      servers,
-      (server) =>
-        http.execute(HttpClientRequest.get(`${server.baseUrl}/models`)).pipe(
-          Effect.flatMap((response) =>
-            response.status === 200 ? response.json : Effect.succeed(undefined),
-          ),
-          Effect.map((body) => {
-            const models = parseOpenAiModelList(body);
-            return models.length === 0 ? null : { ...server, models };
-          }),
-          Effect.timeout(DETECT_TIMEOUT_MS),
-          Effect.orElseSucceed(() => null),
-        ),
-      { concurrency: "unbounded" },
-    );
-    return found.filter((server) => server !== null);
-  });
+) {
+  const http = yield* HttpClient.HttpClient;
+  const found = yield* Effect.forEach(
+    servers,
+    (server) =>
+      http.execute(HttpClientRequest.get(`${server.baseUrl}/models`)).pipe(
+        Effect.flatMap((response) => (response.status === 200 ? response.json : Effect.undefined)),
+        Effect.map((body) => {
+          const models = parseOpenAiModelList(body);
+          return models.length === 0 ? null : { ...server, models };
+        }),
+        Effect.timeout(DETECT_TIMEOUT_MS),
+        Effect.orElseSucceed(() => null),
+      ),
+    { concurrency: "unbounded" },
+  );
+  return found.filter((server) => server !== null);
+});
 
 /** The env value the extension reads: only what it needs, so nothing else leaks into Pi. */
 function localProvidersEnvValue(servers: ReadonlyArray<LocalModelServer>): string {

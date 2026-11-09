@@ -1,12 +1,7 @@
 /**
- * Anonymous PostHog telemetry service. Off by default: it sends nothing unless the user sets
- * `MOONFOLD_TELEMETRY_ENABLED=true` together with their own `MOONFOLD_POSTHOG_KEY` and
+ * Anonymous PostHog telemetry, off by default: it sends nothing unless the user sets
+ * `MOONFOLD_TELEMETRY_ENABLED=true` with their own `MOONFOLD_POSTHOG_KEY` and
  * `MOONFOLD_POSTHOG_HOST`. Moonfold ships no project key.
- *
- * Persists an installation-scoped anonymous identifier, buffers events in
- * memory, and flushes batches over Effect's HTTP client. A failed batch is
- * retried with backoff and dropped after a few tries. Each event carries a
- * uuid, so PostHog can tell a retried copy from a new event.
  *
  * @module AnalyticsService
  */

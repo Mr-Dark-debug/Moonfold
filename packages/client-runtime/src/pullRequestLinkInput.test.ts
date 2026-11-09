@@ -157,7 +157,9 @@ describe("resolveLinkPullRequestInput", () => {
 describe("parsePullRequestReference", () => {
   it("accepts legacy Azure DevOps pull request URLs", () => {
     expect(
-      parsePullRequestReference("https://acme.visualstudio.com/project/_git/moonfold/pullrequest/42"),
+      parsePullRequestReference(
+        "https://acme.visualstudio.com/project/_git/moonfold/pullrequest/42",
+      ),
     ).toBe("https://acme.visualstudio.com/project/_git/moonfold/pullrequest/42");
     expect(
       parsePullRequestReference(

@@ -68,7 +68,12 @@ it.layer(NodeServices.layer)("root CLI commands", (it) => {
         }),
       ).toBe(`sudo env "PATH=$PATH" moonfold browser setup --base-dir '/srv/moonfold home'`);
       expect(
-        yield* rootCommand({ node: "/opt/moonfold/moonfold", entry: "/opt/moonfold/moonfold", executable: true, args }),
+        yield* rootCommand({
+          node: "/opt/moonfold/moonfold",
+          entry: "/opt/moonfold/moonfold",
+          executable: true,
+          args,
+        }),
       ).toBe("sudo /opt/moonfold/moonfold browser setup --base-dir '/srv/moonfold home'");
     }).pipe(Effect.scoped),
   );
@@ -126,7 +131,10 @@ it.layer(NodeServices.layer)("host CLI commands", (it) => {
       yield* fs.writeFileString(shim, "@echo off\r\n");
       const hostCommand = (platform: NodeJS.Platform, env: Record<string, string>) =>
         resolveHostCliCommand("doctor", ["--base-dir", "C:\\Users\\Jane Doe\\.moonfold"]).pipe(
-          Effect.provideService(HostProcess.ExecutablePath, "C:\\Program Files\\Moonfold\\moonfold.exe"),
+          Effect.provideService(
+            HostProcess.ExecutablePath,
+            "C:\\Program Files\\Moonfold\\moonfold.exe",
+          ),
           Effect.provideService(HostProcess.Arguments, [
             "C:\\Program Files\\Moonfold\\moonfold.exe",
             "C:\\Program Files\\Moonfold\\resources\\app.asar\\apps\\server\\dist\\bin.mjs",
@@ -142,7 +150,10 @@ it.layer(NodeServices.layer)("host CLI commands", (it) => {
         'moonfold doctor "--base-dir" "C:\\Users\\Jane Doe\\.moonfold"',
       );
       expect(
-        (yield* resolveHostCliCommand("doctor", ["--base-dir", "C:\\Moonfold\\\u201CArchive\u201D"]).pipe(
+        (yield* resolveHostCliCommand("doctor", [
+          "--base-dir",
+          "C:\\Moonfold\\\u201CArchive\u201D",
+        ]).pipe(
           Effect.provideService(HostProcess.Platform, "win32"),
           Effect.provideService(HostProcess.Environment, { PATH: "" }),
           Effect.provideService(HostProcess.ExecutablePath, "C:\\moonfold.exe"),

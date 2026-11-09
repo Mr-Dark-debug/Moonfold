@@ -228,7 +228,10 @@ describe("buildThreadActionItems", () => {
       icon: null,
       run: async () => undefined,
     });
-    const projects = [action("new-thread-in:moonfold", "moonfold"), action("new-thread-in:web", "web")];
+    const projects = [
+      action("new-thread-in:moonfold", "moonfold"),
+      action("new-thread-in:web", "web"),
+    ];
     const newThreadIn = {
       kind: "submenu" as const,
       value: "action:new-thread-in",

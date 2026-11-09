@@ -437,8 +437,14 @@ it.layer(NodeServices.layer)("dev-runner", (it) => {
         assert.equal(yield* homeFor("~"), "/home/dev");
         assert.equal(yield* homeFor("~\\moonfold-dev"), path.join("/home/dev", "moonfold-dev"));
         assert.equal(yield* homeFor("  ~/moonfold-dev  "), path.join("/home/dev", "moonfold-dev"));
-        assert.equal(yield* homeFor("~someone/moonfold-dev"), path.resolve("~someone/moonfold-dev"));
-        assert.equal(yield* homeFor("relative/moonfold-dev"), path.resolve("relative/moonfold-dev"));
+        assert.equal(
+          yield* homeFor("~someone/moonfold-dev"),
+          path.resolve("~someone/moonfold-dev"),
+        );
+        assert.equal(
+          yield* homeFor("relative/moonfold-dev"),
+          path.resolve("relative/moonfold-dev"),
+        );
         assert.equal(yield* homeFor("/tmp/moonfold-dev"), path.resolve("/tmp/moonfold-dev"));
       }),
     );
@@ -749,7 +755,11 @@ it.layer(NodeServices.layer)("dev-runner", (it) => {
                   return Effect.succeed(mockProcess(0));
                 }),
               );
-              yield* runDevRunnerWithInput({ ...devServerInput, moonfoldHome: undefined, seed }).pipe(
+              yield* runDevRunnerWithInput({
+                ...devServerInput,
+                moonfoldHome: undefined,
+                seed,
+              }).pipe(
                 Effect.provide(Layer.mergeAll(emptyConfigLayer, netServiceLayer, spawnerLayer)),
                 Effect.provideService(HostProcess.Platform, "linux"),
                 Effect.provideService(HostProcess.WorkingDirectory, root),
@@ -763,7 +773,10 @@ it.layer(NodeServices.layer)("dev-runner", (it) => {
 
           assert.deepStrictEqual(yield* spawnedArgs(false), []);
           const [seedArgs] = yield* spawnedArgs(undefined);
-          assert.includeMembers([...(seedArgs ?? [])], ["--base-dir", path.join(root, ".moonfold")]);
+          assert.includeMembers(
+            [...(seedArgs ?? [])],
+            ["--base-dir", path.join(root, ".moonfold")],
+          );
 
           // Either database means the worktree already has data.
           for (const name of ["state.sqlite", "statev2.sqlite"]) {

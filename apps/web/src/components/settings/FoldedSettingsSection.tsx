@@ -29,8 +29,9 @@ export function FoldedSettingsSection({
   readonly children: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
-  // A settings search can open the section during render, so report from an effect.
+  // A settings search can open the section during render, where no handler runs to report it.
   const reportOpen = useStableCallback((next: boolean) => onOpenChange?.(next));
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- reports every open or close, including a settings-search jump that opens the fold during render, so the parent can load its content lazily
   useEffect(() => {
     reportOpen(open);
   }, [open, reportOpen]);

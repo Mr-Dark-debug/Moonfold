@@ -483,10 +483,13 @@ export const MOONFOLD_CONNECT_TROUBLESHOOTING_SECTIONS = [
   "the-host-runs-an-older-moonfold",
   "moonfold-connect-returned-an-error",
 ] as const;
-export type MoonfoldConnectTroubleshootingSection = (typeof MOONFOLD_CONNECT_TROUBLESHOOTING_SECTIONS)[number];
+export type MoonfoldConnectTroubleshootingSection =
+  (typeof MOONFOLD_CONNECT_TROUBLESHOOTING_SECTIONS)[number];
 
 /** Clients, the CLI, and server logs link here as "More info". */
-export function moonfoldConnectTroubleshootingUrl(section: MoonfoldConnectTroubleshootingSection): string {
+export function moonfoldConnectTroubleshootingUrl(
+  section: MoonfoldConnectTroubleshootingSection,
+): string {
   return `https://github.com/pingdotgg/t3code/blob/main/docs/user/t3-connect-troubleshooting.md#${section}`;
 }
 

@@ -1517,7 +1517,9 @@ describe("sidebarFolderExpansionKeys", () => {
   it("honors a collapse the legacy sidebar saved under a member's cwd", () => {
     const keys = sidebarFolderExpansionKeys({
       projectKey: "github.com/moonfold-dev/moonfold",
-      memberProjects: [{ physicalProjectKey: "local:/code/moonfold", workspaceRoot: "/code/moonfold" }],
+      memberProjects: [
+        { physicalProjectKey: "local:/code/moonfold", workspaceRoot: "/code/moonfold" },
+      ],
     });
     const cwdKey = keys.at(-1)!;
 

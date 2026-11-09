@@ -151,7 +151,9 @@ const layerTest = McpHttpServer.layerDeviceToolkit.pipe(
   Layer.provideMerge(McpToolAccessTestkit.liveThreadsLayer),
   Layer.provideMerge(layerDeviceServiceMock),
   Layer.provide(layerProjectsMock),
-  Layer.provide(ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-mcp-device-toolkit-test-" })),
+  Layer.provide(
+    ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-mcp-device-toolkit-test-" }),
+  ),
   Layer.provide(NodeServices.layer),
 );
 

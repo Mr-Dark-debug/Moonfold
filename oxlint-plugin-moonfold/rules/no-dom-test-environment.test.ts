@@ -7,8 +7,9 @@ const rule = createOxlintRuleHarness("moonfold/no-dom-test-environment");
 describe("moonfold/no-dom-test-environment", () => {
   rule.valid("allows browser tests", 'import { page } from "vite-plus/test/browser";');
   rule.valid("allows similarly named packages", 'import "jsdom-helper";');
-  rule.invalid("rejects line pragmas", "// @vitest-environment jsdom\nexport {};");
-  rule.invalid("rejects block pragmas for any environment", "/** @vitest-environment node */");
+  // Split so vitest does not take these fixtures as this file's own environment pragma.
+  rule.invalid("rejects line pragmas", "// @vitest-" + "environment jsdom\nexport {};");
+  rule.invalid("rejects block pragmas for any environment", "/** @vitest-" + "environment node */");
   rule.invalid("rejects jsdom imports", 'import { JSDOM } from "jsdom";');
   rule.invalid("rejects happy-dom imports", 'import "happy-dom";');
   rule.invalid("rejects emulator subpaths", 'import "jsdom/lib/api.js";');

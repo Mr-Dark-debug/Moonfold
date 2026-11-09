@@ -7,7 +7,6 @@ export {
   isWorkspaceAudioPreviewPath,
   isWorkspaceImagePreviewPath,
   mediaKindFromPath,
-  mediaMimeTypeFromExtension,
 } from "./mediaPreview.ts";
 import { GENERIC_MIME_TYPES } from "./image.ts";
 import { videoMimeType } from "./video.ts";
@@ -222,7 +221,7 @@ function hasPreviewExtension(path: string, extensions: ReadonlyArray<string>): b
   return extensions.some((extension) => literalPath.endsWith(extension));
 }
 
-export function isWorkspaceBrowserPreviewPath(path: string): boolean {
+function isWorkspaceBrowserPreviewPath(path: string): boolean {
   return hasPreviewExtension(path, WORKSPACE_BROWSER_PREVIEW_EXTENSIONS);
 }
 

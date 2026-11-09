@@ -69,8 +69,8 @@ export function RemoveMoonfoldConnectEnvironmentDialog({
             <AlertDialogDescription>
               {shown.registration === "registered" ? (
                 <>
-                  It stays on your Moonfold Connect account and keeps its host space. Deregister it in{" "}
-                  {accountPageLink} to free it.
+                  It stays on your Moonfold Connect account and keeps its host space. Deregister it
+                  in {accountPageLink} to free it.
                 </>
               ) : shown.registration === "unregistered" ? (
                 "It's no longer on your Moonfold Connect account."

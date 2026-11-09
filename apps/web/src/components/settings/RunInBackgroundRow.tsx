@@ -1,6 +1,6 @@
 import { isMacPlatform } from "@moonfold/shared/keybindings";
 
-import { useClientSettings, useUpdateClientSettings } from "../../hooks/useSettings";
+import { updateClientSettings, useClientSettings } from "../../hooks/useSettings";
 import { Switch } from "../ui/switch";
 import { SettingsRow } from "./settingsLayout";
 import { searchableSetting } from "./settingsSearch";
@@ -11,7 +11,7 @@ import { searchableSetting } from "./settingsSearch";
  */
 export function RunInBackgroundRow() {
   const enabled = useClientSettings((settings) => settings.desktopRunInBackground);
-  const updateSettings = useUpdateClientSettings();
+
   if (isMacPlatform(navigator.platform)) return null;
   return (
     <SettingsRow
@@ -21,7 +21,7 @@ export function RunInBackgroundRow() {
         <Switch
           checked={enabled}
           onCheckedChange={(checked) =>
-            void updateSettings({ desktopRunInBackground: Boolean(checked) })
+            void updateClientSettings({ desktopRunInBackground: Boolean(checked) })
           }
           aria-label="Keep running in the background"
         />

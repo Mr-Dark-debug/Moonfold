@@ -1,5 +1,9 @@
 import { formatDiffCount } from "@moonfold/client-runtime/diff-count";
-import type { EnvironmentId, PullRequestChangeBreakdown, PullRequestRef } from "@moonfold/contracts";
+import type {
+  EnvironmentId,
+  PullRequestChangeBreakdown,
+  PullRequestRef,
+} from "@moonfold/contracts";
 import { useState } from "react";
 
 import { pullRequestEnvironment } from "~/state/pullRequests";

@@ -140,7 +140,9 @@ describe("tailscale", () => {
       Services: {
         "svc:moonfold": {
           Web: {
-            "moonfold.tailnet.ts.net:443": { Handlers: { "/": { Proxy: "http://127.0.0.1:3773" } } },
+            "moonfold.tailnet.ts.net:443": {
+              Handlers: { "/": { Proxy: "http://127.0.0.1:3773" } },
+            },
           },
         },
       },

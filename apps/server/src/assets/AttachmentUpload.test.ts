@@ -34,7 +34,9 @@ import {
 
 const layerTest = AssetSigner.layer.pipe(
   Layer.provideMerge(ServerSecretStore.layer),
-  Layer.provideMerge(ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-attachment-upload-" })),
+  Layer.provideMerge(
+    ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-attachment-upload-" }),
+  ),
   Layer.provideMerge(
     DocumentText.layer.pipe(
       Layer.provideMerge(Layer.mergeAll(NodeServices.layer, NodeCrypto.layer)),

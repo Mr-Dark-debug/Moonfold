@@ -89,7 +89,9 @@ const layerTest = McpHttpServer.layerPreviewToolkit.pipe(
   Layer.provideMerge(
     Layer.mock(BrowserSitePermissions.BrowserSitePermissions)({ check: () => Effect.void }),
   ),
-  Layer.provideMerge(ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-mcp-http-server-test-" })),
+  Layer.provideMerge(
+    ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-mcp-http-server-test-" }),
+  ),
   Layer.provideMerge(Layer.mergeAll(NodeServices.layer, NodeCrypto.layer)),
 );
 const layerPullRequestsTest = McpHttpServer.layerPullRequestsToolkit.pipe(
@@ -261,7 +263,9 @@ it.effect.each([
             }),
           ),
           Layer.provide(Layer.mock(ProjectService.ProjectService)({})),
-          Layer.provide(ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-device-mcp-test-" })),
+          Layer.provide(
+            ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-device-mcp-test-" }),
+          ),
           Layer.provide(Layer.mergeAll(NodeServices.layer, NodeCrypto.layer)),
         ),
       ),
@@ -565,7 +569,12 @@ it.effect(
         runLimit: 50,
         maxCharsPerItem: 50_000,
       });
-      yield* callTool("moonfold_thread_read", { ...thread, limit: 7, runLimit: 1, maxCharsPerItem: 1 });
+      yield* callTool("moonfold_thread_read", {
+        ...thread,
+        limit: 7,
+        runLimit: 1,
+        maxCharsPerItem: 1,
+      });
 
       expect(calls).toEqual([
         { ...thread, limit: 100, runLimit: 50, maxCharsPerItem: 50_000 },
@@ -1038,7 +1047,9 @@ it.effect("accepts case-insensitive MCP bearer schemes and diagnoses rejected cr
     Layer.provide(ServerSecretStore.layer),
     Layer.provide(ManagedPolicy.layerTest()),
     Layer.provideMerge(ServerEnvironment.layerIdentity),
-    Layer.provide(ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-mcp-auth-header-test-" })),
+    Layer.provide(
+      ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-mcp-auth-header-test-" }),
+    ),
     Layer.provideMerge(Layer.mergeAll(NodeServices.layer, NodeCrypto.layer)),
   );
   return Effect.scoped(

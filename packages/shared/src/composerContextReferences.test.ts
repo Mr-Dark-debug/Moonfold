@@ -61,8 +61,9 @@ describe("labels and reference links", () => {
         ?.label,
     ).toHaveLength(200);
     expect(
-      collectComposerContextReferences(`[${"x".repeat(199)}😀tail](moonfold-context://v1/file/ctx_1)`)[0]
-        ?.label,
+      collectComposerContextReferences(
+        `[${"x".repeat(199)}😀tail](moonfold-context://v1/file/ctx_1)`,
+      )[0]?.label,
     ).toBe("x".repeat(199));
   });
 
@@ -493,9 +494,9 @@ describe("threadLinkContextReferences", () => {
   it("makes a chip of a copied link, a v2 link, and a labeled link, titled here", () => {
     const pasted = threadLinkContextReferences(
       [
-        "https://app.t3.codes/threads/env-1/t1",
+        "<moonfold-thread://v2/env-1/t1>",
         "<moonfold-thread://v2/env-1/t2>",
-        "[Written](https://app.t3.codes/threads/env-2/moonfold)",
+        "[Written](moonfold-thread://v2/env-2/moonfold)",
       ].join(" "),
       [],
       ({ threadId }) => (threadId === "moonfold" ? undefined : `Title ${threadId}`),
@@ -517,22 +518,21 @@ describe("threadLinkContextReferences", () => {
   it("prefers the record the copy carried, and names an unknown thread plainly", () => {
     const copied = threadContextRecord(thread("env-1", "t1"), "Copied title");
     const pasted = threadLinkContextReferences(
-      "https://app.t3.codes/threads/env-1/t1 https://app.t3.codes/threads/env-9/t9",
+      "<moonfold-thread://v2/env-1/t1> <moonfold-thread://v2/env-9/t9>",
       [copied],
       () => "Here",
     );
     expect(pasted.records).toEqual([copied, threadContextRecord(thread("env-9", "t9"), "Here")]);
     expect(
-      threadLinkContextReferences("https://app.t3.codes/threads/env-9/t9", [], () => undefined)
-        .records,
+      threadLinkContextReferences("<moonfold-thread://v2/env-9/t9>", [], () => undefined).records,
     ).toEqual([threadContextRecord(thread("env-9", "t9"), "Thread")]);
   });
 
   it("keeps links it may not chip, v1 links, and links in code as written", () => {
     const text = [
-      "https://app.t3.codes/threads/elsewhere/t1",
+      "https://app.example.org/threads/elsewhere/t1",
       "[Old](moonfold-thread://v1/t2)",
-      "`https://app.t3.codes/threads/env-1/moonfold`",
+      "`https://app.example.org/threads/env-1/moonfold`",
     ].join(" ");
     const pasted = threadLinkContextReferences(
       text,

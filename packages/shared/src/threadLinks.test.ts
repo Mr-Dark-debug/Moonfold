@@ -86,7 +86,9 @@ describe("thread links", () => {
         local,
         title,
       ),
-    ).toBe("[Decoded](moonfold-thread://v1/thread:project:1) [Literal](moonfold-thread://v1/provider%3A1)");
+    ).toBe(
+      "[Decoded](moonfold-thread://v1/thread:project:1) [Literal](moonfold-thread://v1/provider%3A1)",
+    );
     const untitled = titlesIn({ local: { "a%3A1": "", "a:1": "Other" } });
     expect(relabelThreadLinks("[Kept](moonfold-thread://v1/a%3A1)", local, untitled)).toBe(
       "[Kept](moonfold-thread://v1/a%3A1)",
@@ -156,9 +158,9 @@ describe("thread links", () => {
         return match;
       });
     });
-    expect(threadLinkRefs("<moonfold-thread://v2/local/t1> [a](moonfold-thread://v2/there/t2)", local)).toEqual(
-      [ref("local", "t1"), ref("there", "t2")],
-    );
+    expect(
+      threadLinkRefs("<moonfold-thread://v2/local/t1> [a](moonfold-thread://v2/there/t2)", local),
+    ).toEqual([ref("local", "t1"), ref("there", "t2")]);
   });
 
   it("writes a titleless autolink that opens that exact thread", () => {

@@ -65,7 +65,9 @@ it.layer(NodeServices.layer)("ClaudeHome", (it) => {
       Effect.gen(function* () {
         const fileSystem = yield* FileSystem.FileSystem;
         const path = yield* Path.Path;
-        const homePath = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-claude-home-" });
+        const homePath = yield* fileSystem.makeTempDirectoryScoped({
+          prefix: "moonfold-claude-home-",
+        });
         const host = {
           CLAUDE_CODE_ENTRYPOINT: "claude-desktop",
           CLAUDECODE: "1",

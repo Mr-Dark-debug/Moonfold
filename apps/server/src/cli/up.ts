@@ -448,7 +448,10 @@ export const upCommand = Command.make("up", {
   ),
   Command.withExamples([
     { command: "moonfold up", description: "Choose remote access." },
-    { command: "moonfold up --connect", description: "Turn on Moonfold Connect. Keep other settings." },
+    {
+      command: "moonfold up --connect",
+      description: "Turn on Moonfold Connect. Keep other settings.",
+    },
     { command: "moonfold up --lan", description: "Allow LAN access with pairing codes." },
     { command: "moonfold up --no-lan", description: "Stop LAN access." },
     { command: "moonfold up --yes", description: "Take the defaults with no questions." },
@@ -461,7 +464,9 @@ export const connectCommand = Command.make("connect", {
   ...projectLocationFlags,
   headless: headlessFlag,
 }).pipe(
-  Command.withDescription("Set up Moonfold Connect for this machine. Same as `moonfold up --connect`."),
+  Command.withDescription(
+    "Set up Moonfold Connect for this machine. Same as `moonfold up --connect`.",
+  ),
   Command.withHandler((flags) =>
     runCloudCommand(
       flags,

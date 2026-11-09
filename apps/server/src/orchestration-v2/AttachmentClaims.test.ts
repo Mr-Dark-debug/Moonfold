@@ -25,7 +25,9 @@ import {
 } from "./AttachmentClaims.ts";
 
 const layerTest = Layer.mergeAll(NodeServices.layer).pipe(
-  Layer.provideMerge(ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-attachment-claims-" })),
+  Layer.provideMerge(
+    ServerConfig.layerTest(process.cwd(), { prefix: "moonfold-attachment-claims-" }),
+  ),
   Layer.provideMerge(DocumentText.layer.pipe(Layer.provideMerge(NodeServices.layer))),
 );
 

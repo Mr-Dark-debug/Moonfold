@@ -63,9 +63,7 @@ export function useCliReleasePublished(version: string | null): boolean {
 }
 
 const decodeReleaseIndex = Schema.decodeUnknownOption(
-  Schema.Array(
-    Schema.Struct({ tag_name: Schema.String, draft: Schema.optional(Schema.Boolean) }),
-  ),
+  Schema.Array(Schema.Struct({ tag_name: Schema.String, draft: Schema.optional(Schema.Boolean) })),
 );
 
 /** Newest-first pages to read before giving up on a track. */

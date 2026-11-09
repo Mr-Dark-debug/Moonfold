@@ -61,8 +61,8 @@ const make = Effect.gen(function* () {
   const fail = (detail: string) => (cause: unknown) =>
     new ThreadSideQuestionError({ detail, cause });
 
-  const ask: ThreadSideQuestions["Service"]["ask"] = (input) =>
-    Effect.gen(function* () {
+  const ask: ThreadSideQuestions["Service"]["ask"] = Effect.fn("ThreadSideQuestions.ask")(
+    function* (input) {
       const { thread, messages } = yield* projections
         .getThreadRecords(input.threadId, ["messages"])
         .pipe(Effect.mapError(fail("The thread could not be read.")));
@@ -96,7 +96,9 @@ const make = Effect.gen(function* () {
           ),
         );
       return { answer };
-    }).pipe(Effect.annotateSpans({ threadId: input.threadId }));
+    },
+    (effect, input) => effect.pipe(Effect.annotateSpans({ threadId: input.threadId })),
+  );
 
   return ThreadSideQuestions.of({ ask });
 });

@@ -265,9 +265,9 @@ function FullDiskAccessStep({
       <DialogHeader>
         <DialogTitle>Let Moonfold read {source.name}&rsquo;s cookies</DialogTitle>
         <DialogDescription>
-          To import cookies from {source.name}, Moonfold needs Full Disk Access. Turn it on in System
-          Settings, then come back to finish the import. You can revoke it again once the import is
-          done.
+          To import cookies from {source.name}, Moonfold needs Full Disk Access. Turn it on in
+          System Settings, then come back to finish the import. You can revoke it again once the
+          import is done.
         </DialogDescription>
       </DialogHeader>
       <DialogPanel>

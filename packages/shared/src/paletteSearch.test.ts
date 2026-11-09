@@ -163,7 +163,9 @@ describe("scoreThreadSearch", () => {
 
   it("finds a branch pasted with the app's worktree prefix", () => {
     const subject = thread("Cmd+K search", { branch: "moonfold/cmdk-search-v2" });
-    expect(scoreThreadSearch(foldSearchQuery("moonfold/cmdk-search-v2"), subject, NOW)).not.toBeNull();
+    expect(
+      scoreThreadSearch(foldSearchQuery("moonfold/cmdk-search-v2"), subject, NOW),
+    ).not.toBeNull();
     expect(scoreThreadSearch(foldSearchQuery("moonfold/cmdk"), subject, NOW)).not.toBeNull();
   });
 
@@ -181,7 +183,11 @@ describe("scoreThreadSearch", () => {
     ).toBe("Moonfold Connect Tunnel Lifecycle Review");
     expect(
       rankTitles("moonfold", [
-        thread("Fix sidebar lag", { ...busy, projectTitle: "moonfold", branch: "moonfold/sidebar" }),
+        thread("Fix sidebar lag", {
+          ...busy,
+          projectTitle: "moonfold",
+          branch: "moonfold/sidebar",
+        }),
         thread("Moonfold vs Gemini Token Volume", { projectTitle: "slophouse" }),
       ])[0],
     ).toBe("Moonfold vs Gemini Token Volume");
@@ -210,8 +216,8 @@ describe("scoreThreadSearch", () => {
       [],
     );
     // Words with digits still forgive one.
-    expect(rankTitles("moonfoldcoed", [thread("moonfold perf audit"), thread("Other")])).toEqual([
-      "moonfold perf audit",
+    expect(rankTitles("a1coed", [thread("a1code perf audit"), thread("Other")])).toEqual([
+      "a1code perf audit",
     ]);
     expect(rankTitles("oath2", [thread("Fix oauth2 redirect")])).toEqual(["Fix oauth2 redirect"]);
     // A typo beats a mid-word accident: "ilde" is "idle", not the middle of "Builder".
@@ -323,7 +329,7 @@ describe("scoreThreadSearch beyond Latin text and titles", () => {
     // Short words before a mere prefix are a coincidence.
     expect(rankTitles("inth", [thread("Show skill names in thread overview")])).toEqual([]);
     expect(rankTitles("tos", [thread("Move Client State to Server")])).toEqual([]);
-    expect(rankTitles("moonfoldco", [thread("Moonfold vs Gemini")])).toEqual(["Moonfold vs Gemini"]);
+    expect(rankTitles("a1co", [thread("A1 Code vs Gemini")])).toEqual(["A1 Code vs Gemini"]);
     expect(rankTitles('"sidebar lag"', [thread("Fix sidebar lag")])).toEqual(["Fix sidebar lag"]);
     // A pasted query with a separate accent mark matches the composed title.
     expect(rankTitles("cafe\u0301", [thread("Café menu")])).toEqual(["Café menu"]);
@@ -412,7 +418,10 @@ describe("scoreThreadSearch with heavy use and loose input", () => {
       pullRequests: [
         {
           number: 22889,
-          references: ["moonfold-dev/moonfold#22889", "https://github.com/moonfold-dev/moonfold/pull/22889"],
+          references: [
+            "moonfold-dev/moonfold#22889",
+            "https://github.com/moonfold-dev/moonfold/pull/22889",
+          ],
         },
       ],
     });

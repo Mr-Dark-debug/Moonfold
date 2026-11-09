@@ -15,7 +15,11 @@ import {
   threadSearchSubject,
   type ThreadSearchShell,
 } from "@moonfold/client-runtime/state/thread-search";
-import { foldSearchQuery, rankSearchItems, scoreThreadSearch } from "@moonfold/shared/paletteSearch";
+import {
+  foldSearchQuery,
+  rankSearchItems,
+  scoreThreadSearch,
+} from "@moonfold/shared/paletteSearch";
 import {
   isListedThreadLineage,
   type ContextMenuItem,

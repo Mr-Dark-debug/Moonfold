@@ -156,8 +156,8 @@ function GuestLinksRow() {
       managed={settings.guestSharingEnabled ? undefined : connectDenial}
       description={
         <>
-          Share a thread with a guest who watches it live in a browser and sends messages you
-          approve. Needs Moonfold Connect: sign in and link this machine in{" "}
+          Share a thread so a guest can watch it live in a browser and send messages you approve.
+          Needs Moonfold Connect: link this machine in{" "}
           <Link to="/settings/access" className="underline underline-offset-2">
             Sharing & access
           </Link>

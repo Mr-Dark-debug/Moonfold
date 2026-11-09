@@ -28,7 +28,7 @@ export function runServicePreflight(input: {
       // reinstall itself and report success, so name the exact install and the path check.
       reason: [
         `The installed service launcher speaks protocol ${input.launcherProtocol}, but moonfold@${version} requires protocol ${SERVICE_LAUNCHER_PROTOCOL}.`,
-        `On the server machine, install this exact CLI: \`curl -fsSL https://t3.codes/install.sh | MOONFOLD_VERSION=${version} sh\`.`,
+        `On the server machine, install this exact CLI: \`curl -fsSL https://raw.githubusercontent.com/Mr-Dark-debug/Moonfold/main/scripts/install.sh | MOONFOLD_VERSION=${version} sh\`.`,
         `Check that \`moonfold --version\` prints ${version} and that \`which -a moonfold\` lists no older moonfold (such as an npm or nvm install) first, then run \`~/.local/bin/moonfold service install\` (the installer's default path).`,
         "Updating the desktop app does not update this CLI, and `moonfold service update` only repairs the service with whichever CLI runs it.",
       ].join(" "),

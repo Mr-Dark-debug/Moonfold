@@ -73,6 +73,10 @@ it("drops input strings outside the schema's literals, since rejected calls are 
     mode: "async",
   });
   expect(
-    handoffSettings("moonfold_thread_launch", { workspaceStrategy: { type: "/home/me/secret" } }, {}),
+    handoffSettings(
+      "moonfold_thread_launch",
+      { workspaceStrategy: { type: "/home/me/secret" } },
+      {},
+    ),
   ).toEqual({ targetChosen: false, workspace: "root" });
 });

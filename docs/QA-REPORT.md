@@ -51,7 +51,7 @@ renderer IPC calls succeed under the sender check, so the check does not break t
 ### Remote access threat model
 
 - **Exposure.** The server listens on 127.0.0.1 by default (observed: `Listening on
-http://127.0.0.1:<port>`). Other devices reach it only when the user shares it over Tailscale
+  http://127.0.0.1:<port>`). Other devices reach it only when the user shares it over Tailscale
   (`--share`, which serves HTTPS on the tailnet) or an SSH tunnel. Moonfold Connect needs a relay
   the user hosts; release builds have none.
 - **Authentication.** A new browser pairs with a one-time code (60 bits, 5-minute lifetime) or a

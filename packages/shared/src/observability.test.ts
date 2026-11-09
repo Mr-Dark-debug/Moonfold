@@ -379,7 +379,9 @@ describe("observability", () => {
         Effect.gen(function* () {
           const fileSystem = yield* FileSystem.FileSystem;
           const path = yield* Path.Path;
-          const tempDir = yield* fileSystem.makeTempDirectoryScoped({ prefix: "moonfold-trace-sink-" });
+          const tempDir = yield* fileSystem.makeTempDirectoryScoped({
+            prefix: "moonfold-trace-sink-",
+          });
           const tracePath = path.join(tempDir, "shared.trace.ndjson");
           const sink = yield* makeTraceSink({
             filePath: tracePath,

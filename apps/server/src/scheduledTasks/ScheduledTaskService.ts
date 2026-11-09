@@ -402,7 +402,12 @@ function requireFutureOnce(
 
 function errorMessage(error: unknown): string {
   const failure = Cause.isCause(error) ? Cause.squash(error) : error;
-  return failure instanceof Error ? failure.message : String(failure);
+  if (!(failure instanceof Error)) return String(failure);
+  // Launch errors name the failed step; their cause says why, which run history shows.
+  const cause = failure.cause;
+  return cause instanceof Error && cause.message !== "" && cause.message !== failure.message
+    ? `${failure.message} ${cause.message}`
+    : failure.message;
 }
 
 function webhookPath(taskId: string, token: string): string {
@@ -1459,30 +1464,29 @@ export const layer = Layer.effect(
     yield* scheduler.register("scheduled-tasks", runDueTasks());
 
     // Recent orchestration runs per task, attached so clients can apply each task's notify policy.
-    const withRecentRunIds = (tasks: ReadonlyArray<ScheduledTask>) =>
-      Effect.gen(function* () {
-        if (tasks.length === 0) return tasks;
-        const since = iso(
-          DateTime.subtract(yield* localNow, { milliseconds: RECENT_RUN_WINDOW_MS }),
-        );
-        const rows = yield* sql<{
-          readonly task_id: string;
-          readonly orchestration_run_id: string;
-        }>`
+    const withRecentRunIds = Effect.fn("ScheduledTaskService.withRecentRunIds")(function* (
+      tasks: ReadonlyArray<ScheduledTask>,
+    ) {
+      if (tasks.length === 0) return tasks;
+      const since = iso(DateTime.subtract(yield* localNow, { milliseconds: RECENT_RUN_WINDOW_MS }));
+      const rows = yield* sql<{
+        readonly task_id: string;
+        readonly orchestration_run_id: string;
+      }>`
           SELECT task_id, orchestration_run_id FROM scheduled_task_runs
           WHERE orchestration_run_id IS NOT NULL AND started_at >= ${since}
         `;
-        const byTask = new Map<string, Array<RunId>>();
-        for (const row of rows) {
-          const runs = byTask.get(row.task_id) ?? [];
-          runs.push(RunId.make(row.orchestration_run_id));
-          byTask.set(row.task_id, runs);
-        }
-        return tasks.map((task) => {
-          const recentRunIds = byTask.get(task.id);
-          return recentRunIds === undefined ? task : { ...task, recentRunIds };
-        });
+      const byTask = new Map<string, Array<RunId>>();
+      for (const row of rows) {
+        const runs = byTask.get(row.task_id) ?? [];
+        runs.push(RunId.make(row.orchestration_run_id));
+        byTask.set(row.task_id, runs);
+      }
+      return tasks.map((task) => {
+        const recentRunIds = byTask.get(task.id);
+        return recentRunIds === undefined ? task : { ...task, recentRunIds };
       });
+    });
 
     const list: ScheduledTaskService["Service"]["list"] = () =>
       listRows().pipe(

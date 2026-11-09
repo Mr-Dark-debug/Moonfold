@@ -47,9 +47,9 @@ describe("resolveMoonfoldMcpToolDefinition", () => {
     expect(
       resolveMoonfoldMcpToolDefinition("mcp__moonfold__preview_act", { action: "type" })?.labels,
     ).toEqual(resolveMoonfoldMcpToolDefinition("preview_type")?.labels);
-    expect(resolveMoonfoldMcpToolDefinition("moonfold_thread_transfer", { action: "fork" })?.displayName).toBe(
-      resolveMoonfoldMcpToolDefinition("moonfold_thread_fork")?.displayName,
-    );
+    expect(
+      resolveMoonfoldMcpToolDefinition("moonfold_thread_transfer", { action: "fork" })?.displayName,
+    ).toBe(resolveMoonfoldMcpToolDefinition("moonfold_thread_fork")?.displayName);
     expect(resolveMoonfoldMcpToolDefinition("preview_act", { action: "unknown" })?.labels[2]).toBe(
       "Used",
     );
@@ -58,14 +58,18 @@ describe("resolveMoonfoldMcpToolDefinition", () => {
 
 describe("resolveMoonfoldMcpSummaryAction", () => {
   it("summarizes an action tool by the action each call ran", () => {
-    expect(resolveMoonfoldMcpSummaryAction("mcp__moonfold__moonfold_queue", { action: "list" })).toBe(
-      "queue-list",
+    expect(
+      resolveMoonfoldMcpSummaryAction("mcp__moonfold__moonfold_queue", { action: "list" }),
+    ).toBe("queue-list");
+    expect(resolveMoonfoldMcpSummaryAction("moonfold_queue", { action: "edit" })).toBe(
+      "queue-edit",
     );
-    expect(resolveMoonfoldMcpSummaryAction("moonfold_queue", { action: "edit" })).toBe("queue-edit");
     expect(resolveMoonfoldMcpSummaryAction("moonfold_thread_transfer", { action: "status" })).toBe(
       "thread-transfers",
     );
-    expect(resolveMoonfoldMcpSummaryAction("moonfold_thread_configure", {})).toBe("thread-configuration");
+    expect(resolveMoonfoldMcpSummaryAction("moonfold_thread_configure", {})).toBe(
+      "thread-configuration",
+    );
     expect(resolveMoonfoldMcpSummaryAction("schedule_task", { scheduledTaskId: "task-1" })).toBe(
       "schedule-update",
     );

@@ -2,7 +2,6 @@ import { assert, describe, it } from "@effect/vitest";
 import { ProjectId, ProviderInstanceId, ThreadId, TextGenerationError } from "@moonfold/contracts";
 import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
-import * as Option from "effect/Option";
 
 import * as ProjectService from "../project/ProjectService.ts";
 import * as TextGeneration from "../textGeneration/TextGeneration.ts";
@@ -51,7 +50,7 @@ function testLayer(input: {
             } as never),
         }),
         Layer.mock(ProjectService.ProjectService)({
-          getById: () => Effect.succeed(Option.some({ workspaceRoot: "/work/app" } as never)),
+          getById: () => Effect.succeedSome({ workspaceRoot: "/work/app" } as never),
         }),
         Layer.mock(TextGeneration.TextGeneration)({
           answerSideQuestion: (request) => {

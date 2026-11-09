@@ -442,7 +442,9 @@ function disabledManagedRelayClient(relayUrl: string): ManagedRelayClient["Servi
     linkEnvironment: unavailable("clientRuntime.managedRelay.linkEnvironment"),
     unlinkEnvironment: unavailable("clientRuntime.managedRelay.unlinkEnvironment"),
     getMoonfoldChatLink: unavailable("clientRuntime.managedRelay.getMoonfoldChatLink"),
-    createMoonfoldChatLinkRequest: unavailable("clientRuntime.managedRelay.createMoonfoldChatLinkRequest"),
+    createMoonfoldChatLinkRequest: unavailable(
+      "clientRuntime.managedRelay.createMoonfoldChatLinkRequest",
+    ),
     unlinkMoonfoldChat: unavailable("clientRuntime.managedRelay.unlinkMoonfoldChat"),
     getEnvironmentStatus: unavailable("clientRuntime.managedRelay.getEnvironmentStatus"),
     connectEnvironment: unavailable("clientRuntime.managedRelay.connectEnvironment"),

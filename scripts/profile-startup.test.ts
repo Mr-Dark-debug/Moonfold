@@ -107,7 +107,9 @@ it("attributes ESM and CommonJS imports without changing module execution", () =
 });
 
 it("captures only the dev runner and preserves its exit status", () => {
-  const directory = NodeFS.mkdtempSync(NodePath.join(NodeOS.tmpdir(), "moonfold-startup-launcher-"));
+  const directory = NodeFS.mkdtempSync(
+    NodePath.join(NodeOS.tmpdir(), "moonfold-startup-launcher-"),
+  );
   try {
     NodeFS.mkdirSync(NodePath.join(directory, "scripts"));
     NodeFS.writeFileSync(

@@ -145,12 +145,9 @@ export class DesktopWindow extends Context.Service<
     // mode), before the WSL backend that acts as the primary is ready. It is
     // dismissed automatically once the real main window reveals.
     readonly showConnectingSplash: (label: string) => Effect.Effect<void>;
-    // Marks the primary backend as ready so `createMainIfBackendReady` and the
-    // macOS "activate without windows" path may open the real main window. The
-    // renderer now always loads the local client URL (getDesktopUrl) and connects
-    // to the backend through the connection layer, so the reported httpBaseUrl is
-    // no longer used to point the window at the backend — it is kept only for the
-    // readiness log and to preserve the callback contract the backend pool drives.
+    // Marks the primary backend as ready so `createMainIfBackendReady` and the macOS
+    // "activate without windows" path may open the main window. The renderer loads the
+    // local client URL, so `httpBaseUrl` only feeds the readiness log and the pool's callback.
     readonly handleBackendReady: (httpBaseUrl: URL) => Effect.Effect<void, DesktopWindowError>;
     readonly handleBackendNotReady: Effect.Effect<void>;
     readonly flushMainWindowBounds: Effect.Effect<void>;
@@ -1004,8 +1001,8 @@ export const make = Effect.gen(function* () {
     yield* ensureMain;
   }).pipe(Effect.withSpan("desktop.window.createMainIfBackendReady"));
 
-  const showConnectingSplash = (label: string) =>
-    Effect.gen(function* () {
+  const showConnectingSplash = Effect.fn("desktop.window.showConnectingSplash")(
+    function* (label: string) {
       if (yield* Ref.get(desktopState.quitting)) return;
       const existingSplash = yield* Ref.get(splashWindowRef);
       if (Option.isSome(existingSplash)) return;
@@ -1049,12 +1046,11 @@ export const make = Effect.gen(function* () {
       });
       void splash.loadURL(buildConnectingSplashDataUrl(shouldUseDarkColors, label));
       yield* logWindowInfo("connecting splash shown");
-    }).pipe(
-      Effect.catch((error) =>
-        logWindowWarning("failed to show connecting splash", { message: error.message }),
-      ),
-      Effect.withSpan("desktop.window.showConnectingSplash"),
-    );
+    },
+    Effect.catch((error) =>
+      logWindowWarning("failed to show connecting splash", { message: error.message }),
+    ),
+  );
 
   const dispatchRendererEvent = Effect.fn("desktop.window.dispatchRendererEvent")(function* (
     channel: string,

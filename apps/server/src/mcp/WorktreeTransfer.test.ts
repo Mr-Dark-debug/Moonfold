@@ -1,10 +1,10 @@
+import * as NodeCrypto from "@effect/platform-node/NodeCrypto";
 import * as NodeServices from "@effect/platform-node/NodeServices";
 import { describe, expect, it } from "@effect/vitest";
 import { ProjectId, RunId, ThreadId } from "@moonfold/contracts";
 import * as Effect from "effect/Effect";
 import * as FileSystem from "effect/FileSystem";
 import * as Layer from "effect/Layer";
-import * as Option from "effect/Option";
 
 import * as ServerConfig from "../config.ts";
 import * as GitWorkflowService from "../git/GitWorkflowService.ts";
@@ -21,7 +21,7 @@ const projectId = ProjectId.make("project-1");
 
 const gitLayer = GitVcsDriver.layer.pipe(
   Layer.provideMerge(ServerConfig.layerTest(process.cwd(), { prefix: "worktree-transfer-" })),
-  Layer.provideMerge(NodeServices.layer),
+  Layer.provideMerge(Layer.mergeAll(NodeServices.layer, NodeCrypto.layer)),
 );
 
 /**
@@ -81,9 +81,7 @@ const fixture = Effect.gen(function* () {
         }),
         Layer.mock(ProjectService.ProjectService)({
           getById: () =>
-            Effect.succeed(
-              Option.some({ id: projectId, workspaceRoot: project, scripts: [] } as never),
-            ),
+            Effect.succeedSome({ id: projectId, workspaceRoot: project, scripts: [] } as never),
         }),
         // On by default: a move must still start from the local checkout (this repo has no origin).
         ServerSettings.layerTest({ newWorktreesStartFromOrigin: true }),

@@ -1020,7 +1020,12 @@ it.effect("offers each label once across repositories, despite one that cannot b
     const reads: Array<string> = [];
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "moonfold", workspaceRoot: "/a", repository: "moonfold-dev/moonfold" }),
+        project({
+          id: "p1",
+          title: "moonfold",
+          workspaceRoot: "/a",
+          repository: "moonfold-dev/moonfold",
+        }),
         project({
           id: "p5",
           title: "moonfold worktree",
@@ -1033,7 +1038,12 @@ it.effect("offers each label once across repositories, despite one that cannot b
           workspaceRoot: "/b",
           repository: "moonfold-dev/ut",
         }),
-        project({ id: "p3", title: "broken", workspaceRoot: "/c", repository: "moonfold-dev/broken" }),
+        project({
+          id: "p3",
+          title: "broken",
+          workspaceRoot: "/c",
+          repository: "moonfold-dev/broken",
+        }),
         project({
           id: "p4",
           title: "elsewhere",
@@ -1071,7 +1081,10 @@ it.effect("offers each label once across repositories, despite one that cannot b
       result.labels.map((label) => label.name),
       ["bug", "size:XL"],
     );
-    assert.strictEqual(reads.filter((repository) => repository === "moonfold-dev/moonfold").length, 1);
+    assert.strictEqual(
+      reads.filter((repository) => repository === "moonfold-dev/moonfold").length,
+      1,
+    );
     assert.strictEqual(result.truncated, false);
   }),
 );
@@ -1081,7 +1094,12 @@ it.effect("puts the author a query names exactly ahead of those it only begins",
     const queries: Array<string | undefined> = [];
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "moonfold", workspaceRoot: "/a", repository: "moonfold-dev/moonfold" }),
+        project({
+          id: "p1",
+          title: "moonfold",
+          workspaceRoot: "/a",
+          repository: "moonfold-dev/moonfold",
+        }),
       ],
       providers: [
         fakePullRequestProvider(SourceControlProviderKind.make("github"), {
@@ -1116,8 +1134,18 @@ it.effect("ranks references by number, keeping the host's recent-first order", (
   Effect.gen(function* () {
     const service = yield* makeService({
       projects: [
-        project({ id: "p1", title: "moonfold", workspaceRoot: "/a", repository: "moonfold-dev/moonfold" }),
-        project({ id: "p2", title: "tree", workspaceRoot: "/b", repository: "moonfold-dev/moonfold" }),
+        project({
+          id: "p1",
+          title: "moonfold",
+          workspaceRoot: "/a",
+          repository: "moonfold-dev/moonfold",
+        }),
+        project({
+          id: "p2",
+          title: "tree",
+          workspaceRoot: "/b",
+          repository: "moonfold-dev/moonfold",
+        }),
       ],
       providers: [
         fakePullRequestProvider(SourceControlProviderKind.make("github"), {
