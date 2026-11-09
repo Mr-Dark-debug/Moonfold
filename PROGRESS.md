@@ -31,6 +31,18 @@ Connect account pages are dead code here and should be removed. Codex is limited
 
 Next: a real `/brand` run with Claude Code in a scratch project, then the UI review loop.
 
+## Home screen backgrounds (2026-11-09, merged 2026-11-10)
+
+Done: Settings → Appearance → Home screen picks a **Background** (Classic, Moonfold, Golden hour,
+Purple wind) and a **Background style** (ASCII text or Image). Two per-device client settings,
+default Classic and ASCII. The artwork shows only behind the new thread screen and loads only when
+chosen. Decision: D-65. The branch predated the upstream sync, so its settings rows were re-applied
+in upstream's new `AppearanceSettingsPanel.tsx`.
+
+Open problems: not yet looked at in a running client (web, desktop, phone, short windows). The
+owner still has to confirm the right to ship the two landscape pictures (D-65) before a stable
+release includes them.
+
 ## Beta 4 (2026-11-02)
 
 Done: Moonfold for Android beta 1 (`apps/mobile`, native Kotlin, our own code, nothing from the

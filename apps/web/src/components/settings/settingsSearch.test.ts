@@ -205,6 +205,7 @@ describe("searchSettings", () => {
       ["Native sessions", "providers"],
       ["CODEX_HOME path", "providers"],
       ["Shadow home path", "providers"],
+      ["wallpaper", "home-background"],
     ] as const) {
       expect(searchSettings(title)[0]?.id, title).toBe(id);
     }

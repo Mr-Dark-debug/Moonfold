@@ -570,3 +570,25 @@ describe("server model preferences", () => {
     expect(decodeServerSettingsPatch(input)).toEqual(input);
   });
 });
+
+describe("ClientSettings home background", () => {
+  it("defaults to no artwork drawn as ASCII text and accepts every choice", () => {
+    const defaults = decodeClientSettings({});
+    expect(defaults.homeBackground).toBe("none");
+    expect(defaults.homeBackgroundStyle).toBe("ascii");
+
+    for (const homeBackground of ["none", "moonfold", "golden-hour", "purple-wind"] as const) {
+      expect(decodeClientSettingsPatch({ homeBackground }).homeBackground).toBe(homeBackground);
+    }
+    for (const homeBackgroundStyle of ["ascii", "image"] as const) {
+      expect(decodeClientSettingsPatch({ homeBackgroundStyle }).homeBackgroundStyle).toBe(
+        homeBackgroundStyle,
+      );
+    }
+  });
+
+  it("rejects artwork or styles the client does not ship", () => {
+    expect(() => decodeClientSettings({ homeBackground: "sunset" })).toThrow();
+    expect(() => decodeClientSettingsPatch({ homeBackgroundStyle: "svg" })).toThrow();
+  });
+});

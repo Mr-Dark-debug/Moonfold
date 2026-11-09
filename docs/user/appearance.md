@@ -31,6 +31,21 @@ exporting a table preserves the TeX.
 The composer keeps TeX source editable, including when rich text is enabled. The Render math
 preference is saved separately on each device.
 
+## Home screen background
+
+The new thread screen can show artwork behind the prompt. Open **Settings → Appearance → Home
+screen** and choose a **Background**: Moonfold, Golden hour, Purple wind, or Classic (no image),
+which is the default and keeps the plain screen. **Background style** picks how the artwork is
+drawn:
+
+- **ASCII text** draws the artwork as live text in the scene's colors. On a light theme the picture
+  is mirrored so light areas stay light.
+- **Image** shows the bundled picture.
+
+The artwork sits behind the prompt and only shows while a thread has no messages. It goes away when
+you send the first one. Both choices are saved separately on each device or browser, so a phone and
+a desktop can differ.
+
 ## Motion
 
 The main sidebar, right panel, and terminal drawer open and close immediately by default. Move the

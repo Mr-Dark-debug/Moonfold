@@ -1,11 +1,14 @@
 import type { CSSProperties } from "react";
 import { useState } from "react";
+import * as Schema from "effect/Schema";
 import {
   DEFAULT_ENVIRONMENT_IDENTIFICATION_MODE,
   DEFAULT_UNIFIED_SETTINGS,
   type ChatWidth,
   type EffortDisplay,
   type EnvironmentIdentificationMode,
+  HomeBackground,
+  HomeBackgroundStyle,
   MAX_APPEARANCE_CONTRAST,
   MAX_GLASS_OPACITY,
   MAX_PANEL_ANIMATION_DURATION_MS,
@@ -34,6 +37,7 @@ import {
 import { searchableSetting } from "./settingsSearch";
 import { AdvancedSettings } from "./AdvancedSettings";
 import { PanelAnimationsPreview } from "./PanelAnimationsPreview";
+import { HomeBackgroundCanvas } from "../home-background/HomeBackground";
 import { TypographySection } from "./TypographySettings";
 import { ThreadDetailsItemsRow } from "./ThreadDetailsItemsRow";
 
@@ -72,6 +76,21 @@ function environmentIdentificationOptions(
     ["dev-artwork", "Dev artwork"],
   ];
 }
+
+const isHomeBackground = Schema.is(HomeBackground);
+const isHomeBackgroundStyle = Schema.is(HomeBackgroundStyle);
+
+const HOME_BACKGROUND_LABELS: Record<HomeBackground, string> = {
+  none: "Classic (no image)",
+  moonfold: "Moonfold",
+  "golden-hour": "Golden hour",
+  "purple-wind": "Purple wind",
+};
+
+const HOME_BACKGROUND_STYLE_LABELS: Record<HomeBackgroundStyle, string> = {
+  ascii: "ASCII text",
+  image: "Image",
+};
 
 const CHAT_WIDTH_LABELS: Record<ChatWidth, string> = {
   comfortable: "Comfortable",
@@ -478,6 +497,102 @@ export function AppearanceSettingsPanel() {
             }
           />
         </AdvancedSettings>
+      </SettingsSection>
+
+      <SettingsSection id="appearance-home" title="Home screen">
+        <SettingsRow
+          {...searchableSetting("home-background")}
+          description="Artwork behind the new thread screen. Classic keeps the plain look with no image."
+          resetAction={
+            settings.homeBackground !== DEFAULT_UNIFIED_SETTINGS.homeBackground ? (
+              <SettingResetButton
+                label="home background"
+                onClick={() =>
+                  updateSettings({ homeBackground: DEFAULT_UNIFIED_SETTINGS.homeBackground })
+                }
+              />
+            ) : null
+          }
+          control={
+            <div className="flex w-full items-center gap-3 sm:w-auto">
+              {settings.homeBackground !== "none" ? (
+                <div className="relative hidden h-14 w-24 shrink-0 overflow-hidden rounded-md border border-border sm:block">
+                  <HomeBackgroundCanvas
+                    appearance={resolvedTheme}
+                    scene={settings.homeBackground}
+                    style={settings.homeBackgroundStyle}
+                  />
+                </div>
+              ) : null}
+              <div className="w-full sm:w-40">
+                <Select
+                  value={settings.homeBackground}
+                  onValueChange={(value) => {
+                    if (isHomeBackground(value)) updateSettings({ homeBackground: value });
+                  }}
+                >
+                  <SelectTrigger size="sm" className="w-full min-w-0" aria-label="Home background">
+                    <SelectValue>{HOME_BACKGROUND_LABELS[settings.homeBackground]}</SelectValue>
+                  </SelectTrigger>
+                  <SelectPopup align="end" alignItemWithTrigger={false}>
+                    {Object.entries(HOME_BACKGROUND_LABELS).map(([value, label]) => (
+                      <SelectItem hideIndicator key={value} value={value}>
+                        {label}
+                      </SelectItem>
+                    ))}
+                  </SelectPopup>
+                </Select>
+              </div>
+            </div>
+          }
+        />
+
+        <SettingsRow
+          {...searchableSetting("home-background-style")}
+          description="Draw the artwork as ASCII text that follows your theme, or as the bundled image."
+          resetAction={
+            settings.homeBackgroundStyle !== DEFAULT_UNIFIED_SETTINGS.homeBackgroundStyle ? (
+              <SettingResetButton
+                label="home background style"
+                onClick={() =>
+                  updateSettings({
+                    homeBackgroundStyle: DEFAULT_UNIFIED_SETTINGS.homeBackgroundStyle,
+                  })
+                }
+              />
+            ) : null
+          }
+          control={
+            <div className="w-full sm:w-40">
+              <Select
+                disabled={settings.homeBackground === "none"}
+                value={settings.homeBackgroundStyle}
+                onValueChange={(value) => {
+                  if (isHomeBackgroundStyle(value)) {
+                    updateSettings({ homeBackgroundStyle: value });
+                  }
+                }}
+              >
+                <SelectTrigger
+                  size="sm"
+                  className="w-full min-w-0"
+                  aria-label="Home background style"
+                >
+                  <SelectValue>
+                    {HOME_BACKGROUND_STYLE_LABELS[settings.homeBackgroundStyle]}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectPopup align="end" alignItemWithTrigger={false}>
+                  {Object.entries(HOME_BACKGROUND_STYLE_LABELS).map(([value, label]) => (
+                    <SelectItem hideIndicator key={value} value={value}>
+                      {label}
+                    </SelectItem>
+                  ))}
+                </SelectPopup>
+              </Select>
+            </div>
+          }
+        />
       </SettingsSection>
 
       <TypographySection />
