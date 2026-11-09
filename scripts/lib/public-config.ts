@@ -19,9 +19,7 @@ export interface MoonfoldPublicConfig {
 
 type Environment = Readonly<Record<string, string | undefined>>;
 
-const REPO_ROOT = NodePath.dirname(
-  NodePath.dirname(NodePath.dirname(NodeURL.fileURLToPath(import.meta.url))),
-);
+const REPO_ROOT = NodePath.resolve(NodeURL.fileURLToPath(import.meta.url), "../../..");
 
 export function loadRepoEnv({
   baseEnv = process.env,
@@ -103,7 +101,7 @@ export function loadRepoEnv({
   };
 }
 
-export function resolvePublicConfig(...sources: readonly Environment[]): MoonfoldPublicConfig {
+function resolvePublicConfig(...sources: readonly Environment[]): MoonfoldPublicConfig {
   return {
     clerkPublishableKey: firstNonEmpty(
       sources,

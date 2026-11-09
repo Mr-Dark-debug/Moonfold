@@ -14,15 +14,23 @@ to keep a large paste editable in the composer instead.
 
 ## Formatting
 
-The composer writes Markdown and shows it styled as you type. Markers such as
-`**` stay in the text and show beside the styled words when your cursor is on
-them. Lines starting with `- `, `1. `, `- [ ] `, `> `, `# ` or `---` become lists,
-task lists, quotes, headings and rules; ` ``` ` followed by Enter opens a code
-block. What you typed is what the agent receives, markers and numbering
-included, and `#1234` without a space still looks up a pull request.
+The composer writes Markdown and shows it styled as you type. When your cursor
+is on styled text, its Markdown shows instead, such as `**bold**`, and the
+markers edit like any other text: delete them to remove the style, or change
+`**` to `*` for italic. The style updates when your cursor leaves. To write
+plain Markdown with no styling, turn off **Settings → Chat → Rich text
+composer**. Lines starting with `- `, `1. `, `- [ ] `, `> `, `# ` or `---`
+become lists, task lists, quotes, headings and rules; ` ``` ` followed by Enter
+opens a code block. What you typed is what the agent receives, markers and
+numbering included, and `#1234` without a space still looks up a pull request.
+
+Some styled text containing or touching literal Markdown characters, such as a
+bold `path\` or `2*3`, keeps its styling without showing markers. Use formatting
+shortcuts or turn off rich text to edit the formatting of those ranges.
 
 Enter sends. In a list or quote, **Shift+Enter** continues it, and Shift+Enter
-on an empty line leaves it; **Tab** nests a list item. In a code block, Enter
+on an empty line moves out one level, then leaves it; **Tab** nests a list item
+under the one above and **Shift+Tab** moves it back out. In a code block, Enter
 starts a new line at the current indentation, **Tab** and **Shift+Tab** indent
 the selected lines, and a closing ` ``` ` followed by Enter, or two blank lines
 at the end, leave the block. **Backspace** at the start of a code block turns it
@@ -36,7 +44,8 @@ Attach up to 100 files per message. Each image can be up to 10 MiB, with at most
 50 MiB each, subject to the environment's upload support and limit. The agent
 receives them on the environment's machine. Provider and model limits still
 apply, including images already in the conversation. A video attachment gives
-the agent a file path; it does not enable native video input.
+the agent a file path; only [Antigravity](./providers-antigravity.md#skills-and-attachments)
+sends supported videos to Gemini models as video.
 
 Uploads begin when you add an attachment. All uploads must finish before the
 message can send. Retry or remove a failed upload. On web and desktop, reloading
@@ -49,16 +58,21 @@ See [images and videos](#images-and-videos-in-messages) for previewing and savin
 
 ## Send while the agent is working
 
-On web and desktop, choose **Settings → General → Follow-up behavior** to queue
+On web and desktop, choose **Settings → Chat → Follow-up behavior** to queue
 new messages for a later turn or steer the running turn immediately. The setting
 applies to this client; already queued messages keep their place. Queued messages
-are saved on the server and can be edited, reordered, or removed above the composer.
-`Cmd+Enter` on macOS or `Ctrl+Enter` on Windows and Linux uses the opposite action:
-it steers when your default is Queue and queues when your default is Steer.
+are saved on the server and can be edited or removed before they send.
+When Enter sends, `Cmd+Enter` on macOS or `Ctrl+Enter` on Windows and Linux uses
+the opposite action: it steers when your default is Queue and queues when your
+default is Steer.
+If your **Send shortcut** requires `Cmd+Enter` or `Ctrl+Enter`, that shortcut uses
+your default follow-up behavior; add **Shift** to use the opposite action. This
+applies only to multiline messages when you choose the multiline send option.
 
 Use `Cmd+Shift+Enter` on macOS or `Ctrl+Shift+Enter` on Windows and Linux to send
 the oldest queued message as a steer. This leaves the current draft intact and
-requires an active turn that supports steering. Change
+requires an active turn that supports steering. If that shortcut sends the opposite
+action for your draft, move focus outside the composer to steer the queued message. Change
 `thread.steerQueuedMessage` in **Settings → Keybindings** to use another shortcut.
 
 Press `Option+Up` on macOS or `Alt+Up` on Windows and Linux with the cursor at the
@@ -131,6 +145,14 @@ conversation in that popover. Nothing is added to the thread, and a turn that is
 on. The model has no tools here, so it answers only from what the conversation shows. Answers are
 gone when you leave the thread.
 
+## Answer an agent's question card
+
+Any agent can stop and ask you to choose while it works, such as how many designs to make or which
+direction to take. The question appears as a card in the thread, sometimes with a picture for each
+choice; select a picture to see it larger. Pick your answers, or type one under **Other** when the
+card offers it, then select **Submit**. **Dismiss** tells the agent to go on without an answer. The
+agent waits up to 30 minutes, and the card closes if its turn ends first.
+
 ## Send a failed message again
 
 When the agent's latest turn fails, select **Send again** under the error to send the same message
@@ -142,7 +164,8 @@ resets.
 
 On web and desktop, choose **Edit from here** beneath a sent message to rewind
 the conversation to before that message. Choose **Revert and keep changes** to
-leave workspace files as they are, or **Revert files too** to restore them as well.
+leave workspace files as they are, or **Revert files too** to put the workspace back
+to its checkpoint from before that message. That also undoes edits you made yourself.
 File restore is only offered for threads running in a worktree, and it is
 refused when another thread or agent session also uses that directory, a folder
 inside it, or a folder that contains it, since
@@ -165,25 +188,35 @@ Stashes containing uploaded files must be restored in their original environment
 Those files are retained for 24 hours. After an upload expires, restore the prompt
 and use **Attach again** or remove the missing file before sending.
 
+## Voice input on web and desktop
+
+Use the composer's microphone or `mod+shift+d` to dictate into your draft. Audio
+is transcribed on an environment you choose in **Settings → Voice**; nothing is
+sent until you choose one. See [Voice input](./voice-input.md).
+
 ## Queued messages
 
 On web and desktop, the composer shows **Interrupt** while the agent is working and the draft is
-empty. Adding text or attachments replaces it with a steer arrow. Click it to send a message into
-the active turn, or press `Enter` on desktop. Hold `Cmd` on macOS or `Ctrl` on Windows and Linux to
-switch the button to a queue icon. Click while holding that key, or press `Cmd+Enter` or
-`Ctrl+Enter` on desktop, to queue the message for after the active turn.
+empty. Adding text or attachments replaces it with a send button that shows your
+[Follow-up behavior](#send-while-the-agent-is-working): a queue icon for Queue or a steer arrow for
+Steer. Click it or press your send shortcut to use that action. Hold `Cmd` on macOS or `Ctrl` on
+Windows and Linux to switch the button to the opposite action, then click, or use the opposite-action
+shortcut described above.
 
-Queued messages appear above the composer. Rows show a thumbnail of any attached image alongside
-the text. Drag a row by its handle to reorder it, use the handle's arrow keys, promote the message
-to a steer, or remove it.
+On web and desktop, queued messages appear at the end of the thread as dashed messages that have
+not been sent yet. On mobile they appear above the composer. Each shows its text and any attached
+images. **Send now** sends a message right away, into the running turn if there is one. You can
+also edit or remove it.
 
-If the server restarts, saved queued messages keep their order and are held. Press
-**Resume** in an empty composer to continue. You can edit, reorder, or remove held messages without starting them.
+If you stop the agent or the server restarts, queued messages keep their order and are held.
+Press **Resume** in an empty composer to continue. **Resume** also continues a stopped
+run or one that hit a usage limit, even with nothing queued. Sending a new message also resumes the queue, unless it steers a turn that is already
+running. You can edit or remove held messages without starting them.
 
-The pencil on a queued row opens that message in the composer for editing. The original message
-stays in the queue until you save, and its row is highlighted while you edit. The message's
+The pencil on a queued message opens it in the composer for editing. The original message
+stays in the queue until you save, and it is highlighted while you edit. The message's
 attachments appear above the text with a remove control, and new images can be added the usual way.
-The checkmark saves the queued message in place; **Cancel** on its row leaves it unchanged. Whatever
+The checkmark saves the queued message in place; **Cancel** next to it leaves it unchanged. Whatever
 you had typed in the composer before starting the edit is restored afterwards. If the queued
 message starts or is removed while you are editing, the edit ends: changed content moves into the
 composer when it is empty, and is discarded otherwise.
@@ -193,8 +226,8 @@ composer when it is empty, and is discarded otherwise.
 Type `/` for commands or `$` to add a skill from the selected environment and
 provider.
 
-The slash menu also includes skills unless you turn off **Settings → General →
-Show skills in slash menu**. Only skills enabled for the provider are listed.
+The slash menu also includes skills unless you turn off **Settings → Chat →
+Show skills in slash menu**, under Advanced. Only skills enabled for the provider are listed.
 
 After you add or change skills, plugins, or MCP servers, use **Restart agent
 session** in the command palette on web and desktop. The conversation continues,
@@ -204,7 +237,21 @@ Provider commands must start the message to run. Moonfold commands such as
 `/model` and `/plan`, and skill mentions, work on any line.
 
 Send `/compact` in an existing conversation to reduce context usage when the
-provider supports it. Web and desktop also offer compaction from the context meter.
+provider supports it, even with the context meter turned off.
+
+Send `/clear` on its own, or pick it from the slash menu, to start a fresh session
+in the same thread. Your next message goes to a new provider session that doesn't see the
+earlier messages, and the thread marks where it began with **New session**.
+Earlier messages and diffs stay in the thread. Dismiss the notice above the
+composer to keep the current session instead.
+
+On web and desktop, turn on **Settings → Labs → Legacy → Context
+window indicator (legacy)** to see context usage. The meter is off by default
+and appears once the provider reports usage. Open it for usage details and
+**Compact context** when the provider supports compaction.
+
+Claude instances can also compact idle threads for you. See
+[compact long conversations](./providers-claude.md#compact-long-conversations).
 
 ## Plans
 
@@ -218,17 +265,22 @@ sends your version. **Use the original plan** discards your edit. Edits stay on 
 With Codex and Claude, send `/goal` followed by what "done" means, for example
 `/goal all tests in packages/api pass`. The agent keeps working across turns
 until it judges the goal met. The thread shows **Goal** while it works, and a
-row above the composer shows the goal and its progress.
+line at the end of the thread (above the composer on mobile) shows the goal and
+its progress.
 
 - `/goal` alone shows the current goal. `/goal clear` removes it.
 - Codex also supports `/goal pause` and `/goal resume`. Stopping a Codex goal
-  pauses it.
+  pauses it, and so does Codex ending its work without meeting the goal.
 - Codex goals can have a token budget: `/goal --budget 200k all tests pass`
   sets one with the goal, and `/goal budget 500k` or `/goal budget off` changes
   it later. The goal row shows tokens used against the budget, and Codex stops
   the goal when it runs out.
 - Stopping Claude ends the current turn, but the goal stays set. Claude checks it
   again at the end of your next message.
+- Sending a new goal, or `/goal resume`, while the agent works stops the current
+  turn and starts the goal, unless you queue it. `/goal clear` and `/goal pause`
+  stop the turn only when it is working on the goal. Other goal commands wait for
+  the turn to end.
 
 ## Context in your message
 
@@ -249,13 +301,17 @@ pull request is older than the recent list. Type a single word after `#` to sear
 the repository by text. Choose a result to insert it as a chip.
 
 Another thread can be context too. Type `@` followed by part of its title to pick one from
-the same server, or on web and desktop drag a thread out of the sidebar and drop it on the
-composer; a multi-selection drops together. The chip shows the thread's current title and
-opens it when selected. Your prompt only carries a reference: the agent reads the thread's
+the same server, or from a machine it links to while the Linked environments beta is on; those
+show the machine's name. On web and desktop you can also drag a thread out of the sidebar and
+drop it on the composer; a multi-selection drops together. On any client, **Copy thread** copies a
+link to the thread that pastes into a composer as its chip. The chip shows the thread's
+current title and opens it when selected. Your prompt only carries a reference: the agent reads the thread's
 history on demand, so attaching a long thread costs nothing until the agent looks. Attaching a
 thread does not change it, and the agent cannot send messages to it unless you ask.
 
-Dropping a thread from another environment attaches a saved transcript file. The source
+A thread from a linked machine, picked, pasted or dropped, stays a reference that the agent reads
+on that machine. A pasted link to a thread on any other machine stays a link. Dropping a thread
+from any other environment attaches a saved transcript file. The source
 environment must be connected and up to date. The transcript includes the visible history and
 saved text context at the time of the drop; later messages and the contents of attached files
 are not copied. The agent can read the saved transcript after the source disconnects. Normal

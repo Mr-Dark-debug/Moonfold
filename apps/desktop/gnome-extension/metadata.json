@@ -2,7 +2,7 @@
   "uuid": "snap-shot@mr-dark-debug.github.io",
   "name": "Moonfold SnapShots",
   "description": "Allows Moonfold to capture the focused window, identify it for optional accessibility text, and animate it into Moonfold. Disable this extension to revoke access.",
-  "shell-version": ["45", "46", "47", "48", "49", "50"],
-  "version": 2,
+  "shell-version": ["45", "46", "47", "48", "49", "50", "51"],
+  "version": 3,
   "url": "https://github.com/Mr-Dark-debug/Moonfold"
 }

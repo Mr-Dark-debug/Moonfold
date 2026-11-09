@@ -3,6 +3,22 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./assembly-highlighting": {
+      "types": "./src/assemblyHighlighting.ts",
+      "default": "./src/assemblyHighlighting.ts"
+    },
+    "./zip/bounded-zip": {
+      "types": "./src/zip/boundedZip.ts",
+      "default": "./src/zip/boundedZip.ts"
+    },
+    "./zip/directory": {
+      "types": "./src/zip/zipDirectory.ts",
+      "default": "./src/zip/zipDirectory.ts"
+    },
+    "./workspace-basename-lookup": {
+      "types": "./src/workspaceBasenameLookup.ts",
+      "default": "./src/workspaceBasenameLookup.ts"
+    },
     "./composerThreadItems": {
       "types": "./src/composerThreadItems.ts",
       "default": "./src/composerThreadItems.ts"
@@ -50,6 +66,14 @@
     "./secret-request": {
       "types": "./src/secretRequest.ts",
       "default": "./src/secretRequest.ts"
+    },
+    "./link-request": {
+      "types": "./src/linkRequest.ts",
+      "default": "./src/linkRequest.ts"
+    },
+    "./question-request": {
+      "types": "./src/questionRequest.ts",
+      "default": "./src/questionRequest.ts"
     },
     "./scheduled-task-webhook": {
       "types": "./src/scheduledTaskWebhook.ts",
@@ -111,6 +135,10 @@
       "types": "./src/providerUpdateRequiredModels.ts",
       "default": "./src/providerUpdateRequiredModels.ts"
     },
+    "./voice-input": {
+      "types": "./src/voice-input/index.ts",
+      "default": "./src/voice-input/index.ts"
+    },
     "./moonfoldToolSummary": {
       "types": "./src/moonfoldToolSummary.ts",
       "default": "./src/moonfoldToolSummary.ts"
@@ -139,6 +167,14 @@
       "types": "./src/webhookAddress.ts",
       "default": "./src/webhookAddress.ts"
     },
+    "./queued-run-edit": {
+      "types": "./src/queuedRunEdit.ts",
+      "default": "./src/queuedRunEdit.ts"
+    },
+    "./clock": {
+      "types": "./src/clock.ts",
+      "default": "./src/clock.ts"
+    },
     "./delayed-status": {
       "types": "./src/delayedStatus.ts",
       "default": "./src/delayedStatus.ts"
@@ -159,6 +195,10 @@
       "types": "./src/state/git.ts",
       "default": "./src/state/git.ts"
     },
+    "./state/command-output": {
+      "types": "./src/state/commandOutput.ts",
+      "default": "./src/state/commandOutput.ts"
+    },
     "./state/item-support": {
       "types": "./src/state/itemSupport.ts",
       "default": "./src/state/itemSupport.ts"
@@ -170,6 +210,10 @@
     "./state/orchestration": {
       "types": "./src/state/orchestration.ts",
       "default": "./src/state/orchestration.ts"
+    },
+    "./state/thread-history-merge": {
+      "types": "./src/state/threadHistoryMerge.ts",
+      "default": "./src/state/threadHistoryMerge.ts"
     },
     "./state/orchestration-v2-projection": {
       "types": "./src/state/orchestrationV2Projection.ts",
@@ -186,6 +230,18 @@
     "./state/deviceHubAccess": {
       "types": "./src/state/deviceHubAccess.ts",
       "default": "./src/state/deviceHubAccess.ts"
+    },
+    "./state/peerLinks": {
+      "types": "./src/state/peerLinks.ts",
+      "default": "./src/state/peerLinks.ts"
+    },
+    "./state/environmentHttpAuth": {
+      "types": "./src/state/environmentHttpAuth.ts",
+      "default": "./src/state/environmentHttpAuth.ts"
+    },
+    "./state/peerPairingCode": {
+      "types": "./src/state/peerPairingCode.ts",
+      "default": "./src/state/peerPairingCode.ts"
     },
     "./state/preview": {
       "types": "./src/state/preview.ts",
@@ -291,6 +347,10 @@
       "types": "./src/state/threadExecution.ts",
       "default": "./src/state/threadExecution.ts"
     },
+    "./state/pending-user-input": {
+      "types": "./src/state/pendingUserInput.ts",
+      "default": "./src/state/pendingUserInput.ts"
+    },
     "./state/thread-requests": {
       "types": "./src/state/threadRequests.ts",
       "default": "./src/state/threadRequests.ts"
@@ -303,9 +363,17 @@
       "types": "./src/state/composerDispatch.ts",
       "default": "./src/state/composerDispatch.ts"
     },
+    "./state/context-window": {
+      "types": "./src/state/contextWindow.ts",
+      "default": "./src/state/contextWindow.ts"
+    },
     "./state/thread-subagents": {
       "types": "./src/state/threadSubagents.ts",
       "default": "./src/state/threadSubagents.ts"
+    },
+    "./state/thread-undo": {
+      "types": "./src/state/threadUndo.ts",
+      "default": "./src/state/threadUndo.ts"
     },
     "./state/thread-settled": {
       "types": "./src/state/threadSettled.ts",
@@ -314,6 +382,10 @@
     "./state/thread-search": {
       "types": "./src/state/threadSearch.ts",
       "default": "./src/state/threadSearch.ts"
+    },
+    "./state/thread-visits": {
+      "types": "./src/state/threadVisits.ts",
+      "default": "./src/state/threadVisits.ts"
     },
     "./state/turn-item-presentation": {
       "types": "./src/state/turnItemPresentation.ts",
@@ -346,6 +418,26 @@
     "./work-log/scroll-anchor": {
       "types": "./src/work-log/scrollAnchor.ts",
       "default": "./src/work-log/scrollAnchor.ts"
+    },
+    "./pull-request-link-input": {
+      "types": "./src/pullRequestLinkInput.ts",
+      "default": "./src/pullRequestLinkInput.ts"
+    },
+    "./change-request-links": {
+      "types": "./src/changeRequestLinks.ts",
+      "default": "./src/changeRequestLinks.ts"
+    },
+    "./thread-pull-requests": {
+      "types": "./src/threadPullRequests.ts",
+      "default": "./src/threadPullRequests.ts"
+    },
+    "./thread-reference": {
+      "types": "./src/threadReference.ts",
+      "default": "./src/threadReference.ts"
+    },
+    "./pull-request-project-filter": {
+      "types": "./src/pullRequestProjectFilter.ts",
+      "default": "./src/pullRequestProjectFilter.ts"
     },
     "./thread-pull-request-compatibility": {
       "types": "./src/threadPullRequestCompatibility.ts",
@@ -414,24 +506,66 @@
     "./pull-request-markdown": {
       "types": "./src/pullRequestMarkdown.ts",
       "default": "./src/pullRequestMarkdown.ts"
+    },
+    "./pull-request-checks": {
+      "types": "./src/pullRequestChecks.ts",
+      "default": "./src/pullRequestChecks.ts"
+    },
+    "./pull-request-editing": {
+      "types": "./src/pullRequestEditing.ts",
+      "default": "./src/pullRequestEditing.ts"
+    },
+    "./pull-request-reactions": {
+      "types": "./src/pullRequestReactions.ts",
+      "default": "./src/pullRequestReactions.ts"
+    },
+    "./pull-request-reply": {
+      "types": "./src/pullRequestReply.ts",
+      "default": "./src/pullRequestReply.ts"
+    },
+    "./pull-request-query": {
+      "types": "./src/pullRequestQuery.ts",
+      "default": "./src/pullRequestQuery.ts"
+    },
+    "./model-traits": {
+      "types": "./src/modelTraits.ts",
+      "default": "./src/modelTraits.ts"
+    },
+    "./pull-request-reviewers": {
+      "types": "./src/pullRequestReviewers.ts",
+      "default": "./src/pullRequestReviewers.ts"
+    },
+    "./provider-clients": {
+      "types": "./src/providerClients.ts",
+      "default": "./src/providerClients.ts"
+    },
+    "./provider-instance-ids": {
+      "types": "./src/providerInstanceIds.ts",
+      "default": "./src/providerInstanceIds.ts"
     }
   },
   "scripts": {
-    "typecheck": "tsc-rs --noEmit",
+    "typecheck": "effect-tsgo tsrs --noEmit",
     "test": "vp test run"
   },
   "dependencies": {
     "@moonfold/contracts": "workspace:*",
+    "@moonfold/provider-acp-registry": "workspace:*",
+    "@moonfold/provider-core": "workspace:*",
+    "@moonfold/provider-cursor": "workspace:*",
+    "@moonfold/provider-fx": "workspace:*",
+    "@moonfold/provider-grok": "workspace:*",
+    "@moonfold/provider-kiro": "workspace:*",
+    "@moonfold/provider-muse": "workspace:*",
+    "@moonfold/provider-opencode": "workspace:*",
+    "@moonfold/provider-pi": "workspace:*",
+    "@moonfold/secret-provider-definitions": "workspace:*",
     "@moonfold/shared": "workspace:*",
-    "@moonfold/source-control-azure-devops": "workspace:*",
-    "@moonfold/source-control-bitbucket": "workspace:*",
     "@moonfold/source-control-core": "workspace:*",
-    "@moonfold/source-control-forgejo": "workspace:*",
-    "@moonfold/source-control-gitcafe": "workspace:*",
-    "@moonfold/source-control-github": "workspace:*",
-    "@moonfold/source-control-gitlab": "workspace:*",
+    "@moonfold/source-control-definitions": "workspace:*",
     "@pierre/diffs": "catalog:",
     "effect": "catalog:",
+    "jszip": "3.10.1",
     "three": "0.180.0"
   },
   "devDependencies": {

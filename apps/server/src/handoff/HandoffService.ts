@@ -24,7 +24,7 @@ import {
 import { historicalMessage } from "@moonfold/provider-core/server/handoffBudget";
 import { resolveProjectSettings } from "@moonfold/shared/projectSettings";
 import * as Context from "effect/Context";
-import * as Crypto from "effect/Crypto";
+import * as SecureRandom from "effect/crypto/SecureRandom";
 import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
 
@@ -101,24 +101,23 @@ const make = Effect.gen(function* () {
   const settingsService = yield* ServerSettings.ServerSettingsService;
   const threads = yield* ThreadManagement.ThreadManagementService;
   const briefs = yield* HandoffBriefService.HandoffBriefService;
-  const crypto = yield* Crypto.Crypto;
+  const random = yield* SecureRandom.SecureRandom;
 
   const fail = (message: string) => new HandoffError({ message });
 
-  const load = (input: HandoffPreviewInput) =>
-    Effect.gen(function* () {
-      const projection = yield* projections
-        .getThreadProjection(input.threadId)
-        .pipe(Effect.mapError(() => fail("This thread could not be read.")));
-      const settings = yield* settingsService.getSettings.pipe(
-        Effect.mapError(() => fail("Settings could not be read.")),
-      );
-      return {
-        projection,
-        settings,
-        blockedReason: handoffBlockedReason({ projection, settings, target: input.target }),
-      };
-    });
+  const load = Effect.fn("HandoffService.load")(function* (input: HandoffPreviewInput) {
+    const projection = yield* projections
+      .getThreadProjection(input.threadId)
+      .pipe(Effect.mapError(() => fail("This thread could not be read.")));
+    const settings = yield* settingsService.getSettings.pipe(
+      Effect.mapError(() => fail("Settings could not be read.")),
+    );
+    return {
+      projection,
+      settings,
+      blockedReason: handoffBlockedReason({ projection, settings, target: input.target }),
+    };
+  });
 
   const preview = Effect.fn("HandoffService.preview")(function* (input: HandoffPreviewInput) {
     const { projection, blockedReason } = yield* load(input);
@@ -146,7 +145,7 @@ const make = Effect.gen(function* () {
   const start = Effect.fn("HandoffService.start")(function* (input: HandoffStartInput) {
     const { blockedReason } = yield* load(input);
     if (blockedReason !== null) return yield* fail(blockedReason);
-    const id = yield* crypto.randomUUIDv4().pipe(Effect.orDie);
+    const id = yield* random.uuidV4();
     yield* threads
       .dispatch({
         type: "message.dispatch",

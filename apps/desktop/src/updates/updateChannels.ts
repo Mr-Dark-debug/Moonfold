@@ -1,12 +1,6 @@
 import type { DesktopUpdateChannel } from "@moonfold/contracts";
 
-const NIGHTLY_VERSION_PATTERN = /^[^-+]+-nightly\.\d{8}\.\d+$/;
-// Preview builds are the maintainers' test train, cut by hand from unreleased
-// branches to exercise the release flow. They share nightly's branding but
-// are packaged without an update feed (see
-// isDesktopPreviewVersion in scripts/build-desktop-artifact.ts), so the
-// channel a preview install reports is cosmetic: it never checks for updates
-// and no updater feed ever lists a preview release.
+// Preview builds share nightly branding but ship without an update feed.
 const PRERELEASE_VERSION_PATTERN = /^[^-+]+-(?:nightly|preview)\.\d{8}\.\d+$/;
 
 export function isNightlyDesktopVersion(version: string): boolean {
@@ -21,27 +15,19 @@ export function isTestingReleaseVersion(version: string): boolean {
   return TESTING_RELEASE_VERSION_PATTERN.test(version);
 }
 
-export function resolveDefaultDesktopUpdateChannel(appVersion: string): DesktopUpdateChannel {
-  return NIGHTLY_VERSION_PATTERN.test(appVersion) ? "nightly" : "latest";
-}
-
 export interface ElectronUpdaterChannelSettings {
   /** The channel to give electron-updater, or null to leave it unset. */
   readonly channel: DesktopUpdateChannel | null;
   readonly allowPrerelease: boolean;
-  readonly allowDowngrade: boolean;
   readonly fullChangelog: boolean;
 }
 
 /**
  * How electron-updater must be configured for a channel and the running version.
  *
- * A beta on the latest channel leaves electron-updater's channel unset. electron-updater's GitHub
- * provider (6.x), with prereleases allowed, only accepts a release whose prerelease id matches the
- * channel or is alpha/beta when the channel itself is alpha/beta. An explicit "latest" therefore
- * skips every `-beta.N` release and reports "No published versions on GitHub", which is why
- * 0.1.0-beta.1 and beta.2 never saw an update. Unset, the channel comes from the running version
- * ("beta"), which accepts newer betas and stable releases; the manifest falls back to latest.yml.
+ * A beta on the latest channel leaves electron-updater's channel unset: an explicit "latest"
+ * makes its GitHub provider skip every `-beta.N` release. Unset, the channel comes from the
+ * running version ("beta"), which accepts newer betas and stable releases.
  */
 export function electronUpdaterChannelSettings(
   channel: DesktopUpdateChannel,
@@ -52,7 +38,6 @@ export function electronUpdaterChannelSettings(
   return {
     channel: testingRelease && !nightly ? null : channel,
     allowPrerelease: nightly || testingRelease,
-    allowDowngrade: nightly,
     fullChangelog: nightly,
   };
 }

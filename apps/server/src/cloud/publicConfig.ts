@@ -1,5 +1,6 @@
 import { connectLoopbackRedirectUri, CONNECT_OAUTH_SCOPES } from "@moonfold/shared/connectAuth";
 import { clerkFrontendApiUrlFromPublishableKey } from "@moonfold/shared/relayAuth";
+import { isRelayTracingEnabled } from "@moonfold/shared/otelEnvironment";
 import { normalizeSecureRelayUrl } from "@moonfold/shared/relayUrl";
 import * as Config from "effect/Config";
 import * as ConfigProvider from "effect/ConfigProvider";
@@ -81,6 +82,10 @@ export function resolveRelayClientTracingConfig(
   env: Readonly<Record<string, string | undefined>> = process.env,
   fallback = buildTimeRelayClientTracing,
 ) {
+  if (!isRelayTracingEnabled(env)) {
+    return null;
+  }
+
   const tracesUrl = env.MOONFOLD_RELAY_CLIENT_OTLP_TRACES_URL?.trim() || fallback.tracesUrl;
   const tracesDataset =
     env.MOONFOLD_RELAY_CLIENT_OTLP_TRACES_DATASET?.trim() || fallback.tracesDataset;
@@ -143,13 +148,6 @@ function makePublicValueConfig(name: string, fallback: string) {
   );
 }
 
-/**
- * The CLI never calls Clerk's /oauth/authorize itself: the browser leg goes
- * through the hosted /connect page, which builds the authorize URL after a
- * Clerk session exists (see CliTokenManager.login). The token endpoint and,
- * for headless hosts, the device authorization endpoint are contacted
- * directly.
- */
 export interface CloudCliOAuthConfig {
   readonly tokenEndpoint: string;
   readonly deviceAuthorizationEndpoint: string;

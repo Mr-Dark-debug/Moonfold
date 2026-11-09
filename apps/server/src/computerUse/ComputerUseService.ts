@@ -1,8 +1,7 @@
 /**
  * ComputerUseService - what agents may do with desktop apps, and the record of what they did.
- * Computer use is off until the user turns it on. Each app needs approval for the thread (or
- * always); Moonfold's own windows and Windows security screens are never reachable. Every read
- * and action is logged, and recent use is streamed to clients for the "in use" indicator.
+ * Off until the user turns it on; each app needs approval for the thread (or always). Moonfold's
+ * own windows and Windows security screens are never reachable. Every read and action is logged.
  *
  * @module computerUse/ComputerUseService
  */
@@ -20,8 +19,6 @@ import {
 } from "@moonfold/contracts";
 import * as Clock from "effect/Clock";
 import * as Context from "effect/Context";
-import * as Crypto from "effect/Crypto";
-import * as Data from "effect/Data";
 import * as DateTime from "effect/DateTime";
 import * as Deferred from "effect/Deferred";
 import * as Duration from "effect/Duration";
@@ -31,6 +28,7 @@ import * as Option from "effect/Option";
 import * as Ref from "effect/Ref";
 import * as Schedule from "effect/Schedule";
 import * as Schema from "effect/Schema";
+import * as SecureRandom from "effect/crypto/SecureRandom";
 import * as SqlClient from "effect/sql/SqlClient";
 import * as Stream from "effect/Stream";
 import * as SubscriptionRef from "effect/SubscriptionRef";
@@ -38,9 +36,10 @@ import * as SubscriptionRef from "effect/SubscriptionRef";
 import * as ComputerUseHelper from "./ComputerUseHelper.ts";
 
 /** Why an agent may not do something; the message is written for the agent. */
-export class ComputerUseRefused extends Data.TaggedError("ComputerUseRefused")<{
-  readonly message: string;
-}> {}
+export class ComputerUseRefused extends Schema.TaggedError<ComputerUseRefused>()(
+  "ComputerUseRefused",
+  { message: Schema.String },
+) {}
 
 /** How long an agent waits for the user to approve an app. */
 const ASK_TIMEOUT = Duration.minutes(5);
@@ -150,7 +149,7 @@ interface LogRow {
 
 const make = Effect.gen(function* () {
   const sql = yield* SqlClient.SqlClient;
-  const crypto = yield* Crypto.Crypto;
+  const random = yield* SecureRandom.SecureRandom;
   const helper = yield* ComputerUseHelper.ComputerUseHelper;
   const now = DateTime.now.pipe(Effect.map(DateTime.formatIso));
   const pendingRef = yield* SubscriptionRef.make<ReadonlyArray<ComputerUsePermissionRequest>>([]);
@@ -201,8 +200,10 @@ const make = Effect.gen(function* () {
     Effect.forEach([...waiting.values()], (deferred) => Deferred.succeed(deferred, "deny")),
   );
 
-  const setEnabled: ComputerUseService["Service"]["setEnabled"] = (enabled) =>
-    Effect.gen(function* () {
+  const setEnabled: ComputerUseService["Service"]["setEnabled"] = Effect.fn(
+    "ComputerUseService.setEnabled",
+  )(
+    function* (enabled) {
       yield* sql`
         INSERT INTO computer_use_settings (key, value) VALUES ('enabled', ${enabled ? "true" : "false"})
         ON CONFLICT (key) DO UPDATE SET value = excluded.value
@@ -216,12 +217,12 @@ const make = Effect.gen(function* () {
         yield* SubscriptionRef.set(activityRef, []);
       }
       return yield* state;
-    }).pipe(
-      Effect.catchTags({
-        SqlError: (cause) =>
-          Effect.fail(new ComputerUseError({ message: "Could not change computer use.", cause })),
-      }),
-    );
+    },
+    Effect.catchTags({
+      SqlError: (cause) =>
+        Effect.fail(new ComputerUseError({ message: "Could not change computer use.", cause })),
+    }),
+  );
 
   const removeApp: ComputerUseService["Service"]["removeApp"] = (app) =>
     sql`DELETE FROM computer_use_apps WHERE app = ${app}`.pipe(
@@ -235,15 +236,15 @@ const make = Effect.gen(function* () {
       Effect.andThen(state),
     );
 
-  const log = (entry: {
-    readonly threadId: ThreadId;
-    readonly app: string | null;
-    readonly action: ComputerUseActionKind;
-    readonly detail: string;
-    readonly outcome: "done" | "refused" | "failed";
-    readonly error?: string;
-  }) =>
-    Effect.gen(function* () {
+  const log = Effect.fn("ComputerUseService.log")(
+    function* (entry: {
+      readonly threadId: ThreadId;
+      readonly app: string | null;
+      readonly action: ComputerUseActionKind;
+      readonly detail: string;
+      readonly outcome: "done" | "refused" | "failed";
+      readonly error?: string;
+    }) {
       yield* sql`
         INSERT INTO computer_use_log (thread_id, app, action, detail, outcome, error, at)
         VALUES (${entry.threadId}, ${entry.app}, ${entry.action}, ${entry.detail}, ${entry.outcome},
@@ -253,45 +254,49 @@ const make = Effect.gen(function* () {
         DELETE FROM computer_use_log
         WHERE id <= (SELECT MAX(id) FROM computer_use_log) - ${MAX_LOG_ROWS}
       `;
-    }).pipe(
-      // Failing to log must not hide the action, but it is worth knowing about.
-      Effect.catch((error) => Effect.logWarning("Could not log a computer-use action", { error })),
-    );
+    },
+    // Failing to log must not hide the action, but it is worth knowing about.
+    Effect.catch((error) => Effect.logWarning("Could not log a computer-use action", { error })),
+  );
 
-  const answer: ComputerUseService["Service"]["answer"] = (input) =>
-    Effect.gen(function* () {
+  const answer: ComputerUseService["Service"]["answer"] = Effect.fn("ComputerUseService.answer")(
+    function* (input) {
       const deferred = waiting.get(input.id);
       if (deferred === undefined) {
         return yield* new ComputerUseError({ message: "This request is no longer waiting." });
       }
       yield* Deferred.succeed(deferred, input.answer);
-    });
+    },
+  );
 
-  const ask = (threadId: ThreadId, app: string, windowTitle: string) =>
-    Effect.gen(function* () {
-      const id = yield* crypto.randomUUIDv4().pipe(Effect.orDie);
-      const deferred = yield* Deferred.make<ComputerUseAnswerInput["answer"]>();
-      const createdAt = yield* now;
-      waiting.set(id, deferred);
-      yield* SubscriptionRef.update(pendingRef, (requests) => [
-        ...requests,
-        {
-          id,
-          threadId,
-          app: app as ComputerUseAppName,
-          windowTitle: windowTitle.slice(0, 200),
-          createdAt,
-        },
-      ]);
-      return yield* Deferred.await(deferred).pipe(
-        Effect.timeoutOption(ASK_TIMEOUT),
-        Effect.ensuring(
-          SubscriptionRef.update(pendingRef, (requests) =>
-            requests.filter((request) => request.id !== id),
-          ).pipe(Effect.andThen(Effect.sync(() => waiting.delete(id)))),
-        ),
-      );
-    });
+  const ask = Effect.fn("ComputerUseService.ask")(function* (
+    threadId: ThreadId,
+    app: string,
+    windowTitle: string,
+  ) {
+    const id = yield* random.uuidV4();
+    const deferred = yield* Deferred.make<ComputerUseAnswerInput["answer"]>();
+    const createdAt = yield* now;
+    waiting.set(id, deferred);
+    yield* SubscriptionRef.update(pendingRef, (requests) => [
+      ...requests,
+      {
+        id,
+        threadId,
+        app: app as ComputerUseAppName,
+        windowTitle: windowTitle.slice(0, 200),
+        createdAt,
+      },
+    ]);
+    return yield* Deferred.await(deferred).pipe(
+      Effect.timeoutOption(ASK_TIMEOUT),
+      Effect.ensuring(
+        SubscriptionRef.update(pendingRef, (requests) =>
+          requests.filter((request) => request.id !== id),
+        ).pipe(Effect.andThen(Effect.sync(() => waiting.delete(id)))),
+      ),
+    );
+  });
 
   const windows = helper.request("listWindows").pipe(
     Effect.flatMap(decodeWindows),
@@ -319,94 +324,101 @@ const make = Effect.gen(function* () {
     }
   });
 
-  const isApproved = (threadId: ThreadId, app: string) =>
-    Effect.gen(function* () {
-      if ((yield* Ref.get(threadAllows)).has(`${threadId}|${app}`)) return true;
-      const rows = yield* sql<{ readonly app: string }>`
+  const isApproved = Effect.fn("ComputerUseService.isApproved")(function* (
+    threadId: ThreadId,
+    app: string,
+  ) {
+    if ((yield* Ref.get(threadAllows)).has(`${threadId}|${app}`)) return true;
+    const rows = yield* sql<{ readonly app: string }>`
         SELECT app FROM computer_use_apps WHERE app = ${app}
       `.pipe(Effect.orElseSucceed(() => []));
-      return rows.length > 0;
-    });
+    return rows.length > 0;
+  });
 
   /** The window's app, approved for this thread, or why not. */
-  const approve = (threadId: ThreadId, window: string) =>
-    Effect.gen(function* () {
-      const target = (yield* windows).find((candidate) => candidate.window === window);
-      if (target === undefined) {
-        return yield* new ComputerUseRefused({
-          message: "That window is gone. Call computer_list_apps again.",
-        });
-      }
-      if (isBlockedWindow(target.app, target.title) || !isAppName(target.app)) {
-        return yield* new ComputerUseRefused({
-          message: "Agents cannot use this window. Pick another app.",
-        });
-      }
-      if (yield* isApproved(threadId, target.app)) return target;
-      const answered = yield* ask(threadId, target.app, target.title);
-      if (Option.isNone(answered)) {
-        return yield* new ComputerUseRefused({
-          message: `The user did not answer whether you may use ${target.app}. Ask them in chat first.`,
-        });
-      }
-      if (answered.value === "deny") {
-        return yield* new ComputerUseRefused({
-          message: `The user declined to let you use ${target.app}.`,
-        });
-      }
-      if (answered.value === "always_allow") {
-        yield* sql`
+  const approve = Effect.fn("ComputerUseService.approve")(function* (
+    threadId: ThreadId,
+    window: string,
+  ) {
+    const target = (yield* windows).find((candidate) => candidate.window === window);
+    if (target === undefined) {
+      return yield* new ComputerUseRefused({
+        message: "That window is gone. Call computer_list_apps again.",
+      });
+    }
+    if (isBlockedWindow(target.app, target.title) || !isAppName(target.app)) {
+      return yield* new ComputerUseRefused({
+        message: "Agents cannot use this window. Pick another app.",
+      });
+    }
+    if (yield* isApproved(threadId, target.app)) return target;
+    const answered = yield* ask(threadId, target.app, target.title);
+    if (Option.isNone(answered)) {
+      return yield* new ComputerUseRefused({
+        message: `The user did not answer whether you may use ${target.app}. Ask them in chat first.`,
+      });
+    }
+    if (answered.value === "deny") {
+      return yield* new ComputerUseRefused({
+        message: `The user declined to let you use ${target.app}.`,
+      });
+    }
+    if (answered.value === "always_allow") {
+      yield* sql`
           INSERT INTO computer_use_apps (app, added_at) VALUES (${target.app}, ${yield* now})
           ON CONFLICT (app) DO NOTHING
         `.pipe(
-          Effect.catch((error) => Effect.logWarning("Could not save an allowed app", { error })),
-        );
-      } else {
-        yield* Ref.update(
-          threadAllows,
-          (current) => new Set([...current, `${threadId}|${target.app}`]),
-        );
-      }
-      // The user may have stopped computer use while the question was open.
-      yield* requireEnabled;
-      return target;
-    });
+        Effect.catch((error) => Effect.logWarning("Could not save an allowed app", { error })),
+      );
+    } else {
+      yield* Ref.update(
+        threadAllows,
+        (current) => new Set([...current, `${threadId}|${target.app}`]),
+      );
+    }
+    // The user may have stopped computer use while the question was open.
+    yield* requireEnabled;
+    return target;
+  });
 
-  const markActive = (threadId: ThreadId, app: string) =>
-    Effect.gen(function* () {
-      const atMillis = yield* Clock.currentTimeMillis;
-      yield* SubscriptionRef.update(activityRef, (entries) => [
-        ...entries.filter((entry) => !(entry.threadId === threadId && entry.app === app)),
-        { threadId, app, atMillis },
-      ]);
-    });
+  const markActive = Effect.fn("ComputerUseService.markActive")(function* (
+    threadId: ThreadId,
+    app: string,
+  ) {
+    const atMillis = yield* Clock.currentTimeMillis;
+    yield* SubscriptionRef.update(activityRef, (entries) => [
+      ...entries.filter((entry) => !(entry.threadId === threadId && entry.app === app)),
+      { threadId, app, atMillis },
+    ]);
+  });
 
-  const listApps: ComputerUseService["Service"]["listApps"] = (threadId) =>
-    Effect.gen(function* () {
-      yield* requireEnabled;
-      const all = yield* windows;
-      const visible = all.filter((window) => !isBlockedWindow(window.app, window.title));
-      const allowed = new Set<string>();
-      for (const window of visible) {
-        if (yield* isApproved(threadId, window.app)) allowed.add(window.app);
-      }
-      yield* log({
-        threadId,
-        app: null,
-        action: "list_apps",
-        detail: `${visible.length} windows`,
-        outcome: "done",
-      });
-      // Titles can name documents and mail; the agent sees them only for apps it may use.
-      return visible.map((window) => ({
-        ...window,
-        title: allowed.has(window.app) ? window.title : "",
-        approved: allowed.has(window.app),
-      }));
+  const listApps: ComputerUseService["Service"]["listApps"] = Effect.fn(
+    "ComputerUseService.listApps",
+  )(function* (threadId) {
+    yield* requireEnabled;
+    const all = yield* windows;
+    const visible = all.filter((window) => !isBlockedWindow(window.app, window.title));
+    const allowed = new Set<string>();
+    for (const window of visible) {
+      if (yield* isApproved(threadId, window.app)) allowed.add(window.app);
+    }
+    yield* log({
+      threadId,
+      app: null,
+      action: "list_apps",
+      detail: `${visible.length} windows`,
+      outcome: "done",
     });
+    // Titles can name documents and mail; the agent sees them only for apps it may use.
+    return visible.map((window) => ({
+      ...window,
+      title: allowed.has(window.app) ? window.title : "",
+      approved: allowed.has(window.app),
+    }));
+  });
 
-  const act: ComputerUseService["Service"]["act"] = (target, action, detail, args) =>
-    Effect.gen(function* () {
+  const act: ComputerUseService["Service"]["act"] = Effect.fn("ComputerUseService.act")(
+    function* (target, action, detail, args) {
       yield* requireEnabled;
       const window = yield* approve(target.threadId, target.window).pipe(
         Effect.tapError((refused) =>
@@ -441,7 +453,8 @@ const make = Effect.gen(function* () {
             ),
         }),
       );
-    });
+    },
+  );
 
   const stop: ComputerUseService["Service"]["stop"] = setEnabled(false).pipe(
     Effect.asVoid,

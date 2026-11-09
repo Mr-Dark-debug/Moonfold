@@ -1,8 +1,8 @@
 import type { DesktopQuickWindowStatus, SnapShotKeyChord } from "@moonfold/contracts";
 import { parseKeybindingShortcut } from "@moonfold/shared/keybindings";
-import { useCallback, useEffect, useState, type KeyboardEvent } from "react";
+import { useEffect, useState, type KeyboardEvent } from "react";
 
-import { useClientSettings, useUpdateClientSettings } from "../../hooks/useSettings";
+import { updateClientSettings, useClientSettings } from "../../hooks/useSettings";
 import { formatSnapShotShortcutLabel } from "../../lib/snapShotShortcut";
 import { SnapShotShortcutKeys } from "../desktop/SnapShotShortcutKeys";
 import { Button } from "../ui/button";
@@ -17,18 +17,19 @@ import { searchableSetting } from "./settingsSearch";
 export function QuickWindowShortcutRow() {
   const bridge = typeof window === "undefined" ? undefined : window.desktopBridge;
   const shortcut = useClientSettings((settings) => settings.quickWindowShortcut);
-  const updateSettings = useUpdateClientSettings();
+
   const [recording, setRecording] = useState(false);
   const [status, setStatus] = useState<DesktopQuickWindowStatus | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const refreshStatus = useCallback(async () => {
+  const refreshStatus = async () => {
     const read = bridge?.getQuickWindowStatus;
     if (!read) return;
     setStatus(await read().catch(() => null));
-  }, [bridge]);
+  };
   // The desktop app applies the saved hotkey at startup; read whether it took it once here,
   // and again after each save.
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- asks the desktop app whether it registered the saved hotkey and ignores the answer after unmount
   useEffect(() => {
     let live = true;
     void bridge
@@ -42,10 +43,11 @@ export function QuickWindowShortcutRow() {
     };
   }, [bridge]);
 
-  const stopRecording = useCallback(() => {
+  const stopRecording = () => {
     setRecording(false);
     void bridge?.setQuickWindowShortcutSuppressed?.(false).catch(() => undefined);
-  }, [bridge]);
+  };
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- gives the global hotkey back to the desktop app when the row unmounts mid-recording
   useEffect(
     () => () => void bridge?.setQuickWindowShortcutSuppressed?.(false).catch(() => undefined),
     [bridge],
@@ -56,7 +58,7 @@ export function QuickWindowShortcutRow() {
   const save = async (next: SnapShotKeyChord | null) => {
     setError(null);
     try {
-      await updateSettings({ quickWindowShortcut: next });
+      await updateClientSettings({ quickWindowShortcut: next });
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Couldn't save the shortcut.");
     }

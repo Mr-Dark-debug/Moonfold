@@ -3,24 +3,28 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "typecheck": "tsc-rs --noEmit",
+    "typecheck": "effect-tsgo tsrs --noEmit",
     "test": "vp test run --config ../vite.config.ts --dir ."
   },
   "dependencies": {
     "@effect/platform-node": "catalog:",
     "@electron/asar": "^4.3.0",
     "@electron/osx-sign": "2.7.0",
+    "@moonfold/contracts": "workspace:*",
     "@moonfold/shared": "workspace:*",
     "@moonfold/tailscale": "workspace:*",
+    "agent-device": "0.21.32",
     "effect": "catalog:",
     "marked": "16.4.2",
+    "playwright-core": "1.60.0",
     "plist": "catalog:",
     "sharp": "0.35.5"
   },
   "devDependencies": {
     "@effect/vitest": "catalog:",
     "@types/plist": "catalog:",
-    "typescript": "catalog:",
+    "esbuild": "0.28.2",
+    "postject": "1.0.0-alpha.6",
     "typescript-legacy": "npm:typescript@~6.0.3",
     "vite-plus": "catalog:"
   }

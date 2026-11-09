@@ -1,5 +1,5 @@
 import type { EnvironmentId } from "@moonfold/contracts";
-import { useEffect, useId, useMemo, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { create } from "zustand";
 
 import { useEnvironmentQuery } from "../state/query";
@@ -54,6 +54,7 @@ function finish(choice: WorktreeMoveChoice | null) {
 
 export function MoveToWorktreeDialogHost() {
   const request = useRequest((state) => state.request);
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- settles the caller's pending promise as cancelled when the host unmounts with a request open
   useEffect(() => () => finish(null), []);
   return request ? <MoveToWorktreeDialog request={request} /> : null;
 }
@@ -76,14 +77,10 @@ function MoveToWorktreeDialog(props: { readonly request: WorktreeMoveRequest }) 
     }),
   );
   // Branches checked out somewhere other than the project folder are its other worktrees.
-  const worktrees = useMemo(
-    () =>
-      (refs.data?.refs ?? []).flatMap((ref) =>
-        ref.worktreePath !== null && normalizePath(ref.worktreePath) !== normalizePath(projectCwd)
-          ? [{ path: ref.worktreePath, branch: ref.name }]
-          : [],
-      ),
-    [projectCwd, refs.data],
+  const worktrees = (refs.data?.refs ?? []).flatMap((ref) =>
+    ref.worktreePath !== null && normalizePath(ref.worktreePath) !== normalizePath(projectCwd)
+      ? [{ path: ref.worktreePath, branch: ref.name }]
+      : [],
   );
   const selectedWorktree = worktrees.find((worktree) => worktree.path === worktreePath) ?? null;
   const trimmed = branch.trim();

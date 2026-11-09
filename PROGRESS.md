@@ -1,16 +1,25 @@
 # Progress
 
-## Next work planned (2026-11-06)
+## Upstream sync and Cassandre (2026-11-09)
 
-Plans only, no code yet:
+Done:
 
-- **UI refresh** (docs/plans/ui-refresh.md, D-62): port upstream's design overhaul (pingdotgg/t3code#24865,
-  the work behind Theo's "Agents Sucked At UI (Until Today)") and score Moonfold's own screens with
-  the same review loop.
-- **Cassandre** (docs/plans/cassandre.md, D-63): a brand kit from one prompt in `.moonfold/brand/`.
+- Merged upstream T3 Code `202d5b561` (4,004 commits) through a rebranded base (D-64), which brings
+  upstream's UI overhaul with it (D-62). Kept out: the Expo phone app, the marketing site, the hosted
+  CI cache and login pooling; hosted relay/Connect/guest links stay off without a hosted key.
+- Cassandre brand kits (D-63, docs/user/brand-kits.md): `/brand <prompt>` runs a built-in prompt
+  profile; `BrandKitService` and eight `brand_*` MCP tools; `moonfold_ask_user` question cards
+  with picture options, for every provider with Moonfold's MCP tools.
 
-Waiting on the owner: Cassandre's name and how it may gather references from Pinterest and
-Dribbble. Next: start `ui-refresh` step 1.
+Decisions: D-62 rewritten (no toggle; upstream made the new design the only one), D-63, D-64.
+`agentContextBudget.json` raised to the measured Moonfold values; CI flags budget growth.
+
+Open problems: no live run of `/brand` with a real provider yet, and no click-through of the
+question card in a running client. Evals for the new tool descriptions have not been run.
+Moonfold-only screens still need the scored review loop (docs/plans/ui-refresh.md). Hosted
+Connect account pages are dead code here and should be removed. Codex is limited until 19 November.
+
+Next: a real `/brand` run with Claude Code in a scratch project, then the UI review loop.
 
 ## Beta 4 (2026-11-02)
 

@@ -1,3 +1,4 @@
+import { EnvironmentId, ThreadId } from "@moonfold/contracts";
 import { describe, expect, it } from "vite-plus/test";
 
 import {
@@ -9,6 +10,7 @@ import {
   sanitizeLinkedPrompt,
   withoutPromptLinkParams,
 } from "./promptLinks.ts";
+import { hostedThreadLink } from "./threadLinks.ts";
 
 describe("sanitizeLinkedPrompt", () => {
   it("removes characters a reader cannot see and counts them", () => {
@@ -115,6 +117,19 @@ describe("link round trips", () => {
     expect(promptLinkAppPath(link)).toBeNull();
   });
 
+  it("opens a copied thread link in the app at that thread", () => {
+    const hosted = "https://app.example.org";
+    const link = hostedThreadLink(
+      { environmentId: EnvironmentId.make("env-1"), threadId: ThreadId.make("mcp:1") },
+      hosted,
+    );
+    const path = promptLinkAppPath(link, hosted);
+    expect(path).toBe("/env-1/mcp%3A1");
+    const deepLink = promptLinkDeepLink(path!);
+    expect(deepLink).toBe("moonfold://threads/env-1/mcp%3A1");
+    expect(promptLinkAppPath(deepLink)).toBe(path);
+  });
+
   it("maps app scheme and hosted links to in-app paths, and nothing else", () => {
     expect(promptLinkAppPath("moonfold://new?prompt=hi")).toBe("/new?prompt=hi");
     expect(promptLinkAppPath("moonfold-dev://threads/env-1/thread-1")).toBe("/env-1/thread-1");
@@ -123,15 +138,17 @@ describe("link round trips", () => {
       "/env-1/thread-1?prompt=go",
     );
     expect(promptLinkAppPath("https://app.example.org/env-1/thread-1?prompt=go")).toBeNull();
+    expect(promptLinkAppPath("https://app.example.org/threads/env-1/thread-1", hosted)).toBe(
+      "/env-1/thread-1",
+    );
+    expect(
+      promptLinkAppPath("https://app.example.org/threads/env-1/thread-1?prompt=go", hosted),
+    ).toBe("/env-1/thread-1?prompt=go");
+    // The web app's own thread route, reloaded, is no link.
+    expect(promptLinkAppPath("https://app.example.org/env-1/thread-1", hosted)).toBeNull();
+    expect(promptLinkAppPath("https://app.example.org/threads/env-1", hosted)).toBeNull();
     expect(promptLinkAppPath("https://app.example.org/settings/general", hosted)).toBeNull();
     expect(promptLinkAppPath("https://evil.test/new?prompt=hi")).toBeNull();
     expect(promptLinkAppPath("moonfold://app/index.html")).toBeNull();
-  });
-
-  it("hands an in-app path to the installed app", () => {
-    expect(promptLinkDeepLink("/new?prompt=hi")).toBe("moonfold://new?prompt=hi");
-    expect(promptLinkDeepLink("/env-1/thread-1?prompt=hi")).toBe(
-      "moonfold://threads/env-1/thread-1?prompt=hi",
-    );
   });
 });

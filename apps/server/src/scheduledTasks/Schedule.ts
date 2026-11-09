@@ -3,52 +3,30 @@ import {
   type ScheduledTaskSchedule,
   type ScheduledTaskUpsertSchedule,
 } from "@moonfold/contracts";
-import { describeCron, nextCronOccurrence, parseCron } from "@moonfold/shared/cron";
+import { nextCronOccurrence, parseCron } from "@moonfold/shared/cron";
 import * as DateTime from "effect/DateTime";
 import * as Option from "effect/Option";
 
 const MINUTE_MS = 60_000;
 
-export function parseTimeOfDay(value: string): { hour: number; minute: number } | null {
+function parseTimeOfDay(value: string): { hour: number; minute: number } | null {
   const match = /^([01]?\d|2[0-3]):([0-5]\d)$/.exec(value.trim());
   if (!match) return null;
   return { hour: Number(match[1]), minute: Number(match[2]) };
 }
 
-/** The instant a one-off schedule names, or null when its time zone is unknown. */
-function onceRunAt(
-  schedule: Extract<ScheduledTaskSchedule, { type: "once" }>,
-): DateTime.Utc | null {
-  const zone = DateTime.zoneMakeNamed(schedule.timeZone);
-  if (Option.isNone(zone)) return null;
-  const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/.exec(schedule.at);
-  if (match === null) return null;
-  const local = DateTime.setParts(DateTime.setZone(DateTime.makeUnsafe(0), zone.value), {
-    year: Number(match[1]),
-    month: Number(match[2]),
-    day: Number(match[3]),
-    hour: Number(match[4]),
-    minute: Number(match[5]),
-    second: 0,
-    millisecond: 0,
-  });
-  return DateTime.toUtc(local);
-}
-
-/** Why a one-off or cron schedule cannot run, or null when it can. */
+/** Why a cron schedule cannot run, or null when it can. */
 export function scheduleProblem(
   schedule: ScheduledTaskSchedule | ScheduledTaskUpsertSchedule,
 ): string | null {
-  if (schedule.type !== "once" && schedule.type !== "cron") return null;
+  if (schedule.type !== "cron") return null;
   if (Option.isNone(DateTime.zoneMakeNamed(schedule.timeZone))) {
     return `Unknown time zone "${schedule.timeZone}".`;
   }
-  if (schedule.type === "cron") {
-    try {
-      parseCron(schedule.expression);
-    } catch (error) {
-      return error instanceof Error ? error.message : "The cron expression is not valid.";
-    }
+  try {
+    parseCron(schedule.expression);
+  } catch (error) {
+    return error instanceof Error ? error.message : "The cron expression is not valid.";
   }
   return null;
 }
@@ -59,8 +37,11 @@ export function nextScheduledRunAt(
 ): DateTime.DateTime | null {
   if (schedule.type === "webhook") return null;
   if (schedule.type === "once") {
-    const at = onceRunAt(schedule);
-    return at !== null && DateTime.toEpochMillis(at) > DateTime.toEpochMillis(from) ? at : null;
+    const runAt = DateTime.make(schedule.runAt);
+    return Option.isSome(runAt) &&
+      DateTime.toEpochMillis(runAt.value) > DateTime.toEpochMillis(from)
+      ? runAt.value
+      : null;
   }
   if (schedule.type === "cron") {
     if (scheduleProblem(schedule) !== null) return null;
@@ -75,11 +56,8 @@ export function nextScheduledRunAt(
     return next;
   }
   if (schedule.type === "interval") {
-    // Persisted rows created before the one-minute floor remain readable, but
-    // they must not retain their old high-frequency execution rate.
-    return DateTime.add(from, {
-      milliseconds: Math.max(schedule.everyMs, MIN_SCHEDULED_TASK_INTERVAL_MS),
-    });
+    // Intervals advance elapsed time, including across daylight-saving changes.
+    return DateTime.addDuration(from, Math.max(schedule.everyMs, MIN_SCHEDULED_TASK_INTERVAL_MS));
   }
 
   const time = parseTimeOfDay(schedule.timeOfDay);
@@ -100,27 +78,18 @@ export function nextScheduledRunAt(
   return null;
 }
 
-/**
- * Canonical form of a weekday mask, mirroring how `nextScheduledRunAt` reads
- * it: order and duplicates are irrelevant, and an empty/omitted mask means the
- * same as explicitly listing all seven days — daily.
- */
 function weekdayKey(weekdays: ReadonlyArray<number> | undefined): string {
   const unique = [...new Set(weekdays ?? [])].toSorted((x, y) => x - y);
   if (unique.length === 0 || unique.length === 7) return "daily";
   return unique.join(",");
 }
 
-/** Semantic equality for schedules: true iff both fire at the same times. */
 export function isSameSchedule(a: ScheduledTaskSchedule, b: ScheduledTaskSchedule): boolean {
   if (a.type === "interval") {
     return b.type === "interval" && a.everyMs === b.everyMs;
   }
-  // Webhook tasks never have a next run, whatever their signature settings.
   if (a.type === "webhook") return b.type === "webhook";
-  if (a.type === "once") {
-    return b.type === "once" && a.at === b.at && a.timeZone === b.timeZone;
-  }
+  if (a.type === "once") return b.type === "once" && Date.parse(a.runAt) === Date.parse(b.runAt);
   if (a.type === "cron") {
     return (
       b.type === "cron" &&
@@ -130,9 +99,7 @@ export function isSameSchedule(a: ScheduledTaskSchedule, b: ScheduledTaskSchedul
     );
   }
   if (b.type !== "fixed_time") return false;
-  // The contract accepts padded and unpadded hours ("9:00" and "09:00"), so
-  // compare the parsed time — string equality would treat a format-only edit
-  // as a schedule change and recompute the pending run.
+  // Compare parsed times so padded-hour edits do not reschedule pending runs.
   const aTime = parseTimeOfDay(a.timeOfDay);
   const bTime = parseTimeOfDay(b.timeOfDay);
   return (
@@ -144,11 +111,6 @@ export function isSameSchedule(a: ScheduledTaskSchedule, b: ScheduledTaskSchedul
   );
 }
 
-/**
- * How late a fixed-time run may fire before it counts as missed. Covers poll
- * jitter and short sleeps, while a server booted hours after the slot skips
- * to the next occurrence instead of firing stale work at a random time.
- */
 const MISSED_FIXED_TIME_GRACE_MS = 10 * MINUTE_MS;
 
 /**
@@ -166,29 +128,4 @@ export function isMissedFixedTimeRun(
     return false;
   }
   return DateTime.toEpochMillis(now) - DateTime.toEpochMillis(dueAt) > MISSED_FIXED_TIME_GRACE_MS;
-}
-
-function describeSchedule(schedule: ScheduledTaskSchedule): string {
-  if (schedule.type === "webhook") return "On webhook";
-  if (schedule.type === "once")
-    return `Once at ${schedule.at.replace("T", " ")} (${schedule.timeZone})`;
-  if (schedule.type === "cron") {
-    return `${describeCron(schedule.expression) ?? `Cron ${schedule.expression}`} (${schedule.timeZone})`;
-  }
-  if (schedule.type === "interval") {
-    const minutes = schedule.everyMs / MINUTE_MS;
-    if (Number.isInteger(minutes)) {
-      return `Every ${minutes === 1 ? "minute" : `${minutes} minutes`}`;
-    }
-    return `Every ${Math.round(schedule.everyMs / 1000)} seconds`;
-  }
-
-  const weekdayCount = schedule.weekdays?.length ?? 0;
-  const days =
-    weekdayCount === 0
-      ? "day"
-      : weekdayCount === 5 && schedule.weekdays?.every((day) => day >= 1 && day <= 5)
-        ? "weekday"
-        : "selected day";
-  return `At ${schedule.timeOfDay} every ${days}`;
 }

@@ -1,4 +1,4 @@
-import { getPairingTokenFromUrl, setPairingTokenOnUrl } from "./pairingUrl";
+import { getPairingTokenFromUrl, setPairingTokenOnUrl } from "@moonfold/shared/remote";
 
 export interface HostedPairingRequest {
   readonly host: string;
@@ -8,9 +8,9 @@ export interface HostedPairingRequest {
 
 export type HostedAppChannel = "latest" | "nightly";
 
-/** The hosted app origin shared links point at, or null when this build has no hosted app. */
-export function configuredHostedAppUrl(): string | null {
-  return import.meta.env.VITE_HOSTED_APP_URL?.trim() || null;
+/** The hosted app origin shared links point at, or undefined when this build has no hosted app. */
+export function configuredHostedAppUrl(): string | undefined {
+  return import.meta.env.VITE_HOSTED_APP_URL?.trim() || undefined;
 }
 
 function configuredBackendUrl(): string {
@@ -39,14 +39,12 @@ export function isHostedStaticApp(url?: URL): boolean {
     return true;
   }
 
-  // No window, or a window without a location (tests, static render), means
-  // no origin to be hosted at.
   if (url === undefined && (typeof window === "undefined" || window.location === undefined)) {
     return false;
   }
 
   const hostedAppUrl = configuredHostedAppUrl();
-  const hostedOrigin = hostedAppUrl === null ? null : originFromUrl(hostedAppUrl);
+  const hostedOrigin = hostedAppUrl === undefined ? null : originFromUrl(hostedAppUrl);
   return hostedOrigin !== null && (url ?? new URL(window.location.href)).origin === hostedOrigin;
 }
 
@@ -77,7 +75,7 @@ export function buildHostedPairingUrl(input: {
   readonly label?: string | null;
 }): string | null {
   const hostedAppUrl = configuredHostedAppUrl();
-  if (hostedAppUrl === null) return null;
+  if (hostedAppUrl === undefined) return null;
   const url = new URL("/pair", hostedAppUrl);
   url.searchParams.set("host", input.host);
 
@@ -95,4 +93,10 @@ export function buildHostedChannelSelectionUrl(input: {
   const url = new URL("/__moonfold/channel", configuredHostedAppUrl() ?? window.location.origin);
   url.searchParams.set("channel", input.channel);
   return url.toString();
+}
+
+/** `hostedAppUrl` for a copy target, left out when this build has no hosted app. */
+export function hostedAppUrlOption(): { readonly hostedAppUrl?: string } {
+  const hostedAppUrl = configuredHostedAppUrl();
+  return hostedAppUrl === undefined ? {} : { hostedAppUrl };
 }

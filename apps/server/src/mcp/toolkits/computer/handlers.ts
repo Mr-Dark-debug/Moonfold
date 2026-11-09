@@ -21,19 +21,18 @@ const callerThread = Effect.gen(function* () {
   return thread.threadId;
 });
 
-const act = (
+const act = Effect.fn("act")(function* (
   window: string,
   action: "screenshot" | "read" | "click" | "type" | "key" | "scroll",
   detail: string,
   args: Readonly<Record<string, unknown>>,
-) =>
-  Effect.gen(function* () {
-    const threadId = yield* callerThread;
-    const computer = yield* ComputerUseService.ComputerUseService;
-    return yield* computer
-      .act({ threadId, window }, action, detail, args)
-      .pipe(Effect.mapError(refused));
-  });
+) {
+  const threadId = yield* callerThread;
+  const computer = yield* ComputerUseService.ComputerUseService;
+  return yield* computer
+    .act({ threadId, window }, action, detail, args)
+    .pipe(Effect.mapError(refused));
+});
 
 const done = (message: string) => () => ({ message });
 

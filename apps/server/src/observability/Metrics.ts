@@ -15,6 +15,17 @@ export const rpcRequestDuration = Metric.timer("moonfold_rpc_request_duration", 
   description: "RPC request handling duration.",
 });
 
+export const orchestrationCommandsTotal = Metric.counter("moonfold_orchestration_commands_total", {
+  description: "Total orchestration commands dispatched, by outcome.",
+});
+
+export const orchestrationCommandDuration = Metric.timer(
+  "moonfold_orchestration_command_duration",
+  {
+    description: "Orchestration command handling duration, excluding thread dispatch lock wait.",
+  },
+);
+
 export const orchestrationEffectClaimsTotal = Metric.counter(
   "moonfold_orchestration_effect_claims_total",
   {
@@ -42,6 +53,42 @@ export const providerTurnDuration = Metric.timer("moonfold_provider_turn_duratio
   description: "Time for the provider adapter to start a turn, not how long the turn runs.",
 });
 
+// OTLP carries the unit, and Prometheus names the series by it: a unitless gauge gains `_ratio`.
+export const serverResidentBytes = Metric.gauge("moonfold_server_resident_bytes", {
+  description: "Resident memory of the server process.",
+  attributes: { unit: "By" },
+});
+
+export const serverHeapUsedBytes = Metric.gauge("moonfold_server_heap_used_bytes", {
+  description: "JavaScript heap in use by the server process.",
+  attributes: { unit: "By" },
+});
+
+export const serverCpuUtilization = Metric.gauge("moonfold_server_cpu_utilization", {
+  description: "CPU time the server used per second over the last sample; 1 is one full core.",
+});
+
+export const serverEventLoopUtilization = Metric.gauge("moonfold_server_event_loop_utilization", {
+  description: "Share of the last sample the server's event loop spent busy.",
+});
+
+export const serverEventLoopDelayMax = Metric.gauge("moonfold_server_event_loop_delay_max", {
+  description: "Longest event loop delay over the last sample.",
+  attributes: { unit: "ms" },
+});
+
+export const runsTotal = Metric.counter("moonfold_runs_total", {
+  description: "Runs that finished, by outcome. A later rollback does not count again.",
+});
+
+export const runDuration = Metric.timer("moonfold_run_duration", {
+  description: "Wall time of a run, from when it started to its terminal status.",
+});
+
+export const runQueueWait = Metric.timer("moonfold_run_queue_wait", {
+  description: "Time a run waited between being requested and starting.",
+});
+
 export const gitCommandsTotal = Metric.counter("moonfold_git_commands_total", {
   description: "Total git commands executed by the server runtime.",
 });
@@ -54,15 +101,6 @@ export const terminalSessionsTotal = Metric.counter("moonfold_terminal_sessions_
   description: "Total terminal sessions started.",
 });
 
-export const terminalRestartsTotal = Metric.counter("moonfold_terminal_restarts_total", {
-  description: "Total terminal restart requests handled.",
-});
-
-/**
- * One per webhook request that reached a task, by `outcome` (accepted,
- * not_found, rejected_signature, disabled, rate_limited, queue_full, expired,
- * prompt_too_long, error) and `source` (relay or direct).
- */
 export const webhookDeliveriesTotal = Metric.counter("moonfold_webhook_deliveries_total", {
   description: "Webhook requests handled, by outcome and source.",
 });
@@ -71,23 +109,19 @@ export const webhookDeliveryDuration = Metric.timer("moonfold_webhook_delivery_d
   description: "Time to verify, log, and enqueue one webhook request.",
 });
 
-/** How long a relay-held request waited before this environment got it. */
 export const webhookHeldDelay = Metric.timer("moonfold_webhook_held_delay", {
   description:
     "Time between the relay receiving a webhook request and the environment handling it.",
 });
 
-/** Runs started by webhook deliveries, by `outcome` (started, skipped, failed). */
 export const webhookRunsTotal = Metric.counter("moonfold_webhook_runs_total", {
   description: "Runs started from webhook deliveries, by outcome.",
 });
 
-/** Secrets agents asked users for, by how each ended: saved, declined, cancelled, timed_out. */
 export const secretRequestsTotal = Metric.counter("moonfold_secret_requests_total", {
   description: "Secrets agents asked users for, by how each request ended.",
 });
 
-/** One-use secret refs a tool tried to use, by result: used, rejected. */
 export const secretRefsConsumedTotal = Metric.counter("moonfold_secret_refs_consumed_total", {
   description: "Secret refs tools tried to use, by result.",
 });
@@ -113,12 +147,13 @@ export interface WithMetricsOptions {
   ) => Readonly<Record<string, unknown>>;
 }
 
-const recordMetrics = (
-  options: WithMetricsOptions,
-  startedAt: bigint,
-  exit: Exit.Exit<unknown, unknown>,
-) =>
-  Effect.gen(function* () {
+const recordMetrics =
+  /* Instrumentation must not create its own span for every recorded operation. */
+  Effect.fnUntraced(function* (
+    options: WithMetricsOptions,
+    startedAt: bigint,
+    exit: Exit.Exit<unknown, unknown>,
+  ) {
     const duration = Duration.nanos((yield* Clock.monotonicTimeNanos) - startedAt);
     const baseAttributes =
       typeof options.attributes === "function" ? options.attributes() : (options.attributes ?? {});
@@ -146,8 +181,7 @@ const recordMetrics = (
     }
   });
 
-// Durations come from the monotonic clock, so wall-clock corrections cannot skew them, and
-// metrics are recorded in an exit finalizer, so interrupted work is counted as "interrupt".
+// Monotonic timing ignores clock corrections; exit finalizers count interruptions.
 const withMetricsImpl = <A, E, R>(
   effect: Effect.Effect<A, E, R>,
   options: WithMetricsOptions,
@@ -162,3 +196,14 @@ export const withMetrics: {
   ): <A, E, R>(effect: Effect.Effect<A, E, R>) => Effect.Effect<A, E, R>;
   <A, E, R>(effect: Effect.Effect<A, E, R>, options: WithMetricsOptions): Effect.Effect<A, E, R>;
 } = dual(2, withMetricsImpl);
+
+// Shaped as an `Effect.fn` combinator: the command is the instrumented function's argument.
+export const withCommandMetrics = <A, E, R>(
+  effect: Effect.Effect<A, E, R>,
+  command: { readonly type: string },
+): Effect.Effect<A, E, R> =>
+  withMetrics(effect, {
+    counter: orchestrationCommandsTotal,
+    timer: orchestrationCommandDuration,
+    attributes: { commandType: command.type },
+  });

@@ -1,12 +1,9 @@
 import { MOONFOLD_ACP_CATALOG_AGENT_IDS } from "@moonfold/contracts";
 
 /**
- * ACP agents Moonfold lists in addition to the public ACP Registry (D-53).
- *
- * Entries use the Registry's own JSON shape, so they are decoded, searched, installed and launched
- * exactly like Registry entries. Only add agents that speak standard ACP over stdio, publish an
- * exact-version package, and run under the user's own credentials. A Registry entry with the same
- * id always wins, so an agent that later joins the Registry needs no change here.
+ * ACP agents Moonfold lists in addition to the public ACP Registry (D-53), in the Registry's own
+ * JSON shape. Only add agents that speak standard ACP over stdio, publish an exact-version
+ * package, and run under the user's own credentials. A Registry entry with the same id wins.
  */
 export const ACP_CATALOG_SUPPLEMENT: ReadonlyArray<unknown> = [
   {

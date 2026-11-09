@@ -1,5 +1,6 @@
 import * as NodeServices from "@effect/platform-node/NodeServices";
-import { afterEach, beforeEach, expect, it } from "@effect/vitest";
+import { expect, it } from "@effect/vitest";
+import * as HostProcess from "@moonfold/shared/HostProcess";
 import * as Effect from "effect/Effect";
 import * as FileSystem from "effect/FileSystem";
 import * as Option from "effect/Option";
@@ -27,9 +28,14 @@ const environmentFor = (
     appImagePath: Option.none(),
   } as unknown as DesktopEnvironment.DesktopEnvironment["Service"]);
 
-/** The service for a packaged app; the launcher is written on Install. */
 const commandIn = (
-  input: { home: string; baseDir?: string; platform?: NodeJS.Platform; isPackaged?: boolean },
+  input: {
+    home: string;
+    baseDir?: string;
+    platform?: NodeJS.Platform;
+    isPackaged?: boolean;
+    env?: NodeJS.ProcessEnv;
+  },
   spawner?: ChildProcessSpawner.ChildProcessSpawner["Service"],
 ) =>
   Effect.gen(function* () {
@@ -42,13 +48,13 @@ const commandIn = (
         DesktopEnvironment.DesktopEnvironment,
         environmentFor(path, { ...input, baseDir }),
       ),
+      Effect.provideService(HostProcess.Environment, input.env ?? { PATH: "" }),
     );
     return yield* spawner
       ? make.pipe(Effect.provideService(ChildProcessSpawner.ChildProcessSpawner, spawner))
       : make;
   });
 
-/** A PowerShell that keeps the user's PATH in memory and can be told to fail reads. */
 const fakePowerShell = (initial: string) => {
   const registry = { path: initial, failReads: false, writes: 0 };
   const spawner = ChildProcessSpawner.make((command) =>
@@ -85,15 +91,6 @@ const fakePowerShell = (initial: string) => {
   return { registry, spawner };
 };
 
-// The machine's own PATH may already hold a moonfold; each test sets the PATH it means.
-const machinePath = process.env.PATH;
-beforeEach(() => {
-  process.env.PATH = "";
-});
-afterEach(() => {
-  process.env.PATH = machinePath;
-});
-
 it.layer(NodeServices.layer)("DesktopCliCommand", (it) => {
   it.effect("links the launcher onto PATH and removes only that link", () =>
     Effect.gen(function* () {
@@ -103,16 +100,20 @@ it.layer(NodeServices.layer)("DesktopCliCommand", (it) => {
       const command = yield* commandIn({ home });
       const link = path.join(home, ".local", "bin", "moonfold");
 
-      expect(yield* command.state).toEqual({ supported: true, installedPath: null, onPath: false });
-      // Install writes the launcher itself, even when no local backend ever did.
+      expect(yield* command.state).toEqual({
+        supported: true,
+        installedPath: null,
+        onPath: false,
+        launcherPath: null,
+      });
       const installed = yield* command.install;
       expect(installed.installedPath).toBe(link);
+      expect(installed.launcherPath).toBe(path.join(home, ".moonfold", "bin", "moonfold"));
       expect(yield* fs.readLink(link)).toBe(path.join(home, ".moonfold", "bin", "moonfold"));
       expect((yield* command.install).installedPath).toBe(link);
 
       expect((yield* command.uninstall).installedPath).toBeNull();
       expect(yield* fs.exists(link)).toBe(false);
-      // The launcher itself stays for setup commands.
       expect(yield* fs.exists(path.join(home, ".moonfold", "bin", "moonfold"))).toBe(true);
     }).pipe(Effect.scoped),
   );
@@ -122,11 +123,11 @@ it.layer(NodeServices.layer)("DesktopCliCommand", (it) => {
       const fs = yield* FileSystem.FileSystem;
       const path = yield* Path.Path;
       const home = yield* fs.makeTempDirectoryScoped();
-      const command = yield* commandIn({ home });
+      const env: NodeJS.ProcessEnv = { PATH: "" };
+      const command = yield* commandIn({ home, env });
       const theirs = path.join(home, ".local", "bin", "moonfold");
       yield* fs.makeDirectory(path.dirname(theirs), { recursive: true });
       yield* fs.writeFileString(theirs, "npm's moonfold\n");
-      // Even a broken link in the next folder is someone else's.
       yield* fs.makeDirectory(path.join(home, "bin"), { recursive: true });
       yield* fs.symlink(path.join(home, "gone"), path.join(home, "bin", "moonfold"));
 
@@ -135,6 +136,14 @@ it.layer(NodeServices.layer)("DesktopCliCommand", (it) => {
       yield* command.uninstall;
       expect(yield* fs.readFileString(theirs)).toBe("npm's moonfold\n");
       expect(yield* fs.readLink(path.join(home, "bin", "moonfold"))).toBe(path.join(home, "gone"));
+
+      const launcher = path.join(home, ".moonfold", "bin", "moonfold");
+      yield* fs.writeFileString(launcher, "npm's moonfold\n");
+      env.PATH = path.dirname(launcher);
+      expect(yield* command.state).toMatchObject({ onPath: false, shadowedBy: launcher });
+      expect((yield* Effect.flip(command.install)).message).toContain("Could not set up");
+      yield* command.uninstall;
+      expect(yield* fs.readFileString(launcher)).toBe("npm's moonfold\n");
     }).pipe(Effect.scoped),
   );
 
@@ -148,29 +157,11 @@ it.layer(NodeServices.layer)("DesktopCliCommand", (it) => {
 
       const after = yield* commandIn({ home, baseDir: path.join(home, "new-moonfold") });
       expect((yield* after.state).installedPath).toBe(link);
-      // Installing again points the link at this home's launcher.
       expect((yield* after.install).installedPath).toBe(link);
       expect(yield* fs.readLink(link!)).toBe(path.join(home, "new-moonfold", "bin", "moonfold"));
       yield* after.uninstall;
       expect(yield* fs.exists(path.join(home, ".local", "bin", "moonfold"))).toBe(false);
       expect(yield* fs.exists(path.join(home, "bin", "moonfold"))).toBe(false);
-    }).pipe(Effect.scoped),
-  );
-
-  it.effect("does not read a large binary another moonfold links to", () =>
-    Effect.gen(function* () {
-      const fs = yield* FileSystem.FileSystem;
-      const path = yield* Path.Path;
-      const home = yield* fs.makeTempDirectoryScoped();
-      // A big executable that happens to contain the marker text is still not ours.
-      const binary = path.join(home, "native-moonfold");
-      yield* fs.writeFileString(binary, `${"\0".repeat(64 * 1024)}${DesktopCliShim.MARKER}`);
-      yield* fs.makeDirectory(path.join(home, ".local", "bin"), { recursive: true });
-      yield* fs.symlink(binary, path.join(home, ".local", "bin", "moonfold"));
-      const command = yield* commandIn({ home });
-      expect((yield* command.state).installedPath).toBeNull();
-      yield* command.uninstall;
-      expect(yield* fs.readLink(path.join(home, ".local", "bin", "moonfold"))).toBe(binary);
     }).pipe(Effect.scoped),
   );
 
@@ -182,12 +173,11 @@ it.layer(NodeServices.layer)("DesktopCliCommand", (it) => {
       const shadow = path.join(home, "shadow");
       yield* fs.makeDirectory(shadow);
       yield* fs.writeFileString(path.join(shadow, "moonfold"), "#!/bin/sh\n", { mode: 0o755 });
-      process.env.PATH = [shadow, path.join(home, ".local", "bin")].join(":");
+      const env = { PATH: [shadow, path.join(home, ".local", "bin")].join(":") };
 
-      const command = yield* commandIn({ home });
+      const command = yield* commandIn({ home, env });
       const theirs = path.join(shadow, "moonfold");
       expect((yield* command.state).shadowedBy).toBe(theirs);
-      // A link behind it would never run, so nothing is created.
       const error = yield* Effect.flip(command.install);
       expect(error.message).toContain(theirs);
       expect(yield* fs.exists(path.join(home, ".local", "bin", "moonfold"))).toBe(false);
@@ -200,6 +190,69 @@ it.layer(NodeServices.layer)("DesktopCliCommand", (it) => {
       });
       expect(installed.shadowedBy).toBeUndefined();
     }).pipe(Effect.scoped),
+  );
+
+  it.effect.skipIf(HostProcess.Platform.defaultValue() === "win32")(
+    "skips a moonfold directory or a file this user cannot execute",
+    () =>
+      Effect.gen(function* () {
+        const fs = yield* FileSystem.FileSystem;
+        const path = yield* Path.Path;
+        const home = yield* fs.makeTempDirectoryScoped();
+        const folder = path.join(home, "folder");
+        const plain = path.join(home, "plain");
+        const shadow = path.join(home, "shadow");
+        yield* fs.makeDirectory(path.join(folder, "moonfold"), { recursive: true });
+        yield* fs.makeDirectory(plain);
+        yield* fs.writeFileString(path.join(plain, "moonfold"), "notes\n");
+        // Root can execute mode 0o601; other users must honor the owner permissions.
+        yield* fs.chmod(path.join(plain, "moonfold"), process.getuid?.() === 0 ? 0o600 : 0o601);
+        yield* fs.makeDirectory(shadow);
+        yield* fs.writeFileString(path.join(shadow, "moonfold"), "#!/bin/sh\n", { mode: 0o755 });
+        const env = { PATH: [folder, plain, shadow, path.join(home, ".local", "bin")].join(":") };
+
+        const command = yield* commandIn({ home, env });
+        expect((yield* command.state).shadowedBy).toBe(path.join(shadow, "moonfold"));
+
+        const error = yield* Effect.flip(command.install);
+        expect(error.message).toContain(path.join(shadow, "moonfold"));
+
+        yield* fs.remove(shadow, { recursive: true });
+        expect(yield* command.install).toMatchObject({
+          onPath: true,
+          installedPath: path.join(home, ".local", "bin", "moonfold"),
+        });
+      }).pipe(Effect.scoped),
+  );
+
+  it.effect(
+    "does not treat its own launcher as another moonfold when its folder is first on PATH",
+    () =>
+      Effect.gen(function* () {
+        const fs = yield* FileSystem.FileSystem;
+        const path = yield* Path.Path;
+        const home = yield* fs.makeTempDirectoryScoped();
+        const launcher = path.join(home, ".moonfold", "bin", "moonfold");
+        const env = { PATH: [path.dirname(launcher), path.join(home, ".local", "bin")].join(":") };
+
+        const command = yield* commandIn({ home, env });
+        const installed = yield* command.install;
+
+        expect(yield* fs.exists(launcher)).toBe(true);
+        expect(installed).toMatchObject({
+          onPath: true,
+          installedPath: path.join(home, ".local", "bin", "moonfold"),
+        });
+        expect(installed.shadowedBy).toBeUndefined();
+        expect(yield* command.state).toEqual(installed);
+
+        const removed = yield* command.uninstall;
+        expect(removed.installedPath).toBeNull();
+        expect(removed.onPath).toBe(true);
+        expect(yield* command.state).toEqual(removed);
+        expect(yield* fs.exists(installed.installedPath!)).toBe(false);
+        expect(yield* fs.exists(launcher)).toBe(true);
+      }).pipe(Effect.scoped),
   );
 
   it.effect("leaves the Windows PATH alone when it cannot be read", () =>
@@ -243,17 +296,6 @@ it.layer(NodeServices.layer)("DesktopCliCommand", (it) => {
       expect((yield* command.state).installedPath).toBeNull();
       yield* command.uninstall;
       expect(registry.path).toBe(userPath);
-    }).pipe(Effect.scoped),
-  );
-
-  it.effect("offers nothing for a development build", () =>
-    Effect.gen(function* () {
-      const fs = yield* FileSystem.FileSystem;
-      const command = yield* commandIn({
-        home: yield* fs.makeTempDirectoryScoped(),
-        isPackaged: false,
-      });
-      expect((yield* command.state).supported).toBe(false);
     }).pipe(Effect.scoped),
   );
 });

@@ -58,15 +58,15 @@ const make = Effect.gen(function* () {
     { readonly limit: number | null; tally: RunTokenTally | undefined; stopped: boolean }
   >();
 
-  const readLimit = (event: OrchestrationV2DomainEvent) =>
-    Effect.gen(function* () {
-      const { thread } = yield* projections.getThreadRecords(event.threadId, []);
-      const settings = yield* serverSettings.getSettings;
-      return resolveProjectSettings(settings, thread.projectId).settings.runTokenLimit;
-    });
+  const readLimit = Effect.fn("readLimit")(function* (event: OrchestrationV2DomainEvent) {
+    const { thread } = yield* projections.getThreadRecords(event.threadId, []);
+    const settings = yield* serverSettings.getSettings;
+    return resolveProjectSettings(settings, thread.projectId).settings.runTokenLimit;
+  });
 
-  const handle: RunTokenLimitReactor["Service"]["handle"] = (event) =>
-    Effect.gen(function* () {
+  // Runs for every domain event; most events return before any work is needed.
+  const handle: RunTokenLimitReactor["Service"]["handle"] = Effect.fnUntraced(
+    function* (event) {
       if (event.type === "run.updated") {
         if (SETTLED_RUN_STATUSES.has(event.payload.status)) runs.delete(event.payload.id);
         return;
@@ -95,14 +95,17 @@ const make = Effect.gen(function* () {
         reason: `Stopped at the token limit of ${run.limit.toLocaleString("en-US")} tokens for one run. Send a message to continue.`,
         holdQueue: true,
       });
-    }).pipe(
-      Effect.catchCause((cause) =>
-        Effect.logWarning("stopping a run at its token limit failed", {
-          threadId: event.threadId,
-          cause,
-        }),
+    },
+    (effect, event) =>
+      effect.pipe(
+        Effect.catchCause((cause) =>
+          Effect.logWarning("stopping a run at its token limit failed", {
+            threadId: event.threadId,
+            cause,
+          }),
+        ),
       ),
-    );
+  );
 
   const start: RunTokenLimitReactor["Service"]["start"] = () =>
     forkParked(

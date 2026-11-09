@@ -1,8 +1,7 @@
 /**
- * Codex's own configuration (MCP servers, skills, hooks, agent imports and
- * account usage) read and changed through a short-lived `codex app-server`.
- * Each call spawns its own process under the instance's Codex home, so it sees
- * exactly what Codex threads on that instance see.
+ * Codex's own configuration (MCP servers, skills, hooks, agent imports and account usage), read
+ * and changed through a short-lived `codex app-server` spawned per call under the instance's Codex
+ * home, so it sees what Codex threads on that instance see.
  *
  * @module provider/codexNativeConfig
  */

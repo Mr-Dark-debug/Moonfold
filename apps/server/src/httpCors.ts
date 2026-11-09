@@ -10,5 +10,4 @@ export const browserApiCorsAllowedHeaders = [
   ORCHESTRATION_PROTOCOL_HEADER,
 ] as const;
 
-/** Origins of the Electron renderer, packaged and dev. */
 export const DESKTOP_RENDERER_ORIGINS = ["moonfold://app", "moonfold-dev://app"] as const;

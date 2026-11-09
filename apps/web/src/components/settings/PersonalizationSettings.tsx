@@ -10,7 +10,7 @@ import {
   squashAtomCommandFailure,
   type AtomCommandResult,
 } from "@moonfold/client-runtime/state/runtime";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useProjects } from "../../state/entities";
 import { serverEnvironment } from "../../state/server";
@@ -66,13 +66,9 @@ export function PersonalizationSettingsPanel() {
       ?.environmentId ??
     connectedEnvironments[0]?.environmentId ??
     null;
-  const environmentProjects = useMemo(
-    () =>
-      projects
-        .filter((project) => project.environmentId === activeEnvironmentId)
-        .toSorted((a, b) => a.title.localeCompare(b.title)),
-    [activeEnvironmentId, projects],
-  );
+  const environmentProjects = projects
+    .filter((project) => project.environmentId === activeEnvironmentId)
+    .toSorted((a, b) => a.title.localeCompare(b.title));
   const [projectChoice, setProjectChoice] = useState<string>(USER_LEVEL);
   const projectId = environmentProjects.find((project) => project.id === projectChoice)?.id;
 
@@ -149,22 +145,37 @@ function InstructionFiles(props: {
   const [error, setError] = useState<string | null>(null);
   const { environmentId, projectId } = props;
 
-  const load = useCallback(async () => {
-    const result = await listInstructions({
-      environmentId,
-      input: projectId === undefined ? {} : { projectId },
-    });
+  const input = projectId === undefined ? {} : { projectId };
+
+  const load = async () => {
+    const result = await listInstructions({ environmentId, input });
     if (result._tag === "Success") {
       setFiles(result.value.files);
       setError(null);
       return;
     }
     setError(failureMessage(result));
-  }, [environmentId, listInstructions, projectId]);
+  };
 
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- reads the instruction files from the environment when this panel mounts for an environment and project, and ignores the answer after unmount
   useEffect(() => {
-    void load();
-  }, [load]);
+    let live = true;
+    void listInstructions({
+      environmentId,
+      input: projectId === undefined ? {} : { projectId },
+    }).then((result) => {
+      if (!live) return;
+      if (result._tag === "Success") {
+        setFiles(result.value.files);
+        setError(null);
+        return;
+      }
+      setError(failureMessage(result));
+    });
+    return () => {
+      live = false;
+    };
+  }, [environmentId, listInstructions, projectId]);
 
   if (error !== null) {
     return (

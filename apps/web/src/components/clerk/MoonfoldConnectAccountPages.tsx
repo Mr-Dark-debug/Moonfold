@@ -1,12 +1,12 @@
 import { useAuth, useClerk } from "@clerk/react";
-import { ServerIcon, SmartphoneIcon } from "lucide-react";
-import { type ReactNode, useCallback, useState } from "react";
+import { MessageSquareIcon, ServerIcon, SmartphoneIcon } from "lucide-react";
+import { type ReactNode, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { MobileClientsUserProfilePage } from "./MobileClientsUserProfilePage";
+import { MoonfoldChatUserProfilePage } from "./MoonfoldChatUserProfilePage";
 import { MoonfoldConnectUserProfilePage } from "./MoonfoldConnectUserProfilePage";
 
-/** Custom pages in the Clerk account modal, in menu order. */
 export const MOONFOLD_CONNECT_ACCOUNT_PAGES = [
   {
     label: "Mobile clients",
@@ -20,28 +20,32 @@ export const MOONFOLD_CONNECT_ACCOUNT_PAGES = [
     icon: <ServerIcon className="size-4" />,
     content: <MoonfoldConnectUserProfilePage />,
   },
+  {
+    label: "Moonfold Chat",
+    url: "moonfold-chat",
+    icon: <MessageSquareIcon className="size-4" />,
+    content: <MoonfoldChatUserProfilePage />,
+  },
 ] as const;
+
+export type MoonfoldConnectAccountPageUrl = (typeof MOONFOLD_CONNECT_ACCOUNT_PAGES)[number]["url"];
 
 type PortalTargets = Readonly<Record<string, HTMLDivElement | undefined>>;
 
-/**
- * Opens the Clerk account modal on the Moonfold Connect page from outside the
- * UserButton. Clerk mounts custom pages into DOM nodes it owns, so the caller
- * must keep `portals` rendered for as long as the modal can be open.
- */
+/** Keep portals rendered while the modal can open; Clerk owns the custom-page DOM nodes. */
 export function useMoonfoldConnectAccountPage(): {
-  readonly open: (() => void) | null;
+  readonly open: ((page?: MoonfoldConnectAccountPageUrl) => void) | null;
   readonly portals: ReactNode;
 } {
   const clerk = useClerk();
   const { isSignedIn } = useAuth();
   const [targets, setTargets] = useState<PortalTargets>({});
 
-  const open = useCallback(() => {
+  const open = (page: MoonfoldConnectAccountPageUrl = "moonfold-connect") => {
     const setTarget = (key: string, element: HTMLDivElement | undefined) =>
       setTargets((current) => ({ ...current, [key]: element }));
     clerk.openUserProfile({
-      __experimental_startPath: "/moonfold-connect",
+      __experimental_startPath: `/${page}`,
       customPages: MOONFOLD_CONNECT_ACCOUNT_PAGES.map((page) => ({
         label: page.label,
         url: page.url,
@@ -51,7 +55,7 @@ export function useMoonfoldConnectAccountPage(): {
         unmountIcon: () => setTarget(`icon:${page.url}`, undefined),
       })),
     });
-  }, [clerk]);
+  };
 
   const portals = MOONFOLD_CONNECT_ACCOUNT_PAGES.flatMap((page) => {
     const content = targets[`content:${page.url}`];

@@ -7,7 +7,7 @@ has a docs page. A provider that cannot be verified on a real install is not lis
 
 - Adapters: Codex, Claude, Cursor, OpenCode, Grok, Antigravity, Pi, Muse, and the ACP Registry
   provider, which runs any agent from the public ACP registry or a local ACP command (`source:
-local`, `commandPath`, `commandArgs`).
+  local`, `commandPath`, `commandArgs`).
 - Limit signals mapped today: Codex, Claude, Grok, Mistral Vibe (docs/HANDOFF-SIGNALS.md).
 
 ## Findings from recon (2026-10-20, this machine)

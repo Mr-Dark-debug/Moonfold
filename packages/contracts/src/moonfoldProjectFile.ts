@@ -5,7 +5,6 @@ import { ThreadEnvMode, WorktreeSubmodules } from "./environment.ts";
 import { ProjectScriptIcon } from "./project.ts";
 import type { ProjectScopedServerSettingKey, ServerSettings } from "./settings.ts";
 
-/** File name of the checked-in Moonfold project file, resolved at the workspace root. */
 export const MOONFOLD_PROJECT_FILE_NAME = "moonfold.json";
 
 /** Public URL of the published JSON Schema for {@link MoonfoldProjectFile}. */
@@ -15,8 +14,7 @@ export const MOONFOLD_PROJECT_FILE_SCHEMA_URL =
 const MOONFOLD_PROJECT_FILE_PATH_MAX_LENGTH = 512;
 const MOONFOLD_PROJECT_FILE_MAX_SCRIPTS = 50;
 
-// Annotations go on the encoded (string) side so they survive into the
-// published JSON Schema; decoding still trims and re-validates non-emptiness.
+// Encoded-side annotations survive into JSON Schema; decoding still trims and rejects empty strings.
 const trimmedNonEmpty = (annotations: { readonly description: string }, maxLength?: number) => {
   const annotated = Schema.String.annotate(annotations);
   const encoded =
@@ -48,6 +46,12 @@ export const MoonfoldProjectFileScript = Schema.Struct({
     Schema.Boolean.annotate({
       description:
         "When true, the script runs in the thread's worktree each time the thread settles, for example to delete build output. Threads without their own worktree skip it.",
+    }),
+  ),
+  stopOnSettle: Schema.optionalKey(
+    Schema.Boolean.annotate({
+      description:
+        "When true, Moonfold stops this action's terminal and child processes when its thread settles.",
     }),
   ),
   async: Schema.optionalKey(
@@ -114,22 +118,12 @@ export const MoonfoldProjectFile = Schema.Struct({
 });
 export type MoonfoldProjectFile = typeof MoonfoldProjectFile.Type;
 
-/**
- * Settings a repository can also declare in moonfold.json. A key here must be
- * nullable on `ServerSettings` (null means inherit) so both the project
- * override and the environment value can defer to the file; `field` names
- * the moonfold.json field carrying the same value and `builtIn` is what applies
- * when every tier is unset. `resolveProjectSettings` walks project override,
- * environment value, file, built-in, so listing a key here is the whole
- * change for a new file-backed setting.
- */
+/** Keys must be nullable in ServerSettings so both environment and project overrides can inherit moonfold.json. */
 export const PROJECT_FILE_BACKED_SETTINGS = {
   defaultThreadEnvMode: { field: "defaultThreadEnvMode", builtIn: "local" },
   worktreeSubmodules: { field: "worktreeSubmodules", builtIn: "recursive" },
 } as const satisfies {
-  // `providerInstances` is scoped per project but overrides field by field
-  // rather than replacing a whole `ServerSettings` value (see its doc comment
-  // in settings.ts), so it cannot be file-backed and is excluded here.
+  // providerInstances overrides individual fields, so it cannot use whole-setting file inheritance.
   readonly [K in ProjectScopedServerSettingKey & keyof ServerSettings]?: {
     readonly field: {
       readonly [F in keyof MoonfoldProjectFile]: MoonfoldProjectFile[F] extends
@@ -143,11 +137,6 @@ export const PROJECT_FILE_BACKED_SETTINGS = {
 };
 export type ProjectFileBackedSettingKey = keyof typeof PROJECT_FILE_BACKED_SETTINGS;
 
-/**
- * `ServerSettings` with every file-backed key resolved to a concrete value.
- * What `resolveProjectSettings(...).settings` produces once a moonfold.json (or
- * its absence) has been accounted for.
- */
 export type ResolvedServerSettings = Omit<ServerSettings, ProjectFileBackedSettingKey> & {
   readonly [K in ProjectFileBackedSettingKey]: Exclude<ServerSettings[K], null>;
 };

@@ -3,25 +3,13 @@ import { Argument, Command } from "effect/cli";
 
 import { runAcpMcpCliFastPath } from "../mcp/AcpMcpStdioBridge.ts";
 
-/**
- * `moonfold acp-mcp-bridge` — internal stdio MCP server that ACP agents spawn.
- *
- * The Moonfold server injects this command (with per-session endpoint and
- * credential environment variables) into `session/new` so every ACP agent
- * reaches the moonfold toolkit through ACP's required stdio MCP transport.
- * The credential stays in the environment, never on the command line.
- *
- * Real invocations dispatch through the bin.ts fast path before the CLI
- * graph loads; these definitions keep the commands wired for help and for
- * anything that drives the full CLI programmatically.
- */
+/** The credential stays in the environment, never on the command line. */
 export const acpMcpBridgeCommand = Command.make("acp-mcp-bridge").pipe(
   Command.withDescription("Bridge Moonfold's MCP endpoint to stdio for ACP agents."),
   Command.unlisted,
   Command.withHandler(() => Effect.promise(() => runAcpMcpCliFastPath("acp-mcp-bridge", []))),
 );
 
-/** Terminal fallback for ACP agents that do not expose injected MCP servers. */
 export const acpMcpCallCommand = Command.make("acp-mcp-call", {
   tool: Argument.String("tool"),
   argumentsJson: Argument.String("arguments-json"),

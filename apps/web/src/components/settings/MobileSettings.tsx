@@ -1,9 +1,10 @@
 import type { AuthMobileAccessStatus } from "@moonfold/contracts";
 import { RefreshCwIcon } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { createServerPairingCredential, fetchMobileAccessStatus } from "../../environments/primary";
 import { usePrimarySettings, useUpdatePrimarySettings } from "../../hooks/useSettings";
+import { useStableCallback } from "~/hooks/useStableCallback";
 import { usePrimaryEnvironment } from "../../state/environments";
 import { Button } from "../ui/button";
 import { QRCodeSvg } from "../ui/qr-code";
@@ -31,8 +32,7 @@ export function MobileSettingsPanel() {
   const [error, setError] = useState<string | null>(null);
   const hostName = environment?.label ?? "Moonfold";
 
-  const refresh = useCallback(async () => {
-    setError(null);
+  const refresh = useStableCallback(async () => {
     try {
       let current = await fetchMobileAccessStatus();
       for (let attempt = 0; attempt < STATUS_POLL_ATTEMPTS && !current.enabled; attempt += 1) {
@@ -46,19 +46,17 @@ export function MobileSettingsPanel() {
         return;
       }
       const credential = await createServerPairingCredential({ mobile: true });
+      setError(null);
       setPayload(mobilePairingPayload(current, credential.credential, hostName));
     } catch (cause) {
       setPayload(null);
       setError(cause instanceof Error ? cause.message : "This machine did not answer.");
     }
-  }, [hostName]);
+  });
 
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- fetches the pairing code while the connection is on and renews it on a timer before the server token expires
   useEffect(() => {
-    if (!enabled) {
-      setStatus(null);
-      setPayload(null);
-      return;
-    }
+    if (!enabled) return;
     void refresh();
     const timer = window.setInterval(() => void refresh(), QR_REFRESH_MS);
     return () => window.clearInterval(timer);
@@ -74,14 +72,21 @@ export function MobileSettingsPanel() {
             <Switch
               aria-label="Allow the mobile app to connect"
               checked={enabled}
-              onCheckedChange={(checked) => updateSettings({ mobileAccessEnabled: checked })}
+              onCheckedChange={(checked) => {
+                if (!checked) {
+                  setStatus(null);
+                  setPayload(null);
+                  setError(null);
+                }
+                updateSettings({ mobileAccessEnabled: checked });
+              }}
             />
           }
         />
         {enabled ? (
           <SettingsRow
             title="Pair a phone"
-            description="Open Moonfold on the phone and scan this code. The phone must be able to reach this machine: same Wi-Fi, Tailscale or a VPN. The connection is encrypted, and the phone trusts this machine's certificate only."
+            description="Open Moonfold on the phone and scan this code. The phone must reach this machine: same Wi-Fi, Tailscale or a VPN. The connection is encrypted, and the phone trusts only this machine's certificate."
           >
             <div className="mt-3 flex flex-col items-start gap-3 pb-3.5">
               {payload !== null ? (
@@ -113,7 +118,14 @@ export function MobileSettingsPanel() {
                   every few minutes and works once.
                 </p>
               ) : null}
-              <Button size="sm" variant="outline" onClick={() => void refresh()}>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => {
+                  setError(null);
+                  void refresh();
+                }}
+              >
                 <RefreshCwIcon />
                 New code
               </Button>

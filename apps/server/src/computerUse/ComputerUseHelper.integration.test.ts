@@ -113,8 +113,9 @@ it.effect.skipIf(HostProcess.Platform.defaultValue() !== "win32")(
       yield* helper.request("click", { window, ...center(button) });
       const label = yield* read().pipe(
         Effect.map((after) => after.find((element) => element.name.startsWith("Result"))?.name),
-        Effect.flatMap((text) =>
-          text === "Result: Hello from Moonfold" ? Effect.succeed(text) : Effect.fail(text),
+        Effect.filterOrFail(
+          (text) => text === "Result: Hello from Moonfold",
+          (text) => text,
         ),
         Effect.retry({ schedule: Schedule.spaced("100 millis"), times: 20 }),
       );
@@ -143,5 +144,4 @@ it.effect.skipIf(HostProcess.Platform.defaultValue() !== "win32")(
         ),
       ),
     ),
-  60_000,
 );

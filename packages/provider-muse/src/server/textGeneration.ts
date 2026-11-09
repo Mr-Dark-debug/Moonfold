@@ -14,10 +14,18 @@ import * as FileSystem from "effect/FileSystem";
 import * as Option from "effect/Option";
 import * as Schema from "effect/Schema";
 
-import { createMuseSdkHost, createMuseSdkHostEffect, type MuseSdkHost } from "./sdk.ts";
+import {
+  createMuseSdkHost,
+  createMuseSdkHostEffect,
+  MuseSdkError,
+  type MuseSdkHost,
+} from "./sdk.ts";
 import { museModelCapabilities, resolveMuseReasoningEffort } from "./modelCatalog.ts";
 import type { ProviderTextGeneration } from "@moonfold/provider-core/server/textGeneration";
-import { investigationUnsupported } from "@moonfold/provider-core/server/textGenerationOperations";
+import {
+  investigationUnsupported,
+  TranscriptionPostProcessingOutput,
+} from "@moonfold/provider-core/server/textGenerationOperations";
 import {
   buildBranchNamePrompt,
   buildCommitMessagePrompt,
@@ -200,7 +208,6 @@ export const makeMuseTextGeneration = Effect.fn("makeMuseTextGeneration")(functi
   options: {
     readonly environment?: NodeJS.ProcessEnv;
     readonly modelCatalog?: Effect.Effect<ReadonlyArray<ServerProviderModel>>;
-    /** Test hook. */
     readonly createHost?: typeof createMuseSdkHost;
   } = {},
 ) {
@@ -218,7 +225,6 @@ export const makeMuseTextGeneration = Effect.fn("makeMuseTextGeneration")(functi
     }
     const selectedModel = input.modelSelection.model.trim();
     const models = yield* modelCatalog;
-    // "default" is the catalog's default model, as in chat. Without one, Muse picks.
     const catalogModel =
       selectedModel && selectedModel !== MUSE_DEFAULT_MODEL
         ? models.find((model) => model.slug === selectedModel)
@@ -253,16 +259,18 @@ export const makeMuseTextGeneration = Effect.fn("makeMuseTextGeneration")(functi
         (host: MuseSdkHost) => Effect.promise(() => host.close()),
         { interruptible: true },
       );
-      return yield* Effect.tryPromise((signal) =>
-        generateMuseText(
-          host,
-          cwd,
-          `${input.prompt}\n\nReturn only a JSON object matching this schema, with no markdown fences. Do not use tools or ask questions.\n${jsonSchema}`,
-          modelId,
-          reasoningEffort,
-          signal,
-        ),
-      );
+      return yield* Effect.tryPromise({
+        try: (signal) =>
+          generateMuseText(
+            host,
+            cwd,
+            `${input.prompt}\n\nReturn only a JSON object matching this schema, with no markdown fences. Do not use tools or ask questions.\n${jsonSchema}`,
+            modelId,
+            reasoningEffort,
+            signal,
+          ),
+        catch: (cause) => new MuseSdkError({ operation: "generate text", cause }),
+      });
     }).pipe(
       Effect.scoped,
       Effect.mapError(
@@ -343,7 +351,15 @@ export const makeMuseTextGeneration = Effect.fn("makeMuseTextGeneration")(functi
     });
     return { title: sanitizeThreadTitle(generated.title) };
   });
-  // Muse runs in an empty read-only directory and cannot be pointed at a checkout to read.
+  const generateTranscriptionPostProcessing: ProviderTextGeneration["generateTranscriptionPostProcessing"] =
+    Effect.fn("MuseTextGeneration.generateTranscriptionPostProcessing")(function* (input) {
+      return yield* runMuseJson({
+        operation: "generateTranscriptionPostProcessing",
+        prompt: input.prompt,
+        outputSchema: TranscriptionPostProcessingOutput,
+        modelSelection: input.modelSelection,
+      });
+    });
   const generateReviewGuide: ProviderTextGeneration["generateReviewGuide"] = () =>
     Effect.fail(investigationUnsupported("generateReviewGuide", "Muse Code"));
   const answerSideQuestion: ProviderTextGeneration["answerSideQuestion"] = Effect.fn(
@@ -363,5 +379,6 @@ export const makeMuseTextGeneration = Effect.fn("makeMuseTextGeneration")(functi
     generateThreadTitle,
     generateReviewGuide,
     answerSideQuestion,
+    generateTranscriptionPostProcessing,
   } satisfies ProviderTextGeneration;
 });

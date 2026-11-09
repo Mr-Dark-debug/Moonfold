@@ -120,11 +120,6 @@ export function fromDateTimeInputs(dateValue: string, timeValue: string): Date |
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
-/** The `once` schedule's wall-clock `at` (`YYYY-MM-DDTHH:MM`) for a local Date. */
-export function toOnceScheduleAt(date: Date): string {
-  return `${toDateInputValue(date)}T${toTimeInputValue(date)}`;
-}
-
 /** A short default when the user schedules from the send button with no time yet. */
 export function defaultScheduledSendTime(now: Date): Date {
   const at = new Date(now);

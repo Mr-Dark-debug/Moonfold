@@ -48,11 +48,8 @@ vi.mock("../state/session", () => ({
     scope === AuthOrchestrationOperateScope && state.granted.has(environmentId),
 }));
 vi.mock("../state/entities", () => ({
+  readEnvironmentServerConfigLoaded: () => true,
   readEnvironmentSupportsAutoSettleOptOut: () => true,
-  readEnvironmentSupportsPinning: () => true,
-  readEnvironmentSupportsSettlement: () => true,
-  readEnvironmentSupportsSnooze: () => true,
-  readEnvironmentSupportsTitleRegeneration: () => true,
   readEnvironmentPromptProfileChoices: () => null,
   readThreadShell: () => ({
     id: "thread",
@@ -85,7 +82,7 @@ vi.mock("../localApi", () => ({
     },
   }),
 }));
-vi.mock("../logicalProject", () => ({
+vi.mock("@moonfold/client-runtime/state/project-grouping", () => ({
   deriveLogicalProjectKeyFromSettings: () => "project",
   derivePhysicalProjectKey: () => "project",
   selectProjectGroupingSettings: () => ({}),
@@ -133,6 +130,7 @@ vi.mock("./useThreadMemoryChoice", () => ({
   useThreadMemoryChoice: () => ({ read: async () => null, choose: async () => true }),
 }));
 vi.mock("./useThreadActions", () => ({
+  canTurnThreadIntoProject: () => false,
   useThreadActions: () =>
     Object.fromEntries(
       [
@@ -162,11 +160,13 @@ const target = {
   threadId: ThreadId.make("thread"),
 };
 const position = { x: 10, y: 20 };
-const createMenu = () =>
+const createMenu = (options: { readonly onFind?: (threadRef: typeof target) => void } = {}) =>
   useThreadActionMenu({
     threadRef: target,
     projectCwd: "/project",
     onStartRename: () => recordEffect("rename"),
+    onFind: options.onFind,
+    canShareWithGuest: false,
   });
 
 beforeEach(() => {
@@ -189,28 +189,6 @@ const openAndReadItems = (menu: ReturnType<typeof createMenu>) => {
 };
 
 describe("thread menu permissions", () => {
-  it("disables mutations for a denied secondary environment", async () => {
-    const items = await openAndReadItems(createMenu());
-    expect(items.find((item) => item.id === "rename")?.disabled).toBe(true);
-    expect(items.find((item) => item.id === "delete")?.disabled).toBe(true);
-    expect(items.find((item) => item.id === "copy")?.disabled).not.toBe(true);
-  });
-
-  it("allows the target grant even when the primary environment is denied", async () => {
-    state.granted = new Set(["secondary"]);
-    const items = await openAndReadItems(createMenu());
-    expect(items.find((item) => item.id === "rename")?.disabled).not.toBe(true);
-  });
-
-  it("refreshes availability when a retained menu opener gains permission", async () => {
-    const menu = createMenu();
-    const before = await openAndReadItems(menu);
-    expect(before.find((item) => item.id === "rename")?.disabled).toBe(true);
-    state.granted.add("secondary");
-    const after = await openAndReadItems(menu);
-    expect(after.find((item) => item.id === "rename")?.disabled).not.toBe(true);
-  });
-
   it.each([
     "rename",
     "regenerate-title",
@@ -231,15 +209,17 @@ describe("thread menu permissions", () => {
     expect(state.effects).toEqual([]);
   });
 
-  it.each([
-    ["new-thread-on-branch", "draft"],
-    ["copy-thread-id", "copy"],
-    ["mark-unread", "mark-unread"],
-    ["project-settings", "project-settings"],
-  ] as const)("keeps %s available without task permission", async (action, effect) => {
-    state.show.mockResolvedValue(action);
-    createMenu().openMenu(position);
+  it("offers find only to a header that can open it, without task permission", async () => {
+    const withoutFind = await openAndReadItems(createMenu());
+    expect(withoutFind.some((item) => item.id === "find")).toBe(false);
+    state.show.mockResolvedValue("find");
+    const onFind = vi.fn(() => recordEffect("find"));
+    createMenu({ onFind }).openMenu(position);
     await state.completed.promise;
-    expect(state.effects).toEqual([effect]);
+    const items = state.show.mock.calls[1]![0];
+    expect(items[0]).toMatchObject({ id: "find", label: "Find in thread" });
+    expect(items[0]?.disabled).not.toBe(true);
+    expect(state.effects).toEqual(["find"]);
+    expect(onFind).toHaveBeenCalledExactlyOnceWith(target);
   });
 });

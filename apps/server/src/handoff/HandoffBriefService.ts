@@ -1,8 +1,7 @@
 /**
- * HandoffBriefService - builds the brief a provider receives when a thread moves to it from
- * another provider: the thread's log, plus the workspace's git state and project instructions
- * read at that moment. The preview and the delivery both call `build`, so the user sees what
- * the next provider is sent.
+ * HandoffBriefService - builds the brief a provider receives when a thread moves to it: the
+ * thread's log plus the workspace's git state and project instructions at that moment. The
+ * preview and the delivery both call `build`, so the user sees what is sent.
  *
  * @module handoff/HandoffBriefService
  */
@@ -55,18 +54,17 @@ const make = Effect.gen(function* () {
   const path = yield* Path.Path;
   const adapters = yield* ProviderAdapterRegistry.ProviderAdapterRegistryV2;
 
-  const label = (selection: ModelSelection) =>
-    Effect.gen(function* () {
-      const metadata =
-        adapters.getMetadata === undefined
-          ? Option.none()
-          : yield* Effect.option(adapters.getMetadata(selection.instanceId));
-      const name = Option.match(metadata, {
-        onNone: () => selection.instanceId as string,
-        onSome: (found) => PROVIDER_DISPLAY_NAMES[found.driver] ?? selection.instanceId,
-      });
-      return `${name} (${selection.model})`;
+  const label = Effect.fn("HandoffBriefService.label")(function* (selection: ModelSelection) {
+    const metadata =
+      adapters.getMetadata === undefined
+        ? Option.none()
+        : yield* Effect.option(adapters.getMetadata(selection.instanceId));
+    const name = Option.match(metadata, {
+      onNone: () => selection.instanceId as string,
+      onSome: (found) => PROVIDER_DISPLAY_NAMES[found.driver] ?? selection.instanceId,
     });
+    return `${name} (${selection.model})`;
+  });
 
   // A workspace that is not a repository, or git that fails, leaves that part of the brief out.
   const gitOutput = (cwd: string, operation: string, args: ReadonlyArray<string>) =>
@@ -82,19 +80,18 @@ const make = Effect.gen(function* () {
       })
       .pipe(
         Effect.map((result) => (result.exitCode === 0 ? result.stdout : null)),
-        Effect.catch(() => Effect.succeed(null)),
+        Effect.orElseSucceed(() => null),
       );
 
-  const instructions = (cwd: string) =>
-    Effect.gen(function* () {
-      for (const file of INSTRUCTION_FILES) {
-        const text = yield* fs.readFileString(path.join(cwd, file)).pipe(Effect.option);
-        if (Option.isSome(text) && text.value.trim() !== "") {
-          return { file, text: text.value.slice(0, MAX_INSTRUCTIONS_BYTES) };
-        }
+  const instructions = Effect.fn("HandoffBriefService.instructions")(function* (cwd: string) {
+    for (const file of INSTRUCTION_FILES) {
+      const text = yield* fs.readFileString(path.join(cwd, file)).pipe(Effect.option);
+      if (Option.isSome(text) && text.value.trim() !== "") {
+        return { file, text: text.value.slice(0, MAX_INSTRUCTIONS_BYTES) };
       }
-      return null;
-    });
+    }
+    return null;
+  });
 
   const build = Effect.fn("HandoffBriefService.build")(function* (request: HandoffBriefRequest) {
     const { projection, cwd } = request;

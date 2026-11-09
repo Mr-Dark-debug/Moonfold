@@ -8,7 +8,7 @@ const trimNonEmptyOption = (value: string): Option.Option<string> => {
   return trimmed.length > 0 ? Option.some(trimmed) : Option.none();
 };
 
-const trimmedString = (name: string) =>
+export const trimmedString = (name: string) =>
   Config.String(name).pipe(Config.option, Config.map(Option.flatMap(trimNonEmptyOption)));
 
 const optionalBoolean = (name: string) =>
@@ -55,6 +55,7 @@ export const DesktopConfig = Config.all({
   otlpProtocol: Config.schema(OtlpProtocol, "MOONFOLD_OTLP_PROTOCOL").pipe(
     Config.withDefault("http/json"),
   ),
+  desktopLauncherPath: trimmedString("MOONFOLD_DESKTOP_LAUNCHER_PATH"),
   appImagePath: trimmedString("APPIMAGE"),
   disableAutoUpdate: optionalBoolean("MOONFOLD_DISABLE_AUTO_UPDATE"),
   mockUpdates: optionalBoolean("MOONFOLD_DESKTOP_MOCK_UPDATES"),

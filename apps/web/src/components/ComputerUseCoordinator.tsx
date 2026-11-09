@@ -9,11 +9,12 @@ import {
   squashAtomCommandFailure,
 } from "@moonfold/client-runtime/state/runtime";
 import { MonitorIcon } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useAtomValue } from "@effect/atom-react";
+import { AsyncResult, Atom } from "effect/reactivity";
+import { useRef, useState } from "react";
 
 import { useThreadShells } from "../state/entities";
-import { useEnvironments } from "../state/environments";
-import { useEnvironmentQuery } from "../state/query";
+import { environmentPresentations } from "../state/presentation";
 import { serverEnvironment } from "../state/server";
 import { useAtomCommand } from "../state/use-atom-command";
 import { Button } from "./ui/button";
@@ -27,57 +28,51 @@ import {
 } from "./ui/dialog";
 import { stackedThreadToast, toastManager } from "./ui/toast";
 
-interface EnvironmentComputerUse {
-  readonly requests: ReadonlyArray<ComputerUsePermissionRequest>;
-  readonly active: ComputerUseActivity["active"];
-}
+const NO_REQUESTS: ReadonlyArray<ComputerUsePermissionRequest> = [];
+const NO_ACTIVE: ComputerUseActivity["active"] = [];
 
-const EMPTY: EnvironmentComputerUse = { requests: [], active: [] };
+/** Each connected environment's pending questions and in-use apps, read from its live atoms. */
+const computerUseAtom = Atom.make((get) => {
+  const requests: Array<{
+    readonly environmentId: EnvironmentId;
+    readonly request: ComputerUsePermissionRequest;
+  }> = [];
+  const active: Array<{
+    readonly environmentId: EnvironmentId;
+    readonly threadId: string;
+    readonly app: string;
+  }> = [];
+  for (const [environmentId, presentation] of get(environmentPresentations.presentationsAtom)) {
+    if (presentation.connection.phase !== "connected") continue;
+    const pending = AsyncResult.getOrElse(
+      get(serverEnvironment.computerUsePending({ environmentId, input: {} })),
+      () => null,
+    );
+    const activity = AsyncResult.getOrElse(
+      get(serverEnvironment.computerUseActivity({ environmentId, input: {} })),
+      () => null,
+    );
+    for (const request of pending?.requests ?? NO_REQUESTS)
+      requests.push({ environmentId, request });
+    for (const entry of activity?.active ?? NO_ACTIVE) active.push({ environmentId, ...entry });
+  }
+  return {
+    firstRequest:
+      requests.toSorted((left, right) =>
+        left.request.createdAt.localeCompare(right.request.createdAt),
+      )[0] ?? null,
+    active,
+  };
+}).pipe(Atom.withLabel("web-computer-use-coordinator"));
 
 /**
  * Computer use as every client sees it: the question when an agent wants an app, and while an
  * agent is using one, which app and thread, with a Stop button that turns computer use off.
  */
 export function ComputerUseCoordinator() {
-  const { environments } = useEnvironments();
-  const connected = environments.filter((entry) => entry.connection.phase === "connected");
-  const [byEnvironment, setByEnvironment] = useState<
-    ReadonlyMap<EnvironmentId, EnvironmentComputerUse>
-  >(new Map());
-  const report = useCallback((environmentId: EnvironmentId, value: EnvironmentComputerUse) => {
-    setByEnvironment((current) => {
-      const previous = current.get(environmentId) ?? EMPTY;
-      if (previous.requests === value.requests && previous.active === value.active) return current;
-      const next = new Map(current);
-      next.set(environmentId, value);
-      return next;
-    });
-  }, []);
-  const firstRequest = useMemo(() => {
-    const all = [...byEnvironment].flatMap(([environmentId, value]) =>
-      value.requests.map((request) => ({ environmentId, request })),
-    );
-    return all.toSorted((left, right) =>
-      left.request.createdAt.localeCompare(right.request.createdAt),
-    )[0];
-  }, [byEnvironment]);
-  const active = useMemo(
-    () =>
-      [...byEnvironment].flatMap(([environmentId, value]) =>
-        value.active.map((entry) => ({ environmentId, ...entry })),
-      ),
-    [byEnvironment],
-  );
-
+  const { firstRequest, active } = useAtomValue(computerUseAtom);
   return (
     <>
-      {connected.map((entry) => (
-        <EnvironmentWatcher
-          key={entry.environmentId}
-          environmentId={entry.environmentId}
-          onChange={report}
-        />
-      ))}
       {firstRequest ? (
         <AppApprovalDialog
           key={firstRequest.request.id}
@@ -88,26 +83,6 @@ export function ComputerUseCoordinator() {
       {active.length > 0 ? <InUseIndicator active={active} /> : null}
     </>
   );
-}
-
-function EnvironmentWatcher(props: {
-  readonly environmentId: EnvironmentId;
-  readonly onChange: (environmentId: EnvironmentId, value: EnvironmentComputerUse) => void;
-}) {
-  const { environmentId, onChange } = props;
-  const pending = useEnvironmentQuery(
-    serverEnvironment.computerUsePending({ environmentId, input: {} }),
-  );
-  const activity = useEnvironmentQuery(
-    serverEnvironment.computerUseActivity({ environmentId, input: {} }),
-  );
-  const requests = pending.data?.requests ?? EMPTY.requests;
-  const active = activity.data?.active ?? EMPTY.active;
-  useEffect(() => {
-    onChange(environmentId, { requests, active });
-  }, [environmentId, onChange, requests, active]);
-  useEffect(() => () => onChange(environmentId, EMPTY), [environmentId, onChange]);
-  return null;
 }
 
 function useThreadTitle(environmentId: EnvironmentId, threadId: string) {

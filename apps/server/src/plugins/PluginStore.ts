@@ -1,15 +1,7 @@
 /**
- * PluginStore - plugins installed in Moonfold. Each plugin is a copy of a git repository or a
- * folder under the Moonfold home, with `SKILL.md` skills and optional MCP servers. Codex
- * (`.codex-plugin/plugin.json`) and Claude Code (`.claude-plugin/plugin.json`) plugin folders are
- * read as they are.
- *
- * Layout under `pluginsDir`:
- * - `registry.json` - each plugin's source, enabled flag and what it brings.
- * - `<id>/source/` - the plugin as installed.
- * - `<id>/view/` - what providers load: `skills/<name>/` copies and a Claude plugin manifest.
- *
- * Plugins start disabled, so a plugin's MCP commands are shown to the user before anything runs.
+ * PluginStore - plugins installed in Moonfold: `SKILL.md` skills and optional MCP servers, read
+ * from Codex and Claude Code plugin folders as they are. Plugins start disabled, so their MCP
+ * commands are shown to the user before anything runs.
  *
  * @module plugins/PluginStore
  */
@@ -28,7 +20,7 @@ import {
   ProviderPlugins,
 } from "@moonfold/provider-core/server/ProviderPlugins";
 import * as Context from "effect/Context";
-import * as Crypto from "effect/Crypto";
+import * as SecureRandom from "effect/crypto/SecureRandom";
 import * as DateTime from "effect/DateTime";
 import * as Effect from "effect/Effect";
 import * as FileSystem from "effect/FileSystem";
@@ -215,7 +207,7 @@ export class PluginStore extends Context.Service<
 const make = Effect.gen(function* () {
   const fs = yield* FileSystem.FileSystem;
   const path = yield* Path.Path;
-  const crypto = yield* Crypto.Crypto;
+  const random = yield* SecureRandom.SecureRandom;
   const git = yield* GitVcsDriver.GitVcsDriver;
   const { pluginsDir } = yield* ServerConfig.ServerConfig;
   const registryPath = path.join(pluginsDir, "registry.json");
@@ -413,11 +405,7 @@ const make = Effect.gen(function* () {
   const install: PluginStore["Service"]["install"] = (source) =>
     lock.withPermits(1)(
       Effect.gen(function* () {
-        const staging = path.join(
-          pluginsDir,
-          ".staging",
-          yield* crypto.randomUUIDv4().pipe(Effect.orDie),
-        );
+        const staging = path.join(pluginsDir, ".staging", yield* random.uuidV4());
         return yield* Effect.gen(function* () {
           yield* fetchSource(source, staging);
           const fallbackName =
@@ -488,11 +476,7 @@ const make = Effect.gen(function* () {
             })
             .pipe(Effect.mapError(fail(`Could not update ${source.url}.`)));
         } else {
-          const staging = path.join(
-            pluginsDir,
-            ".staging",
-            yield* crypto.randomUUIDv4().pipe(Effect.orDie),
-          );
+          const staging = path.join(pluginsDir, ".staging", yield* random.uuidV4());
           yield* fetchSource(source, staging).pipe(
             Effect.andThen(fs.remove(sourceDir, { recursive: true })),
             Effect.andThen(fs.rename(staging, sourceDir)),

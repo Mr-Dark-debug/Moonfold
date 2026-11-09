@@ -1,4 +1,4 @@
-import { isWorkspaceImagePreviewPath } from "@moonfold/shared/filePreview";
+import { isWorkspaceImagePreviewPath } from "@moonfold/shared/mediaPreview";
 import { COMPUTER_USE_TOOL_SOURCE, dynamicToolSurface } from "@moonfold/shared/toolActivity";
 import type {
   ToolActivityIcon,

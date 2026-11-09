@@ -11,16 +11,12 @@ import type {
 import { nextHandoffTarget } from "@moonfold/contracts";
 import { resolveProjectSettings } from "@moonfold/shared/projectSettings";
 import { ArrowRightLeftIcon } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { create } from "zustand";
 
 import { useEnvironmentSettings } from "../hooks/useSettings";
 import { getCustomModelOptionsByInstance } from "../modelSelection";
-import {
-  applyProviderInstanceSettings,
-  deriveProviderInstanceEntries,
-  sortProviderInstanceEntries,
-} from "../providerInstances";
+import { providerInstanceEntriesFor } from "../providerInstances";
 import { EMPTY_SERVER_PROVIDERS, serverEnvironment } from "../state/server";
 import { useAtomCommand } from "../state/use-atom-command";
 import { ProviderModelPicker } from "./chat/ProviderModelPicker";
@@ -73,17 +69,7 @@ function HandoffDialog({ request, onClose }: { request: HandoffRequest; onClose:
   const providers =
     useAtomValue(serverEnvironment.providersValueAtom(request.environmentId)) ??
     EMPTY_SERVER_PROVIDERS;
-  const instanceEntries = useMemo(
-    () =>
-      sortProviderInstanceEntries(
-        applyProviderInstanceSettings(
-          deriveProviderInstanceEntries(providers),
-          settings,
-          request.projectId,
-        ),
-      ),
-    [providers, settings, request.projectId],
-  );
+  const instanceEntries = providerInstanceEntriesFor(providers, settings, request.projectId);
   const [target, setTarget] = useState<ModelSelection | null>(() => {
     if (request.target !== undefined) return request.target;
     const project = resolveProjectSettings(settings, request.projectId).settings;
@@ -110,15 +96,11 @@ function HandoffDialog({ request, onClose }: { request: HandoffRequest; onClose:
       })()
     );
   });
-  const modelOptionsByInstance = useMemo(
-    () =>
-      getCustomModelOptionsByInstance(
-        settings,
-        providers,
-        target?.instanceId ?? request.current.instanceId,
-        target?.model ?? "",
-      ),
-    [settings, providers, target, request.current.instanceId],
+  const modelOptionsByInstance = getCustomModelOptionsByInstance(
+    settings,
+    providers,
+    target?.instanceId ?? request.current.instanceId,
+    target?.model ?? "",
   );
   const previewHandoff = useAtomCommand(serverEnvironment.previewHandoff, {
     label: "handoff preview",
@@ -136,6 +118,7 @@ function HandoffDialog({ request, onClose }: { request: HandoffRequest; onClose:
   const preview = settled !== null && settled.key === targetKey ? settled.preview : null;
   const previewError = settled !== null && settled.key === targetKey ? settled.error : null;
 
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- asks the server to build the handoff brief for the chosen target and ignores answers for an earlier target
   useEffect(() => {
     if (target === null || target.model === "" || targetKey === null) return;
     let current = true;
@@ -302,6 +285,7 @@ function HandoffBriefDialog({
     reportFailure: false,
   });
   const [brief, setBrief] = useState<{ text: string } | null | "missing">(null);
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- reads the brief a past handoff sent from the server and ignores the answer once the dialog closes
   useEffect(() => {
     let current = true;
     void readBrief({

@@ -1,8 +1,7 @@
 /**
  * DesktopQuickWindow - the global hotkey that opens the quick window, a small always-on-top
- * window for starting a thread from anywhere. The hotkey comes from client settings and is
- * off until the user records one. It also applies the background-mode setting, the other
- * window preference client settings carry.
+ * window for starting a thread from anywhere. The hotkey is off until the user records one.
+ * It also applies the background-mode client setting.
  *
  * @module window/DesktopQuickWindow
  */
@@ -106,12 +105,11 @@ const make = Effect.gen(function* () {
       Effect.ignore,
     ),
     configure,
-    setSuppressed: (next) =>
-      Effect.suspend(() => {
-        if (suppressed === next) return Effect.void;
-        suppressed = next;
-        return apply;
-      }),
+    setSuppressed: Effect.fn("DesktopQuickWindow.setSuppressed")(function* (next: boolean) {
+      if (suppressed === next) return;
+      suppressed = next;
+      yield* apply;
+    }),
     status: Ref.get(statusRef),
   });
 });

@@ -6,7 +6,7 @@ import {
   type AtomCommandResult,
 } from "@moonfold/client-runtime/state/runtime";
 import { CalendarClockIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { useEnvironmentQuery } from "../../state/query";
 import { serverEnvironment } from "../../state/server";
@@ -68,10 +68,8 @@ export function useScheduledSendBannerItem(
     reportFailure: false,
   });
   const [busyId, setBusyId] = useState<string | null>(null);
-  const pending = useMemo(
-    () => (threadId === null ? [] : pendingScheduledSends(tasksQuery.data?.tasks ?? [], threadId)),
-    [tasksQuery.data, threadId],
-  );
+  const pending =
+    threadId === null ? [] : pendingScheduledSends(tasksQuery.data?.tasks ?? [], threadId);
   const next = pending[0];
   if (next === undefined || next.nextRunAt === null) return null;
   const when = new Date(next.nextRunAt).toLocaleString(undefined, {
@@ -83,7 +81,7 @@ export function useScheduledSendBannerItem(
   return {
     id: `scheduled-send:${next.id}`,
     variant: "info",
-    priority: "notice",
+    group: "attention",
     icon: <CalendarClockIcon />,
     title:
       pending.length === 1

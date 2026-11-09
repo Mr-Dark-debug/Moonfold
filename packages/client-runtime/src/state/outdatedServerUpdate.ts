@@ -24,10 +24,6 @@ export interface OutdatedServerUpdateTarget {
   readonly fromVersion?: string;
 }
 
-/**
- * Updates a host too old for this client to connect to. Progress lands in the
- * same per-environment update state as a normal server update.
- */
 export function createOutdatedServerUpdateCommand<E>(
   runtime: Atom.AtomRuntime<
     | EnvironmentRegistry.EnvironmentRegistry
@@ -45,7 +41,10 @@ export function createOutdatedServerUpdateCommand<E>(
       mode: "singleFlight",
       key: ({ environmentId }: OutdatedServerUpdateTarget) => environmentId,
     },
-    execute: (target: OutdatedServerUpdateTarget, atomRegistry) => {
+    execute: Effect.fn("ServerUpdate.updateOutdatedServer")(function (
+      target: OutdatedServerUpdateTarget,
+      atomRegistry,
+    ) {
       const stateAtom = serverUpdateStateAtom(target.environmentId);
       const targetVersion = target.input.targetVersion;
       const fromVersion = target.fromVersion ?? targetVersion;
@@ -73,6 +72,6 @@ export function createOutdatedServerUpdateCommand<E>(
           }),
         ),
       );
-    },
+    }),
   });
 }

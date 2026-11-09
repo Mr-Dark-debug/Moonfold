@@ -1,8 +1,7 @@
 /**
  * The thread's prompt profile as adapters hand it to a provider (D-54). The text is the user's own
- * standing instruction, so it is followed like one; a closing tag inside it cannot end the block.
- * The project's content exclusions (D-59) travel with it, so every adapter delivers them the same
- * way and a change reaches a running session the same way.
+ * standing instruction, and a closing tag inside it cannot end the block. The project's content
+ * exclusions (D-59) travel with it, so every adapter delivers both the same way.
  *
  * @module provider-core/server/promptProfileInstructions
  */

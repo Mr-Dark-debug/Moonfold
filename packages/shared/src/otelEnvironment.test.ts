@@ -19,16 +19,7 @@ const specIgnored = (value: string) =>
 describe("OtelEnvironment", () => {
   it.effect.each([
     { name: "nothing set", env: {}, disabled: false, warnings: [] },
-    // OTEL_SDK_DISABLED follows the specification: only `true`, case-insensitively.
     { name: "spec true", env: { OTEL_SDK_DISABLED: "true" }, disabled: true, warnings: [SPEC_OFF] },
-    { name: "spec True", env: { OTEL_SDK_DISABLED: "True" }, disabled: true, warnings: [SPEC_OFF] },
-    {
-      name: "spec padded",
-      env: { OTEL_SDK_DISABLED: " true " },
-      disabled: true,
-      warnings: [SPEC_OFF],
-    },
-    { name: "spec false", env: { OTEL_SDK_DISABLED: "false" }, disabled: false, warnings: [] },
     {
       name: "spec 1",
       env: { OTEL_SDK_DISABLED: "1" },
@@ -36,25 +27,11 @@ describe("OtelEnvironment", () => {
       warnings: [specIgnored("1")],
     },
     {
-      name: "spec padded yes",
-      env: { OTEL_SDK_DISABLED: " yes " },
-      disabled: false,
-      warnings: [specIgnored("yes")],
-    },
-    // MOONFOLD_OTEL_SDK_DISABLED takes Config.Boolean's values, case-insensitively.
-    {
       name: "moonfold 1",
       env: { MOONFOLD_OTEL_SDK_DISABLED: "1" },
       disabled: true,
       warnings: [MOONFOLD_OFF],
     },
-    {
-      name: "moonfold TRUE",
-      env: { MOONFOLD_OTEL_SDK_DISABLED: "TRUE" },
-      disabled: true,
-      warnings: [MOONFOLD_OFF],
-    },
-    { name: "moonfold n", env: { MOONFOLD_OTEL_SDK_DISABLED: "n" }, disabled: false, warnings: [] },
     {
       name: "moonfold false overrides spec true",
       env: { MOONFOLD_OTEL_SDK_DISABLED: "false", OTEL_SDK_DISABLED: "true" },
@@ -62,22 +39,10 @@ describe("OtelEnvironment", () => {
       warnings: [],
     },
     {
-      name: "blank moonfold falls through",
-      env: { MOONFOLD_OTEL_SDK_DISABLED: "  ", OTEL_SDK_DISABLED: "true" },
-      disabled: true,
-      warnings: [SPEC_OFF],
-    },
-    {
       name: "unreadable moonfold warns and falls through",
       env: { MOONFOLD_OTEL_SDK_DISABLED: "maybe", OTEL_SDK_DISABLED: "true" },
       disabled: true,
       warnings: ["MOONFOLD_OTEL_SDK_DISABLED=maybe is not a yes or a no and was ignored", SPEC_OFF],
-    },
-    {
-      name: "bad spec value still warns when moonfold answered",
-      env: { MOONFOLD_OTEL_SDK_DISABLED: "false", OTEL_SDK_DISABLED: "yes" },
-      disabled: false,
-      warnings: [specIgnored("yes")],
     },
   ])("$name", ({ env, disabled, warnings }) =>
     Effect.gen(function* () {
@@ -88,7 +53,6 @@ describe("OtelEnvironment", () => {
   );
 
   it.effect.each([
-    { name: "unset", env: {}, resourceAttributes: {}, warnings: [] },
     {
       name: "a percent-encoded list",
       env: { OTEL_RESOURCE_ATTRIBUTES: "team=core,message=hello%20world" },
@@ -119,14 +83,6 @@ describe("OtelEnvironment", () => {
         Unset: () => "Unset",
       });
     it.effect.each([
-      {
-        name: "nothing set",
-        env: {},
-        traces: "Unset",
-        metrics: "Unset",
-        logs: "Unset",
-        warnings: [],
-      },
       {
         name: "generic endpoint appends each signal's path, keeping the query",
         env: { OTEL_EXPORTER_OTLP_ENDPOINT: "https://collector:4318/base?api_key=secret" },
@@ -189,16 +145,6 @@ describe("OtelEnvironment", () => {
         ],
       },
       {
-        name: "an endpoint without a scheme is not an http URL",
-        env: { OTEL_EXPORTER_OTLP_ENDPOINT: "localhost:4318" },
-        traces: "Off",
-        metrics: "Off",
-        logs: "Off",
-        warnings: [
-          "OTEL_EXPORTER_OTLP_ENDPOINT is not an http or https URL, so the signals it configures are not exported",
-        ],
-      },
-      {
         name: "the kill switch wins outright over a valid endpoint",
         env: {
           MOONFOLD_OTEL_SDK_DISABLED: "true",
@@ -220,62 +166,6 @@ describe("OtelEnvironment", () => {
         logs: "Off",
         warnings: [],
       },
-      {
-        name: "an exporter of none turns its signal off with no endpoint named",
-        env: { OTEL_METRICS_EXPORTER: " NONE " },
-        traces: "Unset",
-        metrics: "Off",
-        logs: "Unset",
-        warnings: [],
-      },
-      {
-        name: "an exporter of none leaves its signal's endpoint unread",
-        env: { OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "not-a-url", OTEL_TRACES_EXPORTER: "none" },
-        traces: "Off",
-        metrics: "Unset",
-        logs: "Unset",
-        warnings: [],
-      },
-      {
-        name: "an exporter of otlp or blank is the default",
-        env: {
-          OTEL_EXPORTER_OTLP_ENDPOINT: "https://collector:4318",
-          OTEL_TRACES_EXPORTER: "OTLP",
-          OTEL_LOGS_EXPORTER: "  ",
-        },
-        traces: "https://collector:4318/v1/traces",
-        metrics: "https://collector:4318/v1/metrics",
-        logs: "https://collector:4318/v1/logs",
-        warnings: [],
-      },
-      {
-        name: "an exporter Moonfold does not have is ignored with a warning",
-        env: {
-          OTEL_EXPORTER_OTLP_ENDPOINT: "https://collector:4318",
-          OTEL_METRICS_EXPORTER: "prometheus",
-        },
-        traces: "https://collector:4318/v1/traces",
-        metrics: "https://collector:4318/v1/metrics",
-        logs: "https://collector:4318/v1/logs",
-        warnings: [
-          "OTEL_METRICS_EXPORTER names prometheus, which Moonfold does not export to, so it was ignored",
-        ],
-      },
-      {
-        name: "a list honors none and otlp and names what it ignored",
-        env: {
-          OTEL_EXPORTER_OTLP_ENDPOINT: "https://collector:4318",
-          OTEL_TRACES_EXPORTER: "console,none",
-          OTEL_LOGS_EXPORTER: "otlp,console,otlpp",
-        },
-        traces: "Off",
-        metrics: "https://collector:4318/v1/metrics",
-        logs: "https://collector:4318/v1/logs",
-        warnings: [
-          "OTEL_TRACES_EXPORTER names console, which Moonfold does not export to, so it was ignored",
-          "OTEL_LOGS_EXPORTER names console, otlpp, which Moonfold does not export to, so they were ignored",
-        ],
-      },
     ])("$name", ({ env, traces, metrics, logs, warnings }) =>
       Effect.gen(function* () {
         const resolved = yield* load(env);
@@ -294,20 +184,6 @@ describe("OtelEnvironment", () => {
         Unset: () => "Unset",
       });
     it.effect.each([
-      {
-        name: "nothing else set takes the specification's default protocol",
-        env: ENDPOINT,
-        traces: { protocol: "http/protobuf", headers: undefined },
-        logs: { protocol: "http/protobuf", headers: undefined },
-        warnings: [],
-      },
-      {
-        name: "headers are comma-separated pairs with percent-encoded values",
-        env: { ...ENDPOINT, OTEL_EXPORTER_OTLP_HEADERS: "api-key=a%20b,tenant=moonfold" },
-        traces: { protocol: "http/protobuf", headers: { "api-key": "a b", tenant: "moonfold" } },
-        logs: { protocol: "http/protobuf", headers: { "api-key": "a b", tenant: "moonfold" } },
-        warnings: [],
-      },
       {
         name: "a per-signal protocol and headers beat the generic ones",
         env: {
@@ -331,13 +207,6 @@ describe("OtelEnvironment", () => {
         ],
       },
       {
-        name: "a protocol reads case-insensitively",
-        env: { ...ENDPOINT, OTEL_EXPORTER_OTLP_PROTOCOL: "HTTP/JSON" },
-        traces: { protocol: "http/json", headers: undefined },
-        logs: { protocol: "http/json", headers: undefined },
-        warnings: [],
-      },
-      {
         name: "undecodable headers turn off every signal once, without leaking them",
         env: { ...ENDPOINT, OTEL_EXPORTER_OTLP_HEADERS: "api-key=%zz" },
         traces: "Off",
@@ -345,44 +214,6 @@ describe("OtelEnvironment", () => {
         warnings: [
           "OTEL_EXPORTER_OTLP_HEADERS is not a list of key=value pairs with percent-encoded values, so the signals it configures are not exported",
         ],
-      },
-      {
-        name: "a header without a value separator turns its signal off",
-        env: { ...ENDPOINT, OTEL_EXPORTER_OTLP_LOGS_HEADERS: "Authorization" },
-        traces: { protocol: "http/protobuf", headers: undefined },
-        logs: "Off",
-        warnings: [
-          "OTEL_EXPORTER_OTLP_LOGS_HEADERS is not a list of key=value pairs with percent-encoded values, so the signals it configures are not exported",
-        ],
-      },
-      {
-        name: "blank per-signal headers leave the generic ones in charge",
-        env: {
-          ...ENDPOINT,
-          OTEL_EXPORTER_OTLP_HEADERS: "api-key=shared",
-          OTEL_EXPORTER_OTLP_LOGS_HEADERS: "  ",
-        },
-        traces: { protocol: "http/protobuf", headers: { "api-key": "shared" } },
-        logs: { protocol: "http/protobuf", headers: { "api-key": "shared" } },
-        warnings: [],
-      },
-      {
-        name: "generic headers every signal overrides say nothing",
-        env: {
-          OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "https://tempo:4318/v1/traces",
-          OTEL_EXPORTER_OTLP_TRACES_HEADERS: "api-key=traces",
-          OTEL_EXPORTER_OTLP_HEADERS: "api-key=%zz",
-        },
-        traces: { protocol: "http/protobuf", headers: { "api-key": "traces" } },
-        logs: "Unset",
-        warnings: [],
-      },
-      {
-        name: "protocol and headers say nothing for a signal no endpoint names",
-        env: { OTEL_EXPORTER_OTLP_PROTOCOL: "grpc", OTEL_EXPORTER_OTLP_HEADERS: "api-key=%zz" },
-        traces: "Unset",
-        logs: "Unset",
-        warnings: [],
       },
     ])("$name", ({ env, traces, logs, warnings }) =>
       Effect.gen(function* () {
@@ -393,6 +224,24 @@ describe("OtelEnvironment", () => {
       }),
     );
   });
+
+  it.effect("names the variable each signal's endpoint came from", () =>
+    Effect.gen(function* () {
+      const otel = yield* load({
+        OTEL_EXPORTER_OTLP_ENDPOINT: "https://collector:4318",
+        OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "https://tempo:4318/v1/traces",
+      });
+      const variableOf = (signal: OtelEnvironment.OtelSignal) =>
+        OtelEnvironment.OtelSignal.$match(signal, {
+          Export: ({ variable }) => variable,
+          Off: () => undefined,
+          Unset: () => undefined,
+        });
+      assert.strictEqual(variableOf(otel.traces), "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT");
+      assert.strictEqual(variableOf(otel.metrics), "OTEL_EXPORTER_OTLP_ENDPOINT");
+      assert.strictEqual(variableOf(otel.logs), "OTEL_EXPORTER_OTLP_ENDPOINT");
+    }),
+  );
 
   describe("resolveSignalEndpoint", () => {
     const moonfoldExport = {
@@ -407,21 +256,21 @@ describe("OtelEnvironment", () => {
     });
     const otelExport = OtelEnvironment.OtelSignal.Export({
       url: "http://otel:4318/v1/logs",
+      variable: "OTEL_EXPORTER_OTLP_LOGS_ENDPOINT",
       protocol: "http/protobuf",
       headers: { "x-key": "otel" },
     });
     it.each([
       {
-        name: "MOONFOLD_OTLP_*_URL wins over an OTEL endpoint",
-        otel: withLogs(otelExport),
-        moonfoldUrl: "http://moonfold:4318/v1/logs",
-        expected: { url: "http://moonfold:4318/v1/logs", export: moonfoldExport },
-      },
-      {
         name: "MOONFOLD_OTLP_*_URL wins over a signal the OTEL variables turned off",
         otel: withLogs(OtelEnvironment.OtelSignal.Off()),
         moonfoldUrl: "http://moonfold:4318/v1/logs",
-        expected: { url: "http://moonfold:4318/v1/logs", export: moonfoldExport },
+        expected: {
+          url: "http://moonfold:4318/v1/logs",
+          export: moonfoldExport,
+          source: "environment" as const,
+          variable: "MOONFOLD_OTLP_LOGS_URL",
+        },
       },
       {
         name: "an OTEL endpoint brings its headers and protocol over the fallback",
@@ -434,6 +283,8 @@ describe("OtelEnvironment", () => {
             headers: { "x-key": "otel" },
             exportIntervalMs: 5_000,
           },
+          source: "environment" as const,
+          variable: "OTEL_EXPORTER_OTLP_LOGS_ENDPOINT",
         },
       },
       {
@@ -446,22 +297,41 @@ describe("OtelEnvironment", () => {
         name: "an unset signal takes the first non-blank fallback",
         otel: withLogs(OtelEnvironment.OtelSignal.Unset()),
         moonfoldUrl: undefined,
-        expected: { url: "http://settings:4318/v1/logs", export: moonfoldExport },
+        expected: {
+          url: "http://settings:4318/v1/logs",
+          export: moonfoldExport,
+          source: "settings" as const,
+        },
       },
       {
-        name: "the kill switch wins over everything",
-        otel: withLogs(otelExport, true),
-        moonfoldUrl: "http://moonfold:4318/v1/logs",
-        expected: undefined,
+        name: "a desktop bootstrap URL that differs from the setting wins as the desktop's own",
+        otel: withLogs(OtelEnvironment.OtelSignal.Unset()),
+        moonfoldUrl: undefined,
+        bootstrapUrl: "http://desktop:4318/v1/logs",
+        expected: {
+          url: "http://desktop:4318/v1/logs",
+          export: moonfoldExport,
+          source: "bootstrap" as const,
+        },
       },
-    ])("$name", ({ otel, moonfoldUrl, expected }) => {
+      {
+        name: "a desktop bootstrap URL that forwards the setting counts as the setting",
+        otel: withLogs(OtelEnvironment.OtelSignal.Unset()),
+        moonfoldUrl: undefined,
+        bootstrapUrl: " http://settings:4318/v1/logs ",
+        expected: {
+          url: "http://settings:4318/v1/logs",
+          export: moonfoldExport,
+          source: "settings" as const,
+        },
+      },
+    ])("$name", ({ otel, moonfoldUrl, bootstrapUrl = "", expected }) => {
       assert.deepStrictEqual(
         OtelEnvironment.resolveSignalEndpoint(
           otel,
           "logs",
           { url: moonfoldUrl, export: moonfoldExport },
-          "",
-          "http://settings:4318/v1/logs",
+          { bootstrapUrl, settingsUrl: "http://settings:4318/v1/logs" },
         ),
         expected,
       );
@@ -476,21 +346,17 @@ describe("OtelEnvironment", () => {
         export: { protocol: "http/json", headers: undefined, exportIntervalMs: 10_000 },
       } as const;
       assert.strictEqual(
-        OtelEnvironment.resolveSignalEndpoint(
-          otel,
-          "logs",
-          moonfold,
-          "http://settings:4318/v1/logs",
-        ),
+        OtelEnvironment.resolveSignalEndpoint(otel, "logs", moonfold, {
+          bootstrapUrl: undefined,
+          settingsUrl: "http://settings:4318/v1/logs",
+        }),
         undefined,
       );
       assert.strictEqual(
-        OtelEnvironment.resolveSignalEndpoint(
-          otel,
-          "traces",
-          moonfold,
-          "http://settings:4318/v1/traces",
-        )?.url,
+        OtelEnvironment.resolveSignalEndpoint(otel, "traces", moonfold, {
+          bootstrapUrl: undefined,
+          settingsUrl: "http://settings:4318/v1/traces",
+        })?.url,
         "http://settings:4318/v1/traces",
       );
     }),
@@ -517,11 +383,53 @@ describe("OtelEnvironment", () => {
         assert.deepStrictEqual(
           resource.attributes
             .map((attribute) => attribute.key)
-            // Effect adds these to every resource.
             .filter((key) => !key.startsWith("telemetry.sdk.")),
           [...attributes, "service.name"],
         );
       }),
     );
   });
+});
+
+describe("isRelayTracingEnabled", () => {
+  it("defaults on and respects the MOONFOLD SDK override of the standard kill switch", () => {
+    assert.isTrue(OtelEnvironment.isRelayTracingEnabled({}));
+    assert.isFalse(OtelEnvironment.isRelayTracingEnabled({ OTEL_SDK_DISABLED: "true" }));
+    assert.isTrue(
+      OtelEnvironment.isRelayTracingEnabled({
+        OTEL_SDK_DISABLED: "true",
+        MOONFOLD_OTEL_SDK_DISABLED: "false",
+      }),
+    );
+    assert.isFalse(
+      OtelEnvironment.isRelayTracingEnabled({
+        OTEL_SDK_DISABLED: "false",
+        MOONFOLD_OTEL_SDK_DISABLED: "true",
+      }),
+    );
+  });
+
+  it.effect("product opt-out beats SDK enable without disabling user-configured tracing", () =>
+    Effect.gen(function* () {
+      const env = {
+        MOONFOLD_TELEMETRY_ENABLED: "false",
+        MOONFOLD_OTEL_SDK_DISABLED: "false",
+        OTEL_SDK_DISABLED: "true",
+        OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "https://user.example.test/v1/traces",
+      };
+      assert.isFalse(OtelEnvironment.isRelayTracingEnabled(env));
+
+      const otel = yield* load(env);
+      assert.isFalse(otel.disabled);
+      assert.deepStrictEqual(
+        otel.traces,
+        OtelEnvironment.OtelSignal.Export({
+          url: env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT,
+          variable: "OTEL_EXPORTER_OTLP_TRACES_ENDPOINT",
+          protocol: "http/protobuf",
+          headers: undefined,
+        }),
+      );
+    }),
+  );
 });

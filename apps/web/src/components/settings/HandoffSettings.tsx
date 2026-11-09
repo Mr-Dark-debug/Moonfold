@@ -9,12 +9,8 @@ import { ArrowDownIcon, ArrowUpIcon, PlusIcon, XIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { getCustomModelOptionsByInstance } from "../../modelSelection";
-import {
-  applyProviderInstanceSettings,
-  deriveProviderInstanceEntries,
-  sortProviderInstanceEntries,
-} from "../../providerInstances";
-import { useEnvironments } from "../../state/environments";
+import { providerInstanceEntriesFor } from "../../providerInstances";
+import { useEnvironmentProviders, useEnvironments } from "../../state/environments";
 import { EMPTY_SERVER_PROVIDERS } from "../../state/server";
 import { ProviderModelPicker } from "../chat/ProviderModelPicker";
 import { Button } from "../ui/button";
@@ -49,14 +45,12 @@ export function HandoffSettingsPanel() {
   const representative = target
     ? environments.find((environment) => environment.environmentId === target.environmentId)
     : undefined;
-  const providers = representative?.serverConfig?.providers ?? EMPTY_SERVER_PROVIDERS;
-  const entries = sortProviderInstanceEntries(
-    applyProviderInstanceSettings(
-      deriveProviderInstanceEntries(providers),
-      settings,
-      target?.projectId ?? null,
-    ),
-  );
+  const providersByEnvironment = useEnvironmentProviders();
+  const providers =
+    (representative?.serverConfig
+      ? providersByEnvironment.get(representative.environmentId)
+      : undefined) ?? EMPTY_SERVER_PROVIDERS;
+  const entries = providerInstanceEntriesFor(providers, settings, target?.projectId ?? null);
   const enabledEntries = entries.filter((entry) => entry.enabled);
   const firstEntry = enabledEntries[0];
   const [adding, setAdding] = useState<ModelSelection | null>(null);
@@ -66,6 +60,7 @@ export function HandoffSettingsPanel() {
   const refocus = useRef<{ key: string; action: "up" | "down" | "remove"; index: number } | null>(
     null,
   );
+  // oxlint-disable-next-line moonfold/no-unreasoned-state-sync -- moves DOM focus back to the reordered row after the list re-renders
   useEffect(() => {
     const target = refocus.current;
     const list = fallbackListRef.current;

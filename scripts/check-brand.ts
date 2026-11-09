@@ -38,6 +38,12 @@ const ALLOWED_FILES: ReadonlyArray<RegExp> = [
   // Its generated docs and blog pages carry the same credit in their footer, and the blog
   // describes the fork's history.
   /^moonfold-website\/(?:content\/blog\/|public\/(?:docs|blog)\/|scripts\/build-content\.mjs$)/,
+  // Upstream's hosted relay and its account pages (D-64). They only run with a hosted sign-in key,
+  // which Moonfold does not ship, and name the upstream services they were written for.
+  /^infra\/relay\//,
+  /^apps\/web\/src\/components\/clerk\//,
+  /^apps\/web\/src\/components\/cloud\/TunnelUsage\.tsx$/,
+  /^docs\/operations\/relay-observability\.md$/,
 ];
 
 // Allowed inside any file: references to upstream history.

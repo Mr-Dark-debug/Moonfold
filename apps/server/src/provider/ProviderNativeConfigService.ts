@@ -1,8 +1,7 @@
 /**
- * ProviderNativeConfigService - the provider's own configuration (MCP servers,
- * skills, hooks, imports from other agents, account usage) for Settings and
- * agents. It resolves the instance and project, then calls the instance's
- * `nativeConfig` capability; providers without one answer with a setup error.
+ * ProviderNativeConfigService - the provider's own configuration (MCP servers, skills, hooks,
+ * imports, account usage) for Settings and agents. It resolves the instance and project, then
+ * calls the instance's `nativeConfig` capability; providers without one answer with a setup error.
  *
  * @module provider/ProviderNativeConfigService
  */
@@ -99,24 +98,26 @@ const make = Effect.gen(function* () {
       ...(cause === undefined ? {} : { cause }),
     });
 
-  const configFor = (instanceId: ProviderInstanceId, operation: string) =>
-    Effect.gen(function* () {
-      const instance = yield* providerInstances.getInstance(instanceId);
-      if (instance === undefined) {
-        return yield* setupError(instanceId, operation, "Provider instance not found.");
-      }
-      if (!instance.enabled) {
-        return yield* setupError(instanceId, operation, "This provider is disabled.");
-      }
-      if (instance.nativeConfig === undefined) {
-        return yield* setupError(
-          instanceId,
-          operation,
-          "This provider does not expose its configuration to Moonfold.",
-        );
-      }
-      return instance.nativeConfig;
-    });
+  const configFor = Effect.fn("ProviderNativeConfigService.configFor")(function* (
+    instanceId: ProviderInstanceId,
+    operation: string,
+  ) {
+    const instance = yield* providerInstances.getInstance(instanceId);
+    if (instance === undefined) {
+      return yield* setupError(instanceId, operation, "Provider instance not found.");
+    }
+    if (!instance.enabled) {
+      return yield* setupError(instanceId, operation, "This provider is disabled.");
+    }
+    if (instance.nativeConfig === undefined) {
+      return yield* setupError(
+        instanceId,
+        operation,
+        "This provider does not expose its configuration to Moonfold.",
+      );
+    }
+    return instance.nativeConfig;
+  });
 
   const projectCwd = (
     instanceId: ProviderInstanceId,
@@ -124,7 +125,7 @@ const make = Effect.gen(function* () {
     projectId: ProjectId | undefined,
   ) =>
     projectId === undefined
-      ? Effect.succeed(undefined)
+      ? Effect.undefined
       : projects.getById(projectId).pipe(
           Effect.mapError((cause) =>
             setupError(instanceId, operation, "The project is unavailable.", cause),
@@ -138,57 +139,62 @@ const make = Effect.gen(function* () {
         );
 
   /** Runs one capability call with the project's directory, mapping driver errors. */
-  const run = <A>(
+  const run = Effect.fn("ProviderNativeConfigService.run")(function* <A>(
     input: { readonly instanceId: ProviderInstanceId; readonly projectId?: ProjectId | undefined },
     operation: string,
     use: (
       config: NativeConfig,
       cwd: string | undefined,
     ) => Effect.Effect<A, ProviderSetupError | { readonly detail: string }>,
-  ) =>
-    Effect.gen(function* () {
-      const config = yield* configFor(input.instanceId, operation);
-      const cwd = yield* projectCwd(input.instanceId, operation, input.projectId);
-      return yield* use(config, cwd).pipe(
-        Effect.mapError((error) =>
-          isProviderSetupError(error)
-            ? error
-            : setupError(input.instanceId, operation, error.detail, error),
-        ),
-      );
-    }).pipe(Effect.annotateSpans({ instanceId: input.instanceId, operation }));
+  ) {
+    const annotations = { instanceId: input.instanceId, operation };
+    yield* Effect.annotateCurrentSpan(annotations);
+    const config = yield* configFor(input.instanceId, operation);
+    const cwd = yield* projectCwd(input.instanceId, operation, input.projectId);
+    return yield* use(config, cwd).pipe(
+      Effect.mapError((error) =>
+        isProviderSetupError(error)
+          ? error
+          : setupError(input.instanceId, operation, error.detail, error),
+      ),
+      Effect.annotateSpans(annotations),
+    );
+  });
 
   const listSkills = (input: ProviderNativeConfigInput) =>
     run(input, "list-skills", (config, cwd) => config.listSkills(cwd));
 
-  const readSkill = (input: ProviderSkillReadInput) =>
-    Effect.gen(function* () {
-      const { skills } = yield* listSkills(input);
-      if (!skills.some((skill) => skill.path === input.path)) {
-        return yield* setupError(
-          input.instanceId,
-          "read-skill",
-          "That skill is not one this provider lists.",
-        );
-      }
-      const bytes = yield* fileSystem
-        .readFile(input.path)
-        .pipe(
-          Effect.mapError((cause) =>
-            setupError(input.instanceId, "read-skill", "The skill file could not be read.", cause),
-          ),
-        );
-      const truncated = bytes.byteLength > SKILL_READ_LIMIT_BYTES;
-      return {
-        contents: new TextDecoder().decode(
-          truncated ? bytes.subarray(0, SKILL_READ_LIMIT_BYTES) : bytes,
+  const readSkill = Effect.fn("ProviderNativeConfigService.readSkill")(function* (
+    input: ProviderSkillReadInput,
+  ) {
+    const { skills } = yield* listSkills(input);
+    if (!skills.some((skill) => skill.path === input.path)) {
+      return yield* setupError(
+        input.instanceId,
+        "read-skill",
+        "That skill is not one this provider lists.",
+      );
+    }
+    const bytes = yield* fileSystem
+      .readFile(input.path)
+      .pipe(
+        Effect.mapError((cause) =>
+          setupError(input.instanceId, "read-skill", "The skill file could not be read.", cause),
         ),
-        truncated,
-      };
-    });
+      );
+    const truncated = bytes.byteLength > SKILL_READ_LIMIT_BYTES;
+    return {
+      contents: new TextDecoder().decode(
+        truncated ? bytes.subarray(0, SKILL_READ_LIMIT_BYTES) : bytes,
+      ),
+      truncated,
+    };
+  });
 
   return ProviderNativeConfigService.of({
-    listMcpServers: (input) => run(input, "list-mcp-servers", (config) => config.listMcpServers()),
+    listMcpServers: Effect.fn("ProviderNativeConfigService.listMcpServers")((input) =>
+      run(input, "list-mcp-servers", (config) => config.listMcpServers()),
+    ),
     loginMcpServer: (input) =>
       Stream.unwrap(
         configFor(input.instanceId, "login-mcp-server").pipe(
@@ -203,23 +209,30 @@ const make = Effect.gen(function* () {
           ),
         ),
       ),
-    reloadMcpServers: (input) =>
+    reloadMcpServers: Effect.fn("ProviderNativeConfigService.reloadMcpServers")((input) =>
       run(input, "reload-mcp-servers", (config) => config.reloadMcpServers()),
+    ),
     listSkills,
-    setSkillEnabled: (input) =>
+    setSkillEnabled: Effect.fn("ProviderNativeConfigService.setSkillEnabled")((input) =>
       run(input, "set-skill-enabled", (config) =>
         config.setSkillEnabled({ path: input.path, enabled: input.enabled }),
       ),
+    ),
     readSkill,
-    listHooks: (input) => run(input, "list-hooks", (config, cwd) => config.listHooks(cwd)),
-    detectAgentImports: (input) =>
+    listHooks: Effect.fn("ProviderNativeConfigService.listHooks")((input) =>
+      run(input, "list-hooks", (config, cwd) => config.listHooks(cwd)),
+    ),
+    detectAgentImports: Effect.fn("ProviderNativeConfigService.detectAgentImports")((input) =>
       run(input, "detect-agent-imports", (config, cwd) => config.detectAgentImports(cwd)),
-    importAgentConfig: (input) =>
+    ),
+    importAgentConfig: Effect.fn("ProviderNativeConfigService.importAgentConfig")((input) =>
       run(input, "import-agent-config", (config, cwd) =>
         config.importAgentConfig({ cwd, itemIds: input.itemIds }),
       ),
-    readAccountUsage: (input) =>
+    ),
+    readAccountUsage: Effect.fn("ProviderNativeConfigService.readAccountUsage")((input) =>
       run(input, "read-account-usage", (config) => config.readAccountUsage()),
+    ),
   });
 });
 

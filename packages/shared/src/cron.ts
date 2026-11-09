@@ -1,10 +1,8 @@
 /**
- * Five-field cron expressions (minute, hour, day of month, month, day of week) evaluated in an
- * IANA time zone. Used by scheduled tasks on the server and by the task form's preview.
- *
- * Supported per field: `*`, numbers, ranges `a-b`, steps `*\/n` and `a-b/n`, lists `a,b`, and
- * three-letter month and weekday names. Day of week accepts 0-7 (0 and 7 are Sunday). When both
- * day of month and day of week are restricted, a day matches either one (the classic cron rule).
+ * Five-field cron expressions evaluated in an IANA time zone, for scheduled tasks and the task
+ * form's preview. Per field: `*`, numbers, ranges `a-b`, steps `*\/n` and `a-b/n`, lists `a,b`,
+ * and month and weekday names. Day of week is 0-7 (0 and 7 are Sunday). When both day of month
+ * and day of week are restricted, a day matches either one (the classic cron rule).
  */
 import * as DateTime from "effect/DateTime";
 import * as Option from "effect/Option";
@@ -52,6 +50,7 @@ const FIELDS: ReadonlyArray<FieldSpec> = [
   { name: "day of week", min: 0, max: 7, names: DAY_NAMES, nameOffset: 0 },
 ];
 
+// @effect-diagnostics-next-line extendsNativeError:off - a local throw sentinel inside synchronous parsing, caught below.
 class CronParseError extends Error {}
 
 function parseValue(raw: string, spec: FieldSpec): number {

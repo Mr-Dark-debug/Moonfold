@@ -1,15 +1,23 @@
-export const PASTED_TEXT_ATTACHMENT_THRESHOLD_BYTES = 32 * 1024;
+const PASTED_TEXT_ATTACHMENT_THRESHOLD_BYTES = 32 * 1024;
 
 const textEncoder = new TextEncoder();
 
 export type PastedTextDisposition = "attachment" | "inline";
 
+/** Non-Latin layouts (Cyrillic, Greek) report the typed letter; fall back to the physical key. */
+function isVKey(event: { readonly key: string; readonly code?: string }): boolean {
+  const key = event.key.toLowerCase();
+  return /^[a-z]$/.test(key) ? key === "v" : event.code === "KeyV";
+}
+
 export function isPasteAsTextShortcut(
-  event: Pick<KeyboardEvent, "key" | "metaKey" | "ctrlKey" | "altKey" | "shiftKey">,
+  event: Pick<KeyboardEvent, "key" | "metaKey" | "ctrlKey" | "altKey" | "shiftKey"> & {
+    readonly code?: string;
+  },
   macPlatform: boolean,
 ): boolean {
   return (
-    event.key.toLowerCase() === "v" &&
+    isVKey(event) &&
     event.shiftKey &&
     !event.altKey &&
     (macPlatform ? event.metaKey && !event.ctrlKey : event.ctrlKey && !event.metaKey)
@@ -17,7 +25,6 @@ export function isPasteAsTextShortcut(
 }
 
 /**
- * Large clipboard text becomes a file so an agent can inspect it selectively.
  * The threshold is byte-based: character counts substantially understate the
  * context cost of some Unicode-heavy clipboard contents.
  */
@@ -37,7 +44,6 @@ export function pastedTextDisposition(input: {
     : "inline";
 }
 
-/** Stable, human-readable names when a draft contains several folded pastes. */
 export function nextPastedTextFileName(existingNames: ReadonlyArray<string>): string {
   const names = new Set(existingNames.map((name) => name.toLowerCase()));
   if (!names.has("pasted-text.txt")) {
@@ -49,19 +55,6 @@ export function nextPastedTextFileName(existingNames: ReadonlyArray<string>): st
       return candidate;
     }
   }
-}
-
-export function replaceTextSelection(input: {
-  readonly value: string;
-  readonly selection: { readonly start: number; readonly end: number };
-  readonly text: string;
-}): { readonly value: string; readonly cursor: number } {
-  const start = Math.max(0, Math.min(input.value.length, input.selection.start));
-  const end = Math.max(start, Math.min(input.value.length, input.selection.end));
-  return {
-    value: `${input.value.slice(0, start)}${input.text}${input.value.slice(end)}`,
-    cursor: start + input.text.length,
-  };
 }
 
 export function wouldTextPasteExceedLimit(input: {

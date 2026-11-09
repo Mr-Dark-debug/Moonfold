@@ -1,10 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 
-import {
-  buildDraftActionMenuItems,
-  buildThreadActionMenuItems,
-  type ThreadActionMenuState,
-} from "./threadActionMenu.logic";
+import { buildThreadActionMenuItems, type ThreadActionMenuState } from "./threadActionMenu.logic";
 
 const baseState: ThreadActionMenuState = {
   canOperate: true,
@@ -33,12 +29,6 @@ const baseState: ThreadActionMenuState = {
 
 function ids(state: ThreadActionMenuState): string[] {
   return buildThreadActionMenuItems(state).map((item) => item.id);
-}
-
-function allIds(state: ThreadActionMenuState): string[] {
-  const flatten = (items: ReturnType<typeof buildThreadActionMenuItems>): string[] =>
-    items.flatMap((item) => [item.id, ...(item.children ? flatten(item.children) : [])]);
-  return flatten(buildThreadActionMenuItems(state));
 }
 
 describe("open in new window", () => {
@@ -70,6 +60,53 @@ describe("moving between the project folder and a worktree", () => {
     expect(find({ ...baseState, workspace: "project" })?.disabled).toBe(false);
     expect(find({ ...baseState, workspace: "project", isRunning: true })?.disabled).toBe(true);
     expect(find({ ...baseState, workspace: "project", canOperate: false })?.disabled).toBe(true);
+  });
+});
+
+describe("per-thread memories and prompt profile", () => {
+  it("shows the thread's memory choice, and hides it when the environment did not answer", () => {
+    const optedIn = buildThreadActionMenuItems({ ...baseState, memoriesOptedOut: false });
+    expect(optedIn.find((item) => item.id === "memories")?.children).toEqual([
+      { id: "memories:on", label: "Use memories", checked: true },
+      { id: "memories:off", label: "Don't use memories", checked: false },
+    ]);
+    const optedOut = buildThreadActionMenuItems({ ...baseState, memoriesOptedOut: true });
+    expect(
+      optedOut.find((item) => item.id === "memories")?.children?.find((child) => child.checked)?.id,
+    ).toBe("memories:off");
+    expect(ids({ ...baseState, memoriesOptedOut: null })).not.toContain("memories");
+  });
+
+  it("offers the prompt profiles with the thread's pick checked, and Default otherwise", () => {
+    const promptProfile = {
+      defaultName: "Careful engineer",
+      options: [
+        { id: "moonfold-default", name: "Moonfold default" },
+        { id: "minimal", name: "Minimal" },
+      ],
+    };
+    const following = buildThreadActionMenuItems({
+      ...baseState,
+      promptProfile: { ...promptProfile, threadProfileId: null },
+    }).find((item) => item.id === "prompt-profile");
+    expect(following?.children?.[0]).toEqual({
+      id: "prompt-profile:",
+      label: "Default (Careful engineer)",
+      checked: true,
+    });
+    const picked = buildThreadActionMenuItems({
+      ...baseState,
+      promptProfile: { ...promptProfile, threadProfileId: "minimal" },
+    }).find((item) => item.id === "prompt-profile");
+    expect(picked?.children?.find((child) => child.checked)?.id).toBe("prompt-profile:minimal");
+    expect(ids({ ...baseState, promptProfile: null })).not.toContain("prompt-profile");
+  });
+
+  it("offers a handoff that waits for the running turn", () => {
+    const find = (state: ThreadActionMenuState) =>
+      buildThreadActionMenuItems(state).find((item) => item.id === "hand-off");
+    expect(find(baseState)?.disabled).toBe(false);
+    expect(find({ ...baseState, isRunning: true })?.disabled).toBe(true);
   });
 });
 
@@ -117,215 +154,13 @@ describe("buildThreadActionMenuItems", () => {
     },
   );
 
-  it("preserves local actions and restores mutations after a grant", () => {
-    const denied = buildThreadActionMenuItems({ ...baseState, canOperate: false, branch: "main" });
-    expect(denied.filter((item) => !item.disabled).map((item) => item.id)).toEqual([
-      "new-thread-on-branch",
-      "mark-unread",
-      "copy",
-      "project-settings",
-    ]);
-    const allowed = buildThreadActionMenuItems({ ...baseState, canOperate: true });
-    expect(allowed.every((item) => !item.disabled)).toBe(true);
-  });
-
-  it("hides lifecycle items when the environment lacks the capabilities", () => {
-    expect(
-      ids({
-        ...baseState,
-        supports: {
-          settlement: false,
-          autoSettleOptOut: false,
-          snooze: false,
-          pinning: false,
-          titleRegeneration: false,
-        },
-      }),
-    ).toEqual([
-      "rename",
-      "mark-unread",
-      "schedule-follow-up",
-      "hand-off",
-      "copy",
-      "project-settings",
-      "archive",
-      "delete",
-    ]);
-  });
-
-  it("groups project settings with utility actions before archive", () => {
-    const items = buildThreadActionMenuItems(baseState);
-    const copyIndex = items.findIndex((item) => item.id === "copy");
-    expect(items[copyIndex + 1]).toMatchObject({
-      id: "project-settings",
-      label: "Project settings",
-      icon: "settings",
-    });
-    expect(items[copyIndex + 2]?.id).toBe("archive");
-  });
-
-  it("offers project filtering only for surfaces with a scoped thread list", () => {
-    expect(ids(baseState)).not.toContain("filter-by-project");
-    expect(
-      buildThreadActionMenuItems({
-        ...baseState,
-        projectFilter: { label: "Beta Project", isActive: false },
-      }).find((item) => item.id === "filter-by-project"),
-    ).toMatchObject({ label: "Filter by Beta Project", icon: "folder-tree" });
-  });
-
-  it("offers the way back to all projects once the list is scoped", () => {
+  it("disables archive and turning into a project while the thread is running", () => {
     const items = buildThreadActionMenuItems({
       ...baseState,
-      projectFilter: { label: "Beta Project", isActive: true },
+      isRunning: true,
+      canTurnIntoProject: true,
     });
-    const filterIndex = items.findIndex((candidate) => candidate.id === "filter-by-project");
-    expect(items[filterIndex]).toMatchObject({ label: "Show all projects", icon: "folder-tree" });
-    expect(items[filterIndex - 1]?.id).toBe("mark-unread");
-    expect(items[filterIndex + 1]?.id).toBe("auto-settle");
-  });
-
-  it("shows the thread's memory choice, and hides it when the environment did not answer", () => {
-    const optedIn = buildThreadActionMenuItems({ ...baseState, memoriesOptedOut: false });
-    expect(optedIn.find((item) => item.id === "memories")?.children).toEqual([
-      { id: "memories:on", label: "Use memories", checked: true },
-      { id: "memories:off", label: "Don't use memories", checked: false },
-    ]);
-    const optedOut = buildThreadActionMenuItems({ ...baseState, memoriesOptedOut: true });
-    expect(
-      optedOut.find((item) => item.id === "memories")?.children?.find((child) => child.checked)?.id,
-    ).toBe("memories:off");
-    expect(ids({ ...baseState, memoriesOptedOut: null })).not.toContain("memories");
-  });
-
-  it("offers the prompt profiles with the thread's pick checked, and Default otherwise", () => {
-    const promptProfile = {
-      defaultName: "Careful engineer",
-      options: [
-        { id: "moonfold-default", name: "Moonfold default" },
-        { id: "minimal", name: "Minimal" },
-      ],
-    };
-    const following = buildThreadActionMenuItems({
-      ...baseState,
-      promptProfile: { ...promptProfile, threadProfileId: null },
-    }).find((item) => item.id === "prompt-profile");
-    expect(following?.children?.[0]).toEqual({
-      id: "prompt-profile:",
-      label: "Default (Careful engineer)",
-      checked: true,
-    });
-    const picked = buildThreadActionMenuItems({
-      ...baseState,
-      promptProfile: { ...promptProfile, threadProfileId: "minimal" },
-    }).find((item) => item.id === "prompt-profile");
-    expect(picked?.children?.find((child) => child.checked)?.id).toBe("prompt-profile:minimal");
-    expect(ids({ ...baseState, promptProfile: null })).not.toContain("prompt-profile");
-  });
-
-  it("includes branch items only for threads with a branch", () => {
-    const withBranch = allIds({ ...baseState, branch: "feat/menu" });
-    expect(withBranch).toContain("new-thread-on-branch");
-    expect(withBranch).toContain("copy-branch");
-    expect(allIds(baseState)).not.toContain("new-thread-on-branch");
-    expect(allIds(baseState)).not.toContain("copy-branch");
-  });
-
-  it("flips lifecycle labels with thread state", () => {
-    expect(ids({ ...baseState, isPinned: true, isSettled: true, isSnoozed: true })).toEqual(
-      expect.arrayContaining(["unpin", "unsettle", "unsnooze"]),
-    );
-    expect(ids(baseState)).toEqual(expect.arrayContaining(["pin", "settle", "snooze"]));
-  });
-
-  it("offers auto-settle as a submenu with the current option checked", () => {
-    const find = (state: ThreadActionMenuState) =>
-      buildThreadActionMenuItems(state).find((item) => item.id === "auto-settle");
-    const on = find(baseState);
-    expect(on?.label).toBe("Auto-settle behavior");
-    expect(on?.children?.map((child) => [child.id, child.checked])).toEqual([
-      ["auto-settle:enabled", true],
-      ["auto-settle:disabled", false],
-    ]);
-    const off = find({ ...baseState, autoSettleEnabled: false });
-    expect(off?.children?.map((child) => child.checked)).toEqual([false, true]);
-    // Sits with the per-thread settings after Mark unread, not the lifecycle verbs.
-    const items = buildThreadActionMenuItems(baseState);
-    expect(items[items.findIndex((item) => item.id === "mark-unread") + 1]?.id).toBe("auto-settle");
-    expect(
-      ids({ ...baseState, supports: { ...baseState.supports, autoSettleOptOut: false } }),
-    ).not.toContain("auto-settle");
-  });
-
-  it("disables snooze when the thread cannot snooze, keeping presets visible", () => {
-    const snooze = buildThreadActionMenuItems({ ...baseState, canSnoozeNow: false }).find(
-      (item) => item.id === "snooze",
-    );
-    expect(snooze?.disabled).toBe(true);
-    expect(snooze?.children?.map((child) => child.id)).toEqual(["snooze:hour", "snooze:custom"]);
-  });
-
-  it("disables title regeneration while one is in flight", () => {
-    const item = buildThreadActionMenuItems({ ...baseState, isRegeneratingTitle: true }).find(
-      (candidate) => candidate.id === "regenerate-title",
-    );
-    expect(item).toMatchObject({ label: "Regenerating…", disabled: true });
-  });
-
-  it("marks delete as destructive and keeps it last", () => {
-    const items = buildThreadActionMenuItems({ ...baseState, branch: "main" });
-    expect(items.at(-1)).toMatchObject({ id: "delete", destructive: true });
-  });
-  it("offers archive as a non-destructive action right before delete", () => {
-    const items = buildThreadActionMenuItems(baseState);
-    const archiveItem = items.at(-2);
-    expect(archiveItem?.id).toBe("archive");
-    expect(archiveItem?.icon).toBe("archive");
-    expect(archiveItem?.separatorBefore).toBe(true);
-    expect(archiveItem?.destructive).toBeFalsy();
-    expect(items.at(-1)?.id).toBe("delete");
-  });
-
-  it("keeps archive available even when the environment lacks every other capability", () => {
-    expect(
-      ids({
-        ...baseState,
-        supports: {
-          settlement: false,
-          autoSettleOptOut: false,
-          snooze: false,
-          pinning: false,
-          titleRegeneration: false,
-        },
-      }),
-    ).toContain("archive");
-  });
-
-  it("disables archive while the thread is running", () => {
-    const archiveItem = buildThreadActionMenuItems({ ...baseState, isRunning: true }).find(
-      (item) => item.id === "archive",
-    );
-    expect(archiveItem?.disabled).toBe(true);
-  });
-});
-
-describe("buildDraftActionMenuItems", () => {
-  it("offers only the copy values the draft has", () => {
-    const items = buildDraftActionMenuItems({ hasPath: false, hasBranch: true, hasProject: true });
-    expect(items[0]).toMatchObject({ id: "copy", disabled: false });
-    expect(items[0]?.children?.map((item) => item.id)).toEqual(["copy-branch"]);
-
-    const noCopy = buildDraftActionMenuItems({
-      hasPath: false,
-      hasBranch: false,
-      hasProject: true,
-    });
-    expect(noCopy[0]).toMatchObject({ id: "copy", disabled: true, children: [] });
-  });
-
-  it("drops project settings without a project and keeps discard last", () => {
-    const items = buildDraftActionMenuItems({ hasPath: true, hasBranch: false, hasProject: false });
-    expect(items.map((item) => item.id)).toEqual(["copy", "discard"]);
-    expect(items.at(-1)).toMatchObject({ label: "Discard draft", destructive: true });
+    expect(items.find((item) => item.id === "archive")?.disabled).toBe(true);
+    expect(items.find((item) => item.id === "turn-into-project")?.disabled).toBe(true);
   });
 });

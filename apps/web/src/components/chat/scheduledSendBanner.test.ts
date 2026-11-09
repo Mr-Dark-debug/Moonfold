@@ -11,7 +11,7 @@ const task = (id: string, patch: Partial<Omit<ScheduledTask, "id">> = {}): Sched
     title: "Scheduled: x",
     prompt: "x",
     enabled: true,
-    schedule: { type: "once", at: "2026-10-28T09:00", timeZone: "UTC" },
+    schedule: { type: "once", runAt: "2026-10-28T09:00:00.000Z" },
     threadId: thread,
     nextRunAt: "2026-10-28T09:00:00.000Z",
     lastRunStatus: "never",

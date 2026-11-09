@@ -1,4 +1,3 @@
-// This policy is independent of Shell so lifecycle and authorization can be tested without a desktop.
 export const CLIENT_NAMES = [
   "dev.moonfold.Moonfold.SnapShot",
   "dev.moonfold.Moonfold.Development.SnapShot",

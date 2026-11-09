@@ -8,11 +8,23 @@ TypeScript package. It does not use Cursor's ACP transport for V2 execution.
 - Node.js 22.13 or newer. The repository's supported Node version satisfies this requirement.
 - Sign in with Cursor in **Settings > Providers > Cursor**, or provide a Cursor API key in
   `CURSOR_API_KEY`.
+- A paid Cursor plan on the account used for browser sign-in or `CURSOR_API_KEY`.
 - A model accepted by the Cursor SDK. `auto` is sent to the SDK as its `default` model selection.
 
 The adapter currently uses the SDK's local-agent runtime so runs operate in the selected Moonfold
 workspace. Cursor cloud agents need repository and cloud-environment configuration that Moonfold does
 not expose yet.
+
+Custom Cursor MCP servers and plugins are not configured in Moonfold. They load from the environment
+machine's Cursor config when the agent opens: project `.cursor/mcp.json`, user `~/.cursor/mcp.json`,
+and installed plugins under `~/.cursor/plugins`. Plugin tools
+can appear without a login; OAuth MCP servers still need credentials. Run `agent mcp login <server>`
+with the cwd set to the Moonfold project root (tokens land in
+`~/.cursor/projects/<folder-slug>/mcp-auth.json`). Cursor desktop Connections auth does not write
+that file, and the local SDK cannot complete interactive MCP OAuth itself—auth attempts fail with
+messages such as "MCP authentication is not supported in local SDK runs" or that the auth server
+does not support dynamic client registration. After you add or change skills, plugins, or MCP
+servers, or after a successful CLI login, use **Restart agent session**.
 
 ## Sign in
 
@@ -34,7 +46,7 @@ The adapter supports:
 - creating and resuming local Cursor agent threads;
 - changing the model and model parameters between turns;
 - assistant text, reasoning, tool activity, plans, and todo streaming;
-- thread-scoped Moonfold MCP tools;
+- thread-scoped Moonfold MCP tools alongside ambient Cursor MCP/plugins from disk;
 - image attachments;
 - interruption, queued app messages, and orchestrator-owned interrupt/restart steering;
 - provider conversation snapshots through `Agent.messages.list()`;
@@ -58,9 +70,12 @@ a provider thread to native task projections or advertise subagent thread IDs. A
 read-only: send messages from the parent thread.
 
 Runtime modes map to the controls the local SDK exposes: full access disables its sandbox, while
-restricted modes and explicit non-full-access sandbox policies enable it. Explicit approval policy
-overrides also control Cursor Auto-review. Auto-review is not represented as an interactive Moonfold
-approval flow.
+restricted modes normally enable it. On Windows, Auto and Supervised run without filesystem
+isolation when Cursor Auto-review is enabled, because the SDK does not support a filesystem sandbox
+there. Restricted modes without Auto-review, including the default Auto-accept edits mode, still
+request the sandbox and cannot start on Windows. Explicit sandbox policies remain authoritative,
+including restrictive policies that the Windows SDK rejects. Explicit approval policy overrides
+control Auto-review, which is not represented as an interactive Moonfold approval flow.
 
 The existing Cursor binary path and API endpoint settings belong to the CLI/ACP integration. Cursor
 V2 execution does not launch that binary, and the SDK does not expose an API endpoint override.

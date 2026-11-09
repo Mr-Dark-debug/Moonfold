@@ -19,4 +19,14 @@ describe("clientRpcRequiredScopes", () => {
       clientRpcRequiredScopes(WS_METHODS.browserSitesAnswer, { id: "r1", answer: "always_block" }),
     ).toContain(AuthSettingsWriteScope);
   });
+
+  it("needs operate access to answer an agent's question", () => {
+    expect(
+      clientRpcRequiredScopes(WS_METHODS.questionsAnswerRequest, {
+        threadId: "thread-1",
+        turnItemId: "turn-item-1",
+        answer: { type: "dismiss" },
+      }),
+    ).toEqual([AuthOrchestrationOperateScope]);
+  });
 });
