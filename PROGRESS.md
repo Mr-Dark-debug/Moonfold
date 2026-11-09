@@ -14,6 +14,14 @@ Done:
 Decisions: D-62 rewritten (no toggle; upstream made the new design the only one), D-63, D-64.
 `agentContextBudget.json` raised to the measured Moonfold values; CI flags budget growth.
 
+Verified on Windows before the merge: typecheck in every package, `vp check` 0 errors,
+`knip:check`, `check-brand` clean. Per-package tests: client-runtime 1762 passed, web 4874 with 2
+failures (fixed in `88e91a19d`), contracts and the provider, ssh, tailscale and source-control
+packages passing. Upstream tests that assumed its repo URL, a `full-access` default and the
+mobile voice docs were aligned with Moonfold. Every other failure was Windows-only: POSIX paths
+and separators, `/tmp` fixtures, Linux compositors, macOS login shells, symlinks, git spawn in
+temp worktrees, and executable bits in the ACP registry cache. CI on Linux judges those.
+
 Open problems: no live run of `/brand` with a real provider yet, and no click-through of the
 question card in a running client. Evals for the new tool descriptions have not been run.
 Moonfold-only screens still need the scored review loop (docs/plans/ui-refresh.md). Hosted
