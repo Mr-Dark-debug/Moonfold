@@ -22,8 +22,9 @@ applies to the web and desktop clients.
 ## Home screen background
 
 The new thread screen can show artwork behind the prompt. Open **Settings → Appearance → Home
-screen** and choose a **Background**: Moonfold, Golden hour, Purple wind, or None, which is the
-default. **Background style** picks how it is drawn:
+screen** and choose a **Background**: Moonfold, Golden hour, Purple wind, or Classic (no image),
+which is the default and keeps the plain screen. **Background style** picks how the artwork is
+drawn:
 
 - **ASCII text** draws the artwork as live text in the scene's colors. On a light theme the picture
   is mirrored so light areas stay light.

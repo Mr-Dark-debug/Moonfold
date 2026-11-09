@@ -183,7 +183,7 @@ const ENVIRONMENT_IDENTIFICATION_LABELS: Record<EnvironmentIdentificationMode, s
 };
 
 const HOME_BACKGROUND_LABELS: Record<HomeBackground, string> = {
-  none: "None",
+  none: "Classic (no image)",
   moonfold: "Moonfold",
   "golden-hour": "Golden hour",
   "purple-wind": "Purple wind",
@@ -1494,7 +1494,7 @@ export function AppearanceSettingsPanel() {
       <SettingsSection id="appearance-home" title="Home screen">
         <SettingsRow
           {...searchableSetting("home-background")}
-          description="Artwork behind the new thread screen, so it is more than a prompt box."
+          description="Artwork behind the new thread screen. Classic keeps the plain look with no image."
           resetAction={
             settings.homeBackground !== DEFAULT_UNIFIED_SETTINGS.homeBackground ? (
               <SettingResetButton

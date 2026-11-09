@@ -311,7 +311,7 @@ export const SETTINGS_SEARCH_ITEMS = [
     title: "Home background",
     to: "/settings/appearance",
     searchTerms: [
-      "home screen new thread wallpaper artwork picture moonfold golden hour purple wind logo none",
+      "home screen new thread wallpaper artwork picture moonfold golden hour purple wind logo none classic plain no image",
     ],
   },
   {
