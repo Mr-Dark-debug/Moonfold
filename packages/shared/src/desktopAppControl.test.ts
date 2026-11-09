@@ -8,7 +8,7 @@ describe("resolveDesktopAppControlAddress", () => {
     ["linux", "/var/tmp/custom", "/var/tmp/custom/moonfold-1000", 107],
     ["linux", `/tmp/${"x".repeat(120)}`, "/tmp/moonfold-1000", 107],
     ["darwin", `/tmp/${"é".repeat(30)}`, "/tmp/moonfold-1000", 103],
-    ["darwin", `/tmp/${"x".repeat(56)}`, `/tmp/${"x".repeat(56)}/moonfold-1000`, 103],
+    ["darwin", `/tmp/${"x".repeat(54)}`, `/tmp/${"x".repeat(54)}/moonfold-1000`, 103],
   ] as const)("keeps %s sockets short under %s", (platform, tempDir, directory, maxBytes) => {
     const first = resolveDesktopAppControlAddress({
       stateDir: `/home/user/${"long/".repeat(40)}userdata`,

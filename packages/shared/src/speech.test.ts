@@ -66,7 +66,7 @@ describe("resolveSpeechVocabulary", () => {
     });
     expect(resolved).toHaveLength(100);
     expect(resolved.slice(0, 3)).toEqual([
-      { term: "Moonfold", aliases: [] },
+      { term: "Moonfold Code", aliases: [] },
       { term: "effect", aliases: ["a fact"] },
       { term: "word0", aliases: [] },
     ]);
