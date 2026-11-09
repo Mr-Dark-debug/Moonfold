@@ -284,6 +284,7 @@ it.effect("a launch steps an inherited mode down to the provider's, and refuses 
       const launched: Array<ThreadLaunch.ThreadLaunchInput> = [];
       const { projectId, dependencies } = clientLaunchHarness({
         runtimeModeCeiling: "auto",
+        defaultRuntimeMode: "full-access",
         launched,
         providers: [
           {

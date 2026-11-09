@@ -184,7 +184,7 @@ describe("DesktopPreReadyPlatform", () => {
               DesktopConfig.layerTest({
                 XDG_DATA_HOME: "/xdg",
                 APPIMAGE: "/Applications/current.AppImage",
-                MOONFOLD_DESKTOP_LAUNCHER_PATH: " /opt/Moonfold/moonfold ",
+                MOONFOLD_DESKTOP_LAUNCHER_PATH: " /opt/Moonfold Beta/moonfold ",
               }),
             ),
           ),
@@ -192,7 +192,7 @@ describe("DesktopPreReadyPlatform", () => {
         const entry = writeFileSyncMock.mock.calls.find(
           ([path]) => path === "/xdg/applications/dev.moonfold.Moonfold.desktop",
         )?.[1];
-        assert.include(entry, 'Exec="/opt/Moonfold/moonfold" %U');
+        assert.include(entry, 'Exec="/opt/Moonfold Beta/moonfold" %U');
       }),
     ).pipe(Effect.ensuring(Effect.sync(() => vi.unstubAllEnvs())));
   });

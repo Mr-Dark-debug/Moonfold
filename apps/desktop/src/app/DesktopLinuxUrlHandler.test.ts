@@ -241,10 +241,10 @@ describe("DesktopLinuxUrlHandler", () => {
 
     return Effect.gen(function* () {
       yield* runRegister(recorded, {
-        environment: { desktopLauncherPath: Option.some("/opt/Moonfold/moonfold") },
+        environment: { desktopLauncherPath: Option.some("/opt/Moonfold Beta/moonfold") },
       });
 
-      assert.include(recorded.files[0]?.content, 'Exec="/opt/Moonfold/moonfold" %U');
+      assert.include(recorded.files[0]?.content, 'Exec="/opt/Moonfold Beta/moonfold" %U');
     });
   });
 
@@ -569,16 +569,16 @@ it.layer(NodeServices.layer)("DesktopLinuxUrlHandler theme icons", (it) => {
       yield* registerWithRealFileSystem(run);
       assert.deepEqual([...(yield* fileSystem.readDirectory(fixture.appsDir))].sort(), [
         "dev.moonfold.Moonfold.png",
-        "dev.moonfold.app.png",
+        "dev.moonfold.moonfold.png",
       ]);
-      for (const name of ["dev.moonfold.app", "dev.moonfold.Moonfold"]) {
+      for (const name of ["dev.moonfold.moonfold", "dev.moonfold.Moonfold"]) {
         const target = path.join(fixture.appsDir, `${name}.png`);
         assert.deepEqual([...(yield* fileSystem.readFile(target))], [...icon]);
         yield* fileSystem.utimes(target, fixture.pastSeconds, fixture.pastSeconds);
       }
 
       yield* registerWithRealFileSystem(run);
-      for (const name of ["dev.moonfold.app", "dev.moonfold.Moonfold"]) {
+      for (const name of ["dev.moonfold.moonfold", "dev.moonfold.Moonfold"]) {
         const info = yield* fileSystem.stat(path.join(fixture.appsDir, `${name}.png`));
         assert.equal(Option.getOrThrow(info.mtime).getTime(), fixture.pastSeconds * 1000);
       }
@@ -593,7 +593,7 @@ it.layer(NodeServices.layer)("DesktopLinuxUrlHandler theme icons", (it) => {
       const path = yield* Path.Path;
       const fixture = yield* themeIconFixture(new Uint8Array([1, 2, 3]));
       yield* fixture.seedCache;
-      const lower = path.join(fixture.appsDir, "dev.moonfold.app.png");
+      const lower = path.join(fixture.appsDir, "dev.moonfold.moonfold.png");
       const upper = path.join(fixture.appsDir, "dev.moonfold.Moonfold.png");
       yield* fileSystem.writeFile(lower, new Uint8Array([3, 2, 1]));
       yield* fileSystem.writeFile(upper, new Uint8Array([1, 2, 3]));

@@ -86,10 +86,10 @@ import Migration0079 from "./Migrations/079_DelegatedRecoveryIndexes.ts";
 import Migration0080 from "./Migrations/080_ScheduledTaskThreadMode.ts";
 // Moonfold's own migrations. They ran as 63-66 before the upstream sync took those ids; see
 // reconcileMoonfoldPreSyncMigrations.
-import MoonfoldScheduledTaskRuns from "./Migrations/063_ScheduledTaskRuns.ts";
-import Migration0082 from "./Migrations/064_Memories.ts";
-import Migration0083 from "./Migrations/065_BrowserSiteRules.ts";
-import Migration0084 from "./Migrations/066_ComputerUse.ts";
+import MoonfoldScheduledTaskRuns from "./Migrations/081_ScheduledTaskRuns.ts";
+import Migration0082 from "./Migrations/082_Memories.ts";
+import Migration0083 from "./Migrations/083_BrowserSiteRules.ts";
+import Migration0084 from "./Migrations/084_ComputerUse.ts";
 
 // Its tables are created only when missing; the column add is the one statement that cannot
 // repeat on a database that already ran it as migration 63.

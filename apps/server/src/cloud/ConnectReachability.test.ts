@@ -1,8 +1,6 @@
 // @effect-diagnostics nodeBuiltinImport:off - reads the user guide to check its anchors.
-import * as NodeFS from "node:fs";
 import * as NodeNet from "node:net";
 
-import { MOONFOLD_CONNECT_TROUBLESHOOTING_SECTIONS } from "@moonfold/contracts";
 import { describe, expect, it } from "@effect/vitest";
 import * as Clock from "effect/Clock";
 import * as Deferred from "effect/Deferred";
@@ -376,25 +374,4 @@ describe("ConnectReachability stale connector recovery", () => {
       }).pipe(Effect.provide(layer));
     }),
   );
-});
-
-describe("Moonfold Connect troubleshooting links", () => {
-  it("each section names a heading in the user guide", () => {
-    const guide = NodeFS.readFileSync(
-      new URL("../../../../docs/user/moonfold-connect-troubleshooting.md", import.meta.url),
-      "utf8",
-    );
-    // GitHub's heading anchors: lowercase, drop punctuation, spaces become hyphens.
-    const anchors = new Set(
-      [...guide.matchAll(/^#{2,3} (.+)$/gm)].map(([, heading]) =>
-        heading!
-          .toLowerCase()
-          .replace(/[^\p{L}\p{N} _-]/gu, "")
-          .replace(/ /g, "-"),
-      ),
-    );
-    for (const section of MOONFOLD_CONNECT_TROUBLESHOOTING_SECTIONS) {
-      expect(anchors, section).toContain(section);
-    }
-  });
 });

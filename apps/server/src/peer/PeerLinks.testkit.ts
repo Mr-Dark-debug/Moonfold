@@ -75,7 +75,13 @@ export const servePeer = <E, R>(
     });
     const authContext = yield* EnvironmentAuth.layer.pipe(
       Layer.provide(ManagedPolicy.layerTest()),
-      Layer.provideMerge(ServerSettings.layerTest({ linkedEnvironmentsEnabled: true })),
+      Layer.provideMerge(
+        // Upstream's permissive default (Moonfold ships approval-required), so links set the limits.
+        ServerSettings.layerTest({
+          linkedEnvironmentsEnabled: true,
+          defaultRuntimeMode: "full-access",
+        }),
+      ),
       Layer.provide(Sqlite.layerMemory),
       Layer.provideMerge(ServerSecretStore.layer),
       Layer.provideMerge(ServerEnvironment.layerIdentity),

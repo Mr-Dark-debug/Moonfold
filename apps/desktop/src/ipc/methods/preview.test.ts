@@ -52,7 +52,12 @@ describe("preview IPC methods", () => {
         });
         yield* ipc.handle(method);
         return yield* Effect.promise(async () =>
-          structuredClone(await listener!({ sender: { id: 7 } }, { tabId: "capture-tab" })),
+          structuredClone(
+            await listener!(
+              { sender: { id: 7 }, senderFrame: { url: "moonfold://app/" } },
+              { tabId: "capture-tab" },
+            ),
+          ),
         );
       }).pipe(
         Effect.provideService(

@@ -468,11 +468,8 @@ export function formatConnectReachable(
   ].join(" · ");
 }
 
-/**
- * Sections of docs/user/moonfold-connect-troubleshooting.md. Each is the GitHub anchor of a
- * heading there; the test fails when a heading is renamed without updating this list.
- */
-export const MOONFOLD_CONNECT_TROUBLESHOOTING_SECTIONS = [
+// Anchors in upstream's hosted Connect guide, which Moonfold does not ship (hosted Connect is off).
+const MOONFOLD_CONNECT_TROUBLESHOOTING_SECTIONS = [
   "the-hosts-tunnel-is-offline",
   "port-7844-is-blocked-on-the-host",
   "the-tunnel-works-but-moonfold-does-not-answer",

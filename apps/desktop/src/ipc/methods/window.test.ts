@@ -204,7 +204,7 @@ describe("installRelayTelemetryEnabled", () => {
           Layer.mergeAll(DesktopIpc.layer(ipcMain), DesktopManagedPolicy.layerTest(policy)),
         ),
       );
-      const event = { returnValue: undefined as unknown };
+      const event = { returnValue: undefined as unknown, senderFrame: { url: "moonfold://app/" } };
       listeners.get(IpcChannels.GET_RELAY_TELEMETRY_ENABLED_CHANNEL)?.(event as never);
       return event.returnValue;
     }).pipe(Effect.scoped);

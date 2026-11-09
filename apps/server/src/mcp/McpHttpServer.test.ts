@@ -135,7 +135,8 @@ const serveSnapshots = (clientId: string, result: unknown) =>
     const events = yield* broker.connect({ clientId, environmentId });
     yield* Stream.runForEach(events, (event) => {
       if (event.type === "connected") return Deferred.succeed(connected, undefined);
-      inputs.push(event.request.input);
+      // Moonfold checks the tab with status before acting, for its site rules.
+      if (event.request.operation !== "status") inputs.push(event.request.input);
       return broker.respond({
         clientId,
         connectionId: event.connectionId,
@@ -528,7 +529,7 @@ it.effect("checks each preview_act action against that action's own input", () =
       expect(inputs[0]).toEqual({ locator: "text=Send" });
 
       yield* callTool("preview_act", { action: "type", selector: "#name", text: "Ada" });
-      expect(inputs.at(-2)).toEqual({ selector: "#name", text: "Ada" });
+      expect(inputs.at(-1)).toEqual({ selector: "#name", text: "Ada" });
     }),
   ).pipe(Effect.provide(layerTest)),
 );
