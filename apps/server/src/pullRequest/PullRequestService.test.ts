@@ -1110,7 +1110,7 @@ it.effect("puts the author a query names exactly ahead of those it only begins",
                 { login: "theo-browne", name: null, avatarUrl: null },
                 { login: "octocat", name: "Theo", avatarUrl: null },
                 { login: "julius", name: "Julius", avatarUrl: null },
-                { login: "moonfolddotgg", name: "theo", avatarUrl: null },
+                { login: "qdotgg", name: "theo", avatarUrl: null },
               ],
               truncated: true,
             });
@@ -1124,7 +1124,7 @@ it.effect("puts the author a query names exactly ahead of those it only begins",
     assert.deepStrictEqual(queries, ["theo"]);
     assert.deepStrictEqual(
       result.authors.map((author) => author.login),
-      ["octocat", "moonfolddotgg", "theo-browne"],
+      ["octocat", "qdotgg", "theo-browne"],
     );
     assert.strictEqual(result.truncated, true);
   }),
