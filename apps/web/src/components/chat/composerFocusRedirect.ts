@@ -44,7 +44,9 @@ export function eventPathContainsSelector(event: Event, selector: string): boole
   return path.some((target) => target instanceof Element && target.closest(selector));
 }
 
-const SECRET_REQUEST_SELECTOR = '[data-v2-item-type="secret_request"]';
+// Typing in a card answers it, never the composer.
+const SECRET_REQUEST_SELECTOR =
+  '[data-v2-item-type="secret_request"], [data-v2-item-type="question_request"]';
 const SURFACE_LAUNCHER_KEYS_ATTRIBUTE = "data-surface-launcher-keys";
 
 // The right-panel launcher registers its own window capture listener when it
@@ -61,7 +63,7 @@ function isSurfaceLauncherKey(event: KeyboardEvent): boolean {
 
 export function shouldRedirectInputToComposer(event: Event): boolean {
   if (event.defaultPrevented) return false;
-  // Never persist or send secret-request typing through the composer.
+  // Never persist or send secret- or question-card typing through the composer.
   if (eventPathContainsSelector(event, SECRET_REQUEST_SELECTOR)) return false;
   if (eventPathContainsSelector(event, TYPE_TO_FOCUS_EDITABLE_SELECTOR)) return false;
   if (eventPathContainsSelector(event, TYPE_TO_FOCUS_INTERACTIVE_SELECTOR)) return false;

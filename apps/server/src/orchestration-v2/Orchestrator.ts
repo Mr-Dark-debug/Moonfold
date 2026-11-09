@@ -10,7 +10,12 @@ import {
   runRanAfter,
   usageLimitBlockedRun,
 } from "@moonfold/shared/orchestrationV2ThreadError";
-import type { HandoffReason } from "@moonfold/contracts";
+import type { HandoffReason, QuestionRequestAnswers } from "@moonfold/contracts";
+import {
+  normalizeQuestionRequestAnswers,
+  questionRequestAnswerProblem,
+  questionRequestProblem,
+} from "@moonfold/contracts";
 import { canonicalizeGitCafePullRequestUrl } from "@moonfold/source-control-definitions/registry";
 import { threadPullRequestsOf } from "../sourceControl/threadPullRequests.ts";
 import {
@@ -635,6 +640,7 @@ function commandThreadId(command: OrchestrationV2ServerCommand): ThreadId {
       return command.parentThreadId;
     case "secret_request.record":
     case "link_request.record":
+    case "question_request.record":
       return command.threadId;
     case "thread.fork":
     case "thread.merge_back":
@@ -9091,6 +9097,125 @@ const makeOrchestrator = Effect.fn("orchestrationV2.Orchestrator.layer")(functio
   );
 
   /**
+   * Records a question card, its answer, or its close. A card is answered or
+   * closed once; any later record leaves it as it is.
+   */
+  const dispatchQuestionRequestRecord = Effect.fn("orchestrationV2.dispatch.questionRequestRecord")(
+    function* (
+      command: Extract<
+        OrchestrationV2InternalCommand,
+        { readonly type: "question_request.record" }
+      >,
+      events: Ref.Ref<Array<OrchestrationV2DomainEvent>>,
+    ) {
+      const rejected = (cause: string) =>
+        new OrchestratorDispatchError({
+          commandId: command.commandId,
+          commandType: command.type,
+          cause,
+        });
+      const projection = yield* projectionStore
+        .getThreadRecords(
+          command.threadId,
+          ["runs", "nodes", "turnItems", "attempts", "providerTurns"],
+          { turnItemTypes: ["question_request"], messageRoles: [] },
+        )
+        .pipe(
+          Effect.mapError(
+            (cause) => new OrchestratorProjectionError({ threadId: command.threadId, cause }),
+          ),
+        );
+      const run = projection.runs.find((candidate) => candidate.id === command.runId);
+      if (run === undefined) return yield* rejected(`Run ${command.runId} was not found.`);
+      const existing = projection.turnItems.find((item) => item.id === command.turnItemId);
+      if (existing !== undefined && existing.type !== "question_request") {
+        return yield* rejected(`Turn item ${command.turnItemId} is not a question request.`);
+      }
+      if (existing !== undefined && existing.runId !== command.runId) {
+        return yield* rejected(`Question request ${command.turnItemId} belongs to another run.`);
+      }
+      if (existing === undefined) {
+        if (command.questionStatus === "answered") {
+          return yield* rejected(`Question request ${command.turnItemId} was never asked.`);
+        }
+        if (run.rootNodeId !== command.nodeId) {
+          return yield* rejected(`Node ${command.nodeId} is not the root of run ${command.runId}.`);
+        }
+        const problem = questionRequestProblem(command.questions);
+        if (problem !== null) return yield* rejected(problem);
+      }
+      const unchanged =
+        existing !== undefined &&
+        (existing.questionStatus !== "pending" || command.questionStatus === "pending");
+      if (unchanged) return;
+      const questions = existing?.questions ?? command.questions;
+      let answers: QuestionRequestAnswers | undefined;
+      if (command.questionStatus === "answered") {
+        if (command.answers === undefined) {
+          return yield* rejected("An answered question request needs its answers.");
+        }
+        answers = normalizeQuestionRequestAnswers(command.answers);
+        const problem = questionRequestAnswerProblem(questions, answers);
+        if (problem !== null) return yield* rejected(problem);
+      }
+      const now = yield* DateTime.now;
+      const pending = command.questionStatus === "pending";
+      const title = existing?.title ?? command.title ?? questions[0]?.header ?? null;
+      const turnItem: OrchestrationV2TurnItem = {
+        id: command.turnItemId,
+        threadId: command.threadId,
+        runId: command.runId,
+        nodeId: existing?.nodeId ?? command.nodeId,
+        providerThreadId: existing?.providerThreadId ?? run.providerThreadId,
+        providerTurnId:
+          existing === undefined
+            ? (providerTurnForRun(projection, run)?.id ?? null)
+            : existing.providerTurnId,
+        nativeItemRef: null,
+        parentItemId: null,
+        ordinal: existing?.ordinal ?? (yield* nextTurnItemOrdinal(projection)),
+        status: pending
+          ? "waiting"
+          : command.questionStatus === "answered"
+            ? "completed"
+            : "cancelled",
+        title,
+        startedAt: existing?.startedAt ?? now,
+        completedAt: pending ? null : now,
+        updatedAt: now,
+        type: "question_request",
+        questions,
+        questionStatus: command.questionStatus,
+        ...(answers === undefined ? {} : { answers }),
+      };
+      if (command.questionStatus === "answered" && projection.thread.snoozedUntil != null) {
+        yield* emit(
+          events,
+          command,
+        )({
+          type: "thread.unsnoozed",
+          threadId: command.threadId,
+          providerInstanceId: projection.thread.providerInstanceId,
+          occurredAt: now,
+          payload: { ...projection.thread, snoozedUntil: null, snoozedAt: null, updatedAt: now },
+        });
+      }
+      yield* emit(
+        events,
+        command,
+      )({
+        type: "turn-item.updated",
+        threadId: command.threadId,
+        runId: command.runId,
+        nodeId: turnItem.nodeId ?? command.nodeId,
+        providerInstanceId: run.providerInstanceId,
+        occurredAt: now,
+        payload: turnItem,
+      });
+    },
+  );
+
+  /**
    * Records or updates the card for a link an agent asked the user to make.
    * The pairing code goes straight to the link and never through orchestration.
    */
@@ -13773,6 +13898,9 @@ const makeOrchestrator = Effect.fn("orchestrationV2.Orchestrator.layer")(functio
         break;
       case "link_request.record":
         yield* dispatchLinkRequestRecord(command, events, effects);
+        break;
+      case "question_request.record":
+        yield* dispatchQuestionRequestRecord(command, events);
         break;
       default:
         return yield* dispatchUnsupported(command);

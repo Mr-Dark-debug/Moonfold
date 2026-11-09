@@ -25,7 +25,8 @@ export type ComposerSlashCommand =
   | "side"
   | "btw"
   | "clear"
-  | "timed";
+  | "timed"
+  | "brand";
 export type ComposerSubmissionIntent = "foreground" | "background" | "alternate";
 
 export interface ComposerTrigger {
@@ -327,7 +328,7 @@ export function composerStateAtPromptEnd(
 
 export function parseStandaloneComposerSlashCommand(
   text: string,
-): Exclude<ComposerSlashCommand, "model" | "side" | "btw" | "clear" | "timed"> | null {
+): Exclude<ComposerSlashCommand, "model" | "side" | "btw" | "clear" | "timed" | "brand"> | null {
   const match = /^\/(plan|default)\s*$/i.exec(text.trim());
   if (!match) {
     return null;

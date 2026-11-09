@@ -459,6 +459,7 @@ import {
   ComputerUseState,
 } from "./computerUse.ts";
 import { SecretRequestAnswerInput, SecretRequestError } from "./secretRequest.ts";
+import { QuestionRequestAnswerInput, QuestionRequestError } from "./questionRequest.ts";
 import {
   ProjectCloneActionInput,
   ProjectCloneActionResult,
@@ -642,6 +643,7 @@ export const WS_METHODS = {
   scheduledTasksRunNow: "scheduledTasks.runNow",
   scheduledTasksRotateWebhookToken: "scheduledTasks.rotateWebhookToken",
   secretsAnswerRequest: "secrets.answerRequest",
+  questionsAnswerRequest: "questions.answerRequest",
   guestShareCreate: "guestShare.create",
   scheduledTasksListWebhookDeliveries: "scheduledTasks.listWebhookDeliveries",
   scheduledTasksListRuns: "scheduledTasks.listRuns",
@@ -2176,6 +2178,11 @@ const WsSecretsAnswerRequestRpc = Rpc.make(WS_METHODS.secretsAnswerRequest, {
   error: Schema.Union([SecretRequestError, EnvironmentAuthorizationError]),
 });
 
+const WsQuestionsAnswerRequestRpc = Rpc.make(WS_METHODS.questionsAnswerRequest, {
+  payload: QuestionRequestAnswerInput,
+  error: Schema.Union([QuestionRequestError, EnvironmentAuthorizationError]),
+});
+
 const WsScheduledTasksListWebhookDeliveriesRpc = Rpc.make(
   WS_METHODS.scheduledTasksListWebhookDeliveries,
   {
@@ -2372,7 +2379,7 @@ export class RpcScopeAuthorization extends RpcMiddleware.Service<RpcScopeAuthori
  * exceeds TypeScript's instantiation budget. Clients use the merged `WsRpcGroup`. Add a new
  * method to the last part, or to whichever part is smallest.
  */
-export const WsRpcGroupPart1 = RpcGroup.make(
+const WsRpcGroupPart1 = RpcGroup.make(
   WsGuestShareCreateRpc,
   WsServerProbeRpc,
   WsServerGetConfigRpc,
@@ -2432,7 +2439,7 @@ export const WsRpcGroupPart1 = RpcGroup.make(
   WsServerGetProcessDiagnosticsRpc,
 ).middleware(RpcScopeAuthorization);
 
-export const WsRpcGroupPart2 = RpcGroup.make(
+const WsRpcGroupPart2 = RpcGroup.make(
   WsServerGetHostResourcesRpc,
   WsServerGetProcessResourceHistoryRpc,
   WsServerGetResourceTelemetryHistoryRpc,
@@ -2449,6 +2456,7 @@ export const WsRpcGroupPart2 = RpcGroup.make(
   WsScheduledTasksRunNowRpc,
   WsScheduledTasksRotateWebhookTokenRpc,
   WsSecretsAnswerRequestRpc,
+  WsQuestionsAnswerRequestRpc,
   WsScheduledTasksListWebhookDeliveriesRpc,
   WsScheduledTasksGetWebhookDeliveryRpc,
   WsServerReportClientActivityRpc,
@@ -2487,7 +2495,7 @@ export const WsRpcGroupPart2 = RpcGroup.make(
   WsPullRequestsReviewerCandidatesRpc,
 ).middleware(RpcScopeAuthorization);
 
-export const WsRpcGroupPart3 = RpcGroup.make(
+const WsRpcGroupPart3 = RpcGroup.make(
   WsPullRequestsRequestReviewersRpc,
   WsPullRequestsLabelCandidatesRpc,
   WsPullRequestsSetLabelsRpc,
@@ -2551,7 +2559,7 @@ export const WsRpcGroupPart3 = RpcGroup.make(
   WsTerminalAttachRpc,
 ).middleware(RpcScopeAuthorization);
 
-export const WsRpcGroupPart4 = RpcGroup.make(
+const WsRpcGroupPart4 = RpcGroup.make(
   WsTerminalObserveRpc,
   WsTerminalWriteRpc,
   WsTerminalResizeRpc,
@@ -2607,7 +2615,7 @@ export const WsRpcGroupPart4 = RpcGroup.make(
   WsOrchestrationV2SubscribeCommandOutputRpc,
 ).middleware(RpcScopeAuthorization);
 
-export const WsRpcGroupPart5 = RpcGroup.make(
+const WsRpcGroupPart5 = RpcGroup.make(
   WsThreadsAskSideQuestionRpc,
   WsThreadsMoveToWorktreeRpc,
   WsThreadsReturnToProjectRpc,

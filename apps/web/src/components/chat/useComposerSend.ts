@@ -19,11 +19,13 @@ import {
 import { isUsageLimitsCommand } from "@moonfold/shared/usageLimits";
 import {
   AuthOrchestrationOperateScope,
+  BRAND_KIT_PROMPT_PROFILE_ID,
   DEFAULT_MODEL,
   type EnvironmentId,
   type ModelSelection,
   type PreviewAnnotationPayload,
   type ThreadId,
+  isBrandKitCommand,
   ProviderInteractionMode,
   RuntimeMode,
 } from "@moonfold/contracts";
@@ -350,6 +352,9 @@ export function useComposerSend(input: ComposerSendInput) {
     reportFailure: false,
   });
   const uploadThreadFeedback = useOrchestrationCommand(threadEnvironment.uploadFeedback, {
+    reportFailure: false,
+  });
+  const updateThreadMetadata = useOrchestrationCommand(threadEnvironment.updateMetadata, {
     reportFailure: false,
   });
   const setComposerDraftPrompt = useComposerDraftStore((store) => store.setPrompt);
@@ -1424,6 +1429,13 @@ export function useComposerSend(input: ComposerSendInput) {
         failure = startResult;
       } else {
         turnStartSucceeded = true;
+        // `/brand` pins the thread to Cassandre (D-63), so later messages keep building the kit.
+        if (isBrandKitCommand(outgoingMessageText)) {
+          void updateThreadMetadata({
+            environmentId,
+            input: { threadId: threadIdForSend, promptProfileId: BRAND_KIT_PROMPT_PROFILE_ID },
+          });
+        }
         setKeepFullHistory(routeThreadKey, false);
         if (freshArm !== undefined) disarmFreshSession(routeThreadKey, freshArm);
         clearUsageLimitsFor(routeThreadKey);

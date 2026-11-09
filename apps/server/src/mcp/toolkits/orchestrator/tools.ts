@@ -16,6 +16,8 @@ import {
   OrchestratorMcpEnvironmentTarget,
   OrchestratorMcpRequestSecretInput,
   OrchestratorMcpRequestSecretResult,
+  OrchestratorMcpAskUserInput,
+  OrchestratorMcpAskUserResult,
   OrchestratorMcpFailure,
   OrchestratorMcpListScheduledTasksInput,
   OrchestratorMcpListScheduledTasksResult,
@@ -39,6 +41,8 @@ import {
   TrimmedNonEmptyString,
 } from "@moonfold/contracts";
 import { McpSchema, Tool, Toolkit } from "effect/ai";
+import * as FileSystem from "effect/FileSystem";
+import * as Path from "effect/Path";
 import * as Schema from "effect/Schema";
 import * as Struct from "effect/Struct";
 
@@ -209,6 +213,20 @@ const RequestSecretTool = Tool.make("request_secret", {
   // Claude Code defers MCP tools behind ToolSearch; agents that never load this one ask in chat.
   .annotate(Tool.Meta, { "anthropic/alwaysLoad": true });
 
+const AskUserTool = Tool.make("moonfold_ask_user", {
+  description:
+    "Ask the user to choose, in a card, and wait for the answer. Prefer it to asking in chat when you need a decision. One card at a time, 1-4 questions. Option `images`: absolute paths of image files in this thread's workspace, shown as pictures. Returns choices by question id.",
+  parameters: OrchestratorMcpAskUserInput,
+  success: OrchestratorMcpAskUserResult,
+  failure: OrchestratorMcpFailure,
+  failureMode: "return",
+  dependencies: [...dependencies, FileSystem.FileSystem, Path.Path],
+})
+  .annotate(Tool.Title, "Ask the user a question")
+  .annotate(Tool.Destructive, false)
+  // Loaded up front so Claude Code uses it, with pictures, instead of its text-only question tool.
+  .annotate(Tool.Meta, { "anthropic/alwaysLoad": true });
+
 const CreateThreadsTool = Tool.make("create_threads", {
   description:
     "Create new top-level threads in this checkout. Not delegation. One thread or its own worktree: `moonfold_thread_launch`. Project, branch, and worktree inherit.",
@@ -360,6 +378,7 @@ export const OrchestratorToolkit = Toolkit.make(
   ListScheduledTasksTool,
   DeleteScheduledTaskTool,
   RequestSecretTool,
+  AskUserTool,
   CreateThreadsTool,
   ThreadListTool,
   ThreadReadTool,

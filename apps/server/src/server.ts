@@ -44,6 +44,8 @@ import * as PluginStore from "./plugins/PluginStore.ts";
 import * as HandoffBriefService from "./handoff/HandoffBriefService.ts";
 import * as HandoffService from "./handoff/HandoffService.ts";
 import * as MemoryStore from "./memories/MemoryStore.ts";
+import * as BrandKitService from "./brand/BrandKitService.ts";
+import * as HtmlRender from "./htmlRender/HtmlRender.ts";
 import * as BrowserSitePermissions from "./browser/BrowserSitePermissions.ts";
 import * as ComputerUseService from "./computerUse/ComputerUseService.ts";
 import * as AgentScopeLive from "./process/agentScope.ts";
@@ -843,6 +845,8 @@ const layerMakeRoutes = Layer.mergeAll(
   McpHttpServer.layer.pipe(
     Layer.provide(ProviderAdapterRegistry.layerFromProviderInstanceRegistry),
     Layer.provide(McpOAuth.layerMcpClientAuthenticator),
+    // The brand tools render with the HtmlRender the html tools share (layers memoize).
+    Layer.provide(BrandKitService.layer.pipe(Layer.provide(HtmlRender.layer))),
   ),
   // Follows delegated tasks running in linked environments, including after a restart.
   Layer.effectDiscard(
@@ -1075,7 +1079,9 @@ const layerMakeServer = Layer.unwrap(
             const recoverManagedTunnel = (config: RelayManagedEndpointRuntimeConfig) =>
               runManagedTunnelRecovery(config).pipe(
                 Effect.tap((recovered) =>
-                  recovered ? Effect.logInfo("Moonfold Connect managed tunnel recovered") : Effect.void,
+                  recovered
+                    ? Effect.logInfo("Moonfold Connect managed tunnel recovered")
+                    : Effect.void,
                 ),
                 Effect.catchCause((cause) =>
                   Cause.hasInterrupts(cause)

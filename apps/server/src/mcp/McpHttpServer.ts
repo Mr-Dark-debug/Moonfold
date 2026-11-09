@@ -79,6 +79,8 @@ import {
 } from "./toolkits/device/tools.ts";
 import * as HtmlHandlers from "./toolkits/html/handlers.ts";
 import * as MemoryHandlers from "./toolkits/memory/handlers.ts";
+import * as BrandHandlers from "./toolkits/brand/handlers.ts";
+import { BrandToolkit } from "./toolkits/brand/tools.ts";
 import * as ComputerHandlers from "./toolkits/computer/handlers.ts";
 import {
   ComputerScreenshotTool,
@@ -1195,6 +1197,8 @@ export const layerThreadToolkit = toolkitRegistration(ThreadToolkit, ThreadHandl
 
 const layerMemoryToolkit = toolkitRegistration(MemoryToolkit, MemoryHandlers.layer);
 
+const layerBrandToolkit = toolkitRegistration(BrandToolkit, BrandHandlers.layer);
+
 const layerComputerToolkit = Layer.mergeAll(
   toolkitRegistration(ComputerStandardToolkit, ComputerHandlers.layerStandard),
   imageToolRegistration(registerComputerScreenshot(), ComputerHandlers.layerScreenshot),
@@ -1277,6 +1281,7 @@ export const layerTools = Layer.mergeAll(
   layerOrchestratorToolkit,
   layerThreadToolkit,
   layerMemoryToolkit,
+  layerBrandToolkit,
   layerComputerToolkit,
   layerAttachmentToolkit,
   layerProjectRegistration,

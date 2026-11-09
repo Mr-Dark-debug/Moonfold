@@ -94,6 +94,7 @@ import * as RepositoryIdentityResolver from "./project/RepositoryIdentityResolve
 import * as ResourceTelemetry from "./resourceTelemetry/ResourceTelemetry.ts";
 import * as ReviewService from "./review/ReviewService.ts";
 import * as ScheduledTasks from "./scheduledTasks/ScheduledTaskService.ts";
+import * as QuestionRequests from "./questions/QuestionRequests.ts";
 import * as SecretRequests from "./secrets/SecretRequests.ts";
 import * as GuestShareService from "./guest/GuestShareService.ts";
 import * as ServerEnvironment from "./environment/ServerEnvironment.ts";
@@ -127,6 +128,15 @@ import * as Keybindings from "./keybindings.ts";
 import { USAGE_LIMITS_COMMAND } from "@moonfold/shared/usageLimits";
 import * as ServerSettings from "./serverSettings.ts";
 import * as ManagedPolicy from "./policy/ManagedPolicy.ts";
+import * as AgentInstructions from "./project/AgentInstructions.ts";
+import * as BrowserSitePermissions from "./browser/BrowserSitePermissions.ts";
+import * as ComputerUseService from "./computerUse/ComputerUseService.ts";
+import * as HandoffService from "./handoff/HandoffService.ts";
+import * as MemoryStore from "./memories/MemoryStore.ts";
+import * as PluginStore from "./plugins/PluginStore.ts";
+import * as ProviderNativeConfigService from "./provider/ProviderNativeConfigService.ts";
+import * as ThreadSideQuestions from "./orchestration-v2/ThreadSideQuestions.ts";
+import * as WorktreeMcpService from "./mcp/WorktreeMcpService.ts";
 
 import * as ThreadManagement from "./orchestration-v2/ThreadManagementService.ts";
 import * as ProjectStore from "./orchestration-v2/ProjectStore.ts";
@@ -815,6 +825,7 @@ const layerUnusedConfigRpcServices = Layer.mergeAll(
   Layer.mock(ReviewService.ReviewService)({}),
   Layer.mock(ScheduledTasks.ScheduledTaskService)({}),
   Layer.mock(SecretRequests.SecretRequests)({}),
+  Layer.mock(QuestionRequests.QuestionRequests)({}),
   Layer.mock(SecretResolver.SecretResolver)({}),
   Layer.mock(GuestShareService.GuestShareService)({}),
   Layer.mock(ServerLifecycleEvents.ServerLifecycleEvents)({}),
@@ -837,6 +848,16 @@ const layerUnusedConfigRpcServices = Layer.mergeAll(
   Layer.mock(WorkspaceEntries.WorkspaceEntries)({}),
   Layer.mock(WorkspaceFileSystem.WorkspaceFileSystem)({}),
   Layer.mock(WorktreeSetupTracker.WorktreeSetupTracker)({}),
+  // Moonfold-only services the RPC layer needs; these tests never call them.
+  Layer.mock(AgentInstructions.AgentInstructions)({}),
+  Layer.mock(BrowserSitePermissions.BrowserSitePermissions)({}),
+  Layer.mock(ComputerUseService.ComputerUseService)({}),
+  Layer.mock(HandoffService.HandoffService)({}),
+  Layer.mock(MemoryStore.MemoryStore)({}),
+  Layer.mock(PluginStore.PluginStore)({}),
+  Layer.mock(ProviderNativeConfigService.ProviderNativeConfigService)({}),
+  Layer.mock(ThreadSideQuestions.ThreadSideQuestions)({}),
+  Layer.mock(WorktreeMcpService.WorktreeMcpService)({}),
 );
 
 const layerConfigSources = Layer.mergeAll(

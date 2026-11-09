@@ -504,22 +504,38 @@ without users reinstalling. It was generated for beta 1 on the owner's machine i
 `~/.moonfold-release` with its password beside it, and it is not in the repository or in CI. The
 APK is built locally and attached to the GitHub release.
 
-## D-62 Port upstream's design overhaul, with the new look on by default
+## D-62 Upstream's design overhaul arrives through the upstream sync
 
-Upstream T3 Code's pull request 24865 (25 October 2026) came after our base, so Moonfold has none
-of it. It is MIT and we are its fork, so the code is ported, crediting the PR in each commit.
-Foundations (font, radius, icon stroke, contrast) ship to everyone. The sidebar, composer and panel
-changes sit behind Settings → Appearance → New design, as upstream did, but on by default: Moonfold
-is in beta, the new look scored higher in upstream's reviews, and the toggle is the way back. Files
-upstream added after our base are rebuilt by intent on our own components. Moonfold-only screens
-go through the same scored review loop. Plan: docs/plans/ui-refresh.md.
+Upstream T3 Code redesigned its UI in pull request 24865 and later made the new design the only
+one, with no toggle (pull request 25778). Moonfold takes it through the upstream sync (D-64) rather
+than a hand port, so there is no "New design" setting and nothing to keep in step later. Moonfold's
+own screens (handoff, Mobile App, prompt profiles, agent limits, welcome wizard) were not part of
+that review and still need the scored review loop in docs/plans/ui-refresh.md.
 
-## D-63 Cassandre: a brand kit is files in the project, built by a skill and checked by a service
+## D-63 Cassandre: a brand kit is files in the project, built by a profile and checked by a service
 
-The brand kit feature is a built-in skill that any provider can follow, plus a `BrandKitService`
-for the exact parts (validation, contrast, exports, rendering) reached through MCP tools. The kit
-lives in `.moonfold/brand/` with a DTCG `tokens.json` as the source of truth, and exports are
-generated from it, never written by hand. References inform principles and are never copied. Sites
-whose terms forbid automated collection (Pinterest) are browsed by the user with the agent
-assisting, not by the agent alone, and kept screenshots stay out of git. Plan:
+A message that starts with `/brand` runs Cassandre: a built-in prompt profile every provider follows,
+and the app then pins the thread to it. The exact parts (validation, contrast, exports, rendering,
+name lookups, kept references) are a `BrandKitService` reached through `brand_*` MCP tools, and
+decisions go to the user through `moonfold_ask_user` question cards, whose options can show pictures.
+The kit lives in `.moonfold/brand/` with a DTCG `tokens/tokens.json` as the source of truth; exports
+are generated from it, never written by hand. References inform principles and are never copied, and
+`references/` stays out of git. The owner chose that the agent searches design galleries itself,
+Pinterest and Dribbble included (2026-11-06), so this runs under the agent browsing site rules and
+the user guide says which sites forbid automated browsing and how to block them. Plan:
 docs/plans/cassandre.md.
+
+## D-64 Upstream sync of 2026-11-06, and how to repeat it
+
+Moonfold merged upstream T3 Code `202d5b561` (4,004 commits after our base `17e1087d3`). Both sides
+were first run through `scripts/brand-codemod.ts` and merged against a rebranded copy of the old
+base, so renames never conflicted; the merge commit's parents are Moonfold `main` and the real
+upstream commit. Repeat the same way next time, with the last merged upstream commit as the base.
+
+Left out on purpose: upstream's Expo phone app (Moonfold has its own Android app), its marketing
+site, the hosted CI cache, Expo/React Native patches, and anything that pools provider logins.
+Upstream's hosted relay ("Connect"), guest links and hosted account pages stay in the code but only
+switch on with a hosted sign-in key, which Moonfold does not ship; the brand check skips those
+files rather than renaming services that are not ours. Where upstream built a feature Moonfold
+also had (Office previews, one-off scheduled tasks, preview actions), upstream's version won and
+Moonfold's extras (cron schedules, run history, per-site browsing rules) were moved onto it.

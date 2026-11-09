@@ -71,6 +71,10 @@
       "types": "./src/linkRequest.ts",
       "default": "./src/linkRequest.ts"
     },
+    "./question-request": {
+      "types": "./src/questionRequest.ts",
+      "default": "./src/questionRequest.ts"
+    },
     "./scheduled-task-webhook": {
       "types": "./src/scheduledTaskWebhook.ts",
       "default": "./src/scheduledTaskWebhook.ts"
@@ -545,7 +549,6 @@
     "test": "vp test run"
   },
   "dependencies": {
-    "@pierre/diffs": "catalog:",
     "@moonfold/contracts": "workspace:*",
     "@moonfold/provider-acp-registry": "workspace:*",
     "@moonfold/provider-core": "workspace:*",
@@ -560,6 +563,7 @@
     "@moonfold/shared": "workspace:*",
     "@moonfold/source-control-core": "workspace:*",
     "@moonfold/source-control-definitions": "workspace:*",
+    "@pierre/diffs": "catalog:",
     "effect": "catalog:",
     "jszip": "3.10.1",
     "three": "0.180.0"

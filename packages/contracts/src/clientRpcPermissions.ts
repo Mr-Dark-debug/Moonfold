@@ -93,6 +93,8 @@ export const CLIENT_GUARDED_RPC_SCOPES = {
   [WS_METHODS.computerUseClearLog]: AuthSettingsWriteScope,
   [WS_METHODS.computerUseAnswer]: AuthOrchestrationOperateScope,
   [WS_METHODS.computerUseStop]: AuthOrchestrationOperateScope,
+  // An answer steers the agent's run, like a message to it.
+  [WS_METHODS.questionsAnswerRequest]: AuthOrchestrationOperateScope,
   // Force stop kills agent processes, as Stop on a terminal does.
   [ORCHESTRATION_V2_WS_METHODS.forceStopThread]: AuthOrchestrationOperateScope,
   // A guest link hands thread access to someone outside, like a pairing link.

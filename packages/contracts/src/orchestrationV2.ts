@@ -46,6 +46,11 @@ import {
 import { AuthMcpClientAccess } from "./auth.ts";
 import { ChatAttachment } from "./chatAttachment.ts";
 import { ThreadGuestShare } from "./guestShare.ts";
+import {
+  QuestionRequestAnswers,
+  QuestionRequestQuestions,
+  QuestionRequestStatus,
+} from "./questionRequest.ts";
 import { StoredThreadTags, ThreadTag } from "./threadTags.ts";
 import {
   OrchestrationSearchThreadsInput,
@@ -1610,6 +1615,17 @@ const OrchestrationV2LinkRequestFields = {
   failure: Schema.optional(Schema.String),
 } as const;
 
+/**
+ * An agent asked the user to choose, and waits in its run for the answer. The
+ * card's title is the item's `title`.
+ */
+const OrchestrationV2QuestionRequestFields = {
+  type: Schema.Literal("question_request"),
+  questions: QuestionRequestQuestions,
+  questionStatus: QuestionRequestStatus,
+  answers: Schema.optional(QuestionRequestAnswers),
+} as const;
+
 export const OrchestrationV2TurnItem = Schema.Union([
   Schema.Struct({
     ...OrchestrationV2TurnItemBaseFields,
@@ -1809,6 +1825,10 @@ export const OrchestrationV2TurnItem = Schema.Union([
   Schema.Struct({
     ...OrchestrationV2TurnItemBaseFields,
     ...OrchestrationV2LinkRequestFields,
+  }),
+  Schema.Struct({
+    ...OrchestrationV2TurnItemBaseFields,
+    ...OrchestrationV2QuestionRequestFields,
   }),
   Schema.Struct({
     ...OrchestrationV2TurnItemBaseFields,
@@ -2642,6 +2662,10 @@ export const OrchestrationV2TurnItemJson = Schema.Union([
   Schema.Struct({
     ...OrchestrationV2TurnItemJsonBaseFields,
     ...OrchestrationV2LinkRequestFields,
+  }),
+  Schema.Struct({
+    ...OrchestrationV2TurnItemJsonBaseFields,
+    ...OrchestrationV2QuestionRequestFields,
   }),
   Schema.Struct({
     ...OrchestrationV2TurnItemJsonBaseFields,
@@ -3598,6 +3622,23 @@ const OrchestrationV2InternalCommand = Schema.Union([
         notification: OrchestrationV2Notification,
       }),
     ),
+  }),
+  /**
+   * Records, answers or closes a question card. Internal so an answer always
+   * passes the answer service's checks first.
+   */
+  Schema.Struct({
+    type: Schema.Literal("question_request.record"),
+    commandId: CommandId,
+    threadId: ThreadId,
+    runId: RunId,
+    nodeId: NodeId,
+    turnItemId: TurnItemId,
+    title: Schema.optional(TrimmedNonEmptyString),
+    questions: QuestionRequestQuestions,
+    questionStatus: QuestionRequestStatus,
+    /** Required when `questionStatus` is `answered`. */
+    answers: Schema.optional(QuestionRequestAnswers),
   }),
 ]);
 export type OrchestrationV2InternalCommand = typeof OrchestrationV2InternalCommand.Type;

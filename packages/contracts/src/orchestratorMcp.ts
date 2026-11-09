@@ -33,6 +33,7 @@ import {
   ThreadPullRequestLinkSource,
 } from "./threadPullRequest.ts";
 import { hasOnlyPairedSurrogates } from "./threadMetadataMcp.ts";
+import { QuestionRequestQuestions } from "./questionRequest.ts";
 import { ThreadTitleRegeneration } from "./threadTitle.ts";
 import {
   OrchestrationV2Actor,
@@ -794,6 +795,44 @@ export const OrchestratorMcpRequestSecretResult = Schema.Union([
   }),
 ]);
 export type OrchestratorMcpRequestSecretResult = typeof OrchestratorMcpRequestSecretResult.Type;
+
+export const OrchestratorMcpAskUserInput = Schema.Struct({
+  title: Schema.optional(TrimmedNonEmptyString.check(Schema.isMaxLength(120))),
+  questions: QuestionRequestQuestions,
+  clientRequestId: Schema.optional(OrchestratorMcpClientRequestId).annotate({
+    description: "Retry key.",
+  }),
+});
+export type OrchestratorMcpAskUserInput = typeof OrchestratorMcpAskUserInput.Type;
+
+export const OrchestratorMcpAskUserResult = Schema.Union([
+  Schema.Struct({
+    status: Schema.Literal("answered"),
+    answers: Schema.Record(
+      Schema.String,
+      Schema.Struct({
+        selected: Schema.Array(
+          Schema.Struct({ label: Schema.String, value: Schema.optional(Schema.String) }),
+        ),
+        custom: Schema.optional(Schema.String),
+      }),
+    ).annotate({ description: "By question id." }),
+  }),
+  Schema.Struct({
+    status: Schema.Literals(["dismissed", "cancelled", "timed_out"]),
+    note: Schema.String,
+  }),
+]);
+export type OrchestratorMcpAskUserResult = typeof OrchestratorMcpAskUserResult.Type;
+
+/** What the agent reads when its question card closes without an answer. */
+export const ASK_USER_UNANSWERED_NOTE = {
+  dismissed:
+    "The user dismissed the question. Don't ask it again; go on with your best judgment or ask in chat what they want instead.",
+  cancelled: "The card closed with the run.",
+  timed_out:
+    "No answer in 30 minutes. Go on with your best judgment, or ask again only if blocked.",
+} as const;
 
 export const OrchestratorMcpEnvironmentLinkInput = Schema.Struct({
   environmentId: Schema.optional(EnvironmentId).annotate({

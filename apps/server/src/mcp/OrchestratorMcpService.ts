@@ -25,6 +25,11 @@ import {
   type OrchestratorMcpDeleteScheduledTaskInput,
   type OrchestratorMcpRequestSecretInput,
   type OrchestratorMcpRequestSecretResult,
+  ASK_USER_UNANSWERED_NOTE,
+  type OrchestratorMcpAskUserInput,
+  type OrchestratorMcpAskUserResult,
+  type QuestionRequestQuestion,
+  questionRequestProblem,
   type OrchestratorMcpDeleteScheduledTaskResult,
   type OrchestratorMcpListScheduledTasksResult,
   type OrchestratorMcpScheduledTask,
@@ -69,6 +74,7 @@ import {
 import { getProviderOptionCurrentValue, withLegacyUltracodeEffort } from "@moonfold/shared/model";
 import { runRanAfter } from "@moonfold/shared/orchestrationV2ThreadError";
 import { formatThreadLink } from "@moonfold/shared/threadLinks";
+import { isWorkspaceImagePreviewPath } from "@moonfold/shared/mediaPreview";
 import {
   normalizeThreadPullRequestKey,
   visibleThreadPullRequests,
@@ -80,8 +86,10 @@ import * as DateTime from "effect/DateTime";
 import * as Duration from "effect/Duration";
 import * as Effect from "effect/Effect";
 import * as Exit from "effect/Exit";
+import * as FileSystem from "effect/FileSystem";
 import * as Layer from "effect/Layer";
 import * as Option from "effect/Option";
+import * as Path from "effect/Path";
 import * as Ref from "effect/Ref";
 import * as Schema from "effect/Schema";
 import * as Stream from "effect/Stream";
@@ -139,6 +147,7 @@ const TASK_WAKE_EVENTS = [
   { thread: "child", eventType: "runtime-request.updated" },
 ] as const;
 const SECRET_REQUEST_POLL_INTERVAL_MS = 500;
+const ASK_USER_TIMEOUT_MS = 30 * 60 * 1_000;
 const DEFAULT_THREAD_LIST_LIMIT = 50;
 const DEFAULT_THREAD_READ_LIMIT = 50;
 const DEFAULT_THREAD_RUN_LIMIT = 10;
@@ -196,6 +205,18 @@ export interface OrchestratorMcpServiceShape {
     scope: McpInvocationScope,
     input: OrchestratorMcpRequestSecretInput,
   ) => Effect.Effect<OrchestratorMcpRequestSecretResult, OrchestratorMcpFailure>;
+  /**
+   * Opens a question card and waits for its answer. It checks option images on
+   * disk when called, so the caller provides the filesystem.
+   */
+  readonly askUser: (
+    scope: McpInvocationScope,
+    input: OrchestratorMcpAskUserInput,
+  ) => Effect.Effect<
+    OrchestratorMcpAskUserResult,
+    OrchestratorMcpFailure,
+    FileSystem.FileSystem | Path.Path
+  >;
   readonly listThreads: (
     scope: McpInvocationScope,
     input: OrchestratorMcpThreadListInput,
@@ -672,6 +693,42 @@ function canExposeTaskRunResult(run: OrchestrationV2Run | undefined): run is Orc
   );
 }
 
+/**
+ * A closed card the run outlived was dismissed by the user; otherwise it
+ * closed with the run, or with the wait.
+ */
+function askUserResult(
+  item: Extract<OrchestrationV2TurnItem, { readonly type: "question_request" }> | undefined,
+  closed: { readonly runEnded: boolean; readonly timedOut: boolean },
+): OrchestratorMcpAskUserResult {
+  if (item?.questionStatus === "answered") {
+    const answers = item.answers ?? {};
+    return {
+      status: "answered",
+      answers: Object.fromEntries(
+        item.questions.map((question) => {
+          const answer = Object.hasOwn(answers, question.id) ? answers[question.id] : undefined;
+          const selected = (answer?.selected ?? []).map((label) => {
+            const value = question.options.find((option) => option.label === label)?.value;
+            return value === undefined ? { label } : { label, value };
+          });
+          return [
+            question.id,
+            answer?.custom === undefined ? { selected } : { selected, custom: answer.custom },
+          ] as const;
+        }),
+      ),
+    };
+  }
+  const status =
+    item?.questionStatus === "cancelled" && !closed.runEnded && !closed.timedOut
+      ? "dismissed"
+      : closed.timedOut && !closed.runEnded
+        ? "timed_out"
+        : "cancelled";
+  return { status, note: ASK_USER_UNANSWERED_NOTE[status] };
+}
+
 function stablePart(value: string): string {
   return encodeURIComponent(value);
 }
@@ -952,6 +1009,12 @@ function turnItemText(item: OrchestrationV2TurnItem): string | null {
       return `Created thread ${item.targetThreadId} with ${item.targetProviderInstanceId} (${item.targetModel}).`;
     case "secret_request":
       return `Asked the user for ${item.label}: ${item.secretStatus}.`;
+    case "question_request":
+      return jsonText({
+        questions: item.questions.map((question) => question.question),
+        status: item.questionStatus,
+        ...(item.answers === undefined ? {} : { answers: item.answers }),
+      });
     case "link_request":
       return item.linkStatus === "linked"
         ? `Linked ${item.linkedLabel ?? item.label ?? item.url ?? "an environment"} (${item.linkedAccess}).`
@@ -1475,6 +1538,54 @@ const make = Effect.gen(function* () {
 
   const requestKey = (clientRequestId: string | undefined): Effect.Effect<string> =>
     clientRequestId === undefined ? random.uuidV4() : Effect.succeed(clientRequestId);
+
+  /** Option images must be image files inside the thread's checkout, where the card can load them. */
+  const checkQuestionImages = Effect.fn("OrchestratorMcpService.checkQuestionImages")(function* (
+    thread: Pick<OrchestrationV2ThreadProjection["thread"], "projectId" | "worktreePath">,
+    questions: ReadonlyArray<QuestionRequestQuestion>,
+  ) {
+    const images = questions.flatMap((question) =>
+      question.options.flatMap((option) => option.images ?? []),
+    );
+    if (images.length === 0) return;
+    const fileSystem = yield* FileSystem.FileSystem;
+    const path = yield* Path.Path;
+    const workspaceRoot =
+      thread.worktreePath ?? (yield* requireProject(thread.projectId)).workspaceRoot;
+    const realRoot = yield* fileSystem
+      .realPath(workspaceRoot)
+      .pipe(
+        Effect.mapError(() =>
+          failure(
+            "orchestration_error",
+            `Could not read this thread's workspace ${workspaceRoot}.`,
+          ),
+        ),
+      );
+    for (const image of images) {
+      const rejected = (why: string) => failure("invalid_request", `Image ${image} ${why}`);
+      if (!path.isAbsolute(image)) return yield* rejected("is not an absolute path.");
+      if (!isWorkspaceImagePreviewPath(image)) {
+        return yield* rejected("is not an image file such as .png, .jpg, .webp or .svg.");
+      }
+      const real = yield* fileSystem
+        .realPath(image)
+        .pipe(Effect.mapError(() => rejected("does not exist.")));
+      const relative = path.relative(realRoot, real);
+      if (
+        relative === "" ||
+        relative === ".." ||
+        relative.startsWith(`..${path.sep}`) ||
+        path.isAbsolute(relative)
+      ) {
+        return yield* rejected(`is outside this thread's workspace ${workspaceRoot}.`);
+      }
+      const info = yield* fileSystem
+        .stat(real)
+        .pipe(Effect.mapError(() => rejected("could not be read.")));
+      if (info.type !== "File") return yield* rejected("is not a file.");
+    }
+  });
 
   const readTask = Effect.fn("OrchestratorMcpService.readTask")(function* (
     scope: McpThreadInvocationScope,
@@ -2305,6 +2416,108 @@ const make = Effect.gen(function* () {
         );
       }
       return { status, secretRef: secretRef.value };
+    }),
+
+    askUser: Effect.fn("OrchestratorMcpService.askUser")(function* (scope, input) {
+      const { scope: threadScope, parent } = yield* loadThreadCaller(scope, "moonfold_ask_user");
+      const threadId = threadScope.thread.threadId;
+      const run = ThreadManagementService.latestActiveRun(parent);
+      if (
+        run === undefined ||
+        run.rootNodeId === null ||
+        run.providerInstanceId !== threadScope.thread.providerInstanceId
+      ) {
+        return yield* failure(
+          "parent_not_active",
+          "Asking a question requires an active run owned by this MCP provider session.",
+        );
+      }
+      const problem = questionRequestProblem(input.questions);
+      if (problem !== null) return yield* failure("invalid_request", problem);
+      yield* checkQuestionImages(parent.thread, input.questions);
+      const runId = run.id;
+      const nodeId = run.rootNodeId;
+      const key = yield* requestKey(input.clientRequestId);
+      const turnItemId = TurnItemId.make(
+        `turn-item:question-request:${stablePart(threadId)}:${stablePart(key)}`,
+      );
+      const record = (questionStatus: "pending" | "cancelled") =>
+        threadManagement
+          .dispatch({
+            type: "question_request.record",
+            commandId: stableCommandId({
+              scope,
+              requestKey: key,
+              operation: `question-${questionStatus}`,
+            }),
+            threadId,
+            runId,
+            nodeId,
+            turnItemId,
+            ...(input.title === undefined ? {} : { title: input.title }),
+            questions: input.questions,
+            questionStatus,
+          })
+          .pipe(
+            Effect.mapError((error) =>
+              failure(
+                "orchestration_error",
+                `Could not record the question: ${errorMessage(error)}`,
+              ),
+            ),
+          );
+      const readCard = threadManagement
+        .getThreadRecords(threadId, ["runs", "turnItems"], {
+          turnItemTypes: ["question_request"],
+          messageRoles: [],
+        })
+        .pipe(
+          Effect.mapError((error) =>
+            failure("orchestration_error", `Unable to read the question: ${errorMessage(error)}`),
+          ),
+          Effect.map((records) => {
+            const item = records.turnItems.find((candidate) => candidate.id === turnItemId);
+            const current = records.runs.find((candidate) => candidate.id === runId);
+            return {
+              item: item?.type === "question_request" ? item : undefined,
+              runEnded:
+                current === undefined ||
+                ThreadManagementService.isTerminalRunStatus(current.status),
+            };
+          }),
+        );
+      yield* record("pending");
+      // Only this call can hand the agent the answer, so the card must not outlive it.
+      const closeCard = record("cancelled").pipe(
+        Effect.catch((error) =>
+          Effect.logWarning("Could not close a question card", { error: error.message }),
+        ),
+      );
+      const settled = yield* Effect.gen(function* () {
+        while (true) {
+          const card = yield* readCard;
+          if (card.item !== undefined && card.item.questionStatus !== "pending") return card;
+          if (card.runEnded) {
+            yield* record("cancelled");
+            return card;
+          }
+          yield* Effect.sleep(Duration.millis(SECRET_REQUEST_POLL_INTERVAL_MS));
+        }
+      }).pipe(
+        Effect.timeoutOption(Duration.millis(ASK_USER_TIMEOUT_MS)),
+        Effect.onExit((exit) => (Exit.isSuccess(exit) ? Effect.void : closeCard)),
+      );
+      if (Option.isNone(settled)) yield* closeCard;
+      // An answer that landed with the timeout still counts.
+      const card = Option.isSome(settled)
+        ? settled.value
+        : yield* readCard.pipe(Effect.orElseSucceed(() => ({ item: undefined, runEnded: false })));
+      const result = askUserResult(card.item, {
+        runEnded: card.runEnded,
+        timedOut: Option.isNone(settled),
+      });
+      yield* Effect.annotateCurrentSpan({ "question_request.status": result.status });
+      return result;
     }),
 
     capabilities: Effect.fn("OrchestratorMcpService.capabilities")(function* (scope, input = {}) {

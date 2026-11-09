@@ -145,6 +145,14 @@ conversation in that popover. Nothing is added to the thread, and a turn that is
 on. The model has no tools here, so it answers only from what the conversation shows. Answers are
 gone when you leave the thread.
 
+## Answer an agent's question card
+
+Any agent can stop and ask you to choose while it works, such as how many designs to make or which
+direction to take. The question appears as a card in the thread, sometimes with a picture for each
+choice; select a picture to see it larger. Pick your answers, or type one under **Other** when the
+card offers it, then select **Submit**. **Dismiss** tells the agent to go on without an answer. The
+agent waits up to 30 minutes, and the card closes if its turn ends first.
+
 ## Send a failed message again
 
 When the agent's latest turn fails, select **Send again** under the error to send the same message

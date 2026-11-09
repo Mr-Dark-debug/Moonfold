@@ -41,6 +41,7 @@ export type MoonfoldMcpToolSummaryAction =
   | "question-read"
   | "question-respond"
   | "secret-request"
+  | "question-ask"
   | "worktree-handoff"
   | "worktree-list"
   | "worktree-status"
@@ -156,6 +157,7 @@ const MOONFOLD_MCP_TOOLS: Readonly<Record<string, MoonfoldMcpToolDefinition>> = 
     "schedule-delete",
   ),
   request_secret: tool(["Ask for", "Asking for", "Asked for", "a secret"], "secret-request"),
+  moonfold_ask_user: tool(["Ask", "Asking", "Asked", "you a question"], "question-ask"),
   create_threads: tool(["Create", "Creating", "Created", "Moonfold threads"], "thread-create"),
   moonfold_thread_start: tool(
     ["Start", "Starting", "Started", "a Moonfold thread"],
@@ -326,9 +328,15 @@ const MOONFOLD_MCP_TOOLS: Readonly<Record<string, MoonfoldMcpToolDefinition>> = 
     ["Read", "Reading", "Read", "thread configuration"],
     "thread-configuration",
   ),
-  moonfold_thread_configure: tool(["Use", "Using", "Used", "thread model settings"], "thread-configure"),
+  moonfold_thread_configure: tool(
+    ["Use", "Using", "Used", "thread model settings"],
+    "thread-configure",
+  ),
   moonfold_thread_transfer: tool(["Use", "Using", "Used", "thread transfers"], "thread-fork"),
-  moonfold_thread_fork: tool(["Fork", "Forking", "Requested a fork of", "this thread"], "thread-fork"),
+  moonfold_thread_fork: tool(
+    ["Fork", "Forking", "Requested a fork of", "this thread"],
+    "thread-fork",
+  ),
   moonfold_thread_merge_back: tool(
     ["Merge", "Merging", "Requested a merge of", "thread context"],
     "thread-merge",
@@ -490,9 +498,11 @@ const ACTION_TOOLS: Readonly<Record<string, (action: string) => string | undefin
   moonfold_queue: (action) => `moonfold_queue_${action}`,
   moonfold_pending_request: (action) => `moonfold_pending_request_${action}`,
   moonfold_thread_transfer: (action) =>
-    ({ fork: "moonfold_thread_fork", merge_back: "moonfold_thread_merge_back", status: "moonfold_thread_transfers" })[
-      action
-    ],
+    ({
+      fork: "moonfold_thread_fork",
+      merge_back: "moonfold_thread_merge_back",
+      status: "moonfold_thread_transfers",
+    })[action],
 };
 
 /** Pass the call's input so an action tool resolves to the labels and summary of its action. */

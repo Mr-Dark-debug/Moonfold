@@ -20,6 +20,8 @@ import {
   type ProviderSessionId,
   type ProviderThreadId,
   type ProviderTurnId,
+  BRAND_KIT_PROMPT_PROFILE_ID,
+  isBrandKitCommand,
   resolvePromptProfile,
   type RunAttemptId,
   type ThreadId,
@@ -1706,7 +1708,10 @@ export const layer: Layer.Layer<
             const profile = resolvePromptProfile({
               customProfiles: settings.promptProfiles,
               defaultProfileId: project.defaultPromptProfileId,
-              threadProfileId: input.appThread.promptProfileId,
+              // A `/brand` message runs Cassandre (D-63) even before the thread is pinned to it.
+              threadProfileId: isBrandKitCommand(input.message.text)
+                ? BRAND_KIT_PROMPT_PROFILE_ID
+                : input.appThread.promptProfileId,
             });
             const contentExclusions = project.contentExclusions;
             return profile.instructions.trim() === "" && contentExclusions.length === 0

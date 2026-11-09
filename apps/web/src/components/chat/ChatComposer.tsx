@@ -1894,6 +1894,40 @@ export const ChatComposer = memo(function ChatComposer(props: ChatComposerProps)
     ...(backgroundThread ? { targetRef: composerFormRef } : {}),
   });
 
+  const clearComposerDraftContent = useComposerDraftStore((store) => store.clearComposerContent);
+  // Scheduled send needs a thread the scheduler can post into (D-55).
+  const canScheduleSend = routeKind === "server" && activeThread !== undefined;
+  const openScheduleSend = useStableCallback((initial?: { text?: string; at?: Date | null }) => {
+    if (routeKind !== "server" || !activeThread) {
+      toastManager.add({
+        type: "info",
+        title: "Send the first message first",
+        description: "A message can be scheduled once the thread has started.",
+      });
+      return;
+    }
+    const hasAttachments =
+      composerImages.length > 0 || composerFiles.length > 0 || composerTerminalContexts.length > 0;
+    requestScheduleSend({
+      environmentId,
+      threadId: activeThread.id,
+      projectId: activeThread.projectId,
+      text: initial?.text ?? promptRef.current,
+      at: initial?.at ?? null,
+      modelSelection: selectedModelSelection,
+      runtimeMode,
+      interactionMode,
+      hasAttachments,
+      onScheduled: () => {
+        // Attachments stay in the composer, since the scheduled message does not carry them.
+        if (hasAttachments) return;
+        promptRef.current = "";
+        clearComposerDraftContent(composerDraftTarget);
+      },
+    });
+  });
+  const openScheduleSendFromButton = useStableCallback(() => openScheduleSend());
+
   const resolveActiveComposerTrigger = (): {
     snapshot: { value: string; cursor: number; expandedCursor: number };
     trigger: ComposerTrigger | null;
@@ -1942,6 +1976,13 @@ export const ChatComposer = memo(function ChatComposer(props: ChatComposerProps)
           setComposerHighlightedItemId(null);
           setIsComposerModelPickerOpen(true);
         }
+        return;
+      }
+      if (item.command === "brand") {
+        const applied = applyPromptReplacement(trigger.rangeStart, trigger.rangeEnd, "/brand ", {
+          expectedText: snapshot.value.slice(trigger.rangeStart, trigger.rangeEnd),
+        });
+        if (applied) setComposerHighlightedItemId(null);
         return;
       }
       if (item.command === "timed") {
@@ -2947,44 +2988,6 @@ export const ChatComposer = memo(function ChatComposer(props: ChatComposerProps)
     setIsComposerModelPickerOpen(true);
   };
   const openModelPickerStable = useStableCallback(openModelPicker);
-
-  const clearComposerDraftContent = useComposerDraftStore((store) => store.clearComposerContent);
-  // Scheduled send needs a thread the scheduler can post into (D-55).
-  const canScheduleSend = routeKind === "server" && activeThread !== undefined;
-  const openScheduleSend = useStableCallback(
-    (initial?: { text?: string; at?: Date | null }) => {
-      if (routeKind !== "server" || !activeThread) {
-        toastManager.add({
-          type: "info",
-          title: "Send the first message first",
-          description: "A message can be scheduled once the thread has started.",
-        });
-        return;
-      }
-      const hasAttachments =
-        composerImages.length > 0 ||
-        composerFiles.length > 0 ||
-        composerTerminalContexts.length > 0;
-      requestScheduleSend({
-        environmentId,
-        threadId: activeThread.id,
-        projectId: activeThread.projectId,
-        text: initial?.text ?? promptRef.current,
-        at: initial?.at ?? null,
-        modelSelection: selectedModelSelection,
-        runtimeMode,
-        interactionMode,
-        hasAttachments,
-        onScheduled: () => {
-          // Attachments stay in the composer, since the scheduled message does not carry them.
-          if (hasAttachments) return;
-          promptRef.current = "";
-          clearComposerDraftContent(composerDraftTarget);
-        },
-      });
-    },
-  );
-  const openScheduleSendFromButton = useStableCallback(() => openScheduleSend());
 
   useImperativeHandle(
     composerRef,

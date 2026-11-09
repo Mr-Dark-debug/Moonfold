@@ -125,6 +125,7 @@ import * as ThreadMessageIntake from "./orchestration-v2/ThreadMessageIntake.ts"
 import * as DocumentText from "./provider/DocumentText.ts";
 import * as IdAllocator from "@moonfold/provider-core/server/IdAllocator";
 import * as ScheduledTasks from "./scheduledTasks/ScheduledTaskService.ts";
+import * as QuestionRequests from "./questions/QuestionRequests.ts";
 import * as SecretRequests from "./secrets/SecretRequests.ts";
 import * as GuestShareService from "./guest/GuestShareService.ts";
 import {
@@ -703,9 +704,7 @@ const isSplitWsRpc = (rpc: ServerWsRpc): rpc is SplitWsRpc =>
   SPLIT_WS_RPC_PREFIXES.some((prefix) => rpc._tag.startsWith(`${prefix}.`));
 const isMoonfoldWsRpc = (rpc: ServerWsRpc): rpc is MoonfoldWsRpc =>
   MOONFOLD_WS_RPC_PREFIXES.some((prefix) => rpc._tag.startsWith(`${prefix}.`));
-const isOtherWsRpc = (
-  rpc: ServerWsRpc,
-): rpc is Exclude<ServerWsRpc, SplitWsRpc | MoonfoldWsRpc> =>
+const isOtherWsRpc = (rpc: ServerWsRpc): rpc is Exclude<ServerWsRpc, SplitWsRpc | MoonfoldWsRpc> =>
   !isSplitWsRpc(rpc) && !isMoonfoldWsRpc(rpc);
 const serverWsRpcs = Array.from(ServerWsRpcGroup.requests.values());
 const SplitWsRpcGroup = RpcGroup.make(...serverWsRpcs.filter(isSplitWsRpc));
@@ -1470,6 +1469,7 @@ export const layerWsRpc = (
       const providerSessionManager = yield* ProviderSessionManager.ProviderSessionManagerV2;
       const scheduledTasks = yield* ScheduledTasks.ScheduledTaskService;
       const secretRequests = yield* SecretRequests.SecretRequests;
+      const questionRequests = yield* QuestionRequests.QuestionRequests;
       const guestShares = yield* GuestShareService.GuestShareService;
       const pullRequests = yield* PullRequestService.PullRequestService;
       const reviewGuides = yield* PullRequestReviewGuideService.PullRequestReviewGuideService;
@@ -1812,7 +1812,8 @@ export const layerWsRpc = (
             if (importedThread !== null) {
               return yield* new AcpRegistryOperationError({
                 reason: "session_delete_failed",
-                message: "Delete the imported Moonfold thread before deleting its native ACP session.",
+                message:
+                  "Delete the imported Moonfold thread before deleting its native ACP session.",
               });
             }
             yield* manager.deleteSession({
@@ -2393,6 +2394,10 @@ export const layerWsRpc = (
         [WS_METHODS.secretsAnswerRequest]: (input) =>
           Effect.annotateCurrentSpan({ "orchestration_v2.thread_id": input.threadId }).pipe(
             Effect.andThen(secretRequests.answer(input)),
+          ),
+        [WS_METHODS.questionsAnswerRequest]: (input) =>
+          Effect.annotateCurrentSpan({ "orchestration_v2.thread_id": input.threadId }).pipe(
+            Effect.andThen(questionRequests.answer(input)),
           ),
         [WS_METHODS.pluginsList]: () => plugins.list,
         [WS_METHODS.pluginsInstall]: (input) =>

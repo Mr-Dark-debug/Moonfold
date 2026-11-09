@@ -1,12 +1,13 @@
 /**
  * Prompt profiles: named standing instructions Moonfold sends with every turn (D-54).
  *
- * The environment (or a project) picks a default; a thread can override it. Each provider adapter
- * delivers the resolved profile through the channel it already uses for Moonfold's own runtime
- * instructions. Profiles add to a provider's system prompt; they never replace it and never edit
- * AGENTS.md or CLAUDE.md. Built-in texts are written for Moonfold and copy no provider's prompt.
+ * The environment or a project picks a default; a thread can override it. Profiles add to a
+ * provider's system prompt through the channel adapters already use for Moonfold's own
+ * instructions. They never replace it and never edit AGENTS.md or CLAUDE.md.
  */
 import * as Schema from "effect/Schema";
+
+import { BRAND_KIT_INSTRUCTIONS } from "./brandKitProfile.ts";
 
 export const PromptProfileId = Schema.String.check(
   Schema.isPattern(/^[a-z0-9][a-z0-9-]{0,63}$/),
@@ -31,6 +32,7 @@ export const CustomPromptProfiles = Schema.Array(PromptProfile).check(
 );
 
 export const DEFAULT_PROMPT_PROFILE_ID = PromptProfileId.make("moonfold-default");
+export const BRAND_KIT_PROMPT_PROFILE_ID = PromptProfileId.make("cassandre");
 
 const builtIn = (profile: {
   readonly id: string;
@@ -92,6 +94,12 @@ export const BUILT_IN_PROMPT_PROFILES: ReadonlyArray<PromptProfile> = [
       "Change only what was asked; do not refactor, rename or reformat anything else.",
       "Skip summaries and recaps unless asked.",
     ].join("\n"),
+  }),
+  builtIn({
+    id: BRAND_KIT_PROMPT_PROFILE_ID,
+    name: "Cassandre (brand kit)",
+    description: "Builds a brand kit from a prompt. Start a message with /brand to use it.",
+    instructions: BRAND_KIT_INSTRUCTIONS,
   }),
 ];
 

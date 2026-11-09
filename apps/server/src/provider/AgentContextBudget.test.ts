@@ -9,12 +9,16 @@ import { McpServer } from "effect/ai";
 
 import { AssetSigner } from "../assets/AssetSigner.ts";
 import { ServerSecretStore } from "../auth/ServerSecretStore.ts";
+import { BrandKitService } from "../brand/BrandKitService.ts";
+import { BrowserSitePermissions } from "../browser/BrowserSitePermissions.ts";
+import { ComputerUseService } from "../computerUse/ComputerUseService.ts";
 import { ServerConfig } from "../config.ts";
 import { DeviceService } from "../device/DeviceService.ts";
 import { ServerEnvironment } from "../environment/ServerEnvironment.ts";
 import { GitWorkflowService } from "../git/GitWorkflowService.ts";
 import * as McpHttpServer from "../mcp/McpHttpServer.ts";
 import { PreviewAutomationBroker } from "../mcp/PreviewAutomationBroker.ts";
+import { MemoryStore } from "../memories/MemoryStore.ts";
 import {
   CLAUDE_PROVIDER,
   makeClaudeQueryOptions,
@@ -49,12 +53,16 @@ import budget from "./agentContextBudget.json" with { type: "json" };
 // Registration only stores tool definitions, so the handlers' services are never called.
 const toolHandlerServices = Layer.mergeAll(
   Layer.mock(AssetSigner)({}),
+  Layer.mock(BrandKitService)({}),
+  Layer.mock(BrowserSitePermissions)({}),
+  Layer.mock(ComputerUseService)({}),
   Layer.mock(DeviceService)({}),
   Layer.mock(DocumentText)({}),
   Layer.mock(GitVcsDriver)({}),
   Layer.mock(GitWorkflowService)({}),
   Layer.mock(ManagedProjectFolders)({ namedProjectsRoot: "" }),
   Layer.mock(McpProviderSessions)({}),
+  Layer.mock(MemoryStore)({}),
   Layer.mock(OrchestratorV2)({}),
   Layer.mock(PeerForwarding)({}),
   Layer.mock(PeerLinkRequests)({}),
@@ -93,7 +101,7 @@ const claudeSystemAppend = () => {
     nativeThreadId: "context-budget",
     resume: false,
     cwd: null,
-    mcpServers: { "moonfold": { type: "http", url: "http://127.0.0.1/mcp" } },
+    mcpServers: { moonfold: { type: "http", url: "http://127.0.0.1/mcp" } },
   });
   return typeof systemPrompt === "object" && "append" in systemPrompt ? systemPrompt.append : "";
 };
@@ -114,13 +122,16 @@ const layerAdvertisedTools = McpHttpServer.layerTools.pipe(
 );
 
 // Claude Code loads these tools up front instead of behind ToolSearch, outside this budget.
-it.effect("only request_secret asks Claude Code to load it up front", () =>
+it.effect("only the secret and question cards ask Claude Code to load them up front", () =>
   Effect.gen(function* () {
     const mcp = yield* McpServer.McpServer;
     const alwaysLoad = mcp.tools
       .filter(({ tool }) => tool._meta?.["anthropic/alwaysLoad"] !== undefined)
       .map(({ tool }) => [tool.name, tool._meta]);
-    expect(alwaysLoad).toEqual([["request_secret", { "anthropic/alwaysLoad": true }]]);
+    expect(alwaysLoad).toEqual([
+      ["request_secret", { "anthropic/alwaysLoad": true }],
+      ["moonfold_ask_user", { "anthropic/alwaysLoad": true }],
+    ]);
   }).pipe(Effect.provide(layerAdvertisedTools)),
 );
 

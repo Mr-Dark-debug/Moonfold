@@ -229,6 +229,13 @@ export function useComposerMenuItems({
           label: "/model",
           description: "Switch response model for this thread",
         },
+        {
+          id: "slash:brand",
+          type: "slash-command",
+          command: "brand",
+          label: "/brand",
+          description: "Build a brand kit with Cassandre, e.g. /brand a calm budgeting app",
+        },
         ...(scheduleSendAvailable
           ? ([
               {
