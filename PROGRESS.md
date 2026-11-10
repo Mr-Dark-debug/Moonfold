@@ -16,7 +16,22 @@ account and one deploy for the default Anywhere relay; the right to ship the two
 pictures (D-65); Orbit's name and default level. Provider runs wait for Codex (19 November) or a
 Claude Code sign-in.
 
-Next: build in the order of stable-1.0.md, starting with project knowledge and the CI fixer.
+Built so far (feature 1, D-68):
+
+- CI fixer: a thread that creates a pull request watches it by itself; failed checks wake the
+  agent with a try number and fixed rules; after the project's limit (Settings → Source Control →
+  Fix failing checks, three by default) the watch ends and the agent stops and asks.
+- Project knowledge: memories have a kind (preference or setup fact); agents can note a
+  correction, which waits as a suggestion by default (Settings → Memories → Learn from
+  corrections); credential-shaped text is refused; Cursor, OpenCode, Muse Code and ACP agents now
+  receive memories. Migration 85.
+
+Verified on Windows: typecheck in contracts, server, web and the provider packages; the watch,
+link, memory store, migration, budget and MCP server tests; `vp check`, knip and the brand check.
+Not verified: a live pull request with a failing check, and a live correction with a real
+provider. No eval was run for the changed `remember` description (no provider access).
+
+Next: the living mark (docs/plans/mascot.md).
 
 ## Beta 5 (2026-11-10)
 
