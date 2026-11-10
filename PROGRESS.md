@@ -1,5 +1,56 @@
 # Progress
 
+## Beta 5 (2026-11-10)
+
+Done: v0.1.0-beta.5 is published and Latest (27 assets, tag on `b9e5d09da6`). It carries home screen
+backgrounds (D-65), the upstream sync (D-64) and Cassandre (D-63). Notes:
+docs/releases/v0.1.0-beta.5.md. REA gate: docs/REA-BETA5.md.
+
+The release dry run found what the sync had broken in the pipeline, none of it visible in CI:
+
+- The CLI executable step still forced Node 26.8.2, while `package.json` now requires 26.12.1. The
+  pin is gone; `setup-vp` installs the right Node.
+- Windows x64 packs 82 files against upstream's budget of 80 (arm64 packs 80). The budget is 84
+  (D-66) and the error now says where the files are.
+- `check-brand` now allows `REA-BETA*.md` records, like `REA-PHASE*.md`.
+
+Product fixes on the way: the ASCII Moonfold emblem was oversized and clipped (found by rendering the
+real component in Chromium; the static mock had hidden it), and the crash-report link and the
+multiple-accounts note pointed at T3 Code's repository instead of Moonfold's. Someone else merged
+the branch into `main` while this was in progress; the work was rebuilt on top of `origin/main`.
+
+Verified (real output, Windows 11 and CI):
+
+- Upgrade: this release's migrations 63 to 84 applied to a snapshot of the real beta 4 database
+  (`vp run migrate-dev-db`, exit 0), and the server booted on the copy reporting
+  `databaseMigration` 84 with no errors in its log. The copy is pruned to 5 projects and 10 threads
+  each, and no client was connected.
+- CI green on `main` at the tagged commit. The dry run and the tagged run built all six targets and
+  ran checksums, SBOM and publish. All 26 files verify against `SHA256SUMS`, the public Windows x64
+  installer matches its published SHA-256, and `latest.yml` serves 0.1.0-beta.5.
+- Home backgrounds: three scenes, both styles and both themes rendered from the real component in
+  Chromium; `ChatView.browser.test.tsx` passes.
+- Local gates: `vp check` 0 errors, `knip:check`, `check-brand`, icon check, typecheck in contracts,
+  web, desktop and scripts.
+
+Not verified / open:
+
+- No click-through of a running client: Settings rows and dropdowns, the home screen inside the real
+  layout, phones and short windows. No installer was launched; only checksums were checked.
+- `/brand` and question cards have not run against a live provider (Codex is limited until 19
+  November, Claude Code is not signed in here). Evals for the new tool text have not been run.
+- Moonfold for Android beta 1 was not re-tested against this server. No new APK.
+- Electron fuses are at their defaults (REA-BETA5). Hardening them needs a check that the server
+  sidecar does not rely on RunAsNode.
+- The hosted Connect account pages are still bundled as dead code.
+- The owner still has to confirm the right to ship the two landscape pictures (D-65).
+- On this Windows machine 8 tests in `scripts/build-desktop-artifact.test.ts` (GNU tar reads `C:\`
+  as a host) and 1 in `DesktopClientSettings.test.ts` (path separator) fail; they fail identically
+  without these changes and pass on Linux CI.
+
+Next: click through the published build on web and desktop, then decide whether the default stays
+Classic and whether to remove the Connect pages.
+
 ## Upstream sync and Cassandre (2026-11-09)
 
 Done:
