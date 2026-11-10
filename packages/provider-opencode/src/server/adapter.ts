@@ -268,6 +268,7 @@ interface ActiveOpenCodeTurn {
   readonly modelSelection: ModelSelection;
   readonly runtimePolicy: ProviderAdapter.ProviderAdapterV2RuntimePolicy;
   readonly promptProfile?: ProviderAdapter.ProviderAdapterV2TurnInput["promptProfile"] | undefined;
+  readonly memories?: ProviderAdapter.ProviderAdapterV2TurnInput["memories"] | undefined;
   readonly providerTurnId: OrchestrationV2ProviderTurn["id"];
   readonly providerThreadId: OrchestrationV2ProviderTurn["providerThreadId"];
   readonly runOrdinal: number;
@@ -2974,6 +2975,7 @@ export const makeOpenCodeAdapterV2 = Effect.fn("makeOpenCodeAdapterV2")(function
                 harness: "OpenCode",
                 model: turn.modelSelection.model,
                 promptProfile: turn.promptProfile,
+                memories: turn.memories,
               }),
             ]
               .filter(Boolean)
@@ -3237,6 +3239,7 @@ export const makeOpenCodeAdapterV2 = Effect.fn("makeOpenCodeAdapterV2")(function
                 modelSelection: turnInput.modelSelection,
                 runtimePolicy: turnInput.runtimePolicy,
                 promptProfile: turnInput.promptProfile,
+                memories: turnInput.memories,
                 providerTurnId,
                 providerThreadId: turnInput.providerThread.id,
                 runOrdinal: turnInput.runOrdinal,

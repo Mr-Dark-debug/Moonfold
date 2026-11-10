@@ -1,4 +1,4 @@
-import { MemoryId, MemoryText, OrchestratorMcpFailure } from "@moonfold/contracts";
+import { MemoryId, MemoryKind, MemoryText, OrchestratorMcpFailure } from "@moonfold/contracts";
 import * as Schema from "effect/Schema";
 import { Tool, Toolkit } from "effect/ai";
 
@@ -8,8 +8,12 @@ import * as McpInvocationContext from "../../McpInvocationContext.ts";
 
 const RememberTool = Tool.make("remember", {
   description:
-    "Save something the user asked you to remember across conversations, such as a lasting preference or a fact about how they work. Use it only when the user asks you to remember something or clearly states a lasting preference; never for task progress or details of this conversation. Write one short sentence in your own words. Later turns receive it as background. It applies to this thread's project. The user sees every memory in Settings → Memories and can edit it, delete it or make it apply everywhere. Fails when the user has turned memories off.",
-  parameters: Schema.Struct({ text: MemoryText }),
+    "Save something to remember across conversations: a lasting preference, or a fact about running this project. Use it when the user asks you to remember something or states a lasting preference. Also use it, with learned:true, when the user corrects how you work here in a way that will apply next time (a tool, a convention, a command that is the right one); the user may be shown it as a suggestion first. Never for task progress, details of this conversation, or anything secret. Write one short sentence in your own words. Set kind to environment for setup facts such as the install, test or lint command; otherwise leave it out. It applies to this thread's project. The user sees every memory in Settings → Memories. Fails when memories are off.",
+  parameters: Schema.Struct({
+    text: MemoryText,
+    kind: Schema.optional(MemoryKind),
+    learned: Schema.optional(Schema.Boolean),
+  }),
   success: Schema.Struct({ memoryId: MemoryId, message: Schema.String }),
   failure: OrchestratorMcpFailure,
   failureMode: "return",

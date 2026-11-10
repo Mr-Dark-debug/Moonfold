@@ -211,7 +211,10 @@ import {
   MOONFOLD_DEVICE_TOOL_INSTRUCTIONS_WITH_TOOL_SEARCH,
   MOONFOLD_ORCHESTRATION_INSTRUCTIONS,
 } from "@moonfold/provider-core/server/orchestrationInstructions";
-import { buildRuntimeInstructions } from "@moonfold/provider-core/server/runtimeInstructions";
+import {
+  buildRuntimeInstructions,
+  memoryBlocks,
+} from "@moonfold/provider-core/server/runtimeInstructions";
 import {
   mcpToolPresentation,
   normalizeMcpText,
@@ -219,11 +222,7 @@ import {
 import * as McpProviderSession from "@moonfold/provider-core/server/mcpSession";
 import * as McpProviderSessions from "@moonfold/provider-core/server/McpProviderSessions";
 import * as ProviderPlugins from "@moonfold/provider-core/server/ProviderPlugins";
-import {
-  agentMemoriesText,
-  type TurnMemories,
-  userMemoriesText,
-} from "@moonfold/provider-core/server/memoryInstructions";
+import type { TurnMemories } from "@moonfold/provider-core/server/memoryInstructions";
 import * as IdAllocator from "@moonfold/provider-core/server/IdAllocator";
 import {
   makeProviderFailure,
@@ -2073,14 +2072,7 @@ export function claudeMcpQueryOverrides(input: {
 }
 
 /** The user's memories as system prompt blocks; notes an agent saved are marked as background. */
-export function claudeMemoryInstructions(memories: TurnMemories | undefined): string {
-  const user = userMemoriesText(memories);
-  const agent = agentMemoriesText(memories);
-  return (
-    (user === undefined ? "" : `\n\n<moonfold_memories>\n${user}\n</moonfold_memories>`) +
-    (agent === undefined ? "" : `\n\n<moonfold_memory_notes>\n${agent}\n</moonfold_memory_notes>`)
-  );
-}
+export const claudeMemoryInstructions = memoryBlocks;
 
 export interface ClaudePluginQueryOverrides {
   readonly plugins?: ReadonlyArray<{ readonly type: "local"; readonly path: string }>;

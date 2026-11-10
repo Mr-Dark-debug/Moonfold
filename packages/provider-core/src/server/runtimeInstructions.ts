@@ -1,3 +1,4 @@
+import { agentMemoriesText, type TurnMemories, userMemoriesText } from "./memoryInstructions.ts";
 import { promptProfileText, type TurnPromptProfile } from "./promptProfileInstructions.ts";
 
 /** Session-invariant; harnesses with a native system-prompt append can carry it once per session. */
@@ -13,6 +14,8 @@ export function buildRuntimeInstructions(runtime: {
   readonly reasoningEffort?: string | undefined;
   /** The thread's prompt profile (D-54); appended as its own block when it adds anything. */
   readonly promptProfile?: TurnPromptProfile | undefined;
+  /** The user's memories, for harnesses with no channel of their own for them (D-68). */
+  readonly memories?: TurnMemories | undefined;
   /** False when the session's system prompt already carries the linking instructions. */
   readonly pullRequestLinking?: boolean;
 }): string {
@@ -26,10 +29,21 @@ export function buildRuntimeInstructions(runtime: {
   const effortInfo = effort ? ` with ${effort} reasoning effort` : "";
   const runtimeInfo = `<runtime_info>In case you're asked: you are running in Moonfold through the ${harness} harness${modelInfo}${effortInfo}. No need to mention this otherwise. You can embed images, video, and audio in your response using Markdown image syntax with absolute file paths. Link any other file you produce using its absolute path so the user can open it in Moonfold's files viewer.</runtime_info>`;
   const profile = promptProfileText(runtime.promptProfile);
-  const profileBlock = profile === undefined ? "" : `\n\n${profile}`;
+  const profileBlock =
+    (profile === undefined ? "" : `\n\n${profile}`) + memoryBlocks(runtime.memories);
   return runtime.pullRequestLinking === false
     ? `${runtimeInfo}${profileBlock}`
     : `${runtimeInfo}\n\n${PULL_REQUEST_LINKING_INSTRUCTIONS}${profileBlock}`;
+}
+
+/** The user's memories as tagged blocks; notes an agent saved are marked as background. */
+export function memoryBlocks(memories: TurnMemories | undefined): string {
+  const user = userMemoriesText(memories);
+  const agent = agentMemoriesText(memories);
+  return (
+    (user === undefined ? "" : `\n\n<moonfold_memories>\n${user}\n</moonfold_memories>`) +
+    (agent === undefined ? "" : `\n\n<moonfold_memory_notes>\n${agent}\n</moonfold_memory_notes>`)
+  );
 }
 
 function toSingleLine(value: string): string {

@@ -1,14 +1,14 @@
 /**
- * MemoryStore - the user's memories: short notes every agent turn receives, for all projects or
- * one. The user writes and edits them in settings; agents save one through the `remember` MCP
- * tool when the user asks. Memories can be turned off as a whole or for one thread.
- *
- * @module memories/MemoryStore
+ * MemoryStore - short notes every agent turn receives, for all projects or one. The user writes
+ * them in settings; agents save one through the `remember` MCP tool when asked, or propose one
+ * after a correction (D-68). Memories can be turned off as a whole or for one thread.
  */
 import {
   type Memory,
   MemoryError,
   MemoryId,
+  type MemoryKind,
+  type MemoryLearning,
   type MemoryListResult,
   type MemorySetThreadOptOutInput,
   type MemoryThreadStatus,
@@ -36,6 +36,8 @@ interface MemoryRow {
   readonly project_id: string | null;
   readonly source: string;
   readonly thread_id: string | null;
+  readonly kind: string;
+  readonly status: string;
   readonly created_at: string;
   readonly updated_at: string;
 }
@@ -44,11 +46,23 @@ const toMemory = (row: MemoryRow): Memory => ({
   id: MemoryId.make(row.memory_id),
   text: row.text,
   projectId: row.project_id === null ? null : ProjectId.make(row.project_id),
+  kind: row.kind === "environment" ? "environment" : "preference",
+  status: row.status === "suggested" ? "suggested" : "active",
   source: row.source === "agent" ? "agent" : "user",
   threadId: row.thread_id === null ? null : ThreadId.make(row.thread_id),
   createdAt: row.created_at,
   updatedAt: row.updated_at,
 });
+
+// Credential shapes a memory must never hold: it is sent to providers on every turn.
+const SECRET_SHAPES = [
+  /-----BEGIN [A-Z ]*PRIVATE KEY-----/,
+  /\bgh[pousr]_[A-Za-z0-9]{20,}\b/,
+  /\bsk-[A-Za-z0-9_-]{20,}\b/,
+  /\bAKIA[0-9A-Z]{16}\b/,
+  /\b(?:api[_-]?key|token|password|passwd|secret)\b\s*[:=]\s*[^\s"']{8,}/i,
+];
+const looksLikeSecret = (text: string) => SECRET_SHAPES.some((shape) => shape.test(text));
 
 const memoryError = (message: string) => (cause: unknown) => new MemoryError({ message, cause });
 
@@ -71,6 +85,7 @@ export class MemoryStore extends Context.Service<
     readonly upsert: (input: MemoryUpsertInput) => Effect.Effect<Memory, MemoryError>;
     readonly remove: (id: MemoryId) => Effect.Effect<void, MemoryError>;
     readonly setEnabled: (enabled: boolean) => Effect.Effect<void, MemoryError>;
+    readonly setLearning: (learning: MemoryLearning) => Effect.Effect<void, MemoryError>;
     readonly threadStatus: (threadId: ThreadId) => Effect.Effect<MemoryThreadStatus, MemoryError>;
     readonly setThreadOptOut: (
       input: MemorySetThreadOptOutInput,
@@ -80,6 +95,9 @@ export class MemoryStore extends Context.Service<
       readonly text: string;
       readonly projectId: ProjectId | null;
       readonly threadId: ThreadId;
+      readonly kind?: MemoryKind | undefined;
+      /** True when the agent learned it from a correction, not from a request to remember. */
+      readonly learned?: boolean | undefined;
     }) => Effect.Effect<Memory, MemoryError>;
     /** What one turn of the thread receives, or undefined when memories are off for it. */
     readonly forTurn: (input: {
@@ -99,6 +117,16 @@ const make = Effect.gen(function* () {
     SELECT value FROM memory_settings WHERE key = 'enabled'
   `.pipe(Effect.map((rows) => rows[0]?.value !== "false"));
 
+  // Until the user chooses, what an agent learns unasked waits as a suggestion.
+  const readLearning = sql<{ readonly value: string }>`
+    SELECT value FROM memory_settings WHERE key = 'learning'
+  `.pipe(
+    Effect.map((rows): MemoryLearning => {
+      const value = rows[0]?.value;
+      return value === "off" || value === "auto" ? value : "suggest";
+    }),
+  );
+
   const readMemory = (id: string) =>
     sql<MemoryRow>`SELECT * FROM memories WHERE memory_id = ${id}`.pipe(
       Effect.map((rows) => rows[0]),
@@ -109,7 +137,15 @@ const make = Effect.gen(function* () {
     readonly projectId: ProjectId | null;
     readonly source: "user" | "agent";
     readonly threadId: ThreadId | null;
+    readonly kind?: MemoryKind | undefined;
+    readonly status?: Memory["status"] | undefined;
   }) {
+    if (looksLikeSecret(input.text)) {
+      return yield* new MemoryError({
+        message:
+          "This looks like it holds a password, key or token, so it was not saved. Memories are sent to agents on every turn; keep secrets out of them.",
+      });
+    }
     const [count] = yield* sql<{ readonly count: number }>`SELECT COUNT(*) AS count FROM memories`;
     if ((count?.count ?? 0) >= MAX_MEMORIES) {
       return yield* new MemoryError({
@@ -119,9 +155,10 @@ const make = Effect.gen(function* () {
     const id = yield* random.uuidV4();
     const timestamp = yield* now;
     yield* sql`
-      INSERT INTO memories (memory_id, text, project_id, source, thread_id, created_at, updated_at)
+      INSERT INTO memories
+        (memory_id, text, project_id, source, thread_id, kind, status, created_at, updated_at)
       VALUES (${id}, ${input.text}, ${input.projectId}, ${input.source}, ${input.threadId},
-        ${timestamp}, ${timestamp})
+        ${input.kind ?? "preference"}, ${input.status ?? "active"}, ${timestamp}, ${timestamp})
     `;
     const row = yield* readMemory(id);
     if (row === undefined) return yield* new MemoryError({ message: "The memory was not saved." });
@@ -130,7 +167,11 @@ const make = Effect.gen(function* () {
 
   const list: MemoryStore["Service"]["list"] = Effect.gen(function* () {
     const rows = yield* sql<MemoryRow>`SELECT * FROM memories ORDER BY created_at ASC`;
-    return { enabled: yield* readEnabled, memories: rows.map(toMemory) };
+    return {
+      enabled: yield* readEnabled,
+      learning: yield* readLearning,
+      memories: rows.map(toMemory),
+    };
   }).pipe(Effect.mapError(memoryError("Could not read memories.")));
 
   const upsert: MemoryStore["Service"]["upsert"] = Effect.fn("MemoryStore.upsert")(
@@ -141,16 +182,24 @@ const make = Effect.gen(function* () {
           projectId: input.projectId,
           source: "user",
           threadId: null,
+          kind: input.kind,
         });
       }
       const existing = yield* readMemory(input.id);
       if (existing === undefined) {
         return yield* new MemoryError({ message: "This memory no longer exists." });
       }
-      // An edited memory is the user's own words now, so it is followed like one.
+      if (looksLikeSecret(input.text)) {
+        return yield* new MemoryError({
+          message:
+            "This looks like it holds a password, key or token, so it was not saved. Keep secrets out of memories.",
+        });
+      }
+      // An edited or accepted memory is the user's own words now, so it is followed like one.
       yield* sql`
         UPDATE memories
         SET text = ${input.text}, project_id = ${input.projectId}, source = 'user',
+          status = 'active', kind = ${input.kind ?? existing.kind},
           updated_at = ${yield* now}
         WHERE memory_id = ${input.id}
       `;
@@ -175,6 +224,12 @@ const make = Effect.gen(function* () {
   const setEnabled: MemoryStore["Service"]["setEnabled"] = (enabled) =>
     sql`
       INSERT INTO memory_settings (key, value) VALUES ('enabled', ${enabled ? "true" : "false"})
+      ON CONFLICT (key) DO UPDATE SET value = excluded.value
+    `.pipe(Effect.asVoid, Effect.mapError(memoryError("Could not change memories.")));
+
+  const setLearning: MemoryStore["Service"]["setLearning"] = (learning) =>
+    sql`
+      INSERT INTO memory_settings (key, value) VALUES ('learning', ${learning})
       ON CONFLICT (key) DO UPDATE SET value = excluded.value
     `.pipe(Effect.asVoid, Effect.mapError(memoryError("Could not change memories.")));
 
@@ -220,7 +275,21 @@ const make = Effect.gen(function* () {
           message: "Memories are turned off for this thread, so nothing was saved.",
         });
       }
-      return yield* insert({ ...input, source: "agent" });
+      if (input.learned !== true) {
+        return yield* insert({ ...input, source: "agent" });
+      }
+      const learning = yield* readLearning;
+      if (learning === "off") {
+        return yield* new MemoryError({
+          message:
+            "Learning from corrections is turned off in Moonfold, so nothing was saved. Do not try again in this thread.",
+        });
+      }
+      return yield* insert({
+        ...input,
+        source: "agent",
+        status: learning === "suggest" ? "suggested" : "active",
+      });
     },
     Effect.catchTags({
       SqlError: (cause) =>
@@ -235,7 +304,7 @@ const make = Effect.gen(function* () {
       // lets providers that resend context only on change skip unchanged turns.
       const rows = yield* sql<MemoryRow>`
         SELECT * FROM memories
-        WHERE project_id IS NULL OR project_id = ${input.projectId}
+        WHERE status = 'active' AND (project_id IS NULL OR project_id = ${input.projectId})
         ORDER BY project_id IS NOT NULL, created_at ASC
       `;
       if (rows.length === 0) return undefined;
@@ -252,6 +321,7 @@ const make = Effect.gen(function* () {
     upsert,
     remove,
     setEnabled,
+    setLearning,
     threadStatus,
     setThreadOptOut,
     remember,

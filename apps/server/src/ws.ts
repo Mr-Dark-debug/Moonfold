@@ -2411,7 +2411,14 @@ export const layerWsRpc = (
         [WS_METHODS.memoriesUpsert]: (input) =>
           memories.upsert(input).pipe(Effect.map((memory) => ({ memory }))),
         [WS_METHODS.memoriesDelete]: (input) => memories.remove(input.id),
-        [WS_METHODS.memoriesSetEnabled]: (input) => memories.setEnabled(input.enabled),
+        [WS_METHODS.memoriesSetEnabled]: (input) =>
+          memories
+            .setEnabled(input.enabled)
+            .pipe(
+              Effect.andThen(
+                input.learning === undefined ? Effect.void : memories.setLearning(input.learning),
+              ),
+            ),
         [WS_METHODS.memoriesThreadStatus]: (input) => memories.threadStatus(input.threadId),
         [WS_METHODS.memoriesSetThreadOptOut]: (input) => memories.setThreadOptOut(input),
         [WS_METHODS.handoffPreview]: (input) => handoffs.preview(input),

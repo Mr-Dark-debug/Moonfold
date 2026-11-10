@@ -27,25 +27,20 @@ and it repairs its own pull request when checks fail. Moonfold has most of the m
 
 ## Project knowledge
 
-1. **Learning without being asked.** When a thread settles, Moonfold looks at what the user
-   corrected in it ("use pnpm here", "tests live beside the file") and proposes up to three short
-   memories for that project. A project setting, **Learn from this project**, picks:
-   - **Off**
-   - **Suggest** (default): proposals wait in Settings → Memories and on the thread; accepting one
-     makes it yours.
-   - **Automatic**: saved as agent memories, which stay background information.
-
-   The proposing pass uses the thread's own provider and a small token budget. It runs after the
-   turn, never during it, and not at all when the thread opted out of memories.
-
+1. **Learning without being asked.** The agent itself proposes a memory through the `remember`
+   tool, marked as learned, when the user corrects how it works. **Learn from corrections** in
+   Settings → Memories picks what happens: **Off**; **Suggest** (default), where the note waits
+   as a suggestion that reaches no turn until the user accepts it; or **Automatic**, saved as an
+   agent memory, which stays background information. (As built: no separate model pass after the
+   thread. That keeps it free of extra usage and working with every provider that has Moonfold's
+   tools. The setting is per environment, beside "Use memories", not per project.)
 2. **Environment notes.** A second kind of memory for facts about running the project: the
    install, test and lint commands that worked, the Node version, a service that must be running.
    Shown in their own group, so preferences and setup facts do not mix.
 3. **Every provider.** Memories travel with the prompt profile path that already reaches every
    adapter (D-59), so providers other than Codex and Claude Code receive them too.
-4. **Hygiene.** A memory records the thread it came from and when it was last used. Settings can
-   sort by "not used lately". Text that looks like a secret is refused. Each project has a size
-   cap, as turns already have.
+4. **Hygiene.** A memory records the thread it came from. Text that looks like a secret is
+   refused. Turns keep their existing size cap. (Not built: a last-used time and sorting by it.)
 
 ## CI fixer
 

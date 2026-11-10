@@ -1,11 +1,14 @@
 import { useAtomValue } from "@effect/atom-react";
-import { BookmarkIcon, PencilIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import { BookmarkIcon, CheckIcon, PencilIcon, PlusIcon, Trash2Icon, XIcon } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
+import * as Schema from "effect/Schema";
 import {
   type EnvironmentId,
   MAX_MEMORY_LENGTH,
   type Memory,
+  MemoryKind,
+  MemoryLearning,
   type ProjectId,
   resolveEnvironmentMachineKind,
 } from "@moonfold/contracts";
@@ -45,6 +48,19 @@ import { SettingsPageContainer, SettingsRow, SettingsSection } from "./settingsL
 import { useSettingsScope } from "./SettingsScopeContext";
 
 const ALL_PROJECTS = "all";
+
+const isMemoryLearning = Schema.is(MemoryLearning);
+const isMemoryKind = Schema.is(MemoryKind);
+const MEMORY_LEARNING_ORDER = ["off", "suggest", "auto"] as const;
+const MEMORY_LEARNING_LABELS: Record<MemoryLearning, string> = {
+  off: "Off",
+  suggest: "Suggest",
+  auto: "Automatic",
+};
+const MEMORY_KIND_LABELS: Record<MemoryKind, string> = {
+  preference: "Preference",
+  environment: "Setup fact",
+};
 
 function reportFailure(title: string, result: AtomCommandResult<unknown, unknown>) {
   if (result._tag !== "Failure" || isAtomCommandInterrupted(result)) return;
@@ -153,6 +169,24 @@ function MemoryEnvironmentSection({
     reportFailure("Could not change memories", result);
     memoriesQuery.refresh();
   };
+  const setLearning = async (learning: MemoryLearning) => {
+    if (!data || busy) return;
+    setBusy(true);
+    const result = await setEnabled({
+      environmentId,
+      input: { enabled: data.enabled, learning },
+    });
+    setBusy(false);
+    reportFailure("Could not change memories", result);
+    memoriesQuery.refresh();
+  };
+  // Suggestions first: they are the ones waiting for an answer.
+  const ordered = data
+    ? [
+        ...data.memories.filter((memory) => memory.status === "suggested"),
+        ...data.memories.filter((memory) => memory.status !== "suggested"),
+      ]
+    : [];
 
   return (
     <SettingsSection
@@ -201,13 +235,37 @@ function MemoryEnvironmentSection({
               />
             }
           />
+          <SettingsRow
+            title="Learn from corrections"
+            description="When you correct how an agent works in a project, it can note that for next time. Suggestions wait here for you; automatic notes are saved as background, never as instructions."
+            control={
+              <Select
+                value={data.learning}
+                disabled={busy || !canWrite || !data.enabled}
+                onValueChange={(value) => {
+                  if (isMemoryLearning(value)) void setLearning(value);
+                }}
+              >
+                <SelectTrigger size="sm" aria-label="Learn from corrections">
+                  <SelectValue>{MEMORY_LEARNING_LABELS[data.learning]}</SelectValue>
+                </SelectTrigger>
+                <SelectPopup align="end" alignItemWithTrigger={false}>
+                  {MEMORY_LEARNING_ORDER.map((value) => (
+                    <SelectItem key={value} value={value}>
+                      {MEMORY_LEARNING_LABELS[value]}
+                    </SelectItem>
+                  ))}
+                </SelectPopup>
+              </Select>
+            }
+          />
           {data.memories.length === 0 ? (
             <SettingsRow
               title="No memories yet"
               description="Add one, or tell an agent “remember that…” in a thread."
             />
           ) : (
-            data.memories.map((memory) => (
+            ordered.map((memory) => (
               <MemoryRow
                 key={memory.id}
                 environmentId={environmentId}
@@ -253,7 +311,26 @@ function MemoryRow({
   readonly onChanged: () => void;
 }) {
   const remove = useAtomCommand(serverEnvironment.deleteMemory, { label: "memory delete" });
+  const upsert = useAtomCommand(serverEnvironment.upsertMemory, { label: "memory accept" });
   const [busy, setBusy] = useState(false);
+  const suggested = memory.status === "suggested";
+  const accept = async () => {
+    setBusy(true);
+    const result = await upsert({
+      environmentId,
+      input: { id: memory.id, text: memory.text, projectId: memory.projectId },
+    });
+    setBusy(false);
+    reportFailure("Could not accept the suggestion", result);
+    onChanged();
+  };
+  const dismiss = async () => {
+    setBusy(true);
+    const result = await remove({ environmentId, input: { id: memory.id } });
+    setBusy(false);
+    reportFailure("Could not dismiss the suggestion", result);
+    onChanged();
+  };
   const runRemove = async () => {
     const message = "Delete this memory?\nAgents stop receiving it from their next turn.";
     const confirmed =
@@ -271,9 +348,18 @@ function MemoryRow({
       status={
         <div className="flex flex-wrap items-center gap-2">
           <span>{projectTitle ?? "All projects"}</span>
-          {memory.source === "agent" ? (
+          {suggested ? (
+            <Badge variant="warning" size="sm">
+              Suggestion
+            </Badge>
+          ) : memory.source === "agent" ? (
             <Badge variant="info" size="sm">
               Saved by an agent
+            </Badge>
+          ) : null}
+          {memory.kind === "environment" ? (
+            <Badge variant="outline" size="sm">
+              Setup fact
             </Badge>
           ) : null}
           {memory.source === "agent" && memory.threadId !== null ? (
@@ -290,6 +376,28 @@ function MemoryRow({
       }
       control={
         <div className="flex items-center gap-1">
+          {suggested ? (
+            <>
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                disabled={busy || !canWrite}
+                aria-label="Accept suggestion"
+                onClick={() => void accept()}
+              >
+                <CheckIcon className="size-4" />
+              </Button>
+              <Button
+                size="icon-sm"
+                variant="ghost"
+                disabled={busy || !canWrite}
+                aria-label="Dismiss suggestion"
+                onClick={() => void dismiss()}
+              >
+                <XIcon className="size-4" />
+              </Button>
+            </>
+          ) : null}
           <Button
             size="icon-sm"
             variant="ghost"
@@ -299,15 +407,17 @@ function MemoryRow({
           >
             <PencilIcon className="size-4" />
           </Button>
-          <Button
-            size="icon-sm"
-            variant="ghost"
-            disabled={busy || !canWrite}
-            aria-label="Delete memory"
-            onClick={() => void runRemove()}
-          >
-            <Trash2Icon className="size-4" />
-          </Button>
+          {suggested ? null : (
+            <Button
+              size="icon-sm"
+              variant="ghost"
+              disabled={busy || !canWrite}
+              aria-label="Delete memory"
+              onClick={() => void runRemove()}
+            >
+              <Trash2Icon className="size-4" />
+            </Button>
+          )}
         </div>
       }
     />
@@ -331,6 +441,7 @@ function MemoryEditorDialog({
   );
   const [text, setText] = useState(memory?.text ?? "");
   const [projectId, setProjectId] = useState<string>(memory?.projectId ?? ALL_PROJECTS);
+  const [kind, setKind] = useState<MemoryKind>(memory?.kind ?? "preference");
   const [saving, setSaving] = useState(false);
   const upsert = useAtomCommand(serverEnvironment.upsertMemory, { label: "memory save" });
   const selectedProject = projects.find((project) => project.id === projectId);
@@ -345,6 +456,7 @@ function MemoryEditorDialog({
         ...(memory === null ? {} : { id: memory.id }),
         text: trimmed,
         projectId: projectId === ALL_PROJECTS ? null : (projectId as ProjectId),
+        kind,
       },
     });
     setSaving(false);
@@ -410,6 +522,25 @@ function MemoryEditorDialog({
                         {project.title}
                       </SelectItem>
                     ))}
+                  </SelectPopup>
+                </Select>
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="memory-kind">Kind</Label>
+                <Select
+                  value={kind}
+                  onValueChange={(value) => {
+                    if (isMemoryKind(value)) setKind(value);
+                  }}
+                >
+                  <SelectTrigger size="sm" id="memory-kind">
+                    <SelectValue>{MEMORY_KIND_LABELS[kind]}</SelectValue>
+                  </SelectTrigger>
+                  <SelectPopup>
+                    <SelectItem value="preference">Preference: how you like things done</SelectItem>
+                    <SelectItem value="environment">
+                      Setup fact: a command or requirement of the project
+                    </SelectItem>
                   </SelectPopup>
                 </Select>
               </div>

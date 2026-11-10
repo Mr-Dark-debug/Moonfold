@@ -7997,6 +7997,7 @@ export const makeAcpAdapterV2 = Effect.fn("makeAcpAdapterV2")(function* (
                 harness: flavor.runtimeHarness ?? driver,
                 model: turnInput.modelSelection.model,
                 promptProfile: turnInput.promptProfile,
+                memories: turnInput.memories,
                 pullRequestLinking:
                   sessionSetup === null ||
                   flavor.sessionCarriesPullRequestLinking?.(sessionSetup.initializeResult) !== true,
