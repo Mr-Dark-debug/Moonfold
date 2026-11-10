@@ -6,11 +6,9 @@ export type HomeBackgroundScene = Exclude<HomeBackground, "none">;
 const ASCII_RAMP = " .:;-=+xX80S#@";
 
 /**
- * Mirrors the tones the art uses so art authored for a dark page (where `@` is
- * the brightest tone) reads as a positive image on a light one. The mirror is
- * taken over the range this art spans, not the whole ramp: a picture that
- * never uses the dimmest characters would otherwise flip to weak ink only.
- * Characters outside the ramp, including newlines, pass through unchanged.
+ * Mirrors tones so art drawn for a dark page reads as a positive image on a light one. The mirror
+ * spans only the tones this art uses: a picture without the dimmest characters would otherwise
+ * flip to weak ink only. Characters outside the ramp pass through unchanged.
  */
 export function invertAsciiRamp(art: string): string {
   let lowest = ASCII_RAMP.length;

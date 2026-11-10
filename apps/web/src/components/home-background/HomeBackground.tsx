@@ -1,5 +1,5 @@
 import type { HomeBackgroundStyle } from "@moonfold/contracts";
-import { Suspense, use, useMemo } from "react";
+import { Suspense, use } from "react";
 
 import { useClientSettings } from "~/hooks/useSettings";
 import { useTheme } from "~/hooks/useTheme";
@@ -53,24 +53,21 @@ function AsciiDrawing({
   const definition = HOME_BACKGROUND_SCENES[scene];
   const grid = use(loadAsciiGrid(scene));
   const flip = appearance === "light" && definition.kind === "scene";
+  if (!grid) return null;
+  // Mirrored as a whole picture, since the flip depends on the tones the art spans.
+  const rows = flip ? invertAsciiRamp(grid.rows.join("\n")).split("\n") : grid.rows;
+  const split = rows.map(splitAsciiTiers);
   // One layer per ink tier, each holding only the rows that have something to
   // draw in it; `y` is unique within a layer and doubles as the key.
-  const layers = useMemo(() => {
-    if (!grid) return null;
-    // Mirrored as a whole picture, since the flip depends on the tones the art spans.
-    const rows = flip ? invertAsciiRamp(grid.rows.join("\n")).split("\n") : grid.rows;
-    const split = rows.map(splitAsciiTiers);
-    return ASCII_TIER_ALPHA.map((alpha, tier) => ({
-      alpha,
-      lines: split.flatMap((tiers, index) => {
-        const text = tiers[tier];
-        return text?.trim()
-          ? [{ y: index * CELL_HEIGHT + BASELINE_OFFSET, text: preserveAsciiSpaces(text) }]
-          : [];
-      }),
-    }));
-  }, [flip, grid]);
-  if (!grid || !layers) return null;
+  const layers = ASCII_TIER_ALPHA.map((alpha, tier) => ({
+    alpha,
+    lines: split.flatMap((tiers, index) => {
+      const text = tiers[tier];
+      return text?.trim()
+        ? [{ y: index * CELL_HEIGHT + BASELINE_OFFSET, text: preserveAsciiSpaces(text) }]
+        : [];
+    }),
+  }));
   const strength = definition.asciiStrength[appearance];
 
   return (
@@ -79,10 +76,10 @@ function AsciiDrawing({
       focusable="false"
       viewBox={`0 0 ${grid.cols} ${grid.rows.length * CELL_HEIGHT}`}
       preserveAspectRatio={definition.kind === "scene" ? "xMidYMid slice" : "xMidYMid meet"}
-      className={cn(
-        "size-full",
-        definition.kind === "emblem" && "absolute inset-x-[10%] inset-y-[18%] size-auto",
-      )}
+      // An SVG with only a viewBox does not stretch between insets, so the emblem gets a sized box.
+      className={
+        definition.kind === "emblem" ? "absolute top-[18%] left-[10%] h-[64%] w-[80%]" : "size-full"
+      }
       fill="currentColor"
       style={{ color: definition.ink[appearance] }}
     >
