@@ -743,6 +743,25 @@ export class WindowsPrimaryNativeProbeError extends Schema.TaggedError<WindowsPr
   }
 }
 
+// Root files are named one by one and deeper ones grouped by their first two folders, which
+// is enough to see what grew without printing the whole payload.
+function describePayloadFileLocations(files: ReadonlyArray<string> | undefined): string {
+  if (files === undefined) return "";
+  const groups = new Map<string, number>();
+  for (const file of files) {
+    const segments = file.split("/");
+    const key =
+      segments.length === 1
+        ? file
+        : `${segments.slice(0, Math.min(2, segments.length - 1)).join("/")}/`;
+    groups.set(key, (groups.get(key) ?? 0) + 1);
+  }
+  const parts = [...groups].map(([key, count]) =>
+    count === 1 ? key : `${key} (${String(count)})`,
+  );
+  return ` Files by location: ${parts.join(", ")}.`;
+}
+
 const WindowsPackagedPayloadValidationReason = Schema.Literals([
   "packaged-app-missing",
   "sidecar-missing",
@@ -762,12 +781,13 @@ export class WindowsPackagedPayloadValidationError extends Schema.TaggedError<Wi
     missingFiles: Schema.optionalKey(Schema.Array(Schema.String)),
     fileCount: Schema.optionalKey(Schema.Int),
     fileLimit: Schema.optionalKey(Schema.Int),
+    files: Schema.optionalKey(Schema.Array(Schema.String)),
     cause: Schema.optionalKey(Schema.Defect()),
   },
 ) {
   override get message(): string {
     if (this.reason === "file-limit-exceeded") {
-      return `Windows packaged payload contains ${String(this.fileCount)} files; expected at most ${String(this.fileLimit)}.`;
+      return `Windows packaged payload contains ${String(this.fileCount)} files; expected at most ${String(this.fileLimit)}.${describePayloadFileLocations(this.files)}`;
     }
     if (this.reason === "unpacked-native-missing") {
       return `Windows server sidecar is missing ${String(this.missingFiles?.length ?? 0)} unpacked native files.`;
@@ -3187,11 +3207,11 @@ function collectUnpackedAsarFiles(
   return output;
 }
 
-const countPayloadFiles = Effect.fn("desktopArtifact.countPayloadFiles")(function* (root: string) {
+const listPayloadFiles = Effect.fn("desktopArtifact.listPayloadFiles")(function* (root: string) {
   const fs = yield* FileSystem.FileSystem;
   const path = yield* Path.Path;
   const pendingDirectories = [root];
-  let count = 0;
+  const files: string[] = [];
 
   while (pendingDirectories.length > 0) {
     const directory = pendingDirectories.pop();
@@ -3203,12 +3223,12 @@ const countPayloadFiles = Effect.fn("desktopArtifact.countPayloadFiles")(functio
       if (stat.type === "Directory") {
         pendingDirectories.push(entryPath);
       } else if (stat.type === "File") {
-        count += 1;
+        files.push(path.relative(root, entryPath).split(path.sep).join("/"));
       }
     }
   }
 
-  return count;
+  return files.sort();
 });
 
 export const verifyWindowsPrimaryFffNativeLoad = Effect.fn(
@@ -3518,13 +3538,15 @@ export const validateWindowsPackagedPayload = Effect.fn(
     }
   }
 
-  const fileCount = yield* countPayloadFiles(packagedAppDir);
+  const payloadFiles = yield* listPayloadFiles(packagedAppDir);
+  const fileCount = payloadFiles.length;
   if (fileCount > fileLimit) {
     return yield* new WindowsPackagedPayloadValidationError({
       reason: "file-limit-exceeded",
       packagedAppDir,
       fileCount,
       fileLimit,
+      files: payloadFiles,
     });
   }
 
