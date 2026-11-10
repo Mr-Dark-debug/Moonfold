@@ -570,3 +570,58 @@ per server bundle chunk, so they grow with Moonfold's own server code. The budge
 wholesale unpacking, which adds hundreds of files, so it moves to 84: room for a little growth, and
 a new tripwire well below the cost that matters. Not done: removing the SwiftShader fallback, which
 renders on machines without a usable GPU.
+
+## D-67 One living mark, not a mascot per feature
+
+The brief that asked for this called it D-64; that number was taken. Moonfold gets one brand
+character, and it is the mark itself: the crescent, ring and star, moved by state (idle, working,
+waiting, done, attention). There is no mascot per feature and none per skill, because skills are
+written by users and have no upper bound. Reviewers in a multi-provider round get seat glyphs made
+from the same geometry (moon phase and star position), never provider logos. Skills get one icon
+per source kind. All of it comes from `scripts/lib/brand-mark.ts`, is drawn by one component, and
+moves with transforms and opacity only, with a still pose per state for reduced motion. Only the
+working state loops, and only while an agent works. Plan: docs/plans/mascot.md. The name, the
+motion intensity and the docs-site form are the owner's to choose.
+
+## D-68 Project knowledge and the CI fixer extend what exists
+
+Memories already apply per project, and a thread can already watch its pull request. Both grow
+instead of being replaced. Memories gain a kind for environment facts, reach every provider, and
+can be proposed from a settled thread's corrections; the default is to suggest, because a memory
+that saves itself is the path by which text an agent read becomes a standing instruction.
+The CI fixer starts the watch by itself for pull requests Moonfold opened and limits attempts
+(three by default), stopping to ask when the same failure repeats. It never weakens a test to get
+green and never force-pushes. Plan: docs/plans/project-knowledge-ci-fixer.md.
+
+## D-69 Phones reach the computer anywhere through a blind relay
+
+This replaces the last sentence of D-58. The owner wants the phone to work on any network with no
+account. Two devices behind address translation cannot always connect directly, so something
+reachable by both must carry the bytes. Moonfold's answer is its own small relay that joins two
+connections and copies bytes under the pinned TLS session the phone already uses. The relay holds
+no key, token or login and cannot read what it carries, so rule 7 holds. It is MIT, in this
+repository, and runs as a plain Node server or on Cloudflare Workers' free plan; any user can
+point their install at their own. Account-less public tunnels were rejected as a default (their
+owners position them for testing, addresses change, a large helper binary). Peer-to-peer by key
+is a later transport behind the same seam. The default relay needs a Cloudflare account held by
+the project, which is the owner's decision. Plan: docs/plans/anywhere.md.
+
+## D-70 Orbit: always-on work is ordinary threads on a schedule, with the reader kept apart
+
+The always-on mode (working name Orbit) is built from scheduled tasks, threads, worktrees, pull
+requests, the CI fixer and provider handoff, not from a second runtime. Its state is files under
+`.moonfold/orbit/`, so another agent can continue after a usage limit. The session that reads
+public text (issues, Reddit, Hacker News) has no write tools and no secrets, and the session that
+builds never sees raw public text, only structured records. Standing orders cannot be changed by a
+session that read public content. Budgets, run caps and the stop switch sit outside the model.
+The default level is Propose: pull requests and drafts, with merging, releasing and posting one
+setting away. Posting to channels that punish automated promotion stays a draft a person sends.
+Every run is the user's own CLI with the user's own credentials. Plan: docs/plans/orbit.md.
+
+## D-71 What 1.0 means
+
+The first stable release is 0.1.0-beta.5 plus four features (project knowledge and the CI fixer,
+the living mark, Anywhere, Orbit) and a gate: each feature verified against a real provider, the
+open items from beta 5 closed, a release dry run on every target, an upgrade test, measured
+performance budgets and an accessibility pass. A feature that is not verified ships behind a build
+flag or not at all. Plan: docs/plans/stable-1.0.md.

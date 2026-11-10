@@ -1,5 +1,23 @@
 # Progress
 
+## Road to 1.0 (started 2026-11-10)
+
+Branch `stable-1`. Plans written, nothing built yet: docs/plans/stable-1.0.md (order and gate),
+project-knowledge-ci-fixer.md, mascot.md, anywhere.md, orbit.md. Decisions D-67 to D-71.
+`feat/home-backgrounds` is in `main`; no other Moonfold branch exists.
+
+Research behind the plans (public sources, summarized in each plan): how Jules does memory and CI
+fixing, how always-on agents from the large labs and the self-hosted ones run and what stops them,
+reported failures of unattended agents, what each feedback and posting channel allows, and every
+way to reach a computer behind address translation without an account.
+
+Waiting for the owner: approval of the living-mark plan and its three choices; a Cloudflare
+account and one deploy for the default Anywhere relay; the right to ship the two landscape
+pictures (D-65); Orbit's name and default level. Provider runs wait for Codex (19 November) or a
+Claude Code sign-in.
+
+Next: build in the order of stable-1.0.md, starting with project knowledge and the CI fixer.
+
 ## Beta 5 (2026-11-10)
 
 Done: v0.1.0-beta.5 is published and Latest (27 assets, tag on `b9e5d09da6`). It carries home screen
