@@ -559,3 +559,14 @@ pictures were converted from source images whose origin and licence this reposit
 record; the owner confirms the right to redistribute them before a release that includes them.
 
 Written on the branch as D-64; renumbered when it merged after the upstream sync took that number.
+
+## D-66 The Windows payload budget is 84 files
+
+The 0.1.0-beta.5 release dry run failed on Windows x64: the unpacked app held 82 files against
+upstream's budget of 80 (arm64 held 80). The error now names where the files are. Of the 82, 16 sit
+at the root (Electron's own files, among them three SwiftShader and Vulkan files that arm64 does not
+ship), 65 under `resources/`, and one locale. Twelve of those are server compile-cache files, one
+per server bundle chunk, so they grow with Moonfold's own server code. The budget exists to stop
+wholesale unpacking, which adds hundreds of files, so it moves to 84: room for a little growth, and
+a new tripwire well below the cost that matters. Not done: removing the SwiftShader fallback, which
+renders on machines without a usable GPU.

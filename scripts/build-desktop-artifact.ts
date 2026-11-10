@@ -1081,7 +1081,9 @@ export function resolveWindowsServerAsarIgnoreGlobs(arch: typeof BuildArch.Type)
   ];
 }
 
-export const WINDOWS_PACKAGED_PAYLOAD_FILE_LIMIT = 80;
+// Windows x64 packs 82 files and arm64 80. The budget is there to catch wholesale unpacking,
+// not a file or two, so it leaves a little headroom (D-66).
+export const WINDOWS_PACKAGED_PAYLOAD_FILE_LIMIT = 84;
 export const WINDOWS_SERVER_RESOURCE_SOURCE_DIR = "apps/desktop/prod-resources/windows-server";
 export const WINDOWS_SERVER_EXTRA_RESOURCES = [
   {
