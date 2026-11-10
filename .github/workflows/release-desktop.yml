@@ -192,13 +192,11 @@ jobs:
           fi
           vp run dist:desktop:artifact "${args[@]}"
 
-      # The single-executable needs a Node with --build-sea; keep in step with SEA_NODE_VERSION in
-      # apps/server/vite.config.ts.
+      # The single-executable needs a Node with --build-sea. It must be the Node that setup-vp
+      # installed from package.json, which apps/server/vite.config.ts enforces, so pin nothing here.
       - name: Build CLI single-executable
         if: inputs.cli_archive
         shell: bash
-        env:
-          VP_NODE_VERSION: "26.8.2"
         run: node apps/server/scripts/cli.ts build-exe --verbose
 
       - name: Build CLI archive
