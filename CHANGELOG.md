@@ -5,11 +5,24 @@ carry a `-beta.N` suffix. Each release's notes are in `docs/releases/`.
 
 ## Unreleased
 
+## 0.1.0-beta.5
+
+Notes: [docs/releases/v0.1.0-beta.5.md](docs/releases/v0.1.0-beta.5.md).
+
 ### Added
 
 - Home screen backgrounds: Settings → Appearance → Home screen puts artwork behind the new thread
   prompt. Choose Moonfold, Golden hour or Purple wind, drawn as ASCII text that follows your theme
-  or as an image. Off by default.
+  or as an image. Classic (no image) is the default.
+- Cassandre brand kits: `/brand <prompt>` builds a brand kit in your project, with exports and a
+  brand book page.
+- Question cards: agents with Moonfold's tools ask you in the thread, with pictures on the options.
+
+### Changed
+
+- Merged about 4,000 upstream T3 Code commits. The redesigned interface is now the only design,
+  with a simpler composer, a configurable thread details card, local commit review in the Diff pane,
+  pull request comments in the chat, and previews for more file types.
 
 ## 0.1.0-beta.4
 
