@@ -1,4 +1,6 @@
 import {
+  CiFixAttempts,
+  DEFAULT_CI_FIX_ATTEMPTS,
   DEFAULT_SERVER_SETTINGS,
   type ModelSelection,
   type WorktreeSubmodules,
@@ -7,6 +9,7 @@ import {
 import { createModelSelection } from "@moonfold/shared/model";
 import { resolveProjectSettings } from "@moonfold/shared/projectSettings";
 import { useNavigate } from "@tanstack/react-router";
+import * as Schema from "effect/Schema";
 
 import { useClientSettings } from "../../hooks/useSettings";
 import {
@@ -51,6 +54,11 @@ const WORKTREE_SUBMODULES_OPTIONS = ["recursive", "top-level", "none"] as const;
 function isWorktreeSubmodules(value: string | null): value is WorktreeSubmodules {
   return value !== null && (WORKTREE_SUBMODULES_OPTIONS as readonly string[]).includes(value);
 }
+
+const isCiFixAttempts = Schema.is(CiFixAttempts);
+const CI_FIX_ATTEMPT_CHOICES = [0, 1, 2, 3, 5, 10] as const;
+const ciFixAttemptsLabel = (attempts: number) =>
+  attempts === 0 ? "Off" : attempts === 1 ? "1 try" : `${attempts} tries`;
 
 export function ProjectDefaultsSettings({ category }: { category: ProjectSettingsCategory }) {
   const { scope, target, targets, connectedEnvironments } = useSettingsScope();
@@ -108,6 +116,7 @@ export function ProjectDefaultsSettings({ category }: { category: ProjectSetting
   const mixedAutoPull = useScopedSettingsMixed(["defaultAutoPull"]);
   const mixedAgentCredits = useScopedSettingsMixed(["removeAgentCreditsOnMerge"]);
   const mixedMergeMethod = useScopedSettingsMixed(["pullRequestMergeMethod"]);
+  const mixedCiFixAttempts = useScopedSettingsMixed(["ciFixAttempts"]);
   const modelSource = useScopedSettingSource(["defaultModelSelection"]);
   const isProjectScope = scope.kind === "project" || scope.kind === "checkout";
   const unavailable = connectedEnvironments.length === 0;
@@ -514,6 +523,45 @@ export function ProjectDefaultsSettings({ category }: { category: ProjectSetting
                   <SelectItem value="merge">{PULL_REQUEST_MERGE_METHOD_LABELS.merge}</SelectItem>
                   <SelectItem value="squash">{PULL_REQUEST_MERGE_METHOD_LABELS.squash}</SelectItem>
                   <SelectItem value="rebase">{PULL_REQUEST_MERGE_METHOD_LABELS.rebase}</SelectItem>
+                </SelectPopup>
+              </Select>
+            }
+          />
+          <SettingsRow
+            serverScoped
+            settingKeys={["ciFixAttempts"]}
+            mixed={mixedCiFixAttempts}
+            {...searchableSetting("ci-fixer")}
+            description="When checks fail on a pull request Moonfold opened, wake its thread to fix them. After this many tries it stops and asks you."
+            resetAction={
+              settings.ciFixAttempts !== DEFAULT_CI_FIX_ATTEMPTS ? (
+                <SettingResetButton
+                  label="fix failing checks"
+                  onClick={() => updateSettings({ ciFixAttempts: DEFAULT_CI_FIX_ATTEMPTS })}
+                />
+              ) : null
+            }
+            control={
+              <Select
+                value={mixedCiFixAttempts ? null : String(settings.ciFixAttempts)}
+                onValueChange={(value) => {
+                  const attempts = Number(value);
+                  if (isCiFixAttempts(attempts)) updateSettings({ ciFixAttempts: attempts });
+                }}
+              >
+                <SelectTrigger size="sm" aria-label="Fix failing checks">
+                  <SelectValue>
+                    {(value: string | null) =>
+                      value === null ? "Mixed" : ciFixAttemptsLabel(Number(value))
+                    }
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectPopup align="end" alignItemWithTrigger={false}>
+                  {CI_FIX_ATTEMPT_CHOICES.map((attempts) => (
+                    <SelectItem key={attempts} value={String(attempts)}>
+                      {ciFixAttemptsLabel(attempts)}
+                    </SelectItem>
+                  ))}
                 </SelectPopup>
               </Select>
             }

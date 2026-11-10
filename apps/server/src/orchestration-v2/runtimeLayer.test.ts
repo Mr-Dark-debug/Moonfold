@@ -3326,6 +3326,7 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
             Layer.mergeAll(
               NodeServices.layer,
               NodeCrypto.layer,
+              ServerSettings.layerTest(),
               Layer.mock(PullRequestService.PullRequestService)({
                 watchFingerprint: () => Effect.succeed(null),
                 detail: () =>
@@ -3487,13 +3488,19 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
         ({ messages }) => messages.flatMap((message) => message.notification?.summary ?? []),
       );
 
-      const reactor = yield* PullRequestWatchReactor.make.pipe(Effect.provide(host));
+      const reactor = yield* PullRequestWatchReactor.make.pipe(
+        Effect.provide(host),
+        Effect.provide(ServerSettings.layerTest()),
+      );
       yield* reactor.sweep;
       yield* TestClock.adjust("10 minutes");
       yield* reactor.sweep;
       assert.deepEqual(yield* summaries, ["#12: checks passed"]);
 
-      const restarted = yield* PullRequestWatchReactor.make.pipe(Effect.provide(host));
+      const restarted = yield* PullRequestWatchReactor.make.pipe(
+        Effect.provide(host),
+        Effect.provide(ServerSettings.layerTest()),
+      );
       yield* restarted.sweep;
       assert.deepEqual(yield* summaries, ["#12: checks passed"]);
 
@@ -3586,7 +3593,10 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
         ({ messages }) => messages.flatMap((message) => message.notification?.summary ?? []),
       );
 
-      const reactor = yield* PullRequestWatchReactor.make.pipe(Effect.provide(host));
+      const reactor = yield* PullRequestWatchReactor.make.pipe(
+        Effect.provide(host),
+        Effect.provide(ServerSettings.layerTest()),
+      );
       yield* reactor.sweep;
       yield* worker.drain();
       yield* TestClock.adjust("10 minutes");
@@ -3599,7 +3609,10 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
         ["test"],
       );
       // The fresh reactor reloads the nonempty obligation from the persisted watch.
-      const restarted = yield* PullRequestWatchReactor.make.pipe(Effect.provide(host));
+      const restarted = yield* PullRequestWatchReactor.make.pipe(
+        Effect.provide(host),
+        Effect.provide(ServerSettings.layerTest()),
+      );
       yield* restarted.sweep;
       yield* worker.drain();
       assert.deepEqual(yield* summaries, ["#12: checks passed"]);
@@ -3730,7 +3743,10 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
         orchestrator.getThreadRecords(threadId, ["messages"]),
         ({ messages }) => messages.flatMap((message) => message.notification?.summary ?? []),
       );
-      const reactor = yield* PullRequestWatchReactor.make.pipe(Effect.provide(host));
+      const reactor = yield* PullRequestWatchReactor.make.pipe(
+        Effect.provide(host),
+        Effect.provide(ServerSettings.layerTest()),
+      );
       yield* reactor.sweep;
       const ended = yield* watchOf;
       assert.isUndefined(ended?.watch);
@@ -3826,7 +3842,10 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
             (message) => message.notification !== undefined && message.notification !== null,
           ),
       );
-      const reactor = yield* PullRequestWatchReactor.make.pipe(Effect.provide(host));
+      const reactor = yield* PullRequestWatchReactor.make.pipe(
+        Effect.provide(host),
+        Effect.provide(ServerSettings.layerTest()),
+      );
       const anHourOfSweeps = Effect.gen(function* () {
         for (let pass = 0; pass < 6; pass++) {
           yield* reactor.sweep;
@@ -3930,7 +3949,10 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
             (message) => message.notification !== undefined && message.notification !== null,
           ),
       );
-      const reactor = yield* PullRequestWatchReactor.make.pipe(Effect.provide(host));
+      const reactor = yield* PullRequestWatchReactor.make.pipe(
+        Effect.provide(host),
+        Effect.provide(ServerSettings.layerTest()),
+      );
       const worker = yield* EffectWorker.OrchestrationEffectWorkerV2;
       const sweep = reactor.sweep.pipe(Effect.andThen(worker.drain()));
       yield* sweep;
@@ -4050,7 +4072,10 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
           ({ messages }) =>
             messages.filter((message) => message.text.includes("No checks have reported")),
         );
-        const reactor = yield* PullRequestWatchReactor.make.pipe(Effect.provide(host));
+        const reactor = yield* PullRequestWatchReactor.make.pipe(
+          Effect.provide(host),
+          Effect.provide(ServerSettings.layerTest()),
+        );
         const worker = yield* EffectWorker.OrchestrationEffectWorkerV2;
         const sweep = reactor.sweep.pipe(Effect.andThen(worker.drain()));
 
@@ -4241,6 +4266,7 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
           Layer.mergeAll(
             NodeServices.layer,
             NodeCrypto.layer,
+            ServerSettings.layerTest(),
             Layer.mock(PullRequestService.PullRequestService)({
               detail: () => Effect.succeed(detail),
               activity: () =>
@@ -4411,7 +4437,10 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
             }),
         }),
       );
-      const reactor = yield* PullRequestWatchReactor.make.pipe(Effect.provide(host));
+      const reactor = yield* PullRequestWatchReactor.make.pipe(
+        Effect.provide(host),
+        Effect.provide(ServerSettings.layerTest()),
+      );
       yield* reactor.sweep;
       assert.include(yield* texts(21), "#21");
       assert.include(yield* texts(22), "#22");

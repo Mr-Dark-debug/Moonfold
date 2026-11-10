@@ -110,6 +110,7 @@ function LinkRowImpl({
   const snapshot = link.snapshot;
   const open = snapshot === null || snapshot.state === "open";
   const watching = link.watch !== undefined;
+  const fixTries = link.watch?.fixAttempts ?? 0;
   const linkHost =
     sourceControlClients.findByChangeRequestUrl(link.url) ?? UNKNOWN_SOURCE_CONTROL_CLIENT;
   const linkHostActions = linkHost.changeRequestActions;
@@ -199,6 +200,9 @@ function LinkRowImpl({
                     <TooltipPopup>
                       Watching: the agent wakes when checks finish, someone comments, or the branch
                       conflicts
+                      {fixTries > 0
+                        ? `. Fixing failed checks: ${fixTries} ${fixTries === 1 ? "try" : "tries"} so far`
+                        : ""}
                     </TooltipPopup>
                   </Tooltip>
                 ) : null}

@@ -20,6 +20,7 @@ import {
 } from "../orchestration-v2/testkit/pullRequestFixtures.ts";
 import * as ProjectStore from "../orchestration-v2/ProjectStore.ts";
 import * as ProjectService from "../project/ProjectService.ts";
+import * as ServerSettings from "../serverSettings.ts";
 import { refreshPushedPullRequests } from "./refreshPushedPullRequests.ts";
 import * as PullRequestService from "../pullRequest/PullRequestService.ts";
 import { createdPullRequestKey, linkCreatedPullRequest } from "./linkCreatedPullRequest.ts";
@@ -75,8 +76,10 @@ function prResult(pr: GitRunStackedActionResult["pr"]): Pick<GitRunStackedAction
 const layerDependenciesFor = (
   dispatch: Orchestrator.OrchestratorV2Shape["dispatch"],
   threadShell: PullRequestTestThread | null = thread,
+  ciFixAttempts = 3,
 ) =>
   Layer.mergeAll(
+    ServerSettings.layerTest({ ciFixAttempts }),
     Layer.mock(ProjectService.ProjectService)({
       getShell: () => Effect.succeedSome(project),
     }),
@@ -160,6 +163,30 @@ describe("linkCreatedPullRequest", () => {
           url: "https://github.com/moonfold/moonfold/pull/42",
           source: "created",
         },
+        {
+          type: "thread.pull-request.watch",
+          commandId: "server:pr-created-link:test:watch",
+          threadId: THREAD_ID,
+          host: "github.com",
+          repository: "moonfold/moonfold",
+          number: 42,
+          watching: true,
+        },
+      ]);
+
+      // With the CI fixer off, the thread is linked and nothing watches.
+      const off = yield* recordingDispatch();
+      yield* linkCreatedPullRequest({
+        threadId: THREAD_ID,
+        result: prResult({
+          status: "created",
+          number: 42,
+          url: "https://github.com/moonfold/moonfold/pull/42",
+        }),
+        commandId,
+      }).pipe(Effect.provide(layerDependenciesFor(off.dispatch, thread, 0)));
+      expect((yield* Ref.get(off.commands)).map((command) => command.type)).toEqual([
+        "thread.pull-request.link",
       ]);
     }),
   );

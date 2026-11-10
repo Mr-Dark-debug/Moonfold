@@ -49,20 +49,18 @@ and it repairs its own pull request when checks fail. Moonfold has most of the m
 
 ## CI fixer
 
-A project setting, **Fix failing checks**, with three choices: Off, On for pull requests Moonfold
-opened (default), On for any pull request the thread is linked to.
+A project setting, **Fix failing checks**, holds the number of tries: Off, or 1 to 10, three by
+default. (As built: one setting instead of the three-way choice first planned. It covers pull
+requests Moonfold opened; a watch the agent starts itself gets the same limit.)
 
 - When a thread opens a pull request through Moonfold, the watch starts by itself.
-- On failed checks the thread is woken, as today, with the failing jobs and the tail of their
-  logs. The message carries the rules below, and the fixer counts the attempt.
-- **Three attempts** per pull request by default (1 to 10). After the last one, or when the same
-  check fails with the same error twice in a row, it stops and asks with a question card and a
-  notification.
-- A failure in a job the change did not touch is rerun once before it counts, to catch flaky
-  checks.
+- On failed checks the thread is woken, as today, with the failing jobs. The message carries the
+  try number and the rules below.
+- After the last try the watch ends and the agent is told to stop pushing, report what still fails
+  and what it tried, and ask. A pass resets the count, and so does watching again.
 - Rules sent with every wake: fix the cause, never delete or weaken a test or a check to get
-  green, never force-push, push only to the pull request's own branch, never touch the default
-  branch.
+  green, never force-push, push only to the pull request's own branch. A failure in a job the
+  change did not touch is rerun once before any code changes, to catch flaky checks.
 - A usage limit during a fix hands the thread to the next agent like any other turn.
 - Works wherever the watch works: GitHub first, the other source-control hosts as their check
   results are available.

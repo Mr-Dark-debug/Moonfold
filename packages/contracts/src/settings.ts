@@ -102,6 +102,14 @@ export const SidebarAutoSettleAfterDays = Schema.Number.check(
 export type SidebarAutoSettleAfterDays = typeof SidebarAutoSettleAfterDays.Type;
 const DEFAULT_SIDEBAR_AUTO_SETTLE_AFTER_DAYS: SidebarAutoSettleAfterDays = 3;
 
+const MAX_CI_FIX_ATTEMPTS = 10;
+export const DEFAULT_CI_FIX_ATTEMPTS = 3;
+/** Fix attempts the CI fixer gets per pull request (D-68); 0 turns it off. */
+export const CiFixAttempts = Schema.Int.check(
+  Schema.isBetween({ minimum: 0, maximum: MAX_CI_FIX_ATTEMPTS }),
+);
+export type CiFixAttempts = typeof CiFixAttempts.Type;
+
 export const MAX_SNOOZE_PRESET_MINUTES = 30 * 24 * 60;
 export const MAX_SNOOZE_PRESETS = 8;
 export const SnoozePresetDay = Schema.Literals([
@@ -1139,6 +1147,7 @@ export const PROJECT_SCOPED_SERVER_SETTING_KEYS = [
   "defaultPromptProfileId",
   "contentExclusions",
   "runTokenLimit",
+  "ciFixAttempts",
   "speechProjectCustomWords",
 ] as const;
 export type ProjectScopedServerSettingKey = (typeof PROJECT_SCOPED_SERVER_SETTING_KEYS)[number];
@@ -1181,6 +1190,7 @@ export const ProjectSettingsOverrides = Schema.Struct({
   defaultPromptProfileId: Schema.optionalKey(PromptProfileId),
   contentExclusions: Schema.optionalKey(ContentExclusions),
   runTokenLimit: Schema.optionalKey(Schema.NullOr(PositiveInt)),
+  ciFixAttempts: Schema.optionalKey(CiFixAttempts),
   speechProjectCustomWords: Schema.optionalKey(SpeechCustomWords),
   providerInstances: Schema.optionalKey(
     Schema.Record(ProviderInstanceId, ProjectProviderInstanceOverride),
@@ -1318,6 +1328,9 @@ export const ServerSettings = Schema.Struct({
   contentExclusions: ContentExclusions.pipe(Schema.withDecodingDefault(Effect.succeed([]))),
   /** Stop a run once it has added this many tokens to its context (D-60); null never stops. */
   runTokenLimit: Schema.NullOr(PositiveInt).pipe(Schema.withDecodingDefault(Effect.succeed(null))),
+  ciFixAttempts: CiFixAttempts.pipe(
+    Schema.withDecodingDefault(Effect.succeed(DEFAULT_CI_FIX_ATTEMPTS)),
+  ),
   /**
    * Whether agents may drive the in-app preview browser. Off withholds the MCP credential, so no
    * `preview_*` tool or its prompt text reaches a provider session; the user's own browser panel
@@ -1753,6 +1766,7 @@ export const ServerSettingsPatch = Schema.Struct({
   defaultPromptProfileId: Schema.optionalKey(PromptProfileId),
   contentExclusions: Schema.optionalKey(ContentExclusions),
   runTokenLimit: Schema.optionalKey(Schema.NullOr(PositiveInt)),
+  ciFixAttempts: Schema.optionalKey(CiFixAttempts),
   enableProviderUpdateChecks: Schema.optionalKey(Schema.Boolean),
   continueThreadsAfterServerUpdate: Schema.optionalKey(Schema.Boolean),
   enableAgentBrowserAccess: Schema.optionalKey(Schema.Boolean),

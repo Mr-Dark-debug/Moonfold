@@ -158,6 +158,48 @@ export function evaluatePullRequestWatch(
   };
 }
 
+/** Where the CI fixer stands after a report: which attempt this failure is, and whether it is out. */
+export interface CiFixState {
+  readonly attempt: number;
+  readonly limit: number;
+  readonly stopped: boolean;
+}
+
+/**
+ * Counts failed-check wakes against the project's fix limit (D-68). A pass clears the count. With
+ * the fixer off (`limit` 0) the count is carried untouched, so turning it back on resumes.
+ */
+export function applyCiFixer(
+  before: ThreadPullRequestWatch,
+  report: PullRequestWatchReport,
+  limit: number,
+): PullRequestWatchReport & { readonly fix: CiFixState | null } {
+  const spent = before.fixAttempts ?? 0;
+  const carried = spent === 0 ? report.next : { ...report.next, fixAttempts: spent };
+  if (limit <= 0) return { ...report, next: carried, fix: null };
+  const failed = report.changes.some((change) => change.kind === "checks-failed");
+  if (failed) {
+    const attempt = spent + 1;
+    const stopped = attempt > limit;
+    return {
+      ...report,
+      // A stopped watch keeps no count, so watching again starts a fresh budget.
+      next: stopped ? report.next : { ...report.next, fixAttempts: attempt },
+      fix: { attempt, limit, stopped },
+    };
+  }
+  const passed = report.changes.some((change) => change.kind === "checks-passed");
+  return { ...report, next: passed ? report.next : carried, fix: null };
+}
+
+const CI_FIX_RULES = [
+  "Rules for this fix:",
+  "- Read the failing job's log and fix the cause in the code.",
+  "- Never delete, skip or weaken a test or a check to get it green.",
+  "- Never force-push. Push only to this pull request's branch, never to the base branch.",
+  "- If the failure is in a job your change did not touch and looks unrelated, rerun that job once before changing code.",
+];
+
 function snippet(body: string): string {
   const text = body
     .replaceAll(/<!--[\s\S]*?-->/g, " ")
@@ -227,8 +269,10 @@ export function pullRequestWatchMessage(input: {
   readonly baseBranch: string;
   readonly headSha: string | null;
   readonly report: PullRequestWatchReport;
+  readonly fix?: CiFixState | null;
 }): { readonly text: string; readonly notification: OrchestrationV2Notification } {
   const { changes, exhausted } = input.report;
+  const fix = input.fix ?? null;
   const context = {
     baseBranch: input.baseBranch,
     commit: input.headSha === null ? "" : ` on ${input.headSha.slice(0, 7)}`,
@@ -237,15 +281,25 @@ export function pullRequestWatchMessage(input: {
     `Update on pull request #${input.number} (${input.url}), which Moonfold is watching for you:`,
     ...changes.flatMap((change) => changeLines(change, context)),
     "",
-    exhausted
-      ? `Moonfold stopped watching after ${PULL_REQUEST_WATCH_WAKE_LIMIT} comment-only updates in a row. Call watch_pull_request to watch it again.`
-      : "Look into each item and act on it as your task requires. This PR stays linked and watched, so do not link, watch, or list it again. End your turn when you are done, and Moonfold wakes you on the next change. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.",
+    ...(fix === null
+      ? []
+      : fix.stopped
+        ? [
+            `Moonfold's CI fixer has used its ${fix.limit} ${fix.limit === 1 ? "attempt" : "attempts"} on this pull request and stopped watching it. Do not push another fix. Tell the user which checks still fail and what you tried, and ask how to continue.`,
+          ]
+        : [`CI fixer: attempt ${fix.attempt} of ${fix.limit}.`, ...CI_FIX_RULES, ""]),
+    fix?.stopped === true
+      ? "Call watch_pull_request only if the user asks you to keep going."
+      : exhausted
+        ? `Moonfold stopped watching after ${PULL_REQUEST_WATCH_WAKE_LIMIT} comment-only updates in a row. Call watch_pull_request to watch it again.`
+        : "Look into each item and act on it as your task requires. This PR stays linked and watched, so do not link, watch, or list it again. End your turn when you are done, and Moonfold wakes you on the next change. When you hand the work back to the user, call unwatch_pull_request first so the thread returns to their inbox.",
   ].join("\n");
   const failed = changes.some(
     (change) => change.kind === "checks-failed" || change.kind === "conflicting",
   );
   const summary = changes.map((change) => SUMMARY[change.kind]);
   if (exhausted) summary.push("stopped watching");
+  if (fix?.stopped === true) summary.push("fix attempts used up");
   return {
     text,
     notification: {

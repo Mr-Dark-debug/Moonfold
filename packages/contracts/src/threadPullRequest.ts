@@ -100,6 +100,8 @@ export const ThreadPullRequestWatch = Schema.Struct({
    * none did. Null once either happened; absent on watches saved before it existed.
    */
   checksAwaitedSince: Schema.optional(Schema.NullOr(IsoDateTime)),
+  /** Failed-check wakes the CI fixer has spent since checks last passed (D-68). */
+  fixAttempts: Schema.optional(NonNegativeInt),
 });
 export type ThreadPullRequestWatch = typeof ThreadPullRequestWatch.Type;
 

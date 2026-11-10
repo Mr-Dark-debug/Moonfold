@@ -35,7 +35,10 @@ import * as PullRequestService from "../pullRequest/PullRequestService.ts";
 import { forkParked } from "../serverActivation.ts";
 import * as Orchestrator from "./Orchestrator.ts";
 import * as ProjectionStore from "./ProjectionStore.ts";
+import { resolveProjectSettings } from "@moonfold/shared/projectSettings";
+import * as ServerSettings from "../serverSettings.ts";
 import {
+  applyCiFixer,
   evaluatePullRequestWatch,
   PULL_REQUEST_WATCH_NO_CHECKS_MS,
   pullRequestWatchMessage,
@@ -103,6 +106,7 @@ type WatchEndReason =
   | "closed"
   | "unreadable"
   | "comment-limit"
+  | "fix-limit"
   | "settled"
   | "subagent"
   | "stopped";
@@ -182,7 +186,8 @@ function watchesEqual(left: ThreadPullRequestWatch, right: ThreadPullRequestWatc
     left.remarkIds.join("\n") === right.remarkIds.join("\n") &&
     left.conflicting === right.conflicting &&
     left.wakes === right.wakes &&
-    left.checksAwaitedSince === right.checksAwaitedSince
+    left.checksAwaitedSince === right.checksAwaitedSince &&
+    (left.fixAttempts ?? 0) === (right.fixAttempts ?? 0)
   );
 }
 
@@ -200,6 +205,7 @@ export const make = Effect.gen(function* () {
   const projections = yield* ProjectionStore.ProjectionStoreV2;
   const pullRequests = yield* PullRequestService.PullRequestService;
   const random = yield* SecureRandom.SecureRandom;
+  const serverSettings = yield* ServerSettings.ServerSettingsService;
   const bootedAt = yield* Clock.currentTimeMillis;
   const lives = new Map<string, WatchLife>();
 
@@ -557,8 +563,18 @@ export const make = Effect.gen(function* () {
       status: fingerprint?.status ?? null,
       remarks: fingerprint?.remarks ?? null,
     });
+    // An unreadable setting leaves the fixer off for this pass; the watch itself still reports.
+    const settings = yield* serverSettings.getSettings.pipe(Effect.orElseSucceed(() => null));
     yield* eachTarget(group, (target) => {
-      const report = evaluatePullRequestWatch(target.watch, detail, remarks, now);
+      const fixLimit =
+        settings === null
+          ? 0
+          : resolveProjectSettings(settings, target.thread.projectId).settings.ciFixAttempts;
+      const report = applyCiFixer(
+        target.watch,
+        evaluatePullRequestWatch(target.watch, detail, remarks, now),
+        fixLimit,
+      );
       if (report.changes.length > 0) {
         const wake = pullRequestWatchMessage({
           number: target.link.number,
@@ -566,15 +582,23 @@ export const make = Effect.gen(function* () {
           baseBranch: detail.baseBranch,
           headSha: report.next.headSha,
           report,
+          fix: report.fix,
         });
+        const fixStopped = report.fix?.stopped === true;
         // An ending watch keeps what this pass saw, so watching again starts from it.
         return (
-          report.exhausted
+          report.exhausted || fixStopped
             ? record(target, null, wake, report.next)
             : record(target, report.next, wake)
         ).pipe(
           Effect.tap(() => woke(target)),
-          Effect.tap(() => (report.exhausted ? ended(target, "comment-limit") : Effect.void)),
+          Effect.tap(() =>
+            fixStopped
+              ? ended(target, "fix-limit")
+              : report.exhausted
+                ? ended(target, "comment-limit")
+                : Effect.void,
+          ),
         );
       }
       return watchesEqual(report.next, target.watch) ? Effect.void : record(target, report.next);

@@ -1157,6 +1157,13 @@ export const SETTINGS_SEARCH_ITEMS = [
     searchTerms: ["pull request merge squash rebase last selected"],
   },
   {
+    id: "ci-fixer",
+    title: "Fix failing checks",
+    to: "/settings/source-control",
+    scope: "project-defaults",
+    searchTerms: ["ci fixer checks failing pull request automatic repair attempts tries actions"],
+  },
+  {
     id: "source-control",
     title: "Source control",
     to: "/settings/source-control",
