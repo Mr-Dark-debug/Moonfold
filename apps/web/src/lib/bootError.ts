@@ -2,7 +2,7 @@ import type { DesktopBridge, DesktopUpdateState } from "@moonfold/contracts";
 
 const FALLBACK_TRIAGE_COMMAND = "npx moonfold triage";
 const DOWNLOAD_URL = "https://github.com/Mr-Dark-debug/Moonfold/releases/latest";
-const ISSUE_URL = "https://github.com/pingdotgg/t3code/issues/new";
+const ISSUE_URL = "https://github.com/Mr-Dark-debug/Moonfold/issues/new";
 const LAST_FAILURE_KEY = "moonfold:boot-failed-at";
 const REPEAT_FAILURE_MS = 5 * 60_000;
 const MAX_CAUSES = 3;
