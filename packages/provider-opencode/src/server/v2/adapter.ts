@@ -3140,6 +3140,7 @@ export const make = Effect.fn("OpenCode2Adapter.make")(function* (instanceId: Pr
           harness: "OpenCode",
           model: turnInput.modelSelection.model,
           promptProfile: turnInput.promptProfile,
+          memories: turnInput.memories,
         }),
         moonfoldOrchestrationSystemPrompt(
           mcpAvailable,

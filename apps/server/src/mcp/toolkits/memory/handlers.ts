@@ -24,6 +24,8 @@ export const layer = McpToolAccess.toLayer(MemoryToolkit, {
           // Only the user widens a memory to every project; an agent's stays where it was saved.
           projectId: caller.projectId,
           threadId: caller.id,
+          kind: input.kind,
+          learned: input.learned,
         })
         .pipe(
           Effect.mapError(
@@ -34,7 +36,9 @@ export const layer = McpToolAccess.toLayer(MemoryToolkit, {
       return {
         memoryId: memory.id,
         message:
-          "Saved. Tell the user in a few words what you will remember; they can change it in Settings → Memories.",
+          memory.status === "suggested"
+            ? "Kept as a suggestion: it applies only after the user accepts it in Settings → Memories. Mention that in a few words, once."
+            : "Saved. Tell the user in a few words what you will remember; they can change it in Settings → Memories.",
       };
     }),
   ),

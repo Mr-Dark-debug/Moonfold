@@ -7,6 +7,7 @@ import { assert, describe, it } from "@effect/vitest";
 
 import {
   PULL_REQUEST_WATCH_WAKE_LIMIT,
+  applyCiFixer,
   evaluatePullRequestWatch as evaluate,
   pullRequestWatchMessage,
 } from "./pullRequestWatch.ts";
@@ -434,5 +435,61 @@ describe("evaluatePullRequestWatch", () => {
   it("never reports missing checks on a host where an empty list says nothing", () => {
     const silent = detail({ capabilities: capabilities(false), checks: [] });
     assert.isTrue(anHourLater(watch(), silent).every((kinds) => kinds.length === 0));
+  });
+});
+
+describe("applyCiFixer", () => {
+  const failing = detail({ checks: [check("test", "failure")] });
+  const fix = (before: ThreadPullRequestWatch, read: Detail, limit: number) =>
+    applyCiFixer(before, evaluatePullRequestWatch(before, read, noRemarks), limit);
+
+  it("counts each failed head, stops past the limit and starts fresh after a pass", () => {
+    const first = fix(watch(), failing, 2);
+    assert.deepEqual(first.fix, { attempt: 1, limit: 2, stopped: false });
+    assert.equal(first.next.fixAttempts, 1);
+
+    const second = fix(first.next, { ...failing, headSha: "bbbbbbbbbb" }, 2);
+    assert.deepEqual(second.fix, { attempt: 2, limit: 2, stopped: false });
+
+    // A third failure is past the limit: the watch ends, and its saved state holds no count.
+    const third = fix(second.next, { ...failing, headSha: "cccccccccc" }, 2);
+    assert.deepEqual(third.fix, { attempt: 3, limit: 2, stopped: true });
+    assert.isUndefined(third.next.fixAttempts);
+
+    const passed = fix(
+      second.next,
+      detail({ headSha: "dddddddddd", checks: [check("test", "success")] }),
+      2,
+    );
+    assert.isNull(passed.fix);
+    assert.isUndefined(passed.next.fixAttempts);
+  });
+
+  it("keeps the count through quiet reads and while the fixer is off", () => {
+    const spent = watch({ headSha: "aaaaaaaaaa", failedChecks: ["test"], fixAttempts: 2 });
+    assert.equal(fix(spent, failing, 3).next.fixAttempts, 2);
+    const off = fix(watch({ fixAttempts: 2 }), failing, 0);
+    assert.isNull(off.fix);
+    assert.equal(off.next.fixAttempts, 2);
+  });
+
+  it("tells the agent the attempt and the rules, then to stop and ask", () => {
+    const first = fix(watch(), failing, 1);
+    const message = (report: typeof first) =>
+      pullRequestWatchMessage({
+        number: 7,
+        url: "https://example.test/pull/7",
+        baseBranch: "main",
+        headSha: report.next.headSha,
+        report,
+        fix: report.fix,
+      });
+    assert.include(message(first).text, "CI fixer: attempt 1 of 1.");
+    assert.include(message(first).text, "Never force-push");
+
+    const stopped = message(fix(first.next, { ...failing, headSha: "bbbbbbbbbb" }, 1));
+    assert.include(stopped.text, "Do not push another fix");
+    assert.notInclude(stopped.text, "CI fixer: attempt");
+    assert.include(stopped.notification.summary, "fix attempts used up");
   });
 });

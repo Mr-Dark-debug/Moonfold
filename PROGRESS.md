@@ -1,5 +1,38 @@
 # Progress
 
+## Road to 1.0 (started 2026-11-10)
+
+Branch `stable-1`. Plans written, nothing built yet: docs/plans/stable-1.0.md (order and gate),
+project-knowledge-ci-fixer.md, mascot.md, anywhere.md, orbit.md. Decisions D-67 to D-71.
+`feat/home-backgrounds` is in `main`; no other Moonfold branch exists.
+
+Research behind the plans (public sources, summarized in each plan): how Jules does memory and CI
+fixing, how always-on agents from the large labs and the self-hosted ones run and what stops them,
+reported failures of unattended agents, what each feedback and posting channel allows, and every
+way to reach a computer behind address translation without an account.
+
+Waiting for the owner: approval of the living-mark plan and its three choices; a Cloudflare
+account and one deploy for the default Anywhere relay; the right to ship the two landscape
+pictures (D-65); Orbit's name and default level. Provider runs wait for Codex (19 November) or a
+Claude Code sign-in.
+
+Built so far (feature 1, D-68):
+
+- CI fixer: a thread that creates a pull request watches it by itself; failed checks wake the
+  agent with a try number and fixed rules; after the project's limit (Settings → Source Control →
+  Fix failing checks, three by default) the watch ends and the agent stops and asks.
+- Project knowledge: memories have a kind (preference or setup fact); agents can note a
+  correction, which waits as a suggestion by default (Settings → Memories → Learn from
+  corrections); credential-shaped text is refused; Cursor, OpenCode, Muse Code and ACP agents now
+  receive memories. Migration 85.
+
+Verified on Windows: typecheck in contracts, server, web and the provider packages; the watch,
+link, memory store, migration, budget and MCP server tests; `vp check`, knip and the brand check.
+Not verified: a live pull request with a failing check, and a live correction with a real
+provider. No eval was run for the changed `remember` description (no provider access).
+
+Next: the living mark (docs/plans/mascot.md).
+
 ## Beta 5 (2026-11-10)
 
 Done: v0.1.0-beta.5 is published and Latest (27 assets, tag on `b9e5d09da6`). It carries home screen

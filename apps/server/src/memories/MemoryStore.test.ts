@@ -19,7 +19,11 @@ const thread = ThreadId.make("thread-1");
 it.effect("delivers memories for every project and the thread's own project", () =>
   Effect.gen(function* () {
     const store = yield* MemoryStore.MemoryStore;
-    assert.deepStrictEqual(yield* store.list, { enabled: true, memories: [] });
+    assert.deepStrictEqual(yield* store.list, {
+      enabled: true,
+      learning: "suggest",
+      memories: [],
+    });
     assert.strictEqual(yield* store.forTurn({ threadId: thread, projectId: projectA }), undefined);
 
     yield* store.upsert({ text: text("Answer in British English."), projectId: null });
@@ -112,5 +116,70 @@ it.effect("a thread can opt out of memories and back in", () =>
       yield* store.forTurn({ threadId: thread, projectId: projectA }),
       undefined,
     );
+  }).pipe(Effect.provide(layer)),
+);
+
+it.effect("what an agent learns unasked follows the learning setting", () =>
+  Effect.gen(function* () {
+    const store = yield* MemoryStore.MemoryStore;
+    const learn = (note: string) =>
+      store.remember({
+        text: text(note),
+        projectId: projectA,
+        threadId: thread,
+        kind: "environment",
+        learned: true,
+      });
+
+    // Suggest is the default: kept, but no turn receives it until the user accepts it.
+    const suggested = yield* learn("Tests run with vp test run.");
+    assert.strictEqual(suggested.status, "suggested");
+    assert.strictEqual(suggested.kind, "environment");
+    assert.strictEqual(yield* store.forTurn({ threadId: thread, projectId: projectA }), undefined);
+
+    // Accepting is an edit, so it becomes the user's own and keeps its kind.
+    const accepted = yield* store.upsert({
+      id: suggested.id,
+      text: suggested.text,
+      projectId: projectA,
+    });
+    assert.deepStrictEqual(
+      { status: accepted.status, source: accepted.source, kind: accepted.kind },
+      { status: "active", source: "user", kind: "environment" },
+    );
+    assert.deepStrictEqual(yield* store.forTurn({ threadId: thread, projectId: projectA }), {
+      user: ["Tests run with vp test run."],
+      agent: [],
+    });
+
+    yield* store.setLearning("auto");
+    assert.strictEqual((yield* learn("Lint runs with vp lint.")).status, "active");
+
+    yield* store.setLearning("off");
+    assert.strictEqual((yield* Effect.flip(learn("Format with vp fmt.")))._tag, "MemoryError");
+    // A request to remember is not learning, so it still saves.
+    assert.strictEqual(
+      (yield* store.remember({ text: text("Prefers tabs."), projectId: null, threadId: thread }))
+        .status,
+      "active",
+    );
+  }).pipe(Effect.provide(layer)),
+);
+
+it.effect("refuses text shaped like a credential, from the user or an agent", () =>
+  Effect.gen(function* () {
+    const store = yield* MemoryStore.MemoryStore;
+    for (const secret of [
+      "Deploy with API_KEY=abcd1234efgh5678",
+      "token: ghp_abcdefghijklmnopqrstuvwxyz0123",
+      "-----BEGIN OPENSSH PRIVATE KEY-----",
+    ]) {
+      assert.strictEqual(
+        (yield* Effect.flip(store.upsert({ text: text(secret), projectId: null })))._tag,
+        "MemoryError",
+      );
+    }
+    yield* store.upsert({ text: text("The API key lives in 1Password."), projectId: null });
+    assert.strictEqual((yield* store.list).memories.length, 1);
   }).pipe(Effect.provide(layer)),
 );

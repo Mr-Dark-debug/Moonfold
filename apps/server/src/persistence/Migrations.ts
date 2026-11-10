@@ -90,6 +90,7 @@ import MoonfoldScheduledTaskRuns from "./Migrations/081_ScheduledTaskRuns.ts";
 import Migration0082 from "./Migrations/082_Memories.ts";
 import Migration0083 from "./Migrations/083_BrowserSiteRules.ts";
 import Migration0084 from "./Migrations/084_ComputerUse.ts";
+import Migration0085 from "./Migrations/085_MemoryKindAndStatus.ts";
 
 // Its tables are created only when missing; the column add is the one statement that cannot
 // repeat on a database that already ran it as migration 63.
@@ -189,6 +190,7 @@ const migrationEntries = [
   [82, "Memories", Migration0082],
   [83, "BrowserSiteRules", Migration0083],
   [84, "ComputerUse", Migration0084],
+  [85, "MemoryKindAndStatus", Migration0085],
 ] as const;
 
 export const migrationManifest = migrationEntries.map(([id, name]) => [id, name] as const);

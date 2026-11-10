@@ -2087,6 +2087,7 @@ export const makeMuseAdapterV2 = Effect.fn("makeMuseAdapterV2")(function* (
                       model: session.model ?? undefined,
                       reasoningEffort: effort,
                       promptProfile: turnInput.promptProfile,
+                      memories: turnInput.memories,
                     }),
                   },
                   ...parts,

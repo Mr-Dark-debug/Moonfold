@@ -329,6 +329,17 @@ A watched thread counts as working between wakes, so it stays in the **Working**
 not auto-settle. Agents stop watching when they hand the work back to you, and the thread then
 returns to your inbox.
 
+### Fix failing checks
+
+When you create a pull request from a thread, Moonfold watches it for that thread without being
+asked. If a check fails, the agent is woken to read the failure and push a fix. It gets three tries
+per pull request; a pass resets the count. After the last try it stops watching and tells you which
+checks still fail and what it tried. It is told never to weaken a test or a check to get green and
+never to force-push.
+
+Change the number of tries, or turn this off, in **Settings → Source Control → Fix failing checks**.
+It can be set per project. The eye on a watched pull request shows how many tries were used.
+
 Cross-repository links use a project on the same host. Azure DevOps reviews require a project checked
 out from the matching organization and repository.
 
