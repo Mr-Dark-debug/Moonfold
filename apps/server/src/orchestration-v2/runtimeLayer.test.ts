@@ -3489,8 +3489,7 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
       );
 
       const reactor = yield* PullRequestWatchReactor.make.pipe(
-        Effect.provide(host),
-        Effect.provide(ServerSettings.layerTest()),
+        Effect.provide(Layer.merge(host, ServerSettings.layerTest())),
       );
       yield* reactor.sweep;
       yield* TestClock.adjust("10 minutes");
@@ -3498,8 +3497,7 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
       assert.deepEqual(yield* summaries, ["#12: checks passed"]);
 
       const restarted = yield* PullRequestWatchReactor.make.pipe(
-        Effect.provide(host),
-        Effect.provide(ServerSettings.layerTest()),
+        Effect.provide(Layer.merge(host, ServerSettings.layerTest())),
       );
       yield* restarted.sweep;
       assert.deepEqual(yield* summaries, ["#12: checks passed"]);
@@ -3594,8 +3592,7 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
       );
 
       const reactor = yield* PullRequestWatchReactor.make.pipe(
-        Effect.provide(host),
-        Effect.provide(ServerSettings.layerTest()),
+        Effect.provide(Layer.merge(host, ServerSettings.layerTest())),
       );
       yield* reactor.sweep;
       yield* worker.drain();
@@ -3610,8 +3607,7 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
       );
       // The fresh reactor reloads the nonempty obligation from the persisted watch.
       const restarted = yield* PullRequestWatchReactor.make.pipe(
-        Effect.provide(host),
-        Effect.provide(ServerSettings.layerTest()),
+        Effect.provide(Layer.merge(host, ServerSettings.layerTest())),
       );
       yield* restarted.sweep;
       yield* worker.drain();
@@ -3744,8 +3740,7 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
         ({ messages }) => messages.flatMap((message) => message.notification?.summary ?? []),
       );
       const reactor = yield* PullRequestWatchReactor.make.pipe(
-        Effect.provide(host),
-        Effect.provide(ServerSettings.layerTest()),
+        Effect.provide(Layer.merge(host, ServerSettings.layerTest())),
       );
       yield* reactor.sweep;
       const ended = yield* watchOf;
@@ -3843,8 +3838,7 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
           ),
       );
       const reactor = yield* PullRequestWatchReactor.make.pipe(
-        Effect.provide(host),
-        Effect.provide(ServerSettings.layerTest()),
+        Effect.provide(Layer.merge(host, ServerSettings.layerTest())),
       );
       const anHourOfSweeps = Effect.gen(function* () {
         for (let pass = 0; pass < 6; pass++) {
@@ -3950,8 +3944,7 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
           ),
       );
       const reactor = yield* PullRequestWatchReactor.make.pipe(
-        Effect.provide(host),
-        Effect.provide(ServerSettings.layerTest()),
+        Effect.provide(Layer.merge(host, ServerSettings.layerTest())),
       );
       const worker = yield* EffectWorker.OrchestrationEffectWorkerV2;
       const sweep = reactor.sweep.pipe(Effect.andThen(worker.drain()));
@@ -4073,8 +4066,7 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
             messages.filter((message) => message.text.includes("No checks have reported")),
         );
         const reactor = yield* PullRequestWatchReactor.make.pipe(
-          Effect.provide(host),
-          Effect.provide(ServerSettings.layerTest()),
+          Effect.provide(Layer.merge(host, ServerSettings.layerTest())),
         );
         const worker = yield* EffectWorker.OrchestrationEffectWorkerV2;
         const sweep = reactor.sweep.pipe(Effect.andThen(worker.drain()));
@@ -4438,8 +4430,7 @@ it.layer(layerTest)("OrchestrationV2LayerLive lifecycle", (it) => {
         }),
       );
       const reactor = yield* PullRequestWatchReactor.make.pipe(
-        Effect.provide(host),
-        Effect.provide(ServerSettings.layerTest()),
+        Effect.provide(Layer.merge(host, ServerSettings.layerTest())),
       );
       yield* reactor.sweep;
       assert.include(yield* texts(21), "#21");

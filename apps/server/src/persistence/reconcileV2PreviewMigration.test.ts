@@ -64,6 +64,7 @@ describe("V2 preview upgrade", () => {
         [82, "Memories"],
         [83, "BrowserSiteRules"],
         [84, "ComputerUse"],
+        [85, "MemoryKindAndStatus"],
       ]);
       assert.deepStrictEqual(yield* runMigrations(), []);
       assert.deepStrictEqual(yield* sql`SELECT * FROM orchestration_v2_legacy_imports`, imports);
@@ -171,6 +172,7 @@ describe("V2 preview upgrade", () => {
         [82, "Memories"],
         [83, "BrowserSiteRules"],
         [84, "ComputerUse"],
+        [85, "MemoryKindAndStatus"],
       ]);
     }).pipe(Effect.provide(NodeSqliteClient.layer({ filename: ":memory:" }))),
   );
