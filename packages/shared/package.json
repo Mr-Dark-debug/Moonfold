@@ -175,6 +175,10 @@
       "types": "./src/projectSettings.ts",
       "import": "./src/projectSettings.ts"
     },
+    "./livingMark": {
+      "types": "./src/livingMark.ts",
+      "import": "./src/livingMark.ts"
+    },
     "./moonfoldProjectFile": {
       "types": "./src/moonfoldProjectFile.ts",
       "import": "./src/moonfoldProjectFile.ts"

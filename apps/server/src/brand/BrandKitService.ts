@@ -19,6 +19,8 @@ import {
   type BrandReferenceInput,
   type BrandRenderInput,
   type BrandRenderResult,
+  BrandReviewRoundInput,
+  type BrandReviewRoundResult,
   type BrandStatus,
   type BrandStepInput,
   type BrandValidationReport,
@@ -54,6 +56,8 @@ import {
 } from "./kitFiles.ts";
 import { decodePng, downscale, encodePng, isPng } from "./png.ts";
 import { exportFiles, readTokens, type ResolvedTokens, TOKENS_PATH } from "./tokens.ts";
+import { summarizeReviewRounds } from "./reviewRounds.ts";
+import { councilGlyphIndex, LIVING_MARK } from "@moonfold/shared/livingMark";
 
 export class BrandKitTargetError extends Schema.TaggedError<BrandKitTargetError>()(
   "BrandKitTargetError",
@@ -189,6 +193,10 @@ export class BrandKitService extends Context.Service<
     readonly validate: (
       target: BrandKitTarget,
     ) => Effect.Effect<BrandValidationReport, BrandKitError>;
+    readonly recordReview: (
+      target: BrandKitTarget,
+      input: BrandReviewRoundInput,
+    ) => Effect.Effect<BrandReviewRoundResult, BrandKitError>;
     readonly exportKit: (
       target: BrandKitTarget,
     ) => Effect.Effect<
@@ -233,6 +241,12 @@ const decodeReferenceIndexJson = Schema.decodeUnknownEffect(
   Schema.fromJsonString(BrandReferenceIndex),
 );
 const decodeJson = Schema.decodeUnknownOption(Schema.fromJsonString(Schema.Unknown));
+
+const decodeReviewRoundsJson = Schema.decodeUnknownEffect(
+  Schema.fromJsonString(Schema.Array(BrandReviewRoundInput)),
+);
+// Royal from the palette: a graphic that holds 3:1 on the light and the dark file viewer.
+const REVIEW_GLYPH_COLOR = "#3D4FE6";
 
 const toJson = (value: unknown) => `${JSON.stringify(value, null, 2)}\n`;
 
@@ -811,6 +825,66 @@ const make = Effect.gen(function* () {
     },
   );
 
+  const recordReview: BrandKitService["Service"]["recordReview"] = Effect.fn(
+    "BrandKitService.recordReview",
+  )(function* (target, input) {
+    const { dir } = yield* locate(target);
+    yield* readManifest(dir);
+    return yield* writes.withPermits(1)(
+      Effect.gen(function* () {
+        const roundsRelative = "reviews/rounds.json";
+        const roundsFile = path.join(dir, "reviews", "rounds.json");
+        const earlier = (yield* exists(roundsFile, roundsRelative))
+          ? yield* readText(roundsFile, roundsRelative).pipe(
+              Effect.flatMap((text) =>
+                decodeReviewRoundsJson(text).pipe(
+                  Effect.mapError(
+                    (cause) => new BrandKitManifestError({ path: roundsRelative, cause }),
+                  ),
+                ),
+              ),
+            )
+          : [];
+        // Re-recording a round replaces it, so a corrected score does not count twice.
+        const rounds = [
+          ...earlier.filter((round) => round.round !== input.round),
+          { round: input.round, scores: input.scores },
+        ].toSorted((left, right) => left.round - right.round);
+        const summary = summarizeReviewRounds(rounds);
+        const used = new Set(summary.seats.map((seat) => seat.seat));
+        for (const seat of used) {
+          const svg = LIVING_MARK.councilSvg[councilGlyphIndex(seat)]!.replaceAll(
+            "currentColor",
+            REVIEW_GLYPH_COLOR,
+          );
+          yield* writeBytes(
+            path.join(dir, "reviews", "seats", `seat-${seat}.svg`),
+            `reviews/seats/seat-${seat}.svg`,
+            svg,
+          );
+        }
+        yield* writeBytes(roundsFile, roundsRelative, toJson(rounds));
+        yield* writeBytes(
+          path.join(dir, "reviews", "index.md"),
+          "reviews/index.md",
+          summary.markdown,
+        );
+        const current = summary.averages.find((entry) => entry.round === input.round)!;
+        const previous = summary.averages.filter((entry) => entry.round < input.round).at(-1);
+        return {
+          round: input.round,
+          average: current.average,
+          change:
+            previous === undefined
+              ? null
+              : Math.round((current.average - previous.average) * 100) / 100,
+          seats: summary.seats,
+          file: "reviews/index.md",
+        };
+      }),
+    );
+  });
+
   return BrandKitService.of({
     init,
     status,
@@ -819,6 +893,7 @@ const make = Effect.gen(function* () {
     keepReference,
     render,
     validate,
+    recordReview,
     exportKit,
   });
 });

@@ -14,19 +14,12 @@ import {
   type ServerProviderSkill,
   type ServerProviderSlashCommand,
 } from "@moonfold/contracts";
-import {
-  BlocksIcon,
-  FolderIcon,
-  MessagesSquareIcon,
-  PackageIcon,
-  SettingsIcon,
-  UserRoundIcon,
-  type LucideIcon,
-} from "lucide-react";
+import { MessagesSquareIcon } from "lucide-react";
 import { memo, useLayoutEffect, useRef } from "react";
 
 import { type ComposerSlashCommand, type ComposerTriggerKind } from "../../composer-logic";
 import { cn } from "~/lib/utils";
+import { SkillKindGlyph } from "../brand/BrandGlyph";
 import { Badge } from "../ui/badge";
 import { Command, CommandGroup, CommandItem, CommandList } from "../ui/command";
 import { EnvironmentMachineIcon } from "../EnvironmentMachineIcon";
@@ -265,15 +258,6 @@ const LISTBOX_LABEL_BY_TRIGGER: Record<ComposerTriggerKind, string> = {
   skill: "Skills",
 };
 
-const SKILL_SOURCE_ICON_BY_KIND: Record<ProviderSkillSourceKind, LucideIcon> = {
-  app: BlocksIcon,
-  repo: FolderIcon,
-  project: FolderIcon,
-  personal: UserRoundIcon,
-  system: SettingsIcon,
-  other: PackageIcon,
-};
-
 const SKILL_SOURCE_LABEL_BY_KIND: Record<ProviderSkillSourceKind, string> = {
   app: "App",
   repo: "Repo",
@@ -284,10 +268,9 @@ const SKILL_SOURCE_LABEL_BY_KIND: Record<ProviderSkillSourceKind, string> = {
 };
 
 function SkillSourceBadge(props: { kind: ProviderSkillSourceKind; showSkillSuffix: boolean }) {
-  const Icon = SKILL_SOURCE_ICON_BY_KIND[props.kind];
   return (
     <Badge className="ms-auto" variant="secondary">
-      <Icon aria-hidden="true" className="text-current" />
+      <SkillKindGlyph kind={props.kind} />
       {SKILL_SOURCE_LABEL_BY_KIND[props.kind]}
       {props.showSkillSuffix ? " Skill" : null}
     </Badge>

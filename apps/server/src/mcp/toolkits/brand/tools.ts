@@ -9,6 +9,8 @@ import {
   BrandReferenceInput,
   BrandRenderInput,
   BrandRenderResult,
+  BrandReviewRoundInput,
+  BrandReviewRoundResult,
   BrandStatus,
   BrandStepInput,
   BrandValidationReport,
@@ -115,6 +117,21 @@ const BrandRenderTool = Tool.make("brand_render", {
   .annotate(Tool.Idempotent, true)
   .annotate(Tool.OpenWorld, true);
 
+const BrandReviewRoundTool = Tool.make("brand_review_round", {
+  description:
+    "Record one review round of the brand book: each reviewer's name (provider and model), score out of 10 and fixes. Recording a round number again replaces it. Moonfold gives each reviewer a fixed seat and writes reviews/index.md, which shows the user who scored what. Returns the round's average and its change from the previous round, which tells you when to stop.",
+  parameters: BrandReviewRoundInput,
+  success: BrandReviewRoundResult,
+  failure: OrchestratorMcpFailure,
+  failureMode: "return",
+  dependencies,
+})
+  .annotate(Tool.Title, "Record brand review round")
+  .annotate(Tool.Readonly, false)
+  .annotate(Tool.Destructive, false)
+  .annotate(Tool.Idempotent, true)
+  .annotate(Tool.OpenWorld, false);
+
 const BrandValidateTool = Tool.make("brand_validate", {
   description:
     "Check the brand kit: tokens/tokens.json shape and required roles, WCAG contrast for both themes, unsafe SVGs, font licenses, and that references/ stays out of git. Fix every error before brand_export.",
@@ -150,6 +167,7 @@ export const BrandToolkit = Toolkit.make(
   BrandCheckNamesTool,
   BrandKeepReferenceTool,
   BrandRenderTool,
+  BrandReviewRoundTool,
   BrandValidateTool,
   BrandExportTool,
 );

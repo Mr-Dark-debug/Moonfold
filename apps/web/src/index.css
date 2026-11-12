@@ -2600,3 +2600,231 @@ code {
   outline: 2px solid var(--ring);
   outline-offset: -2px;
 }
+
+/* The living mark (docs/plans/mascot.md, D-67). Poses switch by opacity, so every state has a
+   still form. Only the star's lap loops, on its own layer of nested transforms that cancel to a
+   slide along the ring, so nothing else is repainted. Numbers come from brand-mark.ts. */
+.living-mark {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  container-type: size;
+  line-height: 0;
+  vertical-align: middle;
+}
+
+.living-mark .lm-body {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: var(--lm-breathe-x) var(--lm-breathe-y);
+}
+
+.living-mark .lm-pose-alert,
+.living-mark .lm-star-hollow,
+.living-mark .lm-rays,
+.living-mark .lm-waiting-dots,
+.living-mark .lm-still-star {
+  opacity: 0;
+}
+
+.living-mark .lm-star {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.living-mark[data-state="attention"] .lm-pose-base,
+.living-mark[data-state="attention"] .lm-star,
+.living-mark[data-state="working"] .lm-star {
+  opacity: 0;
+}
+
+.living-mark[data-state="attention"] .lm-pose-alert,
+.living-mark[data-state="attention"] .lm-star-hollow,
+.living-mark[data-state="waiting"] .lm-waiting-dots,
+.living-mark[data-state="done"] .lm-rays,
+.living-mark[data-state="working"] .lm-still-star {
+  opacity: 1;
+}
+
+.living-mark .lm-orbit {
+  position: absolute;
+  left: var(--lm-cx);
+  top: var(--lm-cy);
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  /* Without motion the still star stands in for the travelling one. */
+  display: none;
+}
+
+.living-mark .lm-o {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+}
+
+.living-mark .lm-o-tilt {
+  transform: rotate(var(--lm-tilt));
+}
+.living-mark .lm-o-squash {
+  transform: scaleY(var(--lm-squash));
+}
+.living-mark .lm-o-lap {
+  transform: rotate(var(--lm-park));
+}
+.living-mark .lm-o-out {
+  transform: translateX(var(--lm-rx));
+}
+.living-mark .lm-o-unlap {
+  transform: rotate(calc(-1 * var(--lm-park)));
+}
+.living-mark .lm-o-unsquash {
+  transform: scaleY(var(--lm-unsquash));
+}
+.living-mark .lm-o-untilt {
+  transform: rotate(calc(-1 * var(--lm-tilt)));
+}
+
+.living-mark .lm-traveller {
+  position: absolute;
+  left: -10cqw;
+  top: -10cqw;
+  width: 20cqw;
+  height: 20cqw;
+  overflow: visible;
+  fill: currentColor;
+  /* A halo in the surface colour keeps the star apart from the crescent it passes over. */
+  stroke: var(--lm-halo, var(--background));
+  stroke-width: 2.4;
+  paint-order: stroke;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .living-mark .lm-pose,
+  .living-mark .lm-star,
+  .living-mark .lm-star-hollow,
+  .living-mark .lm-waiting-dots {
+    transition: opacity 220ms ease-out;
+  }
+
+  .living-mark[data-state="working"] .lm-orbit {
+    display: block;
+  }
+  .living-mark[data-state="working"] .lm-still-star {
+    opacity: 0;
+  }
+  /* Under an observed row the lap pauses off-screen and in a hidden tab (visibleAnimation.ts). */
+  .living-mark[data-state="working"] .lm-o-lap {
+    animation: lm-lap 2400ms linear infinite;
+    animation-play-state: var(--visible-animation-state, running);
+    will-change: var(--visible-animation-will-change, transform);
+  }
+  .living-mark[data-state="working"] .lm-o-unlap {
+    animation: lm-unlap 2400ms linear infinite;
+    animation-play-state: var(--visible-animation-state, running);
+    will-change: var(--visible-animation-will-change, transform);
+  }
+  .living-mark[data-state="working"] .lm-traveller {
+    animation: lm-behind-moon 2400ms linear infinite;
+    animation-play-state: var(--visible-animation-state, running);
+  }
+
+  .living-mark[data-state="waiting"] .lm-body {
+    animation: lm-breathe 4000ms ease-in-out 8;
+  }
+
+  .living-mark[data-state="done"] .lm-star {
+    animation: lm-sparkle 700ms ease-out 1;
+  }
+  .living-mark[data-state="done"] .lm-rays {
+    animation: lm-rays 900ms ease-out 1 forwards;
+  }
+
+  .living-mark[data-state="idle"][data-twinkle] .lm-star {
+    animation: lm-twinkle 7000ms ease-in-out 3;
+  }
+}
+
+@keyframes lm-lap {
+  from {
+    transform: rotate(var(--lm-park));
+  }
+  to {
+    transform: rotate(calc(var(--lm-park) + 360deg));
+  }
+}
+
+@keyframes lm-unlap {
+  from {
+    transform: rotate(calc(-1 * var(--lm-park)));
+  }
+  to {
+    transform: rotate(calc(-1 * var(--lm-park) - 360deg));
+  }
+}
+
+/* livingMarkData().orbit.hideFrom and hideTo: the part of a lap spent behind the moon's disc. */
+@keyframes lm-behind-moon {
+  0%,
+  75.7% {
+    opacity: 1;
+  }
+  77.7%,
+  99.6% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes lm-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes lm-sparkle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.3);
+  }
+}
+
+@keyframes lm-rays {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes lm-twinkle {
+  0%,
+  82%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  91% {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
+}

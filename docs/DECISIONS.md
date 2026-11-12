@@ -581,7 +581,8 @@ from the same geometry (moon phase and star position), never provider logos. Ski
 per source kind. All of it comes from `scripts/lib/brand-mark.ts`, is drawn by one component, and
 moves with transforms and opacity only, with a still pose per state for reduced motion. Only the
 working state loops, and only while an agent works. Plan: docs/plans/mascot.md. The name, the
-motion intensity and the docs-site form are the owner's to choose.
+motion intensity and the docs-site form are the owner's to choose. The owner approved the plan's
+defaults on 2026-11-10: no name in the product, subtle motion, static pictures on the docs site.
 
 ## D-68 Project knowledge and the CI fixer extend what exists
 

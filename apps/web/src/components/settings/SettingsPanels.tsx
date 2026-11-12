@@ -31,6 +31,7 @@ import * as Equal from "effect/Equal";
 import * as Schema from "effect/Schema";
 import { APP_VERSION, HOSTED_APP_CHANNEL, HOSTED_APP_CHANNEL_LABEL } from "../../branding";
 import { AboutVersionTitle } from "./AboutVersionTitle";
+import { LivingMark } from "../brand/LivingMark";
 import { CliCommandSettingsRow } from "./CliCommandSettingsRow";
 import { QuickWindowShortcutRow } from "./QuickWindowShortcutRow";
 import { RunInBackgroundRow } from "./RunInBackgroundRow";
@@ -2048,6 +2049,10 @@ export function AboutSettingsPanel() {
   const telemetryOff = managedTelemetryOffMessage(primaryPolicy);
   return (
     <SettingsPageContainer>
+      <div className="flex items-center gap-3 text-foreground">
+        <LivingMark size={44} twinkle label="" />
+        <span className="text-xl font-medium tracking-tight">Moonfold</span>
+      </div>
       <SettingsSection id="about" title="App">
         {primaryPolicy ? (
           <SettingsRow

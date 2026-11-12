@@ -209,3 +209,41 @@ export const BrandExportResult = Schema.Struct({
   files: Schema.Array(Schema.String),
 });
 export type BrandExportResult = typeof BrandExportResult.Type;
+
+/** At most this many reviewers sit on one panel, one council glyph each (D-67). */
+const MAX_BRAND_REVIEWERS = 6;
+
+export const BrandReviewScore = Schema.Struct({
+  /** Who reviewed, as shown to the user: provider and model, never a logo. */
+  reviewer: ShortText(80),
+  score: Schema.Number.check(Schema.isBetween({ minimum: 0, maximum: 10 })),
+  fixes: Schema.Array(ShortText(400)).check(Schema.isMaxLength(12)),
+});
+export type BrandReviewScore = typeof BrandReviewScore.Type;
+
+export const BrandReviewRoundInput = Schema.Struct({
+  round: Schema.Int.check(Schema.isBetween({ minimum: 1, maximum: 20 })),
+  scores: Schema.Array(BrandReviewScore).check(
+    Schema.isMinLength(1),
+    Schema.isMaxLength(MAX_BRAND_REVIEWERS),
+  ),
+});
+export type BrandReviewRoundInput = typeof BrandReviewRoundInput.Type;
+
+export const BrandReviewSeat = Schema.Struct({
+  /** 1-based; the same reviewer keeps the same seat across rounds. */
+  seat: Schema.Int,
+  reviewer: Schema.String,
+});
+export type BrandReviewSeat = typeof BrandReviewSeat.Type;
+
+export const BrandReviewRoundResult = Schema.Struct({
+  round: Schema.Int,
+  average: Schema.Number,
+  /** The change from the previous round's average, or null for the first round. */
+  change: Schema.NullOr(Schema.Number),
+  seats: Schema.Array(BrandReviewSeat),
+  /** The review summary the user reads, relative to the brand folder. */
+  file: Schema.String,
+});
+export type BrandReviewRoundResult = typeof BrandReviewRoundResult.Type;

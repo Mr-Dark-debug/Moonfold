@@ -91,7 +91,7 @@ import { TerminalViewport } from "../ThreadTerminalDrawer";
 import { CloudEnvironmentConnectRows } from "../cloud/CloudEnvironmentConnectList";
 import { presentSavedCloudEnvironmentConnection } from "../cloud/cloudEnvironmentConnectionPresentation";
 import { ProviderInstanceIcon } from "../chat/ProviderInstanceIcon";
-import { MoonfoldMark } from "../MoonfoldMark";
+import { LivingMark } from "../brand/LivingMark";
 import { Alert, AlertDescription } from "../ui/alert";
 import { Button } from "../ui/button";
 import { CommandBlock } from "../CommandBlock";
@@ -242,7 +242,7 @@ export function WelcomeWizard({
           title="Set up Moonfold"
           identity={
             <div className="flex items-center gap-2" role="img" aria-label="Moonfold">
-              <MoonfoldMark className="size-6 shrink-0" aria-hidden />
+              <LivingMark size={28} twinkle label="" />
               <span className="text-2xl font-medium tracking-tight text-muted-foreground">
                 Moonfold
               </span>

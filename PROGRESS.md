@@ -31,7 +31,23 @@ link, memory store, migration, budget and MCP server tests; `vp check`, knip and
 Not verified: a live pull request with a failing check, and a live correction with a real
 provider. No eval was run for the changed `remember` description (no provider access).
 
-Next: the living mark (docs/plans/mascot.md).
+Feature 2, the living mark (D-67), built 2026-11-12:
+
+- Geometry in `scripts/lib/brand-mark.ts` (`livingMarkData`), generated into
+  `packages/shared/src/livingMark.generated.json` and still SVGs in `assets/brand/living/`; the
+  icon check covers both.
+- `LivingMark` with five states and a still pose each; the star's lap is two cancelling rotations,
+  transforms and opacity only, paused off screen. `CouncilGlyph` (six seats) and `SkillKindGlyph`.
+- Used in: the timeline's Thinking row (working, waiting while an approval is pending), the slash
+  menu's skill badges, plugin skills in Settings, the welcome wizard, the empty thread and About.
+- Review rounds: `brand_review_round` keeps each reviewer on a seat and writes
+  `reviews/index.md` with the glyphs; Cassandre's instructions use it.
+- QA: docs/QA-MASCOT.md, captures in both themes and with reduced motion; a Chromium test proves
+  the lap follows the ring without turning the star.
+
+Not checked: the real app by eye, a performance trace of a long working state.
+
+Next: Anywhere (docs/plans/anywhere.md).
 
 ## Beta 5 (2026-11-10)
 

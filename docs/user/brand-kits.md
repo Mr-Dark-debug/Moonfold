@@ -47,7 +47,7 @@ continues as soon as you submit.
 | `fonts/`                        | The fonts used, each with its open-source license                      |
 | `exports/`                      | CSS variables, a Tailwind theme, SCSS, TypeScript and JSON             |
 | `guidelines/`                   | The brand book page                                                    |
-| `reviews/`                      | Each review round and its scores                                       |
+| `reviews/`                      | Each review round: who scored what, with a glyph per reviewer          |
 
 Moonfold checks the kit before exporting: text colors must meet WCAG AA contrast, logos must be
 plain SVG, and every font needs an open-source license. `exports/` is generated from `tokens.json`,
