@@ -224,6 +224,7 @@ import * as WorktreeMcpService from "./mcp/WorktreeMcpService.ts";
 import * as PluginStore from "./plugins/PluginStore.ts";
 import * as HandoffService from "./handoff/HandoffService.ts";
 import * as MemoryStore from "./memories/MemoryStore.ts";
+import * as OrbitService from "./orbit/OrbitService.ts";
 import * as BrowserSitePermissions from "./browser/BrowserSitePermissions.ts";
 import * as ComputerUseService from "./computerUse/ComputerUseService.ts";
 import { threadWorkspaceRoot } from "./project/threadWorkspaceRoot.ts";
@@ -1533,6 +1534,7 @@ export const layerWsRpc = (
       const worktreeTransfers = yield* WorktreeMcpService.WorktreeMcpService;
       const plugins = yield* PluginStore.PluginStore;
       const memories = yield* MemoryStore.MemoryStore;
+      const orbit = yield* OrbitService.OrbitService;
       const handoffs = yield* HandoffService.HandoffService;
       const browserSites = yield* BrowserSitePermissions.BrowserSitePermissions;
       const computerUse = yield* ComputerUseService.ComputerUseService;
@@ -2407,6 +2409,12 @@ export const layerWsRpc = (
         [WS_METHODS.pluginsSetEnabled]: (input) =>
           plugins.setEnabled(input.id, input.enabled).pipe(Effect.map((plugin) => ({ plugin }))),
         [WS_METHODS.pluginsRemove]: (input) => plugins.remove(input.id),
+        [WS_METHODS.orbitGet]: (input) => orbit.get(input.projectId),
+        [WS_METHODS.orbitUpdate]: (input) => orbit.update(input),
+        [WS_METHODS.orbitRunNow]: (input) => orbit.runNow(input.projectId, input.role),
+        [WS_METHODS.orbitResolveItem]: (input) =>
+          orbit.resolveItem(input.projectId, input.id, input.status),
+        [WS_METHODS.orbitRequest]: (input) => orbit.request(input.projectId, input.text),
         [WS_METHODS.memoriesList]: () => memories.list,
         [WS_METHODS.memoriesUpsert]: (input) =>
           memories.upsert(input).pipe(Effect.map((memory) => ({ memory }))),

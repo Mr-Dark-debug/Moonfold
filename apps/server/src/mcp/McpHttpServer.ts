@@ -79,6 +79,8 @@ import {
 } from "./toolkits/device/tools.ts";
 import * as HtmlHandlers from "./toolkits/html/handlers.ts";
 import * as MemoryHandlers from "./toolkits/memory/handlers.ts";
+import * as OrbitHandlers from "./toolkits/orbit/handlers.ts";
+import { OrbitToolkit } from "./toolkits/orbit/tools.ts";
 import * as BrandHandlers from "./toolkits/brand/handlers.ts";
 import { BrandToolkit } from "./toolkits/brand/tools.ts";
 import * as ComputerHandlers from "./toolkits/computer/handlers.ts";
@@ -1197,6 +1199,8 @@ export const layerThreadToolkit = toolkitRegistration(ThreadToolkit, ThreadHandl
 
 const layerMemoryToolkit = toolkitRegistration(MemoryToolkit, MemoryHandlers.layer);
 
+const layerOrbitToolkit = toolkitRegistration(OrbitToolkit, OrbitHandlers.layer);
+
 const layerBrandToolkit = toolkitRegistration(BrandToolkit, BrandHandlers.layer);
 
 const layerComputerToolkit = Layer.mergeAll(
@@ -1281,6 +1285,7 @@ export const layerTools = Layer.mergeAll(
   layerOrchestratorToolkit,
   layerThreadToolkit,
   layerMemoryToolkit,
+  layerOrbitToolkit,
   layerBrandToolkit,
   layerComputerToolkit,
   layerAttachmentToolkit,

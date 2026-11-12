@@ -61,7 +61,17 @@ Feature 3, Anywhere (D-69), built 2026-11-12:
 - Not verified: the Workers relay (needs a Cloudflare account to deploy); a phone or emulator on
   another network end to end. No default relay ships until the owner deploys one.
 
-Next: Orbit (docs/plans/orbit.md).
+Feature 4, Orbit (D-70), built 2026-11-12:
+
+- Server: `apps/server/src/orbit/` (service, crew prompts, channel readers), migration 86, seven
+  role-checked MCP tools, five RPCs. The crew is scheduled tasks Orbit installs and switches.
+- Screen: **Orbit** in the sidebar: mission prompt, crew rail with living-mark states, autonomy
+  level, channels, run cap, inbox, backlog and activity log. User guide: docs/user/orbit.md.
+- Verified: service tests (crew per level, stop switch, daily budget, role lookup, owner requests
+  first, quiet runs filed), feed parser tests, screen logic tests, typecheck and lint.
+- Not verified: a real crew run against a provider; the screen in a running client.
+
+Next: the 1.0 release gate (docs/plans/stable-1.0.md).
 
 ## Beta 5 (2026-11-10)
 

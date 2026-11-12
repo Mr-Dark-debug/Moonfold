@@ -60,6 +60,7 @@ import * as ThreadLaunchService from "./ThreadLaunchService.ts";
 import * as ThreadForkService from "./ThreadForkService.ts";
 import * as TurnItemPositionStore from "./TurnItemPositionStore.ts";
 import * as ScheduledTaskService from "../scheduledTasks/ScheduledTaskService.ts";
+import * as OrbitService from "../orbit/OrbitService.ts";
 import * as QuestionRequests from "../questions/QuestionRequests.ts";
 import * as SecretRequests from "../secrets/SecretRequests.ts";
 
@@ -391,6 +392,10 @@ export const layerProduction = Layer.mergeAll(
   layerManagedProjectFoldersProvided,
   layerThreadLaunchProvided,
   layerScheduledTaskProvided,
+  // Orbit (D-70) installs and switches the crew's scheduled tasks.
+  OrbitService.layer.pipe(
+    Layer.provide(Layer.merge(layerScheduledTaskProvided, layerProjectService)),
+  ),
   layerScratchThreadPromotionProvided,
   layerSecretRequestsProvided,
   layerQuestionRequestsProvided,
