@@ -2,19 +2,18 @@
 
 ## Road to 1.0 (started 2026-11-10)
 
-Branch `stable-1`. Plans written, nothing built yet: docs/plans/stable-1.0.md (order and gate),
-project-knowledge-ci-fixer.md, mascot.md, anywhere.md, orbit.md. Decisions D-67 to D-71.
-`feat/home-backgrounds` is in `main`; no other Moonfold branch exists.
+Branch `stable-1`, merged into `main`. Plans: docs/plans/stable-1.0.md (order and gate),
+project-knowledge-ci-fixer.md, mascot.md, anywhere.md, orbit.md. Decisions D-67 to D-72.
+All four features are built and shipped as 1.0.0-rc.1 (record at the end of this section).
 
 Research behind the plans (public sources, summarized in each plan): how Jules does memory and CI
 fixing, how always-on agents from the large labs and the self-hosted ones run and what stops them,
 reported failures of unattended agents, what each feedback and posting channel allows, and every
 way to reach a computer behind address translation without an account.
 
-Waiting for the owner: approval of the living-mark plan and its three choices; a Cloudflare
-account and one deploy for the default Anywhere relay; the right to ship the two landscape
-pictures (D-65); Orbit's name and default level. Provider runs wait for Codex (19 November) or a
-Claude Code sign-in.
+Waiting for the owner: a Cloudflare account and one deploy for the default Anywhere relay; the
+right to ship the two landscape pictures (D-65). Provider runs wait for Codex (19 November) or a
+Claude Code sign-in. The living-mark choices were approved on 2026-11-10 (D-67).
 
 Built so far (feature 1, D-68):
 
@@ -81,7 +80,26 @@ Checked in a running client (dev server on this repo's own `.moonfold`, 2026-11-
   to 127.0.0.1:18787"); an HTTPS request through the relay into the running server answered 200,
   and the certificate the client saw was the computer's own.
 
-Next: the 1.0 release gate (docs/plans/stable-1.0.md).
+Released 1.0.0-rc.1 on 2026-11-12 (D-72), a GitHub prerelease:
+https://github.com/Mr-Dark-debug/Moonfold/releases/tag/v1.0.0-rc.1
+
+- Main CI 43187165965 green on `b41d1eaa98`; dry run 43183551657 and release run 43188871249
+  green on all six targets; 26 published assets match `SHA256SUMS`.
+- REA gate on the dry-run `.deb`: docs/REA-RC1.md (no new built-in hosts; fuses as in beta 5).
+- Moonfold for Android 0.2.0-beta.1 attached by hand (versionCode 2, sha256 `5c57bdb4…be4cc`,
+  same signing key as 0.1).
+
+Not verified, and why this is a release candidate: a real provider running an Orbit crew, the CI
+fixer on a failing check, or a learned correction (Codex is limited until 19 November, Claude Code
+is signed out); the Workers relay (not deployed); the Android app on a real phone on another
+network.
+
+### Next step
+
+1.0.0 is one tag once these pass: provider runs of the three agent features, the owner deploying
+the default relay (docs/operations/anywhere-relay.md) and setting it as the default, the D-65
+picture rights, and the open items in the gate in docs/plans/stable-1.0.md. Fuse hardening is
+still open from beta 5.
 
 ## Beta 5 (2026-11-10)
 
