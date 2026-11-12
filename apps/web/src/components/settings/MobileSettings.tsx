@@ -1,4 +1,6 @@
 import type { AuthMobileAccessStatus } from "@moonfold/contracts";
+import { AnywhereRelayUrl, DEFAULT_ANYWHERE_RELAY_URL } from "@moonfold/contracts/settings";
+import * as Schema from "effect/Schema";
 import { RefreshCwIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -7,6 +9,7 @@ import { usePrimarySettings, useUpdatePrimarySettings } from "../../hooks/useSet
 import { useStableCallback } from "~/hooks/useStableCallback";
 import { usePrimaryEnvironment } from "../../state/environments";
 import { Button } from "../ui/button";
+import { DraftInput } from "../ui/draft-input";
 import { QRCodeSvg } from "../ui/qr-code";
 import { Switch } from "../ui/switch";
 import { mobilePairingPayload } from "./mobileSettings.logic";
@@ -18,6 +21,7 @@ const QR_REFRESH_MS = 4 * 60_000;
 /** The listener starts a moment after the setting changes. */
 const STATUS_POLL_MS = 1_000;
 const STATUS_POLL_ATTEMPTS = 8;
+const isAnywhereRelayUrl = Schema.is(AnywhereRelayUrl);
 
 /**
  * Settings > Mobile App (D-58): turn on the phone's encrypted connection to this machine and show
@@ -26,16 +30,22 @@ const STATUS_POLL_ATTEMPTS = 8;
 export function MobileSettingsPanel() {
   const environment = usePrimaryEnvironment();
   const enabled = usePrimarySettings((settings) => settings.mobileAccessEnabled);
+  const anywhereEnabled = usePrimarySettings((settings) => settings.anywhereEnabled);
+  const relayUrl = usePrimarySettings((settings) => settings.anywhereRelayUrl);
+  const [relayError, setRelayError] = useState<string | null>(null);
   const updateSettings = useUpdatePrimarySettings();
   const [status, setStatus] = useState<AuthMobileAccessStatus | null>(null);
   const [payload, setPayload] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const hostName = environment?.label ?? "Moonfold";
 
-  const refresh = useStableCallback(async () => {
+  // `ready` says when the status shows a change just saved; the server applies it a beat later.
+  const refresh = useStableCallback(async (ready?: (status: AuthMobileAccessStatus) => boolean) => {
     try {
+      const settled = (status: AuthMobileAccessStatus) =>
+        status.enabled && (ready === undefined || ready(status));
       let current = await fetchMobileAccessStatus();
-      for (let attempt = 0; attempt < STATUS_POLL_ATTEMPTS && !current.enabled; attempt += 1) {
+      for (let attempt = 0; attempt < STATUS_POLL_ATTEMPTS && !settled(current); attempt += 1) {
         await new Promise((resolve) => setTimeout(resolve, STATUS_POLL_MS));
         current = await fetchMobileAccessStatus();
       }
@@ -62,6 +72,17 @@ export function MobileSettingsPanel() {
     return () => window.clearInterval(timer);
   }, [enabled, refresh]);
 
+  const relayState = status?.anywhere;
+  const anywhereStatus = !anywhereEnabled
+    ? undefined
+    : relayState === undefined
+      ? "Starting…"
+      : relayState.relayUrl === null
+        ? "Enter a relay address below."
+        : relayState.connected
+          ? `Connected to ${new URL(relayState.relayUrl).host}. Phones paired from now on can reach this machine anywhere.`
+          : `Connecting to ${new URL(relayState.relayUrl).host}…`;
+
   return (
     <SettingsPageContainer>
       <SettingsSection title="Mobile app">
@@ -85,8 +106,73 @@ export function MobileSettingsPanel() {
         />
         {enabled ? (
           <SettingsRow
+            {...searchableSetting("mobile-anywhere")}
+            description="Reach this machine from the phone on any network, with no account. A relay passes the encrypted connection along: it sees when the two talk and how much, never what."
+            status={anywhereStatus}
+            control={
+              <Switch
+                aria-label="Reach from anywhere"
+                checked={anywhereEnabled}
+                onCheckedChange={(checked) => {
+                  updateSettings({ anywhereEnabled: checked });
+                  // The code names the relay, so it is made again once the change applies.
+                  void refresh((current) => (current.anywhere !== undefined) === checked);
+                }}
+              />
+            }
+          />
+        ) : null}
+        {enabled && anywhereEnabled ? (
+          <SettingsRow
+            title="Relay"
+            description={
+              DEFAULT_ANYWHERE_RELAY_URL === null
+                ? "The wss:// address of a relay you run with `moonfold relay`, or one you trust."
+                : "Leave empty to use Moonfold's relay, or enter the wss:// address of your own."
+            }
+            control={
+              <DraftInput
+                nativeInput
+                size="sm"
+                className="w-full sm:w-72"
+                aria-label="Relay address"
+                placeholder={DEFAULT_ANYWHERE_RELAY_URL ?? "wss://relay.example.com"}
+                autoCapitalize="none"
+                spellCheck={false}
+                maxLength={512}
+                value={relayUrl ?? ""}
+                onCommit={(next) => {
+                  const trimmed = next.trim();
+                  if (trimmed !== "" && !isAnywhereRelayUrl(trimmed)) {
+                    setRelayError("Enter a wss:// address, without a query or a password.");
+                    return;
+                  }
+                  setRelayError(null);
+                  updateSettings({ anywhereRelayUrl: trimmed === "" ? null : trimmed });
+                  const expected = (trimmed === "" ? DEFAULT_ANYWHERE_RELAY_URL : trimmed) ?? "";
+                  const bare = (url: string) => url.replace(/\/+$/, "");
+                  void refresh(
+                    (current) => bare(current.anywhere?.relayUrl ?? "") === bare(expected),
+                  );
+                }}
+              />
+            }
+          >
+            {relayError !== null ? (
+              <p role="alert" className="text-destructive-foreground pb-3 text-sm">
+                {relayError}
+              </p>
+            ) : null}
+          </SettingsRow>
+        ) : null}
+        {enabled ? (
+          <SettingsRow
             title="Pair a phone"
-            description="Open Moonfold on the phone and scan this code. The phone must reach this machine: same Wi-Fi, Tailscale or a VPN. The connection is encrypted, and the phone trusts only this machine's certificate."
+            description={
+              anywhereEnabled
+                ? "Scan this code in the Moonfold app. The phone connects directly on the same network and through the relay anywhere else, encrypted end to end to this machine."
+                : "Scan this code in the Moonfold app. The phone needs the same Wi-Fi, Tailscale or a VPN, or Reach from anywhere. It is encrypted and trusts only this machine."
+            }
           >
             <div className="mt-3 flex flex-col items-start gap-3 pb-3.5">
               {payload !== null ? (
@@ -99,7 +185,7 @@ export function MobileSettingsPanel() {
                     title="Scan with the Moonfold mobile app"
                   />
                 </div>
-              ) : error === null && status?.addresses.length === 0 ? (
+              ) : error === null && status?.addresses.length === 0 && !anywhereEnabled ? (
                 <p className="text-muted-foreground text-sm">
                   This machine has no network address another device could use. Connect it to Wi-Fi
                   or a VPN.

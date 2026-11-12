@@ -175,6 +175,10 @@
       "types": "./src/projectSettings.ts",
       "import": "./src/projectSettings.ts"
     },
+    "./anywhereRelay": {
+      "types": "./src/anywhereRelay.ts",
+      "import": "./src/anywhereRelay.ts"
+    },
     "./livingMark": {
       "types": "./src/livingMark.ts",
       "import": "./src/livingMark.ts"

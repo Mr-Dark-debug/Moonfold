@@ -27,4 +27,18 @@ describe("mobilePairingPayload", () => {
     expect(mobilePairingPayload({ ...status, port: null }, "T", "x")).toBeNull();
     expect(mobilePairingPayload({ ...status, addresses: [] }, "T", "x")).toBeNull();
   });
+  it("names the relay and room for Reach from anywhere, even with no local address", () => {
+    const anywhere = { relayUrl: "wss://relay.example.dev", room: "R".repeat(43), connected: true };
+    const url = new URL(
+      mobilePairingPayload({ ...status, addresses: [], anywhere }, "T", "x") ?? "moonfold://none",
+    );
+    expect(url.searchParams.get("relay")).toBe("wss://relay.example.dev");
+    expect(url.searchParams.get("room")).toBe("R".repeat(43));
+    expect(url.searchParams.get("hosts")).toBe("");
+    // Without a relay address the code stays a local-network one.
+    const local = new URL(
+      mobilePairingPayload({ ...status, anywhere: { ...anywhere, relayUrl: null } }, "T", "x")!,
+    );
+    expect(local.searchParams.has("relay")).toBe(false);
+  });
 });

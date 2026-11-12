@@ -110,6 +110,12 @@
       // reports an entire component module when nothing imports it.
       "ignoreIssues": { "src/components/ui/*.tsx": ["exports", "nsExports", "duplicates"] },
     },
+    "infra/anywhere-relay": {
+      // Wrangler loads src/worker.ts as the Worker entry and reads its default export.
+      "entry": ["src/worker.ts!"],
+      // Ambient types named in tsconfig.json "types", never imported.
+      "ignoreDependencies": ["@cloudflare/workers-types"],
+    },
     "infra/relay": {
       // Alchemy loads src/worker.ts as the Worker entry and reads its default export.
       "entry": ["alchemy.run.ts!", "src/persistence/schema.ts!", "src/worker.ts!"],

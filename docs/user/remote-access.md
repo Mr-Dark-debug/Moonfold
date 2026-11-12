@@ -4,6 +4,10 @@ Connect a phone, browser, or another desktop app to Moonfold running on a differ
 machine. That machine must stay running and reachable while you work. For Android, use the
 [mobile app](./mobile-app.md), which pairs with one scan.
 
+For the Android app on any network, use **Reach from anywhere** in Settings → Mobile App; see
+the [mobile app](./mobile-app.md#reaching-your-computer). It works for the app only, because a
+browser cannot pin the computer's certificate.
+
 ## Moonfold Connect (self-hosted only)
 
 Moonfold Connect reaches an environment from your other devices through a relay, without router

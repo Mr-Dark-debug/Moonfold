@@ -47,7 +47,21 @@ Feature 2, the living mark (D-67), built 2026-11-12:
 
 Not checked: the real app by eye, a performance trace of a long working state.
 
-Next: Anywhere (docs/plans/anywhere.md).
+Feature 3, Anywhere (D-69), built 2026-11-12:
+
+- Protocol and relay core in `packages/shared/src/anywhereRelay.ts`; `moonfold relay` (Node) and
+  `infra/anywhere-relay` (Workers, hibernating Durable Objects) run it.
+- The server keeps a relay connection while **Reach from anywhere** is on (Settings → Mobile App,
+  relay address there) and pipes each phone stream into its own HTTPS listener.
+- The Android app listens on `127.0.0.1` at the computer's port and sends each connection through
+  the relay (OkHttp); the pairing code carries `relay` and `room`.
+- Verified: protocol tests with real Ed25519 keys; a real-socket test carrying a TLS session
+  through the Node relay, where the phone sees the computer's own certificate; Kotlin tests (10);
+  debug APK builds; `moonfold relay` starts and answers `/health`.
+- Not verified: the Workers relay (needs a Cloudflare account to deploy); a phone or emulator on
+  another network end to end. No default relay ships until the owner deploys one.
+
+Next: Orbit (docs/plans/orbit.md).
 
 ## Beta 5 (2026-11-10)
 

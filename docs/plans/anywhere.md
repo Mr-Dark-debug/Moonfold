@@ -27,6 +27,16 @@ somewhere; the real choice is whose, and whether it can read anything.
 How similar tools solved it: the two closest open-source apps for driving coding agents from a
 phone both use a relay that only sees encrypted bytes, paired by QR code.
 
+## As built (2026-11-12)
+
+- The phone listens on `127.0.0.1` at the computer's own mobile port, so loopback is one more
+  address of the paired host and every existing check works unchanged.
+- The pairing code stays version 1 and gains `relay` and `room`; older apps ignore them.
+- Streams are one WebSocket each, not multiplexed: simpler, and the web client opens few.
+- No default relay ships yet; `DEFAULT_ANYWHERE_RELAY_URL` is null until the owner deploys one.
+- Tested: protocol unit tests, a real-socket test that carries a TLS session through the Node
+  relay and checks the phone sees the computer's own certificate, Kotlin pairing tests.
+
 ## Design: a byte pipe under the TLS we already have
 
 The phone already trusts exactly one certificate, the one whose fingerprint was in the QR code

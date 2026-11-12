@@ -398,6 +398,15 @@ export const AuthMobileAccessStatus = Schema.Struct({
   port: Schema.NullOr(Schema.Int),
   certificateSha256: Schema.NullOr(TrimmedNonEmptyString),
   addresses: Schema.Array(TrimmedNonEmptyString),
+  /** The relay path (D-69): present while Reach from anywhere is on. */
+  anywhere: Schema.optional(
+    Schema.Struct({
+      /** Null when no relay is set and the build has none. */
+      relayUrl: Schema.NullOr(TrimmedNonEmptyString),
+      room: Schema.NullOr(TrimmedNonEmptyString),
+      connected: Schema.Boolean,
+    }),
+  ),
 });
 export type AuthMobileAccessStatus = typeof AuthMobileAccessStatus.Type;
 
