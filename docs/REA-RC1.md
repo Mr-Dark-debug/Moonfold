@@ -30,3 +30,6 @@ from the release dry run of commit `6912e943ac`, workflow run 43183551657.
 - The dormant Connect pages are still bundled.
 - Only the Linux x64 package was inspected; the other five builds come from the same commit and
   workflow run.
+- The published release (run 43188871249, tag on `b41d1eaa98`) was built again, so its `.deb`
+  hashes differ (`11b203d2…29cf1`). That commit adds only docs and the Android version over
+  `6912e943ac`; all 26 published assets match the published `SHA256SUMS`.
