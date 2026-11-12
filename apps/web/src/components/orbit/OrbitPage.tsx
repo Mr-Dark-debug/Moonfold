@@ -281,6 +281,13 @@ function MissionPrompt({
           maxLength={2_000}
           placeholder="Ask the crew for something. It goes to the top of the backlog."
           onChange={(event) => setAsk(event.target.value)}
+          onKeyDown={(event) => {
+            // Enter sends, as in the composer; Shift+Enter adds a line.
+            if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) {
+              event.preventDefault();
+              event.currentTarget.form?.requestSubmit();
+            }
+          }}
         />
         <Button
           type="submit"

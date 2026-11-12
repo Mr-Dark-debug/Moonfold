@@ -71,6 +71,16 @@ Feature 4, Orbit (D-70), built 2026-11-12:
   first, quiet runs filed), feed parser tests, screen logic tests, typecheck and lint.
 - Not verified: a real crew run against a provider; the screen in a running client.
 
+Checked in a running client (dev server on this repo's own `.moonfold`, 2026-11-12):
+
+- Migrations 85 and 86 applied to the existing dev database at startup.
+- Orbit: the screen renders; saving the mission and two requests from Ask the crew show in the
+  backlog marked Yours and in the activity log. Enter in Ask the crew did not send; fixed.
+  Orbit was not switched on there, because the dev project is this repository with full access.
+- Reach from anywhere: Settings → Mobile App connected to a local `moonfold relay` ("Connected
+  to 127.0.0.1:18787"); an HTTPS request through the relay into the running server answered 200,
+  and the certificate the client saw was the computer's own.
+
 Next: the 1.0 release gate (docs/plans/stable-1.0.md).
 
 ## Beta 5 (2026-11-10)
