@@ -11,7 +11,18 @@ import * as NodePath from "node:path";
 import sharp from "sharp";
 
 import { BRAND_ASSET_PATHS, DEVELOPMENT_PUBLIC_ICON_OVERRIDES } from "./lib/brand-assets.ts";
-import { colourMark, monoMark, MOONFOLD_COLORS, placeMark, smallMark } from "./lib/brand-mark.ts";
+import {
+  colourMark,
+  glyphSvg,
+  LIVING_MARK_STATES,
+  livingMarkData,
+  livingMarkStill,
+  monoMark,
+  MOONFOLD_COLORS,
+  placeMark,
+  SKILL_GLYPH_KINDS,
+  smallMark,
+} from "./lib/brand-mark.ts";
 import { encodePngIco, WINDOWS_ICON_SIZES } from "./lib/icon-export.ts";
 
 const repoRoot = NodePath.resolve(import.meta.dirname, "..");
@@ -283,6 +294,33 @@ async function main(): Promise<void> {
     dmgBackground(MOONFOLD_COLORS.royal),
   );
   emit("apps/desktop/resources/dmg/dmg-background-nightly.svg", dmgBackground("#7B5CE0"));
+  // The living mark (docs/plans/mascot.md): data for the clients and the server, stills for docs.
+  const living = livingMarkData();
+  const councilSvg = living.council.map((shapes, index) =>
+    glyphSvg(shapes, "currentColor", `seat${index + 1}`),
+  );
+  emit(
+    "packages/shared/src/livingMark.generated.json",
+    `${JSON.stringify({ ...living, councilSvg }, null, 2)}\n`,
+  );
+  for (const state of LIVING_MARK_STATES) {
+    emit(
+      `assets/brand/living/living-mark-${state}.svg`,
+      livingMarkStill(state, MOONFOLD_COLORS.deep),
+    );
+  }
+  living.council.forEach((shapes, index) =>
+    emit(
+      `assets/brand/living/council-seat-${index + 1}.svg`,
+      glyphSvg(shapes, MOONFOLD_COLORS.deep),
+    ),
+  );
+  for (const kind of SKILL_GLYPH_KINDS) {
+    emit(
+      `assets/brand/living/skill-${kind}.svg`,
+      glyphSvg(living.skills[kind], MOONFOLD_COLORS.deep),
+    );
+  }
   for (const override of DEVELOPMENT_PUBLIC_ICON_OVERRIDES) {
     const source = pending.get(override.sourceRelativePath);
     if (!source) throw new Error(`No rendered source for ${override.sourceRelativePath}`);

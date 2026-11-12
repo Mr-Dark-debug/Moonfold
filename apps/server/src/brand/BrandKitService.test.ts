@@ -428,4 +428,54 @@ describe("BrandKitService", () => {
       }),
     ),
   );
+  it.effect("keeps each reviewer on one seat and writes the rounds for the user", () =>
+    withKit(({ dir }) =>
+      Effect.gen(function* () {
+        const brand = yield* BrandKitService.BrandKitService;
+        const fileSystem = yield* FileSystem.FileSystem;
+        const path = yield* Path.Path;
+        yield* brand.init(target, { prompt: "a calm budgeting app" });
+        const first = yield* brand.recordReview(target, {
+          round: 1,
+          scores: [
+            { reviewer: "Claude Code (claude-opus-5-5)", score: 6, fixes: ["Raise | contrast"] },
+            { reviewer: "Codex (gpt-6.1)", score: 7, fixes: [] },
+          ],
+        });
+        expect(first).toMatchObject({ round: 1, average: 6.5, change: null });
+
+        // The second reviewer comes first now, and a third joins: seats stay where they were.
+        const second = yield* brand.recordReview(target, {
+          round: 2,
+          scores: [
+            { reviewer: "codex (GPT-6.1)", score: 8, fixes: [] },
+            { reviewer: "Claude Code (claude-opus-5-5)", score: 7.5, fixes: [] },
+            { reviewer: "Gemini CLI", score: 7, fixes: [] },
+          ],
+        });
+        expect(second.change).toBe(1);
+        expect(second.seats.map((seat) => seat.seat)).toEqual([1, 2, 3]);
+        expect(second.seats[1]!.reviewer).toBe("Codex (gpt-6.1)");
+
+        const index = yield* fileSystem.readFileString(path.join(dir, "reviews", "index.md"));
+        expect(index).toContain("| 2 | ![Seat 2](seats/seat-2.svg) | 8 | None |");
+        // A pipe in a fix is escaped, so it cannot split the table cell.
+        expect(index).toContain(String.raw`Raise \| contrast`);
+        // The newest round comes first.
+        expect(index.indexOf("## Round 2")).toBeLessThan(index.indexOf("## Round 1"));
+        const glyph = yield* fileSystem.readFileString(
+          path.join(dir, "reviews", "seats", "seat-3.svg"),
+        );
+        expect(glyph).toContain("<svg");
+        expect(glyph).not.toContain("currentColor");
+
+        // Recording a round again replaces it.
+        const again = yield* brand.recordReview(target, {
+          round: 2,
+          scores: [{ reviewer: "Gemini CLI", score: 9, fixes: [] }],
+        });
+        expect(again).toMatchObject({ average: 9, change: 2.5 });
+      }),
+    ),
+  );
 });

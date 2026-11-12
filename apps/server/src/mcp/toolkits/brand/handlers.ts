@@ -70,6 +70,12 @@ export const layer = McpToolAccess.toLayer(BrandToolkit, {
       return yield* (yield* brand).render(target, input).pipe(Effect.mapError(toFailure));
     }),
   ),
+  brand_review_round: McpToolAccess.actsAsCaller((input) =>
+    Effect.gen(function* () {
+      const target = yield* callerKit;
+      return yield* (yield* brand).recordReview(target, input).pipe(Effect.mapError(toFailure));
+    }),
+  ),
   brand_validate: McpToolAccess.readsAsCaller(() =>
     Effect.gen(function* () {
       const target = yield* callerKit;

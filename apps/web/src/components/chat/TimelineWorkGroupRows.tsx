@@ -33,6 +33,7 @@ import {
   type TimelineWorkEntry,
   type TimelineRow,
 } from "./timelineRowContext";
+import { LivingMark } from "../brand/LivingMark";
 import { TimelineRowTimestamp, ActivityShimmerOverlay } from "./TimelineRowParts";
 import {
   failedToolIconClassName,
@@ -368,6 +369,7 @@ export function ThinkingTimelineRow({ row }: { row: Extract<TimelineRow, { kind:
     <LiveActivityRow
       label={liveAnswerPreview ?? "Thinking"}
       iconName="brain"
+      icon={<LivingMark state={live ? "working" : "waiting"} size={16} label="" />}
       active={live}
       shimmer={live}
     />
@@ -389,6 +391,7 @@ export function ThinkingTimelineRow({ row }: { row: Extract<TimelineRow, { kind:
 function LiveActivityRow({
   label,
   iconName,
+  icon,
   toolIcon,
   failed = false,
   active = false,
@@ -396,6 +399,8 @@ function LiveActivityRow({
 }: {
   label: ReactNode;
   iconName?: WorkEntryIconName;
+  /** Drawn in place of the named icon. It keeps its own motion, so the shimmer leaves it alone. */
+  icon?: ReactNode;
   toolIcon?: ToolActivityIcon | undefined;
   failed?: boolean;
   active?: boolean;
@@ -411,6 +416,7 @@ function LiveActivityRow({
       <LiveActivityContent
         label={label}
         iconName={iconName}
+        icon={icon}
         toolIcon={toolIcon}
         failed={failed}
         announceFailure={failed}
@@ -418,7 +424,13 @@ function LiveActivityRow({
       />
       {showShimmer ? (
         <ActivityShimmerOverlay>
-          <LiveActivityContent label={label} iconName={iconName} toolIcon={toolIcon} highlighted />
+          <LiveActivityContent
+            label={label}
+            iconName={iconName}
+            icon={icon === undefined ? undefined : <span className="block size-4" />}
+            toolIcon={toolIcon}
+            highlighted
+          />
         </ActivityShimmerOverlay>
       ) : null}
     </div>
@@ -428,6 +440,7 @@ function LiveActivityRow({
 function LiveActivityContent({
   label,
   iconName,
+  icon,
   toolIcon,
   failed = false,
   announceFailure = false,
@@ -436,6 +449,7 @@ function LiveActivityContent({
 }: {
   label: ReactNode;
   iconName: WorkEntryIconName | undefined;
+  icon?: ReactNode;
   toolIcon?: ToolActivityIcon | undefined;
   failed?: boolean;
   announceFailure?: boolean;
@@ -448,7 +462,9 @@ function LiveActivityContent({
   return (
     <WorkLogRow
       icon={
-        iconName ? (
+        icon !== undefined && !failed ? (
+          <span className="flex size-4 items-center justify-center text-icon-muted">{icon}</span>
+        ) : iconName ? (
           <span
             className={cn(
               "flex size-4 items-center justify-center",

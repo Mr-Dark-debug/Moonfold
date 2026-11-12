@@ -33,6 +33,7 @@ const NOOP_OPEN_ATTACHMENT = (_attachment: ChatFileAttachment) => {};
 
 import { resolveChatListAnchoredEndSpace } from "@moonfold/shared/chatList";
 import { observeVisibleAnimation } from "../../lib/visibleAnimation";
+import { LivingMark } from "../brand/LivingMark";
 import {
   memo,
   use,
@@ -1303,7 +1304,10 @@ const ConversationTimeline = memo(function ConversationTimeline({
           className="flex h-full items-center justify-center ps-(--chat-lane-inset-start) pe-(--chat-lane-inset-end)"
           style={{ paddingBottom: emptyPlaceholderInset }}
         >
-          <p className="text-sm text-muted-foreground">Send a message to start the conversation.</p>
+          <div className="flex flex-col items-center gap-3 text-muted-foreground">
+            <LivingMark size={40} twinkle label="" />
+            <p className="text-sm">Send a message to start the conversation.</p>
+          </div>
         </div>
       </>
     );
