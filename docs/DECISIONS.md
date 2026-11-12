@@ -626,3 +626,12 @@ the living mark, Anywhere, Orbit) and a gate: each feature verified against a re
 open items from beta 5 closed, a release dry run on every target, an upgrade test, measured
 performance budgets and an accessibility pass. A feature that is not verified ships behind a build
 flag or not at all. Plan: docs/plans/stable-1.0.md.
+
+## D-72 The 1.0 features ship first as 1.0.0-rc.1
+
+The owner asked for the first stable release once the four features were built. They are built,
+tested and merged, but the parts that run agents (Orbit's crew, the CI fixer, learned memories)
+have not run against a real provider: Codex is limited until 19 November and Claude Code is not
+signed in on the build machine. CLAUDE.md does not call such work done. So the release is
+`1.0.0-rc.1`, which GitHub lists as a prerelease, and `0.1.0-beta.5` stays Latest. Promoting to
+`1.0.0` is one tag on the same commit once those runs pass and a default relay is deployed.
