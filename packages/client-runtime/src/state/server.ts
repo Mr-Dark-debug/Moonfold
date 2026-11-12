@@ -1402,6 +1402,10 @@ export function createServerEnvironmentAtoms<R, E>(
       label: "environment-data:server:memories",
       tag: WS_METHODS.memoriesList,
     }),
+    orbit: createEnvironmentRpcQueryAtomFamily(runtime, {
+      label: "environment-data:server:orbit",
+      tag: WS_METHODS.orbitGet,
+    }),
     browserSitePolicy: createEnvironmentRpcQueryAtomFamily(runtime, {
       label: "environment-data:server:browser-sites:policy",
       tag: WS_METHODS.browserSitesGetPolicy,
@@ -1729,6 +1733,24 @@ export function createServerEnvironmentAtoms<R, E>(
       tag: WS_METHODS.memoriesDelete,
       scheduler: configScheduler,
       concurrency: configConcurrency,
+    }),
+    updateOrbit: createEnvironmentRpcCommand(runtime, {
+      label: "environment-data:server:orbit:update",
+      tag: WS_METHODS.orbitUpdate,
+      scheduler: configScheduler,
+      concurrency: configConcurrency,
+    }),
+    runOrbitRole: createEnvironmentRpcCommand(runtime, {
+      label: "environment-data:server:orbit:run-now",
+      tag: WS_METHODS.orbitRunNow,
+    }),
+    resolveOrbitItem: createEnvironmentRpcCommand(runtime, {
+      label: "environment-data:server:orbit:resolve-item",
+      tag: WS_METHODS.orbitResolveItem,
+    }),
+    requestOrbit: createEnvironmentRpcCommand(runtime, {
+      label: "environment-data:server:orbit:request",
+      tag: WS_METHODS.orbitRequest,
     }),
     setMemoriesEnabled: createEnvironmentRpcCommand(runtime, {
       label: "environment-data:server:memory:set-enabled",

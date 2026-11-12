@@ -23,6 +23,7 @@ export * from "./sideQuestion.ts";
 export * from "./threadWorkspace.ts";
 export * from "./plugins.ts";
 export * from "./memories.ts";
+export * from "./orbit.ts";
 export * from "./handoff.ts";
 export * from "./promptProfiles.ts";
 export * from "./brandKitProfile.ts";

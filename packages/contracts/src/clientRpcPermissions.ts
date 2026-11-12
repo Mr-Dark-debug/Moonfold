@@ -76,6 +76,11 @@ export const CLIENT_GUARDED_RPC_SCOPES = {
   [WS_METHODS.pluginsUpdate]: AuthProvidersManageScope,
   [WS_METHODS.pluginsSetEnabled]: AuthProvidersManageScope,
   [WS_METHODS.pluginsRemove]: AuthProvidersManageScope,
+  // Orbit's mission and level steer unattended agent runs, so they are settings.
+  [WS_METHODS.orbitUpdate]: AuthSettingsWriteScope,
+  [WS_METHODS.orbitRunNow]: AuthOrchestrationOperateScope,
+  [WS_METHODS.orbitResolveItem]: AuthOrchestrationOperateScope,
+  [WS_METHODS.orbitRequest]: AuthOrchestrationOperateScope,
   // Memories steer every agent run, like instruction files.
   [WS_METHODS.memoriesUpsert]: AuthSettingsWriteScope,
   [WS_METHODS.memoriesDelete]: AuthSettingsWriteScope,

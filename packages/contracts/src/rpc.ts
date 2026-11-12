@@ -433,6 +433,15 @@ import {
   MemoryUpsertInput,
 } from "./memories.ts";
 import {
+  OrbitError,
+  OrbitGetInput,
+  OrbitRequestInput,
+  OrbitResolveItemInput,
+  OrbitRunNowInput,
+  OrbitSnapshot,
+  OrbitUpdateInput,
+} from "./orbit.ts";
+import {
   HandoffBriefInput,
   HandoffBriefResult,
   HandoffError,
@@ -652,6 +661,11 @@ export const WS_METHODS = {
   pluginsUpdate: "plugins.update",
   pluginsSetEnabled: "plugins.setEnabled",
   pluginsRemove: "plugins.remove",
+  orbitGet: "orbit.get",
+  orbitUpdate: "orbit.update",
+  orbitRunNow: "orbit.runNow",
+  orbitResolveItem: "orbit.resolveItem",
+  orbitRequest: "orbit.request",
   memoriesList: "memories.list",
   memoriesUpsert: "memories.upsert",
   memoriesDelete: "memories.delete",
@@ -2223,6 +2237,33 @@ const WsPluginsRemoveRpc = Rpc.make(WS_METHODS.pluginsRemove, {
   error: Schema.Union([PluginError, EnvironmentAuthorizationError]),
 });
 
+const OrbitRpcError = Schema.Union([OrbitError, EnvironmentAuthorizationError]);
+const WsOrbitGetRpc = Rpc.make(WS_METHODS.orbitGet, {
+  payload: OrbitGetInput,
+  success: OrbitSnapshot,
+  error: OrbitRpcError,
+});
+const WsOrbitUpdateRpc = Rpc.make(WS_METHODS.orbitUpdate, {
+  payload: OrbitUpdateInput,
+  success: OrbitSnapshot,
+  error: OrbitRpcError,
+});
+const WsOrbitRunNowRpc = Rpc.make(WS_METHODS.orbitRunNow, {
+  payload: OrbitRunNowInput,
+  success: OrbitSnapshot,
+  error: OrbitRpcError,
+});
+const WsOrbitResolveItemRpc = Rpc.make(WS_METHODS.orbitResolveItem, {
+  payload: OrbitResolveItemInput,
+  success: OrbitSnapshot,
+  error: OrbitRpcError,
+});
+const WsOrbitRequestRpc = Rpc.make(WS_METHODS.orbitRequest, {
+  payload: OrbitRequestInput,
+  success: OrbitSnapshot,
+  error: OrbitRpcError,
+});
+
 const WsMemoriesListRpc = Rpc.make(WS_METHODS.memoriesList, {
   payload: Schema.Struct({}),
   success: MemoryListResult,
@@ -2625,6 +2666,11 @@ const WsRpcGroupPart5 = RpcGroup.make(
   WsPluginsUpdateRpc,
   WsPluginsSetEnabledRpc,
   WsPluginsRemoveRpc,
+  WsOrbitGetRpc,
+  WsOrbitUpdateRpc,
+  WsOrbitRunNowRpc,
+  WsOrbitResolveItemRpc,
+  WsOrbitRequestRpc,
   WsMemoriesListRpc,
   WsMemoriesUpsertRpc,
   WsMemoriesDeleteRpc,

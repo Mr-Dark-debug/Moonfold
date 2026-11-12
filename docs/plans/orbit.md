@@ -2,6 +2,19 @@
 
 Status: plan. Decision: D-70. "Orbit" is a working name; the owner can rename it.
 
+## As built (2026-11-12)
+
+- State lives in the server's database (migration 86), not in `.moonfold/orbit/` files: the mission
+  and settings must not be writable by an agent working in the project folder.
+- The crew is five scheduled tasks Orbit installs and switches every few minutes, from the level,
+  the stop switch, the daily run cap and whether a mission and a model exist.
+- Seven MCP tools check the calling thread's role from the tasks' run history.
+- Channels: GitHub issues (`gh`), Hacker News search, subreddit and RSS/Atom feeds, read on the
+  server. Sentinel's scan: `npm audit` and the host's Dependabot and code-scanning alerts.
+- Not built yet: posting at the Publish level (drafts only), a separate reviewer role (the builder
+  asks another provider with `delegate_task`), quiet hours, and a per-role token cap beyond the
+  project's run token limit (D-60).
+
 ## What the owner asked for
 
 A mode where Moonfold works on a product around the clock without being asked: it reads what

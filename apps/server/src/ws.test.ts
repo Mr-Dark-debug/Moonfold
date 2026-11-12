@@ -133,6 +133,7 @@ import * as BrowserSitePermissions from "./browser/BrowserSitePermissions.ts";
 import * as ComputerUseService from "./computerUse/ComputerUseService.ts";
 import * as HandoffService from "./handoff/HandoffService.ts";
 import * as MemoryStore from "./memories/MemoryStore.ts";
+import * as OrbitService from "./orbit/OrbitService.ts";
 import * as PluginStore from "./plugins/PluginStore.ts";
 import * as ProviderNativeConfigService from "./provider/ProviderNativeConfigService.ts";
 import * as ThreadSideQuestions from "./orchestration-v2/ThreadSideQuestions.ts";
@@ -854,6 +855,7 @@ const layerUnusedConfigRpcServices = Layer.mergeAll(
   Layer.mock(ComputerUseService.ComputerUseService)({}),
   Layer.mock(HandoffService.HandoffService)({}),
   Layer.mock(MemoryStore.MemoryStore)({}),
+  Layer.mock(OrbitService.OrbitService)({}),
   Layer.mock(PluginStore.PluginStore)({}),
   Layer.mock(ProviderNativeConfigService.ProviderNativeConfigService)({}),
   Layer.mock(ThreadSideQuestions.ThreadSideQuestions)({}),

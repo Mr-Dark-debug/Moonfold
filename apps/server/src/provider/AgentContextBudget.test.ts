@@ -19,6 +19,7 @@ import { GitWorkflowService } from "../git/GitWorkflowService.ts";
 import * as McpHttpServer from "../mcp/McpHttpServer.ts";
 import { PreviewAutomationBroker } from "../mcp/PreviewAutomationBroker.ts";
 import { MemoryStore } from "../memories/MemoryStore.ts";
+import { OrbitService } from "../orbit/OrbitService.ts";
 import {
   CLAUDE_PROVIDER,
   makeClaudeQueryOptions,
@@ -63,6 +64,7 @@ const toolHandlerServices = Layer.mergeAll(
   Layer.mock(ManagedProjectFolders)({ namedProjectsRoot: "" }),
   Layer.mock(McpProviderSessions)({}),
   Layer.mock(MemoryStore)({}),
+  Layer.mock(OrbitService)({}),
   Layer.mock(OrchestratorV2)({}),
   Layer.mock(PeerForwarding)({}),
   Layer.mock(PeerLinkRequests)({}),
