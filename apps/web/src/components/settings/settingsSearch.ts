@@ -1442,6 +1442,12 @@ export const SETTINGS_SEARCH_ITEMS = [
     searchTerms: ["budget stop cost tokens usage limit halt spend"],
   },
   {
+    id: "mobile-anywhere",
+    title: "Reach from anywhere",
+    to: "/settings/mobile",
+    searchTerms: ["mobile phone relay remote other network anywhere mobile data away from home"],
+  },
+  {
     id: "mobile-app",
     title: "Moonfold on your phone",
     to: "/settings/mobile",

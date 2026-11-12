@@ -1,0 +1,13 @@
+# The Moonfold Anywhere relay (D-69). Deploy with `npx wrangler@4 deploy` from this folder; see
+# docs/operations/anywhere-relay.md. It runs on the Workers free plan.
+name = "moonfold-anywhere-relay"
+main = "src/worker.ts"
+compatibility_date = "2026-10-01"
+
+[[durable_objects.bindings]]
+name = "ROOMS"
+class_name = "AnywhereRoom"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["AnywhereRoom"]

@@ -15,6 +15,7 @@ import * as NodePath from "node:path";
 import type * as NodeStream from "node:stream";
 
 import type { AuthMobileAccessStatus } from "@moonfold/contracts";
+import { DEFAULT_ANYWHERE_RELAY_URL } from "@moonfold/contracts/settings";
 import * as Context from "effect/Context";
 import * as Effect from "effect/Effect";
 import * as Layer from "effect/Layer";
@@ -24,6 +25,13 @@ import * as Stream from "effect/Stream";
 
 import * as ServerConfig from "../config.ts";
 import * as ServerSettings from "../serverSettings.ts";
+import {
+  type AnywhereHost,
+  type AnywhereKey,
+  loadOrCreateAnywhereKey,
+  normalizeRelayUrl,
+  startAnywhereHost,
+} from "../anywhere/anywhereHost.ts";
 
 const CERTIFICATE_DAYS = 3650;
 /** Tried in order from the main port + 1; the first free one is remembered in the state dir. */
@@ -226,7 +234,61 @@ export const layer = Layer.effect(
     } | null>(null);
     const directory = NodePath.join(config.stateDir, "mobile-access");
 
+    // Anywhere (D-69): the relay connection rides on the listener and stops with it.
+    const anywhere = yield* Ref.make<{
+      readonly relayUrl: string | null;
+      readonly host: AnywhereHost | null;
+      readonly room: string | null;
+      readonly connected: boolean;
+    } | null>(null);
+    let anywhereKey: AnywhereKey | null = null;
+
+    const stopAnywhere = Effect.gen(function* () {
+      const current = yield* Ref.getAndSet(anywhere, null);
+      current?.host?.stop();
+    });
+
+    const applyAnywhere = Effect.fn("MobileAccess.applyAnywhere")(function* (
+      enabled: boolean,
+      relaySetting: string | null,
+    ) {
+      const listener = yield* Ref.get(running);
+      const relayUrl = normalizeRelayUrl(relaySetting ?? DEFAULT_ANYWHERE_RELAY_URL ?? "");
+      const current = yield* Ref.get(anywhere);
+      if (!enabled || listener === null || listener.status.port === null)
+        return yield* stopAnywhere;
+      if (current !== null && current.relayUrl === relayUrl) return;
+      yield* stopAnywhere;
+      if (relayUrl === null) {
+        yield* Ref.set(anywhere, { relayUrl: null, host: null, room: null, connected: false });
+        return;
+      }
+      const key = anywhereKey ?? (yield* Effect.promise(() => loadOrCreateAnywhereKey(directory)));
+      anywhereKey = key;
+      const services = yield* Effect.context<never>();
+      const host = startAnywhereHost({
+        relayUrl,
+        key,
+        targetPort: listener.status.port,
+        onStatus: (status) =>
+          Effect.runForkWith(services)(
+            Ref.update(anywhere, (state) =>
+              state === null || state.relayUrl !== relayUrl
+                ? state
+                : { ...state, connected: status.connected },
+            ),
+          ),
+        onError: (message) =>
+          Effect.runForkWith(services)(
+            Effect.logWarning("Reach from anywhere: relay connection failed", { message }),
+          ),
+      });
+      yield* Ref.set(anywhere, { relayUrl, host, room: key.room, connected: false });
+      yield* Effect.logInfo("Reach from anywhere: connecting to relay", { relayUrl });
+    });
+
     const stop = Effect.gen(function* () {
+      yield* stopAnywhere;
       const current = yield* Ref.getAndSet(running, null);
       if (current !== null) yield* Effect.promise(() => closeListener(current.server));
     });
@@ -246,19 +308,24 @@ export const layer = Layer.effect(
         Effect.logWarning("Mobile access could not start.", { cause: String(error.cause) }),
       ),
     );
+    const applyAll = (current: {
+      readonly mobileAccessEnabled: boolean;
+      readonly anywhereEnabled: boolean;
+      readonly anywhereRelayUrl: string | null;
+    }) =>
+      apply(current.mobileAccessEnabled).pipe(
+        Effect.andThen(applyAnywhere(current.anywhereEnabled, current.anywhereRelayUrl)),
+      );
 
     yield* Effect.addFinalizer(() => stop);
     // Starts a beat later than the server: the main listener must exist to receive requests.
     yield* settings.getSettings.pipe(
-      Effect.flatMap((current) => apply(current.mobileAccessEnabled)),
+      Effect.flatMap(applyAll),
       Effect.delay("1 second"),
       Effect.ignore,
       Effect.forkScoped,
     );
-    yield* settings.streamChanges.pipe(
-      Stream.runForEach((current) => apply(current.mobileAccessEnabled)),
-      Effect.forkScoped,
-    );
+    yield* settings.streamChanges.pipe(Stream.runForEach(applyAll), Effect.forkScoped);
 
     return {
       status: Ref.get(running).pipe(
@@ -270,6 +337,22 @@ export const layer = Layer.effect(
                 // Read fresh: the laptop may have moved to another network since it started.
                 addresses: shareableAddresses(NodeOS.networkInterfaces()),
               },
+        ),
+        Effect.flatMap((status) =>
+          Ref.get(anywhere).pipe(
+            Effect.map((relay) =>
+              relay === null || !status.enabled
+                ? status
+                : {
+                    ...status,
+                    anywhere: {
+                      relayUrl: relay.relayUrl,
+                      room: relay.room,
+                      connected: relay.connected,
+                    },
+                  },
+            ),
+          ),
         ),
       ),
     };

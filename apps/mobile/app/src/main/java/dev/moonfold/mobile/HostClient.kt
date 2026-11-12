@@ -82,7 +82,7 @@ class HostClient(private val host: PairedHost) {
      * session along makes the host replace it, so scanning again leaves one entry in Connections.
      */
     fun exchange(token: String, cookieFor: (String) -> String?): Exchange {
-        for (address in host.addresses) {
+        for (address in host.reachableAddresses) {
             val origin = host.origin(address)
             val connection = try {
                 open("$origin/api/auth/browser-session").apply {

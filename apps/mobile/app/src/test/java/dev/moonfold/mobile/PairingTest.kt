@@ -94,4 +94,31 @@ class PairingTest {
             certificateSha256("abc".toByteArray()),
         )
     }
+    @Test
+    fun `reads a relay and room, and adds this phone's loopback as an address`() {
+        val room = "R".repeat(43)
+        val parsed = parsePairingCode(
+            "moonfold://mobile-pair?v=1&hosts=&port=13774&sha256=$sha256&token=t" +
+                "&relay=wss%3A%2F%2Frelay.example.dev%2F&room=$room",
+        )
+        assertNotNull(parsed)
+        assertEquals(Relay("wss://relay.example.dev", room), parsed!!.host.relay)
+        assertEquals(emptyList<String>(), parsed.host.addresses)
+        assertEquals(listOf(LOOPBACK), parsed.host.reachableAddresses)
+        assertEquals("https://127.0.0.1:13774", parsed.host.origin(LOOPBACK))
+    }
+
+    @Test
+    fun `ignores a relay it cannot use, and needs an address without one`() {
+        val base = "moonfold://mobile-pair?v=1&port=13774&sha256=$sha256&token=t"
+        val room = "R".repeat(43)
+        // An http relay, a short room or credentials in the address are not a relay.
+        assertNull(parsePairingCode("$base&hosts=&relay=https%3A%2F%2Fx.dev&room=$room"))
+        assertNull(parsePairingCode("$base&hosts=&relay=wss%3A%2F%2Fx.dev&room=short"))
+        assertNull(parsePairingCode("$base&hosts=&relay=wss%3A%2F%2Fu%40x.dev&room=$room"))
+        // A local address still pairs, without the relay.
+        val local = parsePairingCode("$base&hosts=10.0.0.2&relay=https%3A%2F%2Fx.dev&room=$room")
+        assertNull(local!!.host.relay)
+        assertEquals(listOf("10.0.0.2"), local.host.reachableAddresses)
+    }
 }

@@ -20,9 +20,21 @@ A code works once and for a few minutes, and Settings shows a new one by itself.
 
 ## Reaching your computer
 
-The phone needs a network it shares with your computer: the same Wi-Fi, or
-[Tailscale](./remote-access.md) or a VPN to use it away from home. Moonfold runs no service in
-between, so with neither of those the phone shows **Waiting for** your computer.
+On the same Wi-Fi, or over [Tailscale](./remote-access.md) or a VPN, the phone connects to your
+computer directly.
+
+To use it anywhere else, on mobile data or another Wi-Fi, turn on **Reach from anywhere** in
+**Settings → Mobile App**, then scan a new code. There is still no account. A relay passes the
+phone's connection along; the connection stays encrypted end to end, so the relay can see that
+your phone and computer are talking, when and how much, but never what. The phone tries your
+network first and the relay only when that fails.
+
+The relay is a small service someone has to run. If Moonfold's own relay is not set up in your
+build, the setting asks for an address: run `moonfold relay` on any machine both devices can
+reach, behind TLS, or deploy the free Cloudflare version (see
+[the relay guide](../operations/anywhere-relay.md)), and enter its `wss://` address.
+
+Without either of these the phone shows **Waiting for** your computer.
 
 Close and reopen the app as often as you like. While Moonfold runs on your computer the phone
 connects by itself; if your computer sleeps or Moonfold closes, it waits and reconnects when it

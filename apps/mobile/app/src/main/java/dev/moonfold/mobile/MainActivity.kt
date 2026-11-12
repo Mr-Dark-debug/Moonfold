@@ -74,6 +74,7 @@ class MainActivity : ComponentActivity() {
     private var misses = 0
     private var resumed = false
     private var fileCallback: ValueCallback<Array<Uri>>? = null
+    private var proxy: RelayProxy? = null
 
     private val scheduledCheck = Runnable { checkHost() }
 
@@ -142,6 +143,7 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         resumed = true
         webView.onResume()
+        store.host?.let(::startRelay)
         checkHost()
     }
 
@@ -151,10 +153,13 @@ class MainActivity : ComponentActivity() {
         main.removeCallbacks(scheduledCheck)
         webView.onPause()
         CookieManager.getInstance().flush()
+        // The system cuts idle sockets in the background anyway; reopen on return.
+        stopRelay()
     }
 
     override fun onDestroy() {
         main.removeCallbacksAndMessages(null)
+        stopRelay()
         background.shutdown()
         webView.destroy()
         super.onDestroy()
@@ -260,7 +265,22 @@ class MainActivity : ComponentActivity() {
 
     private fun isHostUrl(url: Uri): Boolean {
         val host = store.host ?: return false
-        return url.scheme == "https" && url.port == host.port && url.host in host.addresses
+        return url.scheme == "https" && url.port == host.port && url.host in host.reachableAddresses
+    }
+
+    /** Opens the loopback listener for a computer paired with a relay; nothing otherwise. */
+    private fun startRelay(host: PairedHost) {
+        val relay = host.relay
+        val current = proxy
+        if (relay == null) return stopRelay()
+        if (current != null && current.running && current.matches(relay, host.port)) return
+        stopRelay()
+        proxy = RelayProxy(relay, host.port).takeIf { it.start() }
+    }
+
+    private fun stopRelay() {
+        proxy?.stop()
+        proxy = null
     }
 
     private fun openElsewhere(url: Uri) {
@@ -279,7 +299,12 @@ class MainActivity : ComponentActivity() {
         if (code == null) return
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.confirm_title, code.host.name))
-            .setMessage(getString(R.string.confirm_body, code.host.addresses.first()))
+            .setMessage(
+                getString(
+                    R.string.confirm_body,
+                    code.host.addresses.firstOrNull() ?: code.host.name,
+                ),
+            )
             .setPositiveButton(R.string.confirm_connect) { _, _ -> pair(code) }
             .setNegativeButton(R.string.confirm_cancel, null)
             .show()
@@ -288,6 +313,7 @@ class MainActivity : ComponentActivity() {
     private fun pair(code: PairingCode) {
         showConnecting(code.host)
         main.removeCallbacks(scheduledCheck)
+        startRelay(code.host)
         background.execute {
             val cookies = CookieManager.getInstance()
             val outcome = HostClient(code.host).exchange(code.token) { cookies.getCookie(it) }
@@ -307,7 +333,7 @@ class MainActivity : ComponentActivity() {
                 val cookie = outcome.cookie
                 val header = "${cookie.name}=${cookie.value}; Path=/; Secure; HttpOnly; " +
                     "SameSite=Lax; Max-Age=${cookie.maxAgeSeconds}"
-                host.addresses.forEach { cookies.setCookie(host.origin(it), header) }
+                host.reachableAddresses.forEach { cookies.setCookie(host.origin(it), header) }
                 cookies.flush()
                 show(outcome.origin)
             }
@@ -330,7 +356,7 @@ class MainActivity : ComponentActivity() {
         val host = store.host ?: return
         if (!checking.compareAndSet(false, true)) return
         val last = store.lastAddress
-        val addresses = host.addresses.sortedBy { if (it == last) 0 else 1 }
+        val addresses = host.reachableAddresses.sortedBy { if (it == last) 0 else 1 }
         val cookies = CookieManager.getInstance()
         background.execute {
             val state = runCatching {

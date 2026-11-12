@@ -4,6 +4,7 @@ Moonfold for Android bundles the following, each under the Apache License, Versi
 - Kotlin standard library, JetBrains s.r.o. and Kotlin Programming Language contributors
 - ZXing core, ZXing authors
 - ZXing Android Embedded, JourneyApps
+- OkHttp and Okio, Square, Inc.
 
 Apache License
 Version 2.0, January 2004

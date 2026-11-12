@@ -10,14 +10,14 @@
 
     <string name="connecting_title">Connecting to %1$s</string>
     <string name="waiting_title">Waiting for %1$s</string>
-    <string name="waiting_body">Moonfold is not answering. This screen reconnects by itself once Moonfold is running there and this phone can reach it over the same Wi-Fi, Tailscale or a VPN.</string>
+    <string name="waiting_body">Moonfold is not answering. This screen reconnects by itself once Moonfold is running there and this phone can reach it: over the same Wi-Fi, Tailscale or a VPN, or anywhere when Reach from anywhere is on in its Mobile App settings.</string>
 
     <string name="revoked_title">This phone was disconnected</string>
     <string name="revoked_body">The computer ended this phone\'s access. Scan a new code from Settings, then Mobile App, to connect again.</string>
     <string name="code_used_title">That code did not work</string>
     <string name="code_used_body">Codes work once and for a few minutes. Show a new one in Settings, then Mobile App, and scan it.</string>
     <string name="unreachable_title">Could not reach your computer</string>
-    <string name="unreachable_body">Check that this phone is on the same Wi-Fi as your computer, or on the same Tailscale or VPN network, then scan again.</string>
+    <string name="unreachable_body">Check that this phone is on the same Wi-Fi as your computer, or on the same Tailscale or VPN network, or turn on Reach from anywhere in Moonfold\'s Mobile App settings. Then scan again.</string>
 
     <string name="confirm_title">Connect to %1$s?</string>
     <string name="confirm_body">This phone will show everything Moonfold shows at %1$s. Only continue if this is your computer.</string>

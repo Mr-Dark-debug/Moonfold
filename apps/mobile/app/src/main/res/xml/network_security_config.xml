@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Nothing is trusted by default: the host's certificate is pinned from the QR code at runtime. -->
+<!-- The paired computer's certificate is pinned from the QR code at runtime and checked in code, so
+     these anchors never vouch for it. They serve only the relay of Reach from anywhere (D-69),
+     which is an ordinary TLS site carrying the pinned session inside. -->
 <network-security-config>
     <base-config cleartextTrafficPermitted="false">
-        <trust-anchors />
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
     </base-config>
 </network-security-config>

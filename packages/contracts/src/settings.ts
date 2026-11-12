@@ -110,6 +110,16 @@ export const CiFixAttempts = Schema.Int.check(
 );
 export type CiFixAttempts = typeof CiFixAttempts.Type;
 
+/**
+ * The relay a release build uses when the user names none. Null until the project runs one
+ * (docs/operations/anywhere-relay.md); the setting then asks for an address.
+ */
+export const DEFAULT_ANYWHERE_RELAY_URL: string | null = null;
+export const AnywhereRelayUrl = TrimmedNonEmptyString.check(
+  Schema.isMaxLength(512),
+  Schema.isPattern(/^wss?:\/\/[^\s?#@]+$/i),
+);
+
 export const MAX_SNOOZE_PRESET_MINUTES = 30 * 24 * 60;
 export const MAX_SNOOZE_PRESETS = 8;
 export const SnoozePresetDay = Schema.Literals([
@@ -1314,6 +1324,12 @@ export const ServerSettings = Schema.Struct({
   ),
   /** Serves the Moonfold mobile app over pinned TLS on every interface (D-58). Off by default. */
   mobileAccessEnabled: Schema.Boolean.pipe(Schema.withDecodingDefault(Effect.succeed(false))),
+  /** Reach the mobile listener through a relay when the phone shares no network (D-69). */
+  anywhereEnabled: Schema.Boolean.pipe(Schema.withDecodingDefault(Effect.succeed(false))),
+  /** The relay's `wss://` address; null uses the build's own (`DEFAULT_ANYWHERE_RELAY_URL`). */
+  anywhereRelayUrl: Schema.NullOr(AnywhereRelayUrl).pipe(
+    Schema.withDecodingDefault(Effect.succeed(null)),
+  ),
   /** Moving limited threads to another provider: ask first by default, every provider allowed. */
   providerHandoff: ProviderHandoffSettings.pipe(
     Schema.withDecodingDefault(Effect.succeed(DEFAULT_PROVIDER_HANDOFF_SETTINGS)),
@@ -1763,6 +1779,8 @@ export const ServerSettingsPatch = Schema.Struct({
   providerHandoff: Schema.optionalKey(ProviderHandoffSettings),
   promptProfiles: Schema.optionalKey(CustomPromptProfiles),
   mobileAccessEnabled: Schema.optionalKey(Schema.Boolean),
+  anywhereEnabled: Schema.optionalKey(Schema.Boolean),
+  anywhereRelayUrl: Schema.optionalKey(Schema.NullOr(AnywhereRelayUrl)),
   defaultPromptProfileId: Schema.optionalKey(PromptProfileId),
   contentExclusions: Schema.optionalKey(ContentExclusions),
   runTokenLimit: Schema.optionalKey(Schema.NullOr(PositiveInt)),
