@@ -30,6 +30,27 @@
   Pop $0
 !macroend
 
+; electron-builder counts running copies with `(...).Count -gt 0`, which Windows PowerShell 5.1 leaves
+; empty for a single match. A lone helper started from the app's .exe (agent-device, a server) then
+; survived an upgrade, the new .exe could not be written, and only the uninstaller was left.
+; Defining customCheckAppRunning makes electron-builder skip these two, which its check still uses.
+!include "getProcessInfo.nsh"
+Var pid
+
+!macro customCheckAppRunning
+  !insertmacro IS_POWERSHELL_AVAILABLE
+  !insertmacro _CHECK_APP_RUNNING
+  Push $0
+  ${If} $IsPowerShellAvailable == 0
+    nsExec::Exec `"$PowerShellPath" -NoProfile -NonInteractive -C "@(Get-CimInstance -ClassName Win32_Process | ? {$$_.Path -and $$_.Path.StartsWith('$INSTDIR', 'CurrentCultureIgnoreCase')}) | % { Stop-Process -Id $$_.ProcessId -Force -ErrorAction SilentlyContinue }"`
+  ${Else}
+    nsExec::Exec `"$CmdPath" /C taskkill /F /IM "${APP_EXECUTABLE_FILENAME}" /FI "PID ne $pid" /FI "USERNAME eq %USERNAME%"`
+  ${EndIf}
+  Pop $0
+  Pop $0
+  Sleep 500
+!macroend
+
 !macro customInstall
   !ifndef DO_NOT_CREATE_START_MENU_SHORTCUT
     ${IfNot} ${FileExists} "$newStartMenuLink"
