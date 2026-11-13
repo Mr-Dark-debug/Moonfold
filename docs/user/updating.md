@@ -43,16 +43,19 @@ reports no update. Install 0.1.0-beta.3 or later by hand once, from the
 [releases page](https://github.com/Mr-Dark-debug/Moonfold/releases) or with the command-line
 installer. Your projects, threads and settings stay. Later releases then arrive in the app.
 
-## Switch between Stable and Nightly
+## Switch between Stable and Beta
 
-In the desktop app, change **Settings → About → Update track**. Moonfold shows each
-connected machine it will move and each one it skips, then moves them in one
-step. Remote servers install the latest release on the new track. Remote desktop
-apps reinstall on the new track. This app reinstalls last. Your threads,
-settings, and data stay.
+**Stable** gets tested releases. **Beta** gets new features first; a beta install stays on Beta
+until you switch. In the desktop app, change **Settings → About → Update track**. Moonfold
+installs the newest build of that track over the one you have, in the same place, so your
+projects, threads, settings and shortcuts stay. It shows each connected machine it will move and
+each one it skips, then moves them in one step. Remote servers install the latest release on the
+new track. Remote desktop apps reinstall on the new track. This app reinstalls last.
+
+Until the first stable release is out, Stable has nothing to install and the switch says so.
 
 A background service cannot move to an older release remotely. When Stable is
-older than its Nightly, run `moonfold update --channel stable --allow-downgrade` on
+older than its Beta, run `moonfold update --channel stable --allow-downgrade` on
 that machine.
 
 A switch is blocked for a machine whose database already has changes the
@@ -150,6 +153,13 @@ open "/Applications/Moonfold (Beta).app"
 
 If an old Dock shortcut no longer opens the app, remove it and add the Beta app
 from Applications again.
+
+### Windows says it is searching for Moonfold (Beta).exe
+
+An installer before 1.0.0-beta.7 could leave only `Uninstall Moonfold (Beta).exe` behind when a
+Moonfold helper was still running, so shortcuts pointed at a missing app. Install the latest
+release from the [releases page](https://github.com/Mr-Dark-debug/Moonfold/releases) over it;
+your data stays. From beta 7 the installer closes such helpers first.
 
 ## If the desktop app does not start
 

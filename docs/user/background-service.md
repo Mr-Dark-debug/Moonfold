@@ -32,7 +32,8 @@ before updating; to match a remote client's version, follow
 [Updating Moonfold](./updating.md).
 
 Pass an exact version (`moonfold update 0.0.42`) to pin one, `--channel nightly` to
-switch trains, or `--allow-downgrade` to move backwards. `preview` is a
+switch to the Beta train (betas keep that name on the command line) or `--channel stable` back,
+or `--allow-downgrade` to move backwards. `preview` is a
 maintainers' test train: its builds can be broken and are never offered as
 updates, so the installer and `moonfold update` ask for confirmation before
 installing one.
