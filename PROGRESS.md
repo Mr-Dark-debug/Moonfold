@@ -1,5 +1,39 @@
 # Progress
 
+## Release content: demo videos and blog posts for betas 5 to 7 (2026-11-13)
+
+Done:
+
+- New owner rule (D-78, docs/operations/release.md "Release content"): every new feature gets a
+  demo video, every change a blog post, and ten real-problem posts go out each week (scheduled task
+  `weekly-user-problem-posts`, Mondays).
+- Five demo videos recorded in real builds on an isolated demo home: home screen backgrounds and a
+  replayed agent turn (beta 5), Orbit setup and the Android app updating itself from 0.1.9 to
+  0.3.0-beta.1 on an emulator (beta 6), settings pages staying in the panel (beta 7).
+- Attached to the GitHub releases as assets and embedded inline in the release notes ("See it
+  working"); docs/releases mirror the sections. The beta 7 migration marker is intact.
+- Website: release posts for betas 5, 6, 7, plus posts on Orbit, Android self-updates and the
+  Windows missing-exe fix, each with its video. `npm run check` passes; live at
+  moonfold-website.vercel.app/blog (deployed by the push to main).
+- Fixed two user-doc links to pages that never existed (background-service, telemetry), which broke
+  the site check.
+
+Decisions: videos ship at native 1440x810 (the headless screencast captures CSS pixels); agent
+turns use the free Replay provider and are captioned as replays; the PC hostname is relabelled on
+screen.
+
+Open problems:
+
+- No video for brand kits, question cards, the CI fixer, Orbit crew runs or relay over mobile data:
+  each needs a provider sign-in or a real phone.
+- No video for the Stable/Beta switch: it is desktop-only and there is no Stable release to switch to.
+- Several user docs still describe upstream's hosted "Moonfold Connect" service, which Moonfold
+  does not run.
+- `moonfold-website/README.md` still says deploys are manual; the project now deploys from Git.
+  The README has another session's uncommitted edits, so it was left alone.
+
+Next: make demos and posts part of each release from beta 8 on.
+
 ## Beta 7: Windows upgrades, settings crashes, Stable/Beta switch (2026-11-13)
 
 Owner reports: Windows "Missing Shortcut … Moonfold (Beta).exe" after installing a newer build;
