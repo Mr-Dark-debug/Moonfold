@@ -16,13 +16,6 @@ import { Route as ConnectAgentRouteImport } from './routes/connect-agent'
 import { Route as ConnectRouteImport } from './routes/connect'
 import { Route as ChatRouteImport } from './routes/_chat'
 import { Route as ChatIndexRouteImport } from './routes/_chat.index'
-import { Route as SettingsPromptProfilesRouteImport } from './routes/settings.prompt-profiles'
-import { Route as SettingsPluginsRouteImport } from './routes/settings.plugins'
-import { Route as SettingsPersonalizationRouteImport } from './routes/settings.personalization'
-import { Route as SettingsMobileRouteImport } from './routes/settings.mobile'
-import { Route as SettingsMemoriesRouteImport } from './routes/settings.memories'
-import { Route as SettingsHandoffRouteImport } from './routes/settings.handoff'
-import { Route as SettingsComputerUseRouteImport } from './routes/settings.computer-use'
 import { Route as ProjectsProjectKeyRouteImport } from './routes/projects.$projectKey'
 import { Route as ChatUsageRouteImport } from './routes/_chat.usage'
 import { Route as ChatSettingsRouteImport } from './routes/_chat.settings'
@@ -39,17 +32,24 @@ import { Route as ChatSettingsSnapShotRouteImport } from './routes/_chat.setting
 import { Route as ChatSettingsSecretsRouteImport } from './routes/_chat.settings.secrets'
 import { Route as ChatSettingsScheduledTasksRouteImport } from './routes/_chat.settings.scheduled-tasks'
 import { Route as ChatSettingsProvidersRouteImport } from './routes/_chat.settings.providers'
+import { Route as ChatSettingsPromptProfilesRouteImport } from './routes/_chat.settings.prompt-profiles'
 import { Route as ChatSettingsProjectsRouteImport } from './routes/_chat.settings.projects'
+import { Route as ChatSettingsPluginsRouteImport } from './routes/_chat.settings.plugins'
+import { Route as ChatSettingsPersonalizationRouteImport } from './routes/_chat.settings.personalization'
 import { Route as ChatSettingsOpenSourceLicensesRouteImport } from './routes/_chat.settings.open-source-licenses'
+import { Route as ChatSettingsMobileRouteImport } from './routes/_chat.settings.mobile'
+import { Route as ChatSettingsMemoriesRouteImport } from './routes/_chat.settings.memories'
 import { Route as ChatSettingsMaintenanceRouteImport } from './routes/_chat.settings.maintenance'
 import { Route as ChatSettingsLabsRouteImport } from './routes/_chat.settings.labs'
 import { Route as ChatSettingsKeybindingsRouteImport } from './routes/_chat.settings.keybindings'
 import { Route as ChatSettingsIntegrationsRouteImport } from './routes/_chat.settings.integrations'
+import { Route as ChatSettingsHandoffRouteImport } from './routes/_chat.settings.handoff'
 import { Route as ChatSettingsGeneralRouteImport } from './routes/_chat.settings.general'
 import { Route as ChatSettingsDiffsRouteImport } from './routes/_chat.settings.diffs'
 import { Route as ChatSettingsDiagnosticsRouteImport } from './routes/_chat.settings.diagnostics'
 import { Route as ChatSettingsDevicesRouteImport } from './routes/_chat.settings.devices'
 import { Route as ChatSettingsConnectionsRouteImport } from './routes/_chat.settings.connections'
+import { Route as ChatSettingsComputerUseRouteImport } from './routes/_chat.settings.computer-use'
 import { Route as ChatSettingsChatRouteImport } from './routes/_chat.settings.chat'
 import { Route as ChatSettingsBrowserRouteImport } from './routes/_chat.settings.browser'
 import { Route as ChatSettingsBetaRouteImport } from './routes/_chat.settings.beta'
@@ -93,41 +93,6 @@ const ChatIndexRoute = ChatIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ChatRoute,
-} as any)
-const SettingsPromptProfilesRoute = SettingsPromptProfilesRouteImport.update({
-  id: '/settings/prompt-profiles',
-  path: '/settings/prompt-profiles',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsPluginsRoute = SettingsPluginsRouteImport.update({
-  id: '/settings/plugins',
-  path: '/settings/plugins',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsPersonalizationRoute = SettingsPersonalizationRouteImport.update({
-  id: '/settings/personalization',
-  path: '/settings/personalization',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsMobileRoute = SettingsMobileRouteImport.update({
-  id: '/settings/mobile',
-  path: '/settings/mobile',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsMemoriesRoute = SettingsMemoriesRouteImport.update({
-  id: '/settings/memories',
-  path: '/settings/memories',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsHandoffRoute = SettingsHandoffRouteImport.update({
-  id: '/settings/handoff',
-  path: '/settings/handoff',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsComputerUseRoute = SettingsComputerUseRouteImport.update({
-  id: '/settings/computer-use',
-  path: '/settings/computer-use',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsProjectKeyRoute = ProjectsProjectKeyRouteImport.update({
   id: '/projects/$projectKey',
@@ -212,17 +177,44 @@ const ChatSettingsProvidersRoute = ChatSettingsProvidersRouteImport.update({
   path: '/providers',
   getParentRoute: () => ChatSettingsRoute,
 } as any)
+const ChatSettingsPromptProfilesRoute =
+  ChatSettingsPromptProfilesRouteImport.update({
+    id: '/prompt-profiles',
+    path: '/prompt-profiles',
+    getParentRoute: () => ChatSettingsRoute,
+  } as any)
 const ChatSettingsProjectsRoute = ChatSettingsProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
   getParentRoute: () => ChatSettingsRoute,
 } as any)
+const ChatSettingsPluginsRoute = ChatSettingsPluginsRouteImport.update({
+  id: '/plugins',
+  path: '/plugins',
+  getParentRoute: () => ChatSettingsRoute,
+} as any)
+const ChatSettingsPersonalizationRoute =
+  ChatSettingsPersonalizationRouteImport.update({
+    id: '/personalization',
+    path: '/personalization',
+    getParentRoute: () => ChatSettingsRoute,
+  } as any)
 const ChatSettingsOpenSourceLicensesRoute =
   ChatSettingsOpenSourceLicensesRouteImport.update({
     id: '/open-source-licenses',
     path: '/open-source-licenses',
     getParentRoute: () => ChatSettingsRoute,
   } as any)
+const ChatSettingsMobileRoute = ChatSettingsMobileRouteImport.update({
+  id: '/mobile',
+  path: '/mobile',
+  getParentRoute: () => ChatSettingsRoute,
+} as any)
+const ChatSettingsMemoriesRoute = ChatSettingsMemoriesRouteImport.update({
+  id: '/memories',
+  path: '/memories',
+  getParentRoute: () => ChatSettingsRoute,
+} as any)
 const ChatSettingsMaintenanceRoute = ChatSettingsMaintenanceRouteImport.update({
   id: '/maintenance',
   path: '/maintenance',
@@ -244,6 +236,11 @@ const ChatSettingsIntegrationsRoute =
     path: '/integrations',
     getParentRoute: () => ChatSettingsRoute,
   } as any)
+const ChatSettingsHandoffRoute = ChatSettingsHandoffRouteImport.update({
+  id: '/handoff',
+  path: '/handoff',
+  getParentRoute: () => ChatSettingsRoute,
+} as any)
 const ChatSettingsGeneralRoute = ChatSettingsGeneralRouteImport.update({
   id: '/general',
   path: '/general',
@@ -267,6 +264,11 @@ const ChatSettingsDevicesRoute = ChatSettingsDevicesRouteImport.update({
 const ChatSettingsConnectionsRoute = ChatSettingsConnectionsRouteImport.update({
   id: '/connections',
   path: '/connections',
+  getParentRoute: () => ChatSettingsRoute,
+} as any)
+const ChatSettingsComputerUseRoute = ChatSettingsComputerUseRouteImport.update({
+  id: '/computer-use',
+  path: '/computer-use',
   getParentRoute: () => ChatSettingsRoute,
 } as any)
 const ChatSettingsChatRoute = ChatSettingsChatRouteImport.update({
@@ -329,13 +331,6 @@ export interface FileRoutesByFullPath {
   '/settings': typeof ChatSettingsRouteWithChildren
   '/usage': typeof ChatUsageRoute
   '/projects/$projectKey': typeof ProjectsProjectKeyRoute
-  '/settings/computer-use': typeof SettingsComputerUseRoute
-  '/settings/handoff': typeof SettingsHandoffRoute
-  '/settings/memories': typeof SettingsMemoriesRoute
-  '/settings/mobile': typeof SettingsMobileRoute
-  '/settings/personalization': typeof SettingsPersonalizationRoute
-  '/settings/plugins': typeof SettingsPluginsRoute
-  '/settings/prompt-profiles': typeof SettingsPromptProfilesRoute
   '/$environmentId/$threadId': typeof ChatEnvironmentIdThreadIdRoute
   '/draft/$draftId': typeof ChatDraftDraftIdRoute
   '/settings/about': typeof ChatSettingsAboutRoute
@@ -345,17 +340,24 @@ export interface FileRoutesByFullPath {
   '/settings/beta': typeof ChatSettingsBetaRoute
   '/settings/browser': typeof ChatSettingsBrowserRoute
   '/settings/chat': typeof ChatSettingsChatRoute
+  '/settings/computer-use': typeof ChatSettingsComputerUseRoute
   '/settings/connections': typeof ChatSettingsConnectionsRoute
   '/settings/devices': typeof ChatSettingsDevicesRoute
   '/settings/diagnostics': typeof ChatSettingsDiagnosticsRoute
   '/settings/diffs': typeof ChatSettingsDiffsRoute
   '/settings/general': typeof ChatSettingsGeneralRoute
+  '/settings/handoff': typeof ChatSettingsHandoffRoute
   '/settings/integrations': typeof ChatSettingsIntegrationsRoute
   '/settings/keybindings': typeof ChatSettingsKeybindingsRoute
   '/settings/labs': typeof ChatSettingsLabsRoute
   '/settings/maintenance': typeof ChatSettingsMaintenanceRoute
+  '/settings/memories': typeof ChatSettingsMemoriesRoute
+  '/settings/mobile': typeof ChatSettingsMobileRoute
   '/settings/open-source-licenses': typeof ChatSettingsOpenSourceLicensesRoute
+  '/settings/personalization': typeof ChatSettingsPersonalizationRoute
+  '/settings/plugins': typeof ChatSettingsPluginsRoute
   '/settings/projects': typeof ChatSettingsProjectsRoute
+  '/settings/prompt-profiles': typeof ChatSettingsPromptProfilesRoute
   '/settings/providers': typeof ChatSettingsProvidersRoute
   '/settings/scheduled-tasks': typeof ChatSettingsScheduledTasksRoute
   '/settings/secrets': typeof ChatSettingsSecretsRoute
@@ -379,13 +381,6 @@ export interface FileRoutesByTo {
   '/settings': typeof ChatSettingsRouteWithChildren
   '/usage': typeof ChatUsageRoute
   '/projects/$projectKey': typeof ProjectsProjectKeyRoute
-  '/settings/computer-use': typeof SettingsComputerUseRoute
-  '/settings/handoff': typeof SettingsHandoffRoute
-  '/settings/memories': typeof SettingsMemoriesRoute
-  '/settings/mobile': typeof SettingsMobileRoute
-  '/settings/personalization': typeof SettingsPersonalizationRoute
-  '/settings/plugins': typeof SettingsPluginsRoute
-  '/settings/prompt-profiles': typeof SettingsPromptProfilesRoute
   '/': typeof ChatIndexRoute
   '/$environmentId/$threadId': typeof ChatEnvironmentIdThreadIdRoute
   '/draft/$draftId': typeof ChatDraftDraftIdRoute
@@ -396,17 +391,24 @@ export interface FileRoutesByTo {
   '/settings/beta': typeof ChatSettingsBetaRoute
   '/settings/browser': typeof ChatSettingsBrowserRoute
   '/settings/chat': typeof ChatSettingsChatRoute
+  '/settings/computer-use': typeof ChatSettingsComputerUseRoute
   '/settings/connections': typeof ChatSettingsConnectionsRoute
   '/settings/devices': typeof ChatSettingsDevicesRoute
   '/settings/diagnostics': typeof ChatSettingsDiagnosticsRoute
   '/settings/diffs': typeof ChatSettingsDiffsRoute
   '/settings/general': typeof ChatSettingsGeneralRoute
+  '/settings/handoff': typeof ChatSettingsHandoffRoute
   '/settings/integrations': typeof ChatSettingsIntegrationsRoute
   '/settings/keybindings': typeof ChatSettingsKeybindingsRoute
   '/settings/labs': typeof ChatSettingsLabsRoute
   '/settings/maintenance': typeof ChatSettingsMaintenanceRoute
+  '/settings/memories': typeof ChatSettingsMemoriesRoute
+  '/settings/mobile': typeof ChatSettingsMobileRoute
   '/settings/open-source-licenses': typeof ChatSettingsOpenSourceLicensesRoute
+  '/settings/personalization': typeof ChatSettingsPersonalizationRoute
+  '/settings/plugins': typeof ChatSettingsPluginsRoute
   '/settings/projects': typeof ChatSettingsProjectsRoute
+  '/settings/prompt-profiles': typeof ChatSettingsPromptProfilesRoute
   '/settings/providers': typeof ChatSettingsProvidersRoute
   '/settings/scheduled-tasks': typeof ChatSettingsScheduledTasksRoute
   '/settings/secrets': typeof ChatSettingsSecretsRoute
@@ -432,13 +434,6 @@ export interface FileRoutesById {
   '/_chat/settings': typeof ChatSettingsRouteWithChildren
   '/_chat/usage': typeof ChatUsageRoute
   '/projects/$projectKey': typeof ProjectsProjectKeyRoute
-  '/settings/computer-use': typeof SettingsComputerUseRoute
-  '/settings/handoff': typeof SettingsHandoffRoute
-  '/settings/memories': typeof SettingsMemoriesRoute
-  '/settings/mobile': typeof SettingsMobileRoute
-  '/settings/personalization': typeof SettingsPersonalizationRoute
-  '/settings/plugins': typeof SettingsPluginsRoute
-  '/settings/prompt-profiles': typeof SettingsPromptProfilesRoute
   '/_chat/': typeof ChatIndexRoute
   '/_chat/$environmentId/$threadId': typeof ChatEnvironmentIdThreadIdRoute
   '/_chat/draft/$draftId': typeof ChatDraftDraftIdRoute
@@ -449,17 +444,24 @@ export interface FileRoutesById {
   '/_chat/settings/beta': typeof ChatSettingsBetaRoute
   '/_chat/settings/browser': typeof ChatSettingsBrowserRoute
   '/_chat/settings/chat': typeof ChatSettingsChatRoute
+  '/_chat/settings/computer-use': typeof ChatSettingsComputerUseRoute
   '/_chat/settings/connections': typeof ChatSettingsConnectionsRoute
   '/_chat/settings/devices': typeof ChatSettingsDevicesRoute
   '/_chat/settings/diagnostics': typeof ChatSettingsDiagnosticsRoute
   '/_chat/settings/diffs': typeof ChatSettingsDiffsRoute
   '/_chat/settings/general': typeof ChatSettingsGeneralRoute
+  '/_chat/settings/handoff': typeof ChatSettingsHandoffRoute
   '/_chat/settings/integrations': typeof ChatSettingsIntegrationsRoute
   '/_chat/settings/keybindings': typeof ChatSettingsKeybindingsRoute
   '/_chat/settings/labs': typeof ChatSettingsLabsRoute
   '/_chat/settings/maintenance': typeof ChatSettingsMaintenanceRoute
+  '/_chat/settings/memories': typeof ChatSettingsMemoriesRoute
+  '/_chat/settings/mobile': typeof ChatSettingsMobileRoute
   '/_chat/settings/open-source-licenses': typeof ChatSettingsOpenSourceLicensesRoute
+  '/_chat/settings/personalization': typeof ChatSettingsPersonalizationRoute
+  '/_chat/settings/plugins': typeof ChatSettingsPluginsRoute
   '/_chat/settings/projects': typeof ChatSettingsProjectsRoute
+  '/_chat/settings/prompt-profiles': typeof ChatSettingsPromptProfilesRoute
   '/_chat/settings/providers': typeof ChatSettingsProvidersRoute
   '/_chat/settings/scheduled-tasks': typeof ChatSettingsScheduledTasksRoute
   '/_chat/settings/secrets': typeof ChatSettingsSecretsRoute
@@ -486,13 +488,6 @@ export interface FileRouteTypes {
     | '/settings'
     | '/usage'
     | '/projects/$projectKey'
-    | '/settings/computer-use'
-    | '/settings/handoff'
-    | '/settings/memories'
-    | '/settings/mobile'
-    | '/settings/personalization'
-    | '/settings/plugins'
-    | '/settings/prompt-profiles'
     | '/$environmentId/$threadId'
     | '/draft/$draftId'
     | '/settings/about'
@@ -502,17 +497,24 @@ export interface FileRouteTypes {
     | '/settings/beta'
     | '/settings/browser'
     | '/settings/chat'
+    | '/settings/computer-use'
     | '/settings/connections'
     | '/settings/devices'
     | '/settings/diagnostics'
     | '/settings/diffs'
     | '/settings/general'
+    | '/settings/handoff'
     | '/settings/integrations'
     | '/settings/keybindings'
     | '/settings/labs'
     | '/settings/maintenance'
+    | '/settings/memories'
+    | '/settings/mobile'
     | '/settings/open-source-licenses'
+    | '/settings/personalization'
+    | '/settings/plugins'
     | '/settings/projects'
+    | '/settings/prompt-profiles'
     | '/settings/providers'
     | '/settings/scheduled-tasks'
     | '/settings/secrets'
@@ -536,13 +538,6 @@ export interface FileRouteTypes {
     | '/settings'
     | '/usage'
     | '/projects/$projectKey'
-    | '/settings/computer-use'
-    | '/settings/handoff'
-    | '/settings/memories'
-    | '/settings/mobile'
-    | '/settings/personalization'
-    | '/settings/plugins'
-    | '/settings/prompt-profiles'
     | '/'
     | '/$environmentId/$threadId'
     | '/draft/$draftId'
@@ -553,17 +548,24 @@ export interface FileRouteTypes {
     | '/settings/beta'
     | '/settings/browser'
     | '/settings/chat'
+    | '/settings/computer-use'
     | '/settings/connections'
     | '/settings/devices'
     | '/settings/diagnostics'
     | '/settings/diffs'
     | '/settings/general'
+    | '/settings/handoff'
     | '/settings/integrations'
     | '/settings/keybindings'
     | '/settings/labs'
     | '/settings/maintenance'
+    | '/settings/memories'
+    | '/settings/mobile'
     | '/settings/open-source-licenses'
+    | '/settings/personalization'
+    | '/settings/plugins'
     | '/settings/projects'
+    | '/settings/prompt-profiles'
     | '/settings/providers'
     | '/settings/scheduled-tasks'
     | '/settings/secrets'
@@ -588,13 +590,6 @@ export interface FileRouteTypes {
     | '/_chat/settings'
     | '/_chat/usage'
     | '/projects/$projectKey'
-    | '/settings/computer-use'
-    | '/settings/handoff'
-    | '/settings/memories'
-    | '/settings/mobile'
-    | '/settings/personalization'
-    | '/settings/plugins'
-    | '/settings/prompt-profiles'
     | '/_chat/'
     | '/_chat/$environmentId/$threadId'
     | '/_chat/draft/$draftId'
@@ -605,17 +600,24 @@ export interface FileRouteTypes {
     | '/_chat/settings/beta'
     | '/_chat/settings/browser'
     | '/_chat/settings/chat'
+    | '/_chat/settings/computer-use'
     | '/_chat/settings/connections'
     | '/_chat/settings/devices'
     | '/_chat/settings/diagnostics'
     | '/_chat/settings/diffs'
     | '/_chat/settings/general'
+    | '/_chat/settings/handoff'
     | '/_chat/settings/integrations'
     | '/_chat/settings/keybindings'
     | '/_chat/settings/labs'
     | '/_chat/settings/maintenance'
+    | '/_chat/settings/memories'
+    | '/_chat/settings/mobile'
     | '/_chat/settings/open-source-licenses'
+    | '/_chat/settings/personalization'
+    | '/_chat/settings/plugins'
     | '/_chat/settings/projects'
+    | '/_chat/settings/prompt-profiles'
     | '/_chat/settings/providers'
     | '/_chat/settings/scheduled-tasks'
     | '/_chat/settings/secrets'
@@ -636,13 +638,6 @@ export interface RootRouteChildren {
   PairRoute: typeof PairRoute
   WelcomeRoute: typeof WelcomeRoute
   ProjectsProjectKeyRoute: typeof ProjectsProjectKeyRoute
-  SettingsComputerUseRoute: typeof SettingsComputerUseRoute
-  SettingsHandoffRoute: typeof SettingsHandoffRoute
-  SettingsMemoriesRoute: typeof SettingsMemoriesRoute
-  SettingsMobileRoute: typeof SettingsMobileRoute
-  SettingsPersonalizationRoute: typeof SettingsPersonalizationRoute
-  SettingsPluginsRoute: typeof SettingsPluginsRoute
-  SettingsPromptProfilesRoute: typeof SettingsPromptProfilesRoute
   ThreadsEnvironmentIdThreadIdRoute: typeof ThreadsEnvironmentIdThreadIdRoute
 }
 
@@ -696,55 +691,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof ChatIndexRouteImport
       parentRoute: typeof ChatRoute
-    }
-    '/settings/prompt-profiles': {
-      id: '/settings/prompt-profiles'
-      path: '/settings/prompt-profiles'
-      fullPath: '/settings/prompt-profiles'
-      preLoaderRoute: typeof SettingsPromptProfilesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings/plugins': {
-      id: '/settings/plugins'
-      path: '/settings/plugins'
-      fullPath: '/settings/plugins'
-      preLoaderRoute: typeof SettingsPluginsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings/personalization': {
-      id: '/settings/personalization'
-      path: '/settings/personalization'
-      fullPath: '/settings/personalization'
-      preLoaderRoute: typeof SettingsPersonalizationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings/mobile': {
-      id: '/settings/mobile'
-      path: '/settings/mobile'
-      fullPath: '/settings/mobile'
-      preLoaderRoute: typeof SettingsMobileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings/memories': {
-      id: '/settings/memories'
-      path: '/settings/memories'
-      fullPath: '/settings/memories'
-      preLoaderRoute: typeof SettingsMemoriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings/handoff': {
-      id: '/settings/handoff'
-      path: '/settings/handoff'
-      fullPath: '/settings/handoff'
-      preLoaderRoute: typeof SettingsHandoffRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings/computer-use': {
-      id: '/settings/computer-use'
-      path: '/settings/computer-use'
-      fullPath: '/settings/computer-use'
-      preLoaderRoute: typeof SettingsComputerUseRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/projects/$projectKey': {
       id: '/projects/$projectKey'
@@ -858,6 +804,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChatSettingsProvidersRouteImport
       parentRoute: typeof ChatSettingsRoute
     }
+    '/_chat/settings/prompt-profiles': {
+      id: '/_chat/settings/prompt-profiles'
+      path: '/prompt-profiles'
+      fullPath: '/settings/prompt-profiles'
+      preLoaderRoute: typeof ChatSettingsPromptProfilesRouteImport
+      parentRoute: typeof ChatSettingsRoute
+    }
     '/_chat/settings/projects': {
       id: '/_chat/settings/projects'
       path: '/projects'
@@ -865,11 +818,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChatSettingsProjectsRouteImport
       parentRoute: typeof ChatSettingsRoute
     }
+    '/_chat/settings/plugins': {
+      id: '/_chat/settings/plugins'
+      path: '/plugins'
+      fullPath: '/settings/plugins'
+      preLoaderRoute: typeof ChatSettingsPluginsRouteImport
+      parentRoute: typeof ChatSettingsRoute
+    }
+    '/_chat/settings/personalization': {
+      id: '/_chat/settings/personalization'
+      path: '/personalization'
+      fullPath: '/settings/personalization'
+      preLoaderRoute: typeof ChatSettingsPersonalizationRouteImport
+      parentRoute: typeof ChatSettingsRoute
+    }
     '/_chat/settings/open-source-licenses': {
       id: '/_chat/settings/open-source-licenses'
       path: '/open-source-licenses'
       fullPath: '/settings/open-source-licenses'
       preLoaderRoute: typeof ChatSettingsOpenSourceLicensesRouteImport
+      parentRoute: typeof ChatSettingsRoute
+    }
+    '/_chat/settings/mobile': {
+      id: '/_chat/settings/mobile'
+      path: '/mobile'
+      fullPath: '/settings/mobile'
+      preLoaderRoute: typeof ChatSettingsMobileRouteImport
+      parentRoute: typeof ChatSettingsRoute
+    }
+    '/_chat/settings/memories': {
+      id: '/_chat/settings/memories'
+      path: '/memories'
+      fullPath: '/settings/memories'
+      preLoaderRoute: typeof ChatSettingsMemoriesRouteImport
       parentRoute: typeof ChatSettingsRoute
     }
     '/_chat/settings/maintenance': {
@@ -898,6 +879,13 @@ declare module '@tanstack/react-router' {
       path: '/integrations'
       fullPath: '/settings/integrations'
       preLoaderRoute: typeof ChatSettingsIntegrationsRouteImport
+      parentRoute: typeof ChatSettingsRoute
+    }
+    '/_chat/settings/handoff': {
+      id: '/_chat/settings/handoff'
+      path: '/handoff'
+      fullPath: '/settings/handoff'
+      preLoaderRoute: typeof ChatSettingsHandoffRouteImport
       parentRoute: typeof ChatSettingsRoute
     }
     '/_chat/settings/general': {
@@ -933,6 +921,13 @@ declare module '@tanstack/react-router' {
       path: '/connections'
       fullPath: '/settings/connections'
       preLoaderRoute: typeof ChatSettingsConnectionsRouteImport
+      parentRoute: typeof ChatSettingsRoute
+    }
+    '/_chat/settings/computer-use': {
+      id: '/_chat/settings/computer-use'
+      path: '/computer-use'
+      fullPath: '/settings/computer-use'
+      preLoaderRoute: typeof ChatSettingsComputerUseRouteImport
       parentRoute: typeof ChatSettingsRoute
     }
     '/_chat/settings/chat': {
@@ -1009,17 +1004,24 @@ interface ChatSettingsRouteChildren {
   ChatSettingsBetaRoute: typeof ChatSettingsBetaRoute
   ChatSettingsBrowserRoute: typeof ChatSettingsBrowserRoute
   ChatSettingsChatRoute: typeof ChatSettingsChatRoute
+  ChatSettingsComputerUseRoute: typeof ChatSettingsComputerUseRoute
   ChatSettingsConnectionsRoute: typeof ChatSettingsConnectionsRoute
   ChatSettingsDevicesRoute: typeof ChatSettingsDevicesRoute
   ChatSettingsDiagnosticsRoute: typeof ChatSettingsDiagnosticsRoute
   ChatSettingsDiffsRoute: typeof ChatSettingsDiffsRoute
   ChatSettingsGeneralRoute: typeof ChatSettingsGeneralRoute
+  ChatSettingsHandoffRoute: typeof ChatSettingsHandoffRoute
   ChatSettingsIntegrationsRoute: typeof ChatSettingsIntegrationsRoute
   ChatSettingsKeybindingsRoute: typeof ChatSettingsKeybindingsRoute
   ChatSettingsLabsRoute: typeof ChatSettingsLabsRoute
   ChatSettingsMaintenanceRoute: typeof ChatSettingsMaintenanceRoute
+  ChatSettingsMemoriesRoute: typeof ChatSettingsMemoriesRoute
+  ChatSettingsMobileRoute: typeof ChatSettingsMobileRoute
   ChatSettingsOpenSourceLicensesRoute: typeof ChatSettingsOpenSourceLicensesRoute
+  ChatSettingsPersonalizationRoute: typeof ChatSettingsPersonalizationRoute
+  ChatSettingsPluginsRoute: typeof ChatSettingsPluginsRoute
   ChatSettingsProjectsRoute: typeof ChatSettingsProjectsRoute
+  ChatSettingsPromptProfilesRoute: typeof ChatSettingsPromptProfilesRoute
   ChatSettingsProvidersRoute: typeof ChatSettingsProvidersRoute
   ChatSettingsScheduledTasksRoute: typeof ChatSettingsScheduledTasksRoute
   ChatSettingsSecretsRoute: typeof ChatSettingsSecretsRoute
@@ -1039,17 +1041,24 @@ const ChatSettingsRouteChildren: ChatSettingsRouteChildren = {
   ChatSettingsBetaRoute: ChatSettingsBetaRoute,
   ChatSettingsBrowserRoute: ChatSettingsBrowserRoute,
   ChatSettingsChatRoute: ChatSettingsChatRoute,
+  ChatSettingsComputerUseRoute: ChatSettingsComputerUseRoute,
   ChatSettingsConnectionsRoute: ChatSettingsConnectionsRoute,
   ChatSettingsDevicesRoute: ChatSettingsDevicesRoute,
   ChatSettingsDiagnosticsRoute: ChatSettingsDiagnosticsRoute,
   ChatSettingsDiffsRoute: ChatSettingsDiffsRoute,
   ChatSettingsGeneralRoute: ChatSettingsGeneralRoute,
+  ChatSettingsHandoffRoute: ChatSettingsHandoffRoute,
   ChatSettingsIntegrationsRoute: ChatSettingsIntegrationsRoute,
   ChatSettingsKeybindingsRoute: ChatSettingsKeybindingsRoute,
   ChatSettingsLabsRoute: ChatSettingsLabsRoute,
   ChatSettingsMaintenanceRoute: ChatSettingsMaintenanceRoute,
+  ChatSettingsMemoriesRoute: ChatSettingsMemoriesRoute,
+  ChatSettingsMobileRoute: ChatSettingsMobileRoute,
   ChatSettingsOpenSourceLicensesRoute: ChatSettingsOpenSourceLicensesRoute,
+  ChatSettingsPersonalizationRoute: ChatSettingsPersonalizationRoute,
+  ChatSettingsPluginsRoute: ChatSettingsPluginsRoute,
   ChatSettingsProjectsRoute: ChatSettingsProjectsRoute,
+  ChatSettingsPromptProfilesRoute: ChatSettingsPromptProfilesRoute,
   ChatSettingsProvidersRoute: ChatSettingsProvidersRoute,
   ChatSettingsScheduledTasksRoute: ChatSettingsScheduledTasksRoute,
   ChatSettingsSecretsRoute: ChatSettingsSecretsRoute,
@@ -1097,13 +1106,6 @@ const rootRouteChildren: RootRouteChildren = {
   PairRoute: PairRoute,
   WelcomeRoute: WelcomeRoute,
   ProjectsProjectKeyRoute: ProjectsProjectKeyRoute,
-  SettingsComputerUseRoute: SettingsComputerUseRoute,
-  SettingsHandoffRoute: SettingsHandoffRoute,
-  SettingsMemoriesRoute: SettingsMemoriesRoute,
-  SettingsMobileRoute: SettingsMobileRoute,
-  SettingsPersonalizationRoute: SettingsPersonalizationRoute,
-  SettingsPluginsRoute: SettingsPluginsRoute,
-  SettingsPromptProfilesRoute: SettingsPromptProfilesRoute,
   ThreadsEnvironmentIdThreadIdRoute: ThreadsEnvironmentIdThreadIdRoute,
 }
 export const routeTree = rootRouteImport
