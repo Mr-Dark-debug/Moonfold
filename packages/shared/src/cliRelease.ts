@@ -83,9 +83,20 @@ export const CLI_RELEASE_CHANNELS: ReadonlyArray<CliReleaseChannel> = [
   "preview",
 ];
 
+/**
+ * Moonfold publishes no nightlies: its testing track, which keeps upstream's "nightly" name in code,
+ * carries the `-alpha.N` and `-beta.N` builds and is shown as Beta (D-76).
+ */
 export function cliReleaseChannelOf(version: string): CliReleaseChannel {
+  if (/^[^-+]+-(?:alpha|beta)\.\d+$/.test(version)) return "nightly";
   const channel = /^[^-+]+-(nightly|preview)\.\d{8}\.\d+$/.exec(version)?.[1];
   return channel === "nightly" || channel === "preview" ? channel : "stable";
+}
+
+/** The database migration a release's notes declare; the release workflow stamps it there. */
+export function releaseDatabaseMigration(notes: string | null | undefined): number | undefined {
+  const value = /<!-- moonfold:database-migration=(\d+) -->/.exec(notes ?? "")?.[1];
+  return value === undefined ? undefined : Number(value);
 }
 
 /** Whether updating between these versions crosses Stable and Nightly. Preview builds cross nothing.

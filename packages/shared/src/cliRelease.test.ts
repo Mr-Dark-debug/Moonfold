@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vite-plus/test";
 
-import { cliArchiveTarCommand, newestCliReleaseVersion, parseChecksums } from "./cliRelease.ts";
+import {
+  cliArchiveTarCommand,
+  cliReleaseChannelOf,
+  crossesReleaseTrack,
+  desktopUpdateChannelOf,
+  newestCliReleaseVersion,
+  parseChecksums,
+  releaseDatabaseMigration,
+} from "./cliRelease.ts";
 
 describe("cliRelease", () => {
   it("parses sha256sum output including binary-mode markers", () => {
@@ -38,5 +46,26 @@ describe("cliRelease", () => {
     expect(newestCliReleaseVersion(releases, "nightly")).toBe("1.2.4-nightly.20260912.7");
     expect(newestCliReleaseVersion(releases, "stable")).toBe("1.2.3");
     expect(newestCliReleaseVersion([{ tag_name: "v1.2.3" }], "preview")).toBeUndefined();
+  });
+
+  it("puts Moonfold's betas on the testing track, apart from stable releases", () => {
+    const releases = [
+      { tag_name: "v1.0.1-beta.2" },
+      { tag_name: "v1.0.0" },
+      { tag_name: "v1.0.0-rc.1" },
+    ];
+    expect(newestCliReleaseVersion(releases, "nightly")).toBe("1.0.1-beta.2");
+    expect(newestCliReleaseVersion(releases, "stable")).toBe("1.0.0");
+    expect(cliReleaseChannelOf("0.1.0-alpha.3")).toBe("nightly");
+    expect(desktopUpdateChannelOf("1.0.0-beta.6")).toBe("nightly");
+    expect(desktopUpdateChannelOf("1.0.0")).toBe("latest");
+    expect(crossesReleaseTrack("1.0.0-beta.6", "1.0.0")).toBe(true);
+    expect(crossesReleaseTrack("1.0.0-beta.6", "1.0.0-beta.7")).toBe(false);
+  });
+
+  it("reads the database migration a release's notes declare", () => {
+    expect(releaseDatabaseMigration("Notes\n\n<!-- moonfold:database-migration=86 -->\n")).toBe(86);
+    expect(releaseDatabaseMigration("Notes without a marker")).toBeUndefined();
+    expect(releaseDatabaseMigration(null)).toBeUndefined();
   });
 });

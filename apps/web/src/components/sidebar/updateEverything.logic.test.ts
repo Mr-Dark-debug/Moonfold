@@ -188,9 +188,9 @@ describe("collectChannelSwitchTargets", () => {
       ["newer-service", "run `moonfold update --channel stable --allow-downgrade` there"],
       [
         "new-service",
-        "its database has changes 0.1.3 does not support yet; stay on Nightly until Stable has them",
+        "its database has changes 0.1.3 does not support yet; stay on Beta until Stable has them",
       ],
-      ["old-server", "its server predates database checks; update it on Nightly first"],
+      ["old-server", "its server predates database checks; update it on Beta first"],
       ["mac-desktop", "switch the Mac app on that Mac"],
       ["preview", "runs a preview build"],
     ]);
@@ -237,7 +237,7 @@ describe("collectChannelSwitchTargets", () => {
     expect(skipped.map((entry) => [entry.label, entry.reason])).toEqual([
       [
         "ahead",
-        `its database has changes ${NIGHTLY} does not support yet; stay on Stable until Nightly has them`,
+        `its database has changes ${NIGHTLY} does not support yet; stay on Stable until Beta has them`,
       ],
       ["old-desktop", "needs a newer desktop app"],
       [

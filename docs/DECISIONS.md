@@ -663,3 +663,24 @@ Deployed on 2026-11-13 to the owner's Cloudflare account at
 subdomain was renamed from the owner's email name to `moonfold` (owner's choice) so no personal
 identifier ships in the app. A TLS session through it from a test phone to a test computer
 completed and the phone saw the computer's own certificate. Users can still enter their own relay.
+
+## D-76 Betas are the Beta update track; Stable and Beta can be switched in Settings
+
+Asked for by the owner on 2026-11-13. Upstream's two tracks were Stable and Nightly, and Moonfold
+publishes no nightlies, so the second option could only fail. Moonfold's `-alpha.N` and `-beta.N`
+builds now form that second track, shown as Beta; the code keeps upstream's `nightly` name so the
+guarded switch (database check, downgrade only inside a switch) is reused unchanged. Beta is
+electron-updater's `beta` channel and Stable its latest GitHub release. A beta install stays on
+Beta until its user switches. The switch needs each release's database migration, which upstream
+read from npm; Moonfold stamps it into the release notes, the one place the releases API exposes
+to the app. Once a stable release exists, the workflow publishes betas as prereleases so Stable
+never sees them.
+
+## D-77 The Windows installer closes every process running from the install folder
+
+electron-builder decides whether Moonfold is running with a PowerShell `.Count`, which Windows
+PowerShell 5.1 leaves empty for a single match. A lone helper started from the app's `.exe`
+(agent-device) therefore survived an upgrade, the new `.exe` could not be written, and only the
+uninstaller was left, so shortcuts pointed at a missing app (seen on the owner's machine on
+2026-11-13). The installer now runs electron-builder's check, which still asks before closing a
+running Moonfold, and then force-closes anything left in the install folder.

@@ -53,6 +53,7 @@ jobs:
         env:
           DISPATCH_VERSION: ${{ github.event.inputs.version }}
           DISPATCH_PUBLISH: ${{ github.event.inputs.publish }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
@@ -80,11 +81,18 @@ jobs:
             echo "Testing builds are -alpha.N or -beta.N; other labels strand their installs: $version" >&2
             exit 1
           fi
+          # The Stable track's updater takes GitHub's latest release, so once a stable release exists
+          # betas publish as prereleases. Before that, betas stay latest so download links work.
+          stable_exists=false
+          tags=$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" --jq '.[].tag_name')
+          if grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$' <<< "$tags"; then
+            stable_exists=true
+          fi
           {
             echo "version=$version"
             echo "tag=v$version"
             echo "publish=$publish"
-            if [[ "$version" =~ -alpha\. ]]; then
+            if [[ "$version" =~ -alpha\. ]] || { [[ "$version" == *-* ]] && $stable_exists; }; then
               echo "is_prerelease=true"
             else
               echo "is_prerelease=false"
@@ -312,6 +320,7 @@ jobs:
           ref: ${{ needs.preflight.outputs.ref }}
           sparse-checkout: |
             docs/releases
+            apps/server/src/persistence/Migrations
           sparse-checkout-cone-mode: false
 
       - name: Download release bundle
@@ -326,13 +335,25 @@ jobs:
         shell: bash
         run: test -f "docs/releases/${{ needs.preflight.outputs.tag }}.md"
 
+      # A Stable/Beta switch must know which database a release can open before installing it.
+      # The releases API is the one place clients can read without CORS, so the number rides in
+      # the notes; `releaseDatabaseMigration` in packages/shared/src/cliRelease.ts reads it back.
+      - name: Stamp the database migration into the notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          head=$(ls apps/server/src/persistence/Migrations | sed -nE 's/^([0-9]+)_\w+\.ts$/\1/p' | sort -n | tail -1)
+          test -n "$head"
+          { cat "docs/releases/${{ needs.preflight.outputs.tag }}.md"; echo; echo "<!-- moonfold:database-migration=$((10#$head)) -->"; } > release-body.md
+          tail -1 release-body.md
+
       - name: Publish release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.preflight.outputs.tag }}
           target_commitish: ${{ needs.preflight.outputs.ref }}
           name: Moonfold ${{ needs.preflight.outputs.tag }}
-          body_path: docs/releases/${{ needs.preflight.outputs.tag }}.md
+          body_path: release-body.md
           prerelease: ${{ needs.preflight.outputs.is_prerelease }}
           make_latest: ${{ needs.preflight.outputs.is_prerelease == 'false' }}
           files: release-assets/*

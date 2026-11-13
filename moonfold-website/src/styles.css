@@ -272,6 +272,47 @@ body.fs-nav-open .fs-pill {
 .fs-toggle[aria-expanded="true"] span:nth-child(3) {
   transform: translateY(-6.6px) rotate(-45deg);
 }
+/* ---- Seasonal overlay (winter snow / autumn leaves) ---- */
+.seasonal-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 65;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.fs-seasonal {
+  position: relative;
+  z-index: 71;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+  border-radius: 50%;
+  color: inherit;
+  transition: border-color 0.2s ease;
+}
+.fs-seasonal:hover {
+  border-color: currentColor;
+}
+.fs-seasonal svg {
+  width: 17px;
+  height: 17px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fs-seasonal {
+    transition:
+      border-color 0.2s ease,
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .fs-seasonal:hover {
+    transform: scale(1.07);
+  }
+}
 .fs-nav {
   position: fixed;
   inset: 0;
