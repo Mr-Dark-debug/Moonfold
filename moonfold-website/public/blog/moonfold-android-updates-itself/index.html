@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Moonfold for Android now updates itself | Moonfold</title>
+<meta name="description" content="From 0.3, the Moonfold Android app finds new releases on GitHub, checks the checksum and signing key, and installs the update after you agree.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/blog/moonfold-android-updates-itself/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://moonfold-website.vercel.app/blog/moonfold-android-updates-itself/">
+<meta property="og:title" content="Moonfold for Android now updates itself | Moonfold">
+<meta property="og:description" content="From 0.3, the Moonfold Android app finds new releases on GitHub, checks the checksum and signing key, and installs the update after you agree.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Moonfold for Android now updates itself","description":"From 0.3, the Moonfold Android app finds new releases on GitHub, checks the checksum and signing key, and installs the update after you agree.","datePublished":"2026-11-13","author":{"@type":"Organization","name":"The Moonfold team"},"mainEntityOfPage":"https://moonfold-website.vercel.app/blog/moonfold-android-updates-itself/"}</script>
+</head>
+<body class="page-post">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/">Docs</a>
+    <a href="/blog/" aria-current="page">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<main class="post" id="content">
+<div class="post-head">
+<p class="crumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><a href="/blog/#guides">Guides</a></p>
+<p class="eyebrow">Guides</p>
+<h1>Moonfold for Android now updates itself</h1>
+<p class="lede">From 0.3, the Moonfold Android app finds new releases on GitHub, checks the checksum and signing key, and installs the update after you agree.</p>
+<dl class="post-facts">
+<div><dt>Written by</dt><dd>The Moonfold team</dd></div>
+<div><dt>Published</dt><dd><time datetime="2026-11-13">Nov 13, 2026</time></dd></div>
+<div><dt>Reading time</dt><dd>1 min</dd></div>
+</dl>
+</div>
+<div class="post-body-wrap">
+<nav class="post-toc" aria-label="In this post"><h2>In this post</h2><ul><li><a href="#how-it-works">How it works</a></li><li><a href="#what-it-checks-before-installing">What it checks before installing</a></li><li><a href="#checking-now-or-not-at-all">Checking now, or not at all</a></li></ul></nav>
+<article class="prose">
+<p>Moonfold for Android is installed from an APK on the releases page, not from an app store. Until now that meant downloading and installing every new version by hand. From 0.3.0-beta.1 the app does it for you.</p>
+<p><video controls preload="metadata" playsinline width="1440" height="810" poster="/assets/demo-beta6-android-updates-poster.jpg" src="/assets/demo-beta6-android-updates.mp4"></video></p>
+<p>The video was recorded on an Android emulator: an older build finds 0.3.0-beta.1 on the releases page and installs it in place.</p>
+<h2 id="how-it-works"><a class="anchor" href="#how-it-works">How it works</a></h2>
+<p>About once a day the app checks Moonfold&#39;s GitHub releases for a newer Android build and offers it. Tap <strong>Update</strong> and it downloads the APK. The first time, Android asks you to let Moonfold install updates; turn on <strong>Allow from this source</strong>, come back, and the update continues. Android asks once more before replacing the app, and your pairing is kept.</p>
+<h2 id="what-it-checks-before-installing"><a class="anchor" href="#what-it-checks-before-installing">What it checks before installing</a></h2>
+<p>An update is installed only if its checksum matches the one GitHub publishes for the release and it is signed with the same key as the app you already have. A tampered or re-signed APK is refused.</p>
+<h2 id="checking-now-or-not-at-all"><a class="anchor" href="#checking-now-or-not-at-all">Checking now, or not at all</a></h2>
+<p>Long-press the Moonfold icon and choose <strong>Check for updates</strong> to check right away. <strong>Stop checking</strong> in the update prompt turns the daily check off, and <strong>Check for updates</strong> turns it back on.</p>
+<p>Versions before 0.3 cannot update themselves, so install 0.3 from the <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">releases page</a> once. The <a href="/docs/mobile-app/#updates">mobile app guide</a> has the details.</p>
+
+<div class="post-cta"><p><strong>Try Moonfold.</strong> It is free, open source and runs the agents you already use, with your own logins.</p><a class="btn btn-solid" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download the beta</a></div>
+</article>
+</div>
+<section class="related"><h2>Keep reading</h2><div class="post-grid"><article class="post-card"><a href="/blog/orbit-a-crew-that-keeps-working/">
+<span class="post-no" aria-hidden="true">01</span>
+<span class="post-cat">Guides</span>
+<h3>Orbit, a crew that keeps working on your project while you are away</h3>
+<p>How Orbit turns public feedback into a ranked backlog and proposed pull requests, and the limits that keep a crew of coding agents in check.</p>
+<span class="post-meta">Nov 13, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/windows-searching-for-exe-after-update/">
+<span class="post-no" aria-hidden="true">02</span>
+<span class="post-cat">Guides</span>
+<h3>Windows is searching for an .exe after an update: why it happens and how we fixed it</h3>
+<p>A Windows shortcut that searches for a missing .exe after an app update usually means the installer could not replace a running file. Here is the cause and the fix.</p>
+<span class="post-meta">Nov 13, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/reach-moonfold-from-another-device/">
+<span class="post-no" aria-hidden="true">03</span>
+<span class="post-cat">Guides</span>
+<h3>Reach your Moonfold from another device</h3>
+<p>Pair a phone, a browser or another desktop with a Moonfold running on a different machine, using your own network, Tailscale or an SSH tunnel.</p>
+<span class="post-meta">Oct 25, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article></div></section>
+</main>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

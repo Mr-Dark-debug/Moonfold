@@ -1,283 +1,108 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Muse Code · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Muse Code is a beta integration and is disabled by default. Install Muse Code on the machine hosting your environment, then run muse login as the account that runs Moonfold."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-muse/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-muse/" />
-    <meta property="og:title" content="Muse Code · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Muse Code is a beta integration and is disabled by default. Install Muse Code on the machine hosting your environment, then run muse login as the account that runs Moonfold."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/" aria-current="page">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
-        <h1 id="muse-code">Muse Code</h1>
-        <p>
-          Muse Code is a beta integration and is disabled by default. Install
-          <a href="https://dev.meta.ai/docs/muse-code" target="_blank" rel="noopener noreferrer"
-            >Muse Code</a
-          >
-          on the machine hosting your environment, then run <code>muse login</code> as the account
-          that runs Moonfold.
-        </p>
-        <p>
-          Open <strong>Settings → Providers</strong> in the web or desktop app, select the
-          environment, and enable <strong>Muse Code</strong>. Set <strong>Binary path</strong> if
-          Muse is not on the host&#39;s <code>PATH</code>. Refresh provider status after
-          installation or login, then select Muse in a thread&#39;s model picker.
-        </p>
-        <p>
-          Provider status does not check your login. If you are signed out, messages fail until you
-          run <code>muse login</code> on the host.
-        </p>
-        <h2 id="sign-in-and-api-keys">
-          <a class="anchor" href="#sign-in-and-api-keys">Sign-in and API keys</a>
-        </h2>
-        <p>
-          Moonfold ignores a <code>META_API_KEY</code> that the Moonfold server inherits from its
-          own environment, so Muse uses the credential saved on the host by <code>muse login</code>.
-          To use an API key instead, add <code>META_API_KEY</code> to the Muse instance&#39;s
-          environment variables in <strong>Settings → Providers</strong>. Muse gives that key
-          priority over the saved login.
-        </p>
-        <h2 id="remote-access-and-instances">
-          <a class="anchor" href="#remote-access-and-instances">Remote access and instances</a>
-        </h2>
-        <p>
-          Connect from web or desktop through <a href="/docs/remote-access/">remote access</a>. Muse
-          uses the selected environment&#39;s files and login; connecting devices do not need Muse
-          installed. Install and sign in separately on each host where you want Muse to run.
-        </p>
-        <p>
-          Add a provider instance for a separate configuration. Instances on the same host share its
-          Muse login; give an instance its own <code>META_API_KEY</code> to bill it separately.
-          Existing conversations retain their instance when its model catalog becomes unavailable.
-        </p>
-        <h2 id="models"><a class="anchor" href="#models">Models</a></h2>
-        <p>
-          Models and reasoning choices come from Muse on the selected host. After changing Muse
-          configuration, refresh provider status in <strong>Settings → Providers</strong>. If a
-          saved model becomes unavailable, select an available model before sending another message.
-        </p>
-        <p>
-          Muse can list models that your account cannot use. If a message fails with &quot;does not
-          exist or you lack access&quot;, pick another model, or add one your account can use under
-          <strong>Custom models</strong> in the instance settings.
-        </p>
-        <h2 id="permissions-and-limitations">
-          <a class="anchor" href="#permissions-and-limitations">Permissions and limitations</a>
-        </h2>
-        <p>
-          Muse offers two <a href="/docs/permission-modes/">permission modes</a>:
-          <strong>Supervised</strong> asks before commands and edits, and
-          <strong>Full access</strong> runs them without asking. Muse has no equivalent of
-          <strong>Auto-accept edits</strong> or <strong>Auto</strong>, so they are not offered. Muse
-          does not offer a separate Plan mode in Moonfold.
-        </p>
-        <p>
-          Muse can use Moonfold&#39;s tools. If Muse cannot reach them, the turn continues without
-          them. Switching providers can pass conversation context as a handoff.
-        </p>
-        <p>
-          Muse skills do not appear in the composer&#39;s <code>$</code> menu. Muse still loads them
-          itself. Manage them with <code>muse skills</code> on the host.
-        </p>
-        <p>
-          Forking a Muse conversation starts a new session with a copy of the conversation context.
-          Conversation rewind is unavailable.
-        </p>
-        <p>
-          Install Muse and sign in on the host; in-app installation and sign-in are not available.
-          Updates can run from <strong>Settings → Providers</strong> when Moonfold recognizes the
-          Muse launcher; otherwise update Muse on that host manually.
-        </p>
-        <p>
-          To stop using Muse in an environment, disable it in <strong>Settings → Providers</strong>.
-          This keeps the host&#39;s Muse login, thread history, and workspace files.
-        </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Muse Code · Moonfold docs</title>
+<meta name="description" content="Muse Code is disabled by default. Install Muse Code on the machine hosting your environment, then run muse login as the account that runs Moonfold.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-muse/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-muse/">
+<meta property="og:title" content="Muse Code · Moonfold docs">
+<meta property="og:description" content="Muse Code is disabled by default. Install Muse Code on the machine hosting your environment, then run muse login as the account that runs Moonfold.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/" aria-current="page">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
+<h1 id="muse-code">Muse Code</h1>
+<p>Muse Code is disabled by default. Install
+<a href="https://dev.meta.ai/docs/muse-code" target="_blank" rel="noopener noreferrer">Muse Code</a> on the machine hosting your
+environment, then run <code>muse login</code> as the account that runs Moonfold.</p>
+<p>Open <strong>Settings → Providers</strong> in the web or desktop app, select the environment,
+and enable <strong>Muse Code</strong>. Set <strong>Binary path</strong> if Muse is not on the host&#39;s <code>PATH</code>.
+Refresh provider status after installation or login, then select Muse in a
+thread&#39;s model picker.</p>
+<p>Provider status does not check your login. If you are signed out, messages
+fail until you run <code>muse login</code> on the host.</p>
+<h2 id="sign-in-and-api-keys"><a class="anchor" href="#sign-in-and-api-keys">Sign-in and API keys</a></h2>
+<p>Moonfold ignores a <code>META_API_KEY</code> that the Moonfold server inherits from its own
+environment, so Muse uses the credential saved on the host by <code>muse login</code>. To
+use an API key instead, add <code>META_API_KEY</code> to the Muse instance&#39;s environment
+variables in <strong>Settings → Providers</strong>. Muse gives that key priority over the
+saved login.</p>
+<h2 id="remote-access-and-instances"><a class="anchor" href="#remote-access-and-instances">Remote access and instances</a></h2>
+<p>Connect from web or desktop through <a href="/docs/remote-access/">remote access</a>.
+Muse uses the selected environment&#39;s files and login; connecting devices do not
+need Muse installed. Install and sign in separately on each host where you want
+Muse to run.</p>
+<p>Add a provider instance for a separate configuration. Instances on the same host
+share its Muse login; give an instance its own <code>META_API_KEY</code> to bill it
+separately. Existing conversations retain their instance when its model catalog
+becomes unavailable.</p>
+<h2 id="models"><a class="anchor" href="#models">Models</a></h2>
+<p>Models and reasoning choices come from Muse on the selected host. After changing
+Muse configuration, refresh provider status in <strong>Settings → Providers</strong>. If a saved model becomes
+unavailable, select an available model before sending another message.</p>
+<p>Muse can list models that your account cannot use. If a message fails with
+&quot;does not exist or you lack access&quot;, pick another model, or add one your account
+can use under <strong>Custom models</strong> in the instance settings.</p>
+<h2 id="permissions-and-limitations"><a class="anchor" href="#permissions-and-limitations">Permissions and limitations</a></h2>
+<p>Muse offers two <a href="/docs/permission-modes/">permission modes</a>: <strong>Supervised</strong> asks
+before commands and edits, and <strong>Full access</strong> runs them without asking. Muse has
+no equivalent of <strong>Auto-accept edits</strong> or <strong>Auto</strong>, so they are not offered. Muse
+does not offer a separate Plan mode in Moonfold.</p>
+<p>Muse can use Moonfold&#39;s tools. If Muse cannot reach them, the turn continues
+without them. Switching providers can pass conversation context as a handoff.</p>
+<p>Muse skills do not appear in the composer&#39;s <code>$</code> menu. Muse still loads them
+itself. Manage them with <code>muse skills</code> on the host.</p>
+<p>Forking a Muse conversation starts a new session with a copy of the conversation
+context. Conversation rewind is unavailable.</p>
+<p>Install Muse and sign in on the host; in-app installation and sign-in are not
+available. Updates can run from <strong>Settings → Providers</strong> when Moonfold recognizes
+the Muse launcher; otherwise update Muse on that host manually.</p>
+<p>To stop using Muse in an environment, disable it in <strong>Settings → Providers</strong>.
+This keeps the host&#39;s Muse login, thread history, and workspace files.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-muse.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/providers-pi/"><small>Previous</small><span>Pi</span></a
-          ><a class="next" href="/docs/providers-deepseek-harness/"
-            ><small>Next</small><span>DeepSeek Harness</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#sign-in-and-api-keys">Sign-in and API keys</a></li>
-            <li><a href="#remote-access-and-instances">Remote access and instances</a></li>
-            <li><a href="#models">Models</a></li>
-            <li><a href="#permissions-and-limitations">Permissions and limitations</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-muse.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/providers-pi/"><small>Previous</small><span>Pi</span></a><a class="next" href="/docs/providers-deepseek-harness/"><small>Next</small><span>DeepSeek Harness</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#sign-in-and-api-keys">Sign-in and API keys</a></li><li><a href="#remote-access-and-instances">Remote access and instances</a></li><li><a href="#models">Models</a></li><li><a href="#permissions-and-limitations">Permissions and limitations</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

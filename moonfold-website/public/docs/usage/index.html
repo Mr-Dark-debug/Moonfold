@@ -1,394 +1,218 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Usage and limits · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Open Usage from the sidebar or the command palette, or press mod+u on web and desktop when the terminal is not focused. Customize usage.open in Settings → Keybindings."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/usage/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/usage/" />
-    <meta property="og:title" content="Usage and limits · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Open Usage from the sidebar or the command palette, or press mod+u on web and desktop when the terminal is not focused. Customize usage.open in Settings → Keybindings."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/" aria-current="page">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs">
-          <a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents
-        </p>
-        <h1 id="usage-and-limits">Usage and limits</h1>
-        <p>
-          Open <strong>Usage</strong> from the sidebar or the command palette, or press
-          <code>mod+u</code> on web and desktop when the terminal is not focused. Customize
-          <code>usage.open</code> in <strong>Settings → Keybindings</strong>.
-        </p>
-        <h2 id="understand-your-usage">
-          <a class="anchor" href="#understand-your-usage">Understand your usage</a>
-        </h2>
-        <p>
-          <strong>Usage</strong> combines Codex, Claude Code, Grok Build, OpenCode, Antigravity, Pi,
-          and Cursor history from your connected environments. It shows token use, cache savings,
-          model breakdowns, and estimated API-equivalent cost, split by token type and by speed.
-          These estimates are not your subscription bill. <strong>Premium</strong> is what Fast and
-          Ultrafast requests cost above standard rates. Cost that cannot be split, such as a
-          provider-reported cost for a model without public rates, shows as <strong>Other</strong>.
-          Select a model under <strong>Breakdown</strong> to see its trend, cache hit rate, and cost
-          per million tokens.
-        </p>
-        <p>
-          For one thread, open the thread details panel from the thread header.
-          <strong>Usage</strong> lists the thread&#39;s own token use (not its subagents&#39;) for
-          each model, effort and speed it ran with, including how much input came from cache. Codex
-          and Claude report this per turn; a total marked <code>≥</code> is missing part of a
-          turn&#39;s report.
-        </p>
-        <p>
-          Totals depend on the history available on each server. Grok turns without a saved
-          completed-turn record are missing from the totals.
-        </p>
-        <p>
-          OpenCode reads its SQLite database and older JSON history. Antigravity reads local
-          conversation databases, including Moonfold-managed profiles. Set
-          <code>OPENCODE_DATA_DIR</code> or <code>ANTIGRAVITY_DATA_DIR</code> on the server to read
-          a different data directory; comma-separated paths read multiple directories.
-        </p>
-        <p>
-          Cursor reads account usage from Cursor&#39;s dashboard API using the CLI login saved on
-          the server. This includes headless Moonfold sessions and desktop usage across machines;
-          the same account counts once across connected environments. Without an accessible CLI
-          login, Moonfold shows a notice instead of incomplete local totals. Moonfold does not
-          estimate missing tokens from conversation text. On macOS, choose
-          <strong>Enable Cursor usage</strong> on Usage to allow Moonfold to read your existing CLI
-          login from Keychain. You can turn it off in
-          <strong>Settings → Providers → Usage providers</strong>. macOS may ask you to allow access
-          on the server Mac.
-        </p>
-        <p>
-          Usage includes each configured account&#39;s history, including disabled accounts. Custom
-          homes follow the account&#39;s home setting or its <code>CODEX_HOME</code>,
-          <code>CLAUDE_CONFIG_DIR</code>, or <code>GROK_HOME</code> environment variable. Pi reads
-          <code>~/.pi/agent/sessions</code>, or the <code>sessions</code> directory under
-          <code>PI_CODING_AGENT_DIR</code>. Set <code>PI_CODING_AGENT_SESSION_DIR</code> to read a
-          different session directory. To include sessions saved through
-          <code>--session-dir</code> or Pi&#39;s <code>sessionDir</code> setting, set this
-          environment variable to the same directory. Pi includes recorded tool and summary costs
-          under <code>Tools/summaries</code>. Use absolute paths or <code>~/</code> paths in the
-          account&#39;s environment settings; relative environment paths depend on each
-          project&#39;s working directory and cannot be reliably discovered by Usage. Accounts
-          sharing a history directory count once.
-        </p>
-        <p>
-          When your app and server support different providers, usage totals may cover only the
-          providers your app understands. Update the app to include newly supported providers.
-        </p>
-        <p>
-          On web and desktop, use the environment dropdown to filter costs, tokens, and limits. All
-          environments are selected by default. The dropdown shows which environments are still
-          scanning; results appear as each one responds, and figures still updating are dimmed.
-          Cursor shows its last saved totals first, then updates them when Cursor&#39;s API
-          responds.
-        </p>
-        <p>
-          If recent work is missing or a new model shows no cost, refresh to rescan session history
-          and update model pricing.
-        </p>
-        <h2 id="set-custom-model-prices">
-          <a class="anchor" href="#set-custom-model-prices">Set custom model prices</a>
-        </h2>
-        <p>
-          On web or desktop, open the environment dropdown on <strong>Usage</strong>, then choose
-          <strong>Model prices</strong> to add, edit, or reset a model&#39;s estimated price.
-          <strong>Apply to</strong> starts with your current Usage filter; choose all environments
-          or select individual destinations. Enter the exact model ID and USD rates per million
-          input and output tokens. You can enter any model ID, including models without public
-          pricing. When a model on <strong>Usage</strong> has no known price, select it under
-          <strong>Breakdown</strong> and choose <strong>Set price</strong> to open this table with
-          that model added.
-        </p>
-        <p>
-          Cache read and cache write rates are optional and use the input rate when blank. Enter
-          <code>0</code> for tokens that are free. Saved prices replace automatic pricing for all of
-          that environment&#39;s history and are shared with clients connected to it. When
-          environments have different prices, cells show <strong>Mixed</strong>. Edit rates directly
-          in the table, then choose <strong>Save changes</strong> to apply all edited rows.
-          Untouched cells keep each environment&#39;s rate. Select one environment to inspect its
-          prices. <strong>Reset to automatic</strong> marks a model&#39;s override for removal when
-          you save; you can undo it before saving.
-        </p>
-        <p>
-          To count one model as another, such as a preview model under its released name, enter the
-          target model ID under <strong>Map to</strong>. The mapped model no longer appears on
-          <strong>Usage</strong>: its tokens and cost move to the target model and use the
-          target&#39;s price. Clear <strong>Map to</strong> or reset the row to show the model on
-          its own again.
-        </p>
-        <p>
-          Each destination reports whether the change saved. Offline or unavailable environments are
-          marked <strong>Not saved</strong>. Reconnect them and choose
-          <strong>Retry failed saves</strong> to finish the same change without writing again to
-          environments that already saved. Changes are not queued after you close the dialog.
-        </p>
-        <h2 id="track-subscription-limits">
-          <a class="anchor" href="#track-subscription-limits">Track subscription limits</a>
-        </h2>
-        <p>
-          <strong>Usage → Limits</strong> pools every subscription account it can see per provider,
-          so with several Codex or Claude accounts across your environments you read one number per
-          window rather than a list. Each window card shows how much of the pool is left and a bar
-          with one segment per account, kept in the same column across windows. Accounts are ordered
-          by their 5-hour reset, soonest first, or by the first available window when no account
-          reports a 5-hour limit. A gap means the account does not report that window. When the
-          provider reports reset times, the card also says when the next reset lands and how much it
-          hands back. The hatched part of a segment is what that reset restores. Tap a segment or
-          account row for the account&#39;s plan, where it is signed in, and its reset time. On web,
-          you can hover too. Codex and Claude accounts with banked reset credits show a ticket count
-          and the <strong>Use reset</strong> action in the account details. Claude resets are off
-          until you turn on <strong>Claude banked resets</strong> in
-          <strong>Settings → Providers → Usage providers</strong>, because Moonfold then reads the
-          Claude CLI&#39;s stored login; they are not available when the server runs on macOS, where
-          Claude keeps its login in the Keychain. On narrow screens, numbered rows below the bar
-          show each account&#39;s quota, countdown, and credits. Tap a row to open its details.
-        </p>
-        <p>
-          The same account signed in on more than one environment counts once. Filter with the
-          environment dropdown to see what a single machine has.
-        </p>
-        <p>
-          Opening Limits checks the selected connected environments automatically. Each client waits
-          at least five minutes between automatic checks of an environment, including after a failed
-          check. If a window still looks stale, refresh Limits to re-check every provider.
-        </p>
-        <p>
-          Pick <code>/usage-limits</code> from the composer&#39;s command menu, or send it as a
-          message, to check the current model&#39;s limits without leaving the conversation. The
-          result opens above the composer and closes when you dismiss it or send your next message.
-          It uses the same snapshot as <strong>Usage → Limits</strong>, so it does not run the agent
-          or refresh anything. The command is offered only for providers that appear under
-          <strong>Usage → Limits</strong>.
-        </p>
-        <p>
-          OpenCode Go reports its session, weekly, and monthly allowance when OpenCode runs locally
-          in the environment. Moonfold cannot report limits for external OpenCode servers because
-          their credentials belong to the remote server. Limits need an OpenCode Go API key. A
-          Console sign-in alone does not report them. Add your Go API key as
-          <code>OPENCODE_API_KEY</code> in the OpenCode instance&#39;s
-          <strong>Environment variables</strong>, then refresh provider status. Cursor reports its
-          monthly allowance, including separate Auto and API usage, using the CLI login or
-          <code>CURSOR_AUTH_TOKEN</code>. On macOS, this includes the default Keychain login after
-          you enable Cursor usage. Keychain login is used for limits only with Cursor&#39;s default
-          API endpoint. If you configure a custom Cursor endpoint, use an explicit token or
-          file-based CLI login for limits.
-        </p>
-        <p>
-          Grok reports the remaining subscription allowance and reset time for its current billing
-          period after signing in with <code>grok login</code>. Explicit
-          <code>XAI_API_KEY</code> connections and custom authentication or endpoint configurations
-          do not report subscription limits.
-        </p>
-        <p>
-          API-key accounts may not report subscription limits. This also applies to Claude
-          connections using a proxy through <code>ANTHROPIC_AUTH_TOKEN</code>.
-        </p>
-        <h2 id="usage-hubs"><a class="anchor" href="#usage-hubs">Usage hubs</a></h2>
-        <p>
-          Moonfold does not read usage hubs such as CLIProxyAPI. They pool provider logins, and
-          Moonfold only runs each provider as your own local CLI with your own login. A hub saved by
-          an older build appears under <strong>Settings → Providers → Usage providers</strong>;
-          remove it there to delete its stored management key.
-        </p>
-        <h2 id="keyboard-shortcuts">
-          <a class="anchor" href="#keyboard-shortcuts">Keyboard shortcuts</a>
-        </h2>
-        <p>
-          On web and desktop, open Usage from the command palette. While on Usage, press
-          <code>C</code>, <code>T</code>, or <code>L</code> for Cost, Tokens, or Limits while not
-          typing in a field. Use <code>Ctrl+Shift+1/2/3/4</code> (<code>Cmd+Shift+1/2/3/4</code> on
-          macOS) for the past 24 hours, 7 days, 30 days, or 90 days. Period shortcuts do nothing on
-          Limits. Press <code>Escape</code> to return to the previous page. Customize these
-          shortcuts in <strong>Settings → Keybindings</strong>.
-        </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Usage and limits · Moonfold docs</title>
+<meta name="description" content="Open Usage from the sidebar or the command palette, or press mod+u on web and desktop when the terminal is not focused. Customize usage.open in Settings → Keybindings.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/usage/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/usage/">
+<meta property="og:title" content="Usage and limits · Moonfold docs">
+<meta property="og:description" content="Open Usage from the sidebar or the command palette, or press mod+u on web and desktop when the terminal is not focused. Customize usage.open in Settings → Keybindings.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/" aria-current="page">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents</p>
+<h1 id="usage-and-limits">Usage and limits</h1>
+<p>Open <strong>Usage</strong> from the sidebar or the command palette, or press <code>mod+u</code> on web and
+desktop when the terminal is not focused. Customize <code>usage.open</code> in
+<strong>Settings → Keybindings</strong>.</p>
+<p>On mobile, choose <strong>Usage</strong> in the workspace navigation.</p>
+<h2 id="understand-your-usage"><a class="anchor" href="#understand-your-usage">Understand your usage</a></h2>
+<p><strong>Usage</strong> combines Codex, Claude Code, Grok Build, OpenCode, Antigravity, Pi, Muse Code, and Cursor history
+from your connected environments. It shows token use, cache savings, model breakdowns, and estimated API-equivalent
+cost, split by token type and by speed. These estimates are not your subscription bill.
+<strong>Premium</strong> is what Fast and Ultrafast requests cost above standard rates. Cost that cannot be
+split, such as a provider-reported cost for a model without public rates, shows as <strong>Other</strong>.
+Select a model under <strong>Breakdown</strong> to see its trend, cache hit rate, and cost per million tokens.</p>
+<p>For one thread, open the thread details panel from the thread header. <strong>Usage</strong> lists the
+thread&#39;s own token use (not its subagents&#39;) for each model, effort and speed it ran with,
+including how much input came from cache. Codex and Claude report this per turn; a total marked
+<code>≥</code> is missing part of a turn&#39;s report.</p>
+<p>Totals depend on the history available on each server. Grok turns without a saved completed-turn
+record are missing from the totals.
+Text generation (thread titles, commit messages, PR text, branch names and review guides) is not in
+the totals for Codex or Claude Code 2.0.63 and newer, because those runs save no session history.</p>
+<p>OpenCode reads its SQLite database and older JSON history. Antigravity reads local conversation
+databases, including Moonfold-managed profiles. Set <code>OPENCODE_DATA_DIR</code> or <code>ANTIGRAVITY_DATA_DIR</code> on the
+server to read a different data directory; comma-separated paths read multiple directories.</p>
+<p>Cursor reads account usage from Cursor&#39;s API for the account you signed in with in Moonfold or set as
+<code>CURSOR_API_KEY</code>, or otherwise the CLI login saved on the server.
+This includes headless Moonfold sessions and desktop usage across machines; the same account counts
+once across connected environments. Without any of these, Moonfold shows a
+notice instead of incomplete local totals. Moonfold does not estimate missing tokens from conversation text.
+On macOS without a Moonfold sign-in, choose <strong>Enable Cursor usage</strong> on Usage to allow Moonfold to read your
+existing CLI login from Keychain. You can turn it off in <strong>Settings → Providers → Usage providers</strong>. macOS may ask
+you to allow access on the server Mac.</p>
+<p>Usage includes each configured account&#39;s history, including disabled accounts. Custom homes follow
+the account&#39;s home setting or its <code>CODEX_HOME</code>, <code>CLAUDE_CONFIG_DIR</code>, or <code>GROK_HOME</code> environment
+variable. Pi reads <code>~/.pi/agent/sessions</code>, or the <code>sessions</code> directory under
+<code>PI_CODING_AGENT_DIR</code>. Set <code>PI_CODING_AGENT_SESSION_DIR</code> to read a different session directory.
+To include sessions saved through <code>--session-dir</code> or Pi&#39;s <code>sessionDir</code> setting, set this environment
+variable to the same directory. Pi includes recorded tool and summary costs under <code>Tools/summaries</code>.
+Muse Code reads native session history, including child sessions, from the home reported by the
+configured Muse CLI. Its environment settings, including <code>XDG_DATA_HOME</code>, apply. Models without
+known prices still contribute tokens and appear as unpriced; set custom prices to estimate their cost.
+Use absolute paths or <code>~/</code> paths in the account&#39;s environment settings; relative environment paths
+depend on each project&#39;s working directory and cannot be reliably discovered by Usage. Accounts
+sharing a history directory count once.</p>
+<p>The server saves its first hostname in <code>&lt;Moonfold home&gt;/usage-host-id</code>, so a recreated container keeps
+its usage identity when Moonfold home is persisted. Set <code>MOONFOLD_HOST_ID</code> to choose the identity
+explicitly.</p>
+<p>When your app and server support different providers, usage totals may cover only the providers
+your app understands. Update the app to include newly supported providers.</p>
+<p>On web and desktop, use the environment dropdown to filter costs, tokens, and limits. All
+environments are selected by default. The dropdown shows which environments are still scanning;
+results appear as each one responds, and figures still updating are dimmed. Cursor shows its last
+saved totals first, then updates them when Cursor&#39;s API responds.</p>
+<p>If recent work is missing or a new model shows no cost, refresh to rescan session history and
+update model pricing.</p>
+<h2 id="set-custom-model-prices"><a class="anchor" href="#set-custom-model-prices">Set custom model prices</a></h2>
+<p>On web or desktop, open the environment dropdown on <strong>Usage</strong>, then choose <strong>Model prices</strong> to add,
+edit, or reset a model&#39;s estimated price. <strong>Apply to</strong> starts with your current Usage filter;
+choose all environments or select individual destinations. Enter the exact model ID and USD
+rates per million input and output tokens. You can enter any model ID, including models
+without public pricing. When a model on <strong>Usage</strong> has no known price, select it under
+<strong>Breakdown</strong> and choose <strong>Set price</strong> to open this table with that model added.</p>
+<p>Cache read and cache write rates are optional and use the input rate when blank. Enter <code>0</code> for
+tokens that are free. Saved prices replace automatic pricing for all of that environment&#39;s
+history and are shared with clients connected to it. When environments have different prices,
+cells show <strong>Mixed</strong>. Edit rates directly in the table, then choose <strong>Save changes</strong> to apply all
+edited rows. Untouched cells keep each environment&#39;s rate. Select one environment to inspect its
+prices. <strong>Reset to automatic</strong> marks a model&#39;s override for removal when you save; you can undo
+it before saving.</p>
+<p>To count one model as another, such as a preview model under its released name, enter the target
+model ID under <strong>Map to</strong>. The mapped model no longer appears on <strong>Usage</strong>: its tokens and cost
+move to the target model and use the target&#39;s price. Clear <strong>Map to</strong> or reset the row to show
+the model on its own again.</p>
+<p>Each destination reports whether the change saved. Offline or unavailable environments are
+marked <strong>Not saved</strong>. Reconnect them and choose <strong>Retry failed saves</strong> to finish the same change
+without writing again to environments that already saved. Changes are not queued after you close
+the dialog.</p>
+<h2 id="show-only-some-models"><a class="anchor" href="#show-only-some-models">Show only some models</a></h2>
+<p>To count only some models, or to leave some out, add <code>usageModelFilter</code> to the server&#39;s
+<code>settings.json</code> in its <code>userdata</code> directory, such as <code>~/.moonfold/userdata/settings.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;usageModelFilter&quot;: {
+    &quot;include&quot;: [{ &quot;provider&quot;: &quot;claude&quot;, &quot;model&quot;: &quot;orbit-1&quot; }, { &quot;model&quot;: &quot;orbit-2&quot; }],
+    &quot;exclude&quot;: [{ &quot;model&quot;: &quot;drift-9&quot; }]
+  }
+}
+</code></pre>
+<p><code>include</code> keeps only the listed models and <code>exclude</code> leaves the listed models out. <code>provider</code> is
+one of <code>claude</code>, <code>codex</code>, <code>cursor</code>, <code>grok</code>, <code>opencode</code>, <code>antigravity</code>, <code>pi</code>, or <code>muse</code>; omit it
+to match a model ID from any provider. Use the model ID that Usage shows without <strong>Map to</strong>, such
+as a provider-prefixed ID for Pi. Filters apply before <strong>Map to</strong>, so a model you leave out is not
+counted under its mapped name. Usage applies each environment&#39;s own filter. Remove the setting to
+show every model again.</p>
+<p>If the setting is invalid, Usage ignores it and shows every model, and the next save of any other
+setting removes it from <code>settings.json</code>.</p>
+<h2 id="track-subscription-limits"><a class="anchor" href="#track-subscription-limits">Track subscription limits</a></h2>
+<p><strong>Usage → Limits</strong> pools every subscription account it can see per provider, so with several Codex
+or Claude accounts across your environments you read one number per window rather than a
+list. Each window card shows how much of the pool is left and a bar with one segment per account,
+kept in the same column across windows. Accounts are ordered by their next 5-hour refill, soonest
+first. For an account with no weekly quota left, this is when its session becomes usable again.
+The first available window is used when no account reports a 5-hour limit. A gap means the
+account does not report that window. When the provider reports reset times, the card also says
+when the next reset lands and how much it hands back. The hatched
+part of a segment is what that reset restores. Tap a segment or account row for the account&#39;s plan,
+where it is signed in, and its reset time. On web, you can hover too. Codex and Claude accounts
+with banked reset credits show a ticket count and the <strong>Use reset</strong> action in the account details.
+Claude resets are off until you turn on <strong>Claude banked resets</strong> in <strong>Settings → Providers →
+Usage providers</strong>, because Moonfold then reads the Claude CLI&#39;s stored login; they are not
+available when the server runs on macOS, where Claude keeps its login in the Keychain. On narrow screens, numbered rows below
+the bar show each account&#39;s quota, countdown, and credits. Tap a row to open its details.</p>
+<p>The same account signed in on more than one environment counts once.
+Filter with the environment dropdown to see what a single machine has.</p>
+<p>When a Claude or Codex account has no overall weekly quota left, its pooled session contribution
+shows 0% left. The next refill depends on both reset times: an exhausted session must also reset,
+and a partly spent session may only regain its unused portion when the week resets. Missing or
+stale reset times have no refill estimate; refresh Limits for a new reading. Claude&#39;s
+model-specific weekly allowances keep their reported values.</p>
+<p>Opening Limits checks the selected connected environments automatically. Each client waits at
+least five minutes between automatic checks of an environment, including after a failed check.
+If a window still looks stale, refresh Limits to re-check every provider.</p>
+<p>Pick <code>/usage-limits</code> from the composer&#39;s command menu, or send it as a message, to check the
+current model&#39;s limits without leaving the conversation. The result opens above the composer and
+closes when you dismiss it or send your next message. It uses the same snapshot as <strong>Usage → Limits</strong>, so it does not run the agent or refresh
+anything. The command is offered only for providers that appear under <strong>Usage → Limits</strong>.</p>
+<p>To keep them in view on web and desktop, turn on <strong>Usage limits</strong> in <strong>Settings → Appearance → Thread details</strong>, or right-click the thread details card.
+The bottom of the thread details card then shows how much is left in each limit window of the
+current provider account. Some windows, such as a weekly Opus limit, count only one model. Hover a
+row to see when it resets and your pace. Turn on <strong>Context window</strong> to also show the thread&#39;s
+context use against the model&#39;s limit. A tick on the bar marks where the provider compacts
+automatically, when it reports that point.</p>
+<p>OpenCode Go reports its session, weekly, and monthly allowance when OpenCode runs locally in
+the environment. Moonfold cannot report limits for external OpenCode servers because their credentials
+belong to the remote server. Limits need an OpenCode Go API key, or an OpenCode Console connected
+in OpenCode with an API key. A Console browser sign-in alone does not report them. You can also add
+your Go API key as <code>OPENCODE_API_KEY</code> in the OpenCode instance&#39;s <strong>Environment variables</strong>, then
+refresh provider status. Cursor reports
+its monthly allowance, including separate Auto and API usage, for <code>CURSOR_AUTH_TOKEN</code> when it is set,
+otherwise for the account you signed in with in Moonfold or set as <code>CURSOR_API_KEY</code>, otherwise for the CLI
+login. On macOS, this includes the default Keychain login after you enable Cursor usage. Sign-in, API key,
+and Keychain login report limits only with Cursor&#39;s default API endpoint. If you configure a custom
+Cursor endpoint, use an explicit token or file-based CLI login for limits.</p>
+<p>Grok reports the remaining subscription allowance and reset time for its current billing period
+after signing in with <code>grok login</code>. Explicit <code>XAI_API_KEY</code> connections and custom authentication
+or endpoint configurations do not report subscription limits.</p>
+<p>API-key accounts may not report subscription limits. This also applies to Claude connections
+using a proxy through <code>ANTHROPIC_AUTH_TOKEN</code>.</p>
+<h2 id="usage-hubs"><a class="anchor" href="#usage-hubs">Usage hubs</a></h2>
+<p>Moonfold does not read usage hubs such as CLIProxyAPI. They pool provider logins, and Moonfold
+only runs each provider as your own local CLI with your own login. A hub saved by an older build
+appears under <strong>Settings → Providers → Usage providers</strong>; remove it there to delete its stored
+management key.</p>
+<h2 id="keyboard-shortcuts"><a class="anchor" href="#keyboard-shortcuts">Keyboard shortcuts</a></h2>
+<p>On web and desktop, open Usage from the command palette. While on Usage,
+press <code>C</code>, <code>T</code>, or <code>L</code> for Cost, Tokens, or Limits while not typing in a field.
+Use <code>Ctrl+Shift+1/2/3/4</code> (<code>Cmd+Shift+1/2/3/4</code> on macOS) for the past
+24 hours, 7 days, 30 days, or 90 days. Period shortcuts do nothing on Limits.
+Press <code>Escape</code> to return to the previous page. Customize these shortcuts in
+<strong>Settings → Keybindings</strong>.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/usage.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/portable-handoffs/"
-            ><small>Previous</small><span>Context in portable handoffs</span></a
-          ><a class="next" href="/docs/scheduled-tasks/"
-            ><small>Next</small><span>Scheduled tasks</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#understand-your-usage">Understand your usage</a></li>
-            <li><a href="#set-custom-model-prices">Set custom model prices</a></li>
-            <li><a href="#track-subscription-limits">Track subscription limits</a></li>
-            <li><a href="#usage-hubs">Usage hubs</a></li>
-            <li><a href="#keyboard-shortcuts">Keyboard shortcuts</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/usage.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/portable-handoffs/"><small>Previous</small><span>Context in portable handoffs</span></a><a class="next" href="/docs/scheduled-tasks/"><small>Next</small><span>Scheduled tasks</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#understand-your-usage">Understand your usage</a></li><li><a href="#set-custom-model-prices">Set custom model prices</a></li><li><a href="#show-only-some-models">Show only some models</a></li><li><a href="#track-subscription-limits">Track subscription limits</a></li><li><a href="#usage-hubs">Usage hubs</a></li><li><a href="#keyboard-shortcuts">Keyboard shortcuts</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

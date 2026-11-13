@@ -1,277 +1,110 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>What goes into a handoff brief, and what is left out | Moonfold</title>
-    <meta
-      name="description"
-      content="The brief the next agent receives is built from the thread's history without a model. Here is exactly what it holds and how secrets are redacted."
-    />
-    <link
-      rel="canonical"
-      href="https://moonfold-website.vercel.app/blog/what-a-handoff-brief-contains/"
-    />
-    <meta property="og:type" content="article" />
-    <meta
-      property="og:url"
-      content="https://moonfold-website.vercel.app/blog/what-a-handoff-brief-contains/"
-    />
-    <meta
-      property="og:title"
-      content="What goes into a handoff brief, and what is left out | Moonfold"
-    />
-    <meta
-      property="og:description"
-      content="The brief the next agent receives is built from the thread's history without a model. Here is exactly what it holds and how secrets are redacted."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "What goes into a handoff brief, and what is left out",
-        "description": "The brief the next agent receives is built from the thread's history without a model. Here is exactly what it holds and how secrets are redacted.",
-        "datePublished": "2026-10-23",
-        "author": { "@type": "Organization", "name": "The Moonfold team" },
-        "mainEntityOfPage": "https://moonfold-website.vercel.app/blog/what-a-handoff-brief-contains/"
-      }
-    </script>
-  </head>
-  <body class="page-post">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/">Docs</a>
-        <a href="/blog/" aria-current="page">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <main class="post" id="content">
-      <div class="post-head">
-        <p class="crumbs">
-          <a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a
-          ><span aria-hidden="true">/</span><a href="/blog/#handoff">Handoff</a>
-        </p>
-        <p class="eyebrow">Handoff</p>
-        <h1>What goes into a handoff brief, and what is left out</h1>
-        <p class="lede">
-          The brief the next agent receives is built from the thread's history without a model. Here
-          is exactly what it holds and how secrets are redacted.
-        </p>
-        <dl class="post-facts">
-          <div>
-            <dt>Written by</dt>
-            <dd>The Moonfold team</dd>
-          </div>
-          <div>
-            <dt>Published</dt>
-            <dd><time datetime="2026-10-23">Oct 23, 2026</time></dd>
-          </div>
-          <div>
-            <dt>Reading time</dt>
-            <dd>2 min</dd>
-          </div>
-        </dl>
-      </div>
-      <div class="post-body-wrap">
-        <nav class="post-toc" aria-label="In this post">
-          <h2>In this post</h2>
-          <ul>
-            <li><a href="#the-contents">The contents</a></li>
-            <li><a href="#built-without-asking-a-model">Built without asking a model</a></li>
-            <li>
-              <a href="#redaction-happens-before-sending">Redaction happens before sending</a>
-            </li>
-            <li>
-              <a href="#what-the-next-agent-does-not-get">What the next agent does not get</a>
-            </li>
-          </ul>
-        </nav>
-        <article class="prose">
-          <p>
-            A handoff is only as good as the brief that carries it. If the brief is vague the next
-            agent starts from scratch, and if it is too eager it leaks things it should not. This is
-            what Moonfold puts in it, and how.
-          </p>
-          <h2 id="the-contents"><a class="anchor" href="#the-contents">The contents</a></h2>
-          <p>The brief is a plain summary of where the task stands:</p>
-          <ul>
-            <li>the <strong>objective</strong>: the thread&#39;s goal, or your first message;</li>
-            <li>the <strong>plan</strong> and how far along it is;</li>
-            <li>what <strong>you said since</strong>;</li>
-            <li>the <strong>files changed</strong>;</li>
-            <li>the current <code>git status</code> and <code>git diff --stat</code>;</li>
-            <li>the <strong>last failing command</strong>;</li>
-            <li>any <strong>open approvals</strong>;</li>
-            <li>the project&#39;s <code>AGENTS.md</code> or <code>CLAUDE.md</code>.</li>
-          </ul>
-          <p>
-            The earlier conversation follows the brief, so nothing has to be reconstructed from
-            memory.
-          </p>
-          <h2 id="built-without-asking-a-model">
-            <a class="anchor" href="#built-without-asking-a-model">Built without asking a model</a>
-          </h2>
-          <p>
-            The brief is assembled from the thread&#39;s recorded history. No model is asked to
-            summarise it. That has two practical effects: the same thread always produces the same
-            brief, and a provider that is already at its limit is not needed to write the summary of
-            its own work.
-          </p>
-          <h2 id="redaction-happens-before-sending">
-            <a class="anchor" href="#redaction-happens-before-sending"
-              >Redaction happens before sending</a
-            >
-          </h2>
-          <p>
-            Before the preview is shown, Moonfold scans the brief for secrets: keys, tokens,
-            passwords and private keys. Matches are replaced, and the preview lists what was
-            redacted, by kind, so you can see that a token was removed without seeing the token
-            again. The brief you preview is the brief that is sent.
-          </p>
-          <p>
-            Redaction is a safeguard, not a guarantee. If a project must never reach a particular
-            company, do not rely on scanning alone. Use the
-            <strong>Allowed providers</strong> setting to decide which providers may receive that
-            project&#39;s context in the first place.
-          </p>
-          <h2 id="what-the-next-agent-does-not-get">
-            <a class="anchor" href="#what-the-next-agent-does-not-get"
-              >What the next agent does not get</a
-            >
-          </h2>
-          <p>
-            The previous agent&#39;s hidden reasoning and its tool state stay behind. The new agent
-            has the files on disk and the brief, and it will read what it needs. That is
-            intentional: it keeps the handoff small and keeps one provider&#39;s internal traces out
-            of another&#39;s context.
-          </p>
-          <p>
-            For the full list of settings see the
-            <a href="/docs/provider-handoff/">provider handoff guide</a>, and for how Moonfold
-            decides a run ended in a usage limit see
-            <a href="/blog/how-moonfold-detects-usage-limits/">how Moonfold detects usage limits</a
-            >.
-          </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>What goes into a handoff brief, and what is left out | Moonfold</title>
+<meta name="description" content="The brief the next agent receives is built from the thread's history without a model. Here is exactly what it holds and how secrets are redacted.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/blog/what-a-handoff-brief-contains/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://moonfold-website.vercel.app/blog/what-a-handoff-brief-contains/">
+<meta property="og:title" content="What goes into a handoff brief, and what is left out | Moonfold">
+<meta property="og:description" content="The brief the next agent receives is built from the thread's history without a model. Here is exactly what it holds and how secrets are redacted.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"What goes into a handoff brief, and what is left out","description":"The brief the next agent receives is built from the thread's history without a model. Here is exactly what it holds and how secrets are redacted.","datePublished":"2026-10-23","author":{"@type":"Organization","name":"The Moonfold team"},"mainEntityOfPage":"https://moonfold-website.vercel.app/blog/what-a-handoff-brief-contains/"}</script>
+</head>
+<body class="page-post">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/">Docs</a>
+    <a href="/blog/" aria-current="page">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<main class="post" id="content">
+<div class="post-head">
+<p class="crumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><a href="/blog/#handoff">Handoff</a></p>
+<p class="eyebrow">Handoff</p>
+<h1>What goes into a handoff brief, and what is left out</h1>
+<p class="lede">The brief the next agent receives is built from the thread's history without a model. Here is exactly what it holds and how secrets are redacted.</p>
+<dl class="post-facts">
+<div><dt>Written by</dt><dd>The Moonfold team</dd></div>
+<div><dt>Published</dt><dd><time datetime="2026-10-23">Oct 23, 2026</time></dd></div>
+<div><dt>Reading time</dt><dd>2 min</dd></div>
+</dl>
+</div>
+<div class="post-body-wrap">
+<nav class="post-toc" aria-label="In this post"><h2>In this post</h2><ul><li><a href="#the-contents">The contents</a></li><li><a href="#built-without-asking-a-model">Built without asking a model</a></li><li><a href="#redaction-happens-before-sending">Redaction happens before sending</a></li><li><a href="#what-the-next-agent-does-not-get">What the next agent does not get</a></li></ul></nav>
+<article class="prose">
+<p>A handoff is only as good as the brief that carries it. If the brief is vague the next agent starts from scratch, and if it is too eager it leaks things it should not. This is what Moonfold puts in it, and how.</p>
+<h2 id="the-contents"><a class="anchor" href="#the-contents">The contents</a></h2>
+<p>The brief is a plain summary of where the task stands:</p>
+<ul>
+<li>the <strong>objective</strong>: the thread&#39;s goal, or your first message;</li>
+<li>the <strong>plan</strong> and how far along it is;</li>
+<li>what <strong>you said since</strong>;</li>
+<li>the <strong>files changed</strong>;</li>
+<li>the current <code>git status</code> and <code>git diff --stat</code>;</li>
+<li>the <strong>last failing command</strong>;</li>
+<li>any <strong>open approvals</strong>;</li>
+<li>the project&#39;s <code>AGENTS.md</code> or <code>CLAUDE.md</code>.</li>
+</ul>
+<p>The earlier conversation follows the brief, so nothing has to be reconstructed from memory.</p>
+<h2 id="built-without-asking-a-model"><a class="anchor" href="#built-without-asking-a-model">Built without asking a model</a></h2>
+<p>The brief is assembled from the thread&#39;s recorded history. No model is asked to summarise it. That has two practical effects: the same thread always produces the same brief, and a provider that is already at its limit is not needed to write the summary of its own work.</p>
+<h2 id="redaction-happens-before-sending"><a class="anchor" href="#redaction-happens-before-sending">Redaction happens before sending</a></h2>
+<p>Before the preview is shown, Moonfold scans the brief for secrets: keys, tokens, passwords and private keys. Matches are replaced, and the preview lists what was redacted, by kind, so you can see that a token was removed without seeing the token again. The brief you preview is the brief that is sent.</p>
+<p>Redaction is a safeguard, not a guarantee. If a project must never reach a particular company, do not rely on scanning alone. Use the <strong>Allowed providers</strong> setting to decide which providers may receive that project&#39;s context in the first place.</p>
+<h2 id="what-the-next-agent-does-not-get"><a class="anchor" href="#what-the-next-agent-does-not-get">What the next agent does not get</a></h2>
+<p>The previous agent&#39;s hidden reasoning and its tool state stay behind. The new agent has the files on disk and the brief, and it will read what it needs. That is intentional: it keeps the handoff small and keeps one provider&#39;s internal traces out of another&#39;s context.</p>
+<p>For the full list of settings see the <a href="/docs/provider-handoff/">provider handoff guide</a>, and for how Moonfold decides a run ended in a usage limit see <a href="/blog/how-moonfold-detects-usage-limits/">how Moonfold detects usage limits</a>.</p>
 
-          <div class="post-cta">
-            <p>
-              <strong>Try Moonfold.</strong> It is free, open source and runs the agents you already
-              use, with your own logins.
-            </p>
-            <a
-              class="btn btn-solid"
-              href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Download the beta</a
-            >
-          </div>
-        </article>
-      </div>
-      <section class="related">
-        <h2>Keep reading</h2>
-        <div class="post-grid">
-          <article class="post-card">
-            <a href="/blog/when-your-agent-hits-its-limit/">
-              <span class="post-no" aria-hidden="true">01</span>
-              <span class="post-cat">Handoff</span>
-              <h3>When your agent hits its limit, the task should keep going</h3>
-              <p>
-                How Moonfold moves a thread from one coding agent to another at a usage limit, what
-                you see before anything is sent, and how to go back.
-              </p>
-              <span class="post-meta">Oct 27, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-          <article class="post-card">
-            <a href="/blog/how-moonfold-detects-usage-limits/">
-              <span class="post-no" aria-hidden="true">02</span>
-              <span class="post-cat">Handoff</span>
-              <h3>How Moonfold detects that an agent hit its usage limit</h3>
-              <p>
-                Each provider reports limits differently. This is what each adapter reads today,
-                where reset times come from, and where handoff is still manual.
-              </p>
-              <span class="post-meta">Oct 24, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-          <article class="post-card">
-            <a href="/blog/moonfold-0-1-0-beta-4/">
-              <span class="post-no" aria-hidden="true">03</span>
-              <span class="post-cat">Releases</span>
-              <h3>Moonfold 0.1.0-beta.4: your agents on your phone, with no account</h3>
-              <p>
-                Beta 4 adds Moonfold for Android, paired with one QR scan over an encrypted
-                connection to your own computer, plus content exclusions and a token limit for one
-                run.
-              </p>
-              <span class="post-meta">Nov 2, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-        </div>
-      </section>
-    </main>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<div class="post-cta"><p><strong>Try Moonfold.</strong> It is free, open source and runs the agents you already use, with your own logins.</p><a class="btn btn-solid" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download the beta</a></div>
+</article>
+</div>
+<section class="related"><h2>Keep reading</h2><div class="post-grid"><article class="post-card"><a href="/blog/when-your-agent-hits-its-limit/">
+<span class="post-no" aria-hidden="true">01</span>
+<span class="post-cat">Handoff</span>
+<h3>When your agent hits its limit, the task should keep going</h3>
+<p>How Moonfold moves a thread from one coding agent to another at a usage limit, what you see before anything is sent, and how to go back.</p>
+<span class="post-meta">Oct 27, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/how-moonfold-detects-usage-limits/">
+<span class="post-no" aria-hidden="true">02</span>
+<span class="post-cat">Handoff</span>
+<h3>How Moonfold detects that an agent hit its usage limit</h3>
+<p>Each provider reports limits differently. This is what each adapter reads today, where reset times come from, and where handoff is still manual.</p>
+<span class="post-meta">Oct 24, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/moonfold-1-0-0-beta-6/">
+<span class="post-no" aria-hidden="true">03</span>
+<span class="post-cat">Releases</span>
+<h3>Moonfold 1.0.0-beta.6: Orbit, your phone on any network, and self-fixing pull requests</h3>
+<p>Beta 6 adds Orbit, a crew that keeps working on your project, lets the Android app reach your computer from anywhere, and fixes failing pull request checks.</p>
+<span class="post-meta">Nov 13, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article></div></section>
+</main>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

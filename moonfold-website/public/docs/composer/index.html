@@ -1,242 +1,115 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Messages and context · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Give the agent a task in the composer. Add files, quote a previous response, or include a skill when the task needs more context."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/composer/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/composer/" />
-    <meta property="og:title" content="Messages and context · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Give the agent a task in the composer. Add files, quote a previous response, or include a skill when the task needs more context."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/" aria-current="page">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs">
-          <a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents
-        </p>
-        <h1 id="messages-and-context">Messages and context</h1>
-        <p>
-          Give the agent a task in the composer. Add files, quote a previous response, or include a
-          skill when the task needs more context.
-        </p>
-        <p>
-          Messages can contain up to 120,000 characters. Longer drafts stay in the composer so you
-          can shorten them or split them into several messages.
-        </p>
-        <p>
-          Pasting 32 KiB or more of text adds that fragment as a text-file attachment so the agent
-          can inspect it without filling the model context. A smaller paste also becomes an
-          attachment when inserting it would exceed the message limit. On a hardware keyboard, use
-          <code>Cmd+Shift+V</code> on Apple devices or <code>Ctrl+Shift+V</code> elsewhere to keep a
-          large paste editable in the composer instead.
-        </p>
-        <h2 id="formatting"><a class="anchor" href="#formatting">Formatting</a></h2>
-        <p>
-          The composer writes Markdown and shows it styled as you type. Markers such as
-          <code>**</code> stay in the text and show beside the styled words when your cursor is on
-          them. Lines starting with <code>- </code>, <code>1. </code>, <code>- [ ] </code>,
-          <code>&gt; </code>, <code># </code> or <code>---</code> become lists, task lists, quotes,
-          headings and rules; <code>```</code> followed by Enter opens a code block. What you typed
-          is what the agent receives, markers and numbering included, and <code>#1234</code> without
-          a space still looks up a pull request.
-        </p>
-        <p>
-          Enter sends. In a list or quote, <strong>Shift+Enter</strong> continues it, and
-          Shift+Enter on an empty line leaves it; <strong>Tab</strong> nests a list item. In a code
-          block, Enter starts a new line at the current indentation, <strong>Tab</strong> and
-          <strong>Shift+Tab</strong> indent the selected lines, and a closing
-          <code>```</code> followed by Enter, or two blank lines at the end, leave the block.
-          <strong>Backspace</strong> at the start of a code block turns it back into plain lines.
-          Choose the language in a code block&#39;s corner to change it. Very large code blocks are
-          shown without syntax highlighting.
-        </p>
-        <h2 id="attach-files"><a class="anchor" href="#attach-files">Attach files</a></h2>
-        <p>
-          Attach up to 100 files per message. Each image can be up to 10 MiB, with at most 80 MiB of
-          images in one message. Other files, including videos, can be up to 50 MiB each, subject to
-          the environment&#39;s upload support and limit. The agent receives them on the
-          environment&#39;s machine. Provider and model limits still apply, including images already
-          in the conversation. A video attachment gives the agent a file path; it does not enable
-          native video input.
-        </p>
-        <p>
-          Uploads begin when you add an attachment. All uploads must finish before the message can
-          send. Retry or remove a failed upload. On web and desktop, reloading before an upload
-          finishes requires you to attach that file again.
-        </p>
-        <p>
-          You can drag or paste images into the web or desktop composer. HEIC and HEIF photos are
-          converted to JPEG there; photos over the image limit are also resized to fit.
-        </p>
-        <p>
-          See <a href="#images-and-videos-in-messages">images and videos</a> for previewing and
-          saving media.
-        </p>
-        <h2 id="send-while-the-agent-is-working">
-          <a class="anchor" href="#send-while-the-agent-is-working"
-            >Send while the agent is working</a
-          >
-        </h2>
-        <p>
-          On web and desktop, choose <strong>Settings → General → Follow-up behavior</strong> to
-          queue new messages for a later turn or steer the running turn immediately. The setting
-          applies to this client; already queued messages keep their place. Queued messages are
-          saved on the server and can be edited, reordered, or removed above the composer.
-          <code>Cmd+Enter</code> on macOS or <code>Ctrl+Enter</code> on Windows and Linux uses the
-          opposite action: it steers when your default is Queue and queues when your default is
-          Steer.
-        </p>
-        <p>
-          Use <code>Cmd+Shift+Enter</code> on macOS or <code>Ctrl+Shift+Enter</code> on Windows and
-          Linux to send the oldest queued message as a steer. This leaves the current draft intact
-          and requires an active turn that supports steering. Change
-          <code>thread.steerQueuedMessage</code> in <strong>Settings → Keybindings</strong> to use
-          another shortcut.
-        </p>
-        <p>
-          Press <code>Option+Up</code> on macOS or <code>Alt+Up</code> on Windows and Linux with the
-          cursor at the start of the composer to edit the most recently queued message. Change
-          <code>thread.editQueuedMessage</code> to use another shortcut.
-        </p>
-        <h2 id="custom-models"><a class="anchor" href="#custom-models">Custom models</a></h2>
-        <p>
-          On web and desktop, use Settings → Providers → <strong>Models</strong> to add an unlisted
-          model with a custom name and options. Only options supported by the provider integration
-          affect turns. Antigravity uses its account catalog and does not support custom models.
-        </p>
-        <p>
-          To rename a built-in model on every client, edit the server&#39;s
-          <code>settings.json</code> in its <code>userdata</code> directory. Add a custom model
-          entry with the built-in model ID and a new name under that provider instance:
-        </p>
-        <pre><code class="language-json">{
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Messages and context · Moonfold docs</title>
+<meta name="description" content="Give the agent a task in the composer. Add files, quote a previous response, or include a skill when the task needs more context.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/composer/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/composer/">
+<meta property="og:title" content="Messages and context · Moonfold docs">
+<meta property="og:description" content="Give the agent a task in the composer. Add files, quote a previous response, or include a skill when the task needs more context.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/" aria-current="page">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents</p>
+<h1 id="messages-and-context">Messages and context</h1>
+<p>Give the agent a task in the composer. Add files, quote a previous response, or
+include a skill when the task needs more context.</p>
+<p>Messages can contain up to 120,000 characters. Longer drafts stay in the composer
+so you can shorten them or split them into several messages.</p>
+<p>Pasting 32 KiB or more of text adds that fragment as a text-file attachment so
+the agent can inspect it without filling the model context. A smaller paste also
+becomes an attachment when inserting it would exceed the message limit. On a
+hardware keyboard, use <code>Cmd+Shift+V</code> on Apple devices or <code>Ctrl+Shift+V</code> elsewhere
+to keep a large paste editable in the composer instead.</p>
+<h2 id="formatting"><a class="anchor" href="#formatting">Formatting</a></h2>
+<p>The composer writes Markdown and shows it styled as you type. When your cursor
+is on styled text, its Markdown shows instead, such as <code>**bold**</code>, and the
+markers edit like any other text: delete them to remove the style, or change
+<code>**</code> to <code>*</code> for italic. The style updates when your cursor leaves. To write
+plain Markdown with no styling, turn off <strong>Settings → Chat → Rich text
+composer</strong>. Lines starting with <code>- </code>, <code>1. </code>, <code>- [ ] </code>, <code>&gt; </code>, <code># </code> or <code>---</code>
+become lists, task lists, quotes, headings and rules; <code>```</code> followed by Enter
+opens a code block. What you typed is what the agent receives, markers and
+numbering included, and <code>#1234</code> without a space still looks up a pull request.</p>
+<p>Some styled text containing or touching literal Markdown characters, such as a
+bold <code>path\</code> or <code>2*3</code>, keeps its styling without showing markers. Use formatting
+shortcuts or turn off rich text to edit the formatting of those ranges.</p>
+<p>Enter sends. In a list or quote, <strong>Shift+Enter</strong> continues it, and Shift+Enter
+on an empty line moves out one level, then leaves it; <strong>Tab</strong> nests a list item
+under the one above and <strong>Shift+Tab</strong> moves it back out. In a code block, Enter
+starts a new line at the current indentation, <strong>Tab</strong> and <strong>Shift+Tab</strong> indent
+the selected lines, and a closing <code>```</code> followed by Enter, or two blank lines
+at the end, leave the block. <strong>Backspace</strong> at the start of a code block turns it
+back into plain lines. Choose the language in a code block&#39;s corner to change
+it. Very large code blocks are shown without syntax highlighting.</p>
+<h2 id="attach-files"><a class="anchor" href="#attach-files">Attach files</a></h2>
+<p>Attach up to 100 files per message. Each image can be up to 10 MiB, with at most
+80 MiB of images in one message. Other files, including videos, can be up to
+50 MiB each, subject to the environment&#39;s upload support and limit. The agent
+receives them on the environment&#39;s machine. Provider and model limits still
+apply, including images already in the conversation. A video attachment gives
+the agent a file path; only <a href="/docs/providers-antigravity/#skills-and-attachments">Antigravity</a>
+sends supported videos to Gemini models as video.</p>
+<p>Uploads begin when you add an attachment. All uploads must finish before the
+message can send. Retry or remove a failed upload. On web and desktop, reloading
+before an upload finishes requires you to attach that file again.</p>
+<p>You can drag or paste images into the web or desktop composer. HEIC and HEIF
+photos are converted to JPEG there; photos over the image limit are also resized to fit.</p>
+<p>See <a href="#images-and-videos-in-messages">images and videos</a> for previewing and saving media.</p>
+<h2 id="send-while-the-agent-is-working"><a class="anchor" href="#send-while-the-agent-is-working">Send while the agent is working</a></h2>
+<p>On web and desktop, choose <strong>Settings → Chat → Follow-up behavior</strong> to queue
+new messages for a later turn or steer the running turn immediately. The setting
+applies to this client; already queued messages keep their place. Queued messages
+are saved on the server and can be edited or removed before they send.
+When Enter sends, <code>Cmd+Enter</code> on macOS or <code>Ctrl+Enter</code> on Windows and Linux uses
+the opposite action: it steers when your default is Queue and queues when your
+default is Steer.
+If your <strong>Send shortcut</strong> requires <code>Cmd+Enter</code> or <code>Ctrl+Enter</code>, that shortcut uses
+your default follow-up behavior; add <strong>Shift</strong> to use the opposite action. This
+applies only to multiline messages when you choose the multiline send option.</p>
+<p>Use <code>Cmd+Shift+Enter</code> on macOS or <code>Ctrl+Shift+Enter</code> on Windows and Linux to send
+the oldest queued message as a steer. This leaves the current draft intact and
+requires an active turn that supports steering. If that shortcut sends the opposite
+action for your draft, move focus outside the composer to steer the queued message. Change
+<code>thread.steerQueuedMessage</code> in <strong>Settings → Keybindings</strong> to use another shortcut.</p>
+<p>Press <code>Option+Up</code> on macOS or <code>Alt+Up</code> on Windows and Linux with the cursor at the
+start of the composer to edit the most recently queued message. Change
+<code>thread.editQueuedMessage</code> to use another shortcut.</p>
+<h2 id="custom-models"><a class="anchor" href="#custom-models">Custom models</a></h2>
+<p>On web and desktop, use Settings → Providers → <strong>Models</strong> to add an unlisted model with a custom
+name and options. Only options supported by the provider integration affect turns. Antigravity
+uses its account catalog and does not support custom models.</p>
+<p>To rename a built-in model on every client, edit the server&#39;s <code>settings.json</code> in its <code>userdata</code>
+directory. Add a custom model entry with the built-in model ID and a new name under that provider
+instance:</p>
+<pre><code class="language-json">{
   &quot;providerInstances&quot;: {
     &quot;codex&quot;: {
       &quot;driver&quot;: &quot;codex&quot;,
@@ -245,374 +118,230 @@
   }
 }
 </code></pre>
-        <h2 id="model-defaults"><a class="anchor" href="#model-defaults">Model defaults</a></h2>
-        <p>
-          Moonfold remembers your provider, model, and model options for new threads. A
-          project&#39;s configured model takes precedence; resetting that project setting returns to
-          the remembered selection.
-        </p>
-        <p>
-          Leaving reasoning level or service tier unset uses the provider&#39;s own configuration.
-        </p>
-        <h2 id="quote-an-assistant-response">
-          <a class="anchor" href="#quote-an-assistant-response">Quote an assistant response</a>
-        </h2>
-        <p>
-          On web and desktop, select text within one assistant response and choose
-          <strong>Cite in composer</strong>. You can add a comment about the quote and write
-          instructions around it.
-        </p>
-        <p>
-          Select the quote in a draft or sent message to return to its source. If the source is
-          unavailable or has changed, the saved quote remains readable.
-        </p>
-        <p>
-          The chip shows your comment when it has one, or a short quote preview otherwise. Use the
-          pencil button to add or change the comment. To remove the citation, place the caret beside
-          its chip and delete it like other inline context. Copying, reloading, and restoring a
-          <a href="#prompt-stash">stashed prompt</a> keep each comment with its quote, and sending
-          tells the agent which words were quoted and which comment you wrote. The quoted text and
-          comment count toward the message limit.
-        </p>
-        <h2 id="recall-a-sent-prompt">
-          <a class="anchor" href="#recall-a-sent-prompt">Recall a sent prompt</a>
-        </h2>
-        <p>
-          Press <code>ArrowUp</code> in an empty composer to bring back the last prompt you sent in
-          this thread. Press <code>ArrowUp</code> again to go further back, and
-          <code>ArrowDown</code> to come forward. Moving forward past the newest prompt clears the
-          composer. Recall walks the prompts loaded in the thread. Attachments, terminal context,
-          and other extras from the original message are not restored, only the text you typed. A
-          composer that holds an attachment or a picked element does not count as empty.
-        </p>
-        <p>
-          When the composer has text, the arrow keys move the caret as usual. Recall takes over only
-          while the text is an unedited recalled prompt, with the caret on the first visual line for
-          <code>ArrowUp</code> or the last visual line for <code>ArrowDown</code>, counting wrapped
-          lines. Editing a recalled prompt turns it into a normal draft.
-        </p>
-        <h2 id="ask-on-the-side"><a class="anchor" href="#ask-on-the-side">Ask on the side</a></h2>
-        <p>
-          Select the question-mark bubble in the thread header to ask a quick question about the
-          thread, such as &quot;which files did the agent change?&quot;. The thread&#39;s model
-          answers from the recent conversation in that popover. Nothing is added to the thread, and
-          a turn that is running carries on. The model has no tools here, so it answers only from
-          what the conversation shows. Answers are gone when you leave the thread.
-        </p>
-        <h2 id="send-a-failed-message-again">
-          <a class="anchor" href="#send-a-failed-message-again">Send a failed message again</a>
-        </h2>
-        <p>
-          When the agent&#39;s latest turn fails, select <strong>Send again</strong> under the error
-          to send the same message and attachments as a new turn, with the thread&#39;s current
-          model and settings. Earlier turns stay as they were. A usage-limit error offers no resend,
-          because it would fail again until the limit resets.
-        </p>
-        <h2 id="edit-an-earlier-prompt">
-          <a class="anchor" href="#edit-an-earlier-prompt">Edit an earlier prompt</a>
-        </h2>
-        <p>
-          On web and desktop, choose <strong>Edit from here</strong> beneath a sent message to
-          rewind the conversation to before that message. Choose
-          <strong>Revert and keep changes</strong> to leave workspace files as they are, or
-          <strong>Revert files too</strong> to restore them as well. File restore is only offered
-          for threads running in a worktree, and it is refused when another thread or agent session
-          also uses that directory, a folder inside it, or a folder that contains it, since
-          restoring would erase their changes. A thread that works in the project directory rewinds
-          the conversation only. The selected prompt and its attachments return to the composer for
-          editing and resending. Any unsent draft stays above the restored prompt.
-        </p>
-        <p>
-          This removes the selected message and later conversation from the active thread and
-          provider history. It does not undo external actions or separate provider memory. The
-          action is available only when the provider supports rewind.
-        </p>
-        <h2 id="prompt-stash"><a class="anchor" href="#prompt-stash">Prompt stash</a></h2>
-        <p>
-          On web and desktop, press <code>Cmd+S</code> on macOS or <code>Ctrl+S</code> on Windows
-          and Linux to save the current prompt and its attachments for later. Wait for uploads to
-          finish first. With an empty composer, the same shortcut restores a single stash or opens
-          the stash menu when there are several.
-        </p>
-        <p>
-          Stashes containing uploaded files must be restored in their original environment. Those
-          files are retained for 24 hours. After an upload expires, restore the prompt and use
-          <strong>Attach again</strong> or remove the missing file before sending.
-        </p>
-        <h2 id="queued-messages"><a class="anchor" href="#queued-messages">Queued messages</a></h2>
-        <p>
-          On web and desktop, the composer shows <strong>Interrupt</strong> while the agent is
-          working and the draft is empty. Adding text or attachments replaces it with a steer arrow.
-          Click it to send a message into the active turn, or press <code>Enter</code> on desktop.
-          Hold <code>Cmd</code> on macOS or <code>Ctrl</code> on Windows and Linux to switch the
-          button to a queue icon. Click while holding that key, or press <code>Cmd+Enter</code> or
-          <code>Ctrl+Enter</code> on desktop, to queue the message for after the active turn.
-        </p>
-        <p>
-          Queued messages appear above the composer. Rows show a thumbnail of any attached image
-          alongside the text. Drag a row by its handle to reorder it, use the handle&#39;s arrow
-          keys, promote the message to a steer, or remove it.
-        </p>
-        <p>
-          If the server restarts, saved queued messages keep their order and are held. Press
-          <strong>Resume</strong> in an empty composer to continue. You can edit, reorder, or remove
-          held messages without starting them.
-        </p>
-        <p>
-          The pencil on a queued row opens that message in the composer for editing. The original
-          message stays in the queue until you save, and its row is highlighted while you edit. The
-          message&#39;s attachments appear above the text with a remove control, and new images can
-          be added the usual way. The checkmark saves the queued message in place;
-          <strong>Cancel</strong> on its row leaves it unchanged. Whatever you had typed in the
-          composer before starting the edit is restored afterwards. If the queued message starts or
-          is removed while you are editing, the edit ends: changed content moves into the composer
-          when it is empty, and is discarded otherwise.
-        </p>
-        <h2 id="commands-and-skills">
-          <a class="anchor" href="#commands-and-skills">Commands and skills</a>
-        </h2>
-        <p>
-          Type <code>/</code> for commands or <code>$</code> to add a skill from the selected
-          environment and provider.
-        </p>
-        <p>
-          The slash menu also includes skills unless you turn off
-          <strong>Settings → General → Show skills in slash menu</strong>. Only skills enabled for
-          the provider are listed.
-        </p>
-        <p>
-          After you add or change skills, plugins, or MCP servers, use
-          <strong>Restart agent session</strong> in the command palette on web and desktop. The
-          conversation continues, and your next message starts the agent again with the new setup.
-        </p>
-        <p>
-          Provider commands must start the message to run. Moonfold commands such as
-          <code>/model</code> and <code>/plan</code>, and skill mentions, work on any line.
-        </p>
-        <p>
-          Send <code>/compact</code> in an existing conversation to reduce context usage when the
-          provider supports it. Web and desktop also offer compaction from the context meter.
-        </p>
-        <h2 id="plans"><a class="anchor" href="#plans">Plans</a></h2>
-        <p>
-          Switch to plan mode (<code>/plan</code>) to have the agent propose a plan before it
-          changes anything. Send feedback to refine the plan, or send an empty message (or select
-          <strong>Implement</strong>) to start the work. To change the plan yourself first, open the
-          plan&#39;s menu and choose <strong>Edit plan</strong>; implementing then sends your
-          version. <strong>Use the original plan</strong> discards your edit. Edits stay on this
-          device.
-        </p>
-        <h2 id="goals"><a class="anchor" href="#goals">Goals</a></h2>
-        <p>
-          With Codex and Claude, send <code>/goal</code> followed by what &quot;done&quot; means,
-          for example <code>/goal all tests in packages/api pass</code>. The agent keeps working
-          across turns until it judges the goal met. The thread shows <strong>Goal</strong> while it
-          works, and a row above the composer shows the goal and its progress.
-        </p>
-        <ul>
-          <li>
-            <code>/goal</code> alone shows the current goal. <code>/goal clear</code> removes it.
-          </li>
-          <li>
-            Codex also supports <code>/goal pause</code> and <code>/goal resume</code>. Stopping a
-            Codex goal pauses it.
-          </li>
-          <li>
-            Codex goals can have a token budget:
-            <code>/goal --budget 200k all tests pass</code> sets one with the goal, and
-            <code>/goal budget 500k</code> or <code>/goal budget off</code> changes it later. The
-            goal row shows tokens used against the budget, and Codex stops the goal when it runs
-            out.
-          </li>
-          <li>
-            Stopping Claude ends the current turn, but the goal stays set. Claude checks it again at
-            the end of your next message.
-          </li>
-        </ul>
-        <h2 id="context-in-your-message">
-          <a class="anchor" href="#context-in-your-message">Context in your message</a>
-        </h2>
-        <p>
-          Context you attach lands where your cursor is, as a chip inside your text: a terminal
-          excerpt, a review comment from a diff or file, a preview annotation, or a file. You can
-          type before and after a chip, move it by cutting and pasting, and delete it like a
-          character. Hover a chip for its brief details. Select a terminal excerpt to open its
-          captured output, or select a review comment, picked element, or preview annotation to open
-          its full details. Chips read as &quot;Terminal excerpt, Terminal 1 lines 3-4&quot; and
-          similar to screen readers.
-        </p>
-        <p>
-          A pull request appears as its icon and number. Its color reflects whether it was open,
-          draft, merged, or closed when it was attached. Select it to inspect the captured title and
-          branches, then choose <strong>Open pull request</strong> to visit the pull request. On web
-          and desktop, type <code>#</code> to browse the newest pull requests in the current
-          project&#39;s repository. Pull requests linked to the thread are included from any
-          repository and listed first, after any exact number match. Continue typing digits to
-          filter the recent list by any part of its pull request numbers. A complete number is also
-          resolved directly, even when that pull request is older than the recent list. Type a
-          single word after <code>#</code> to search pull requests in the repository by text. Choose
-          a result to insert it as a chip.
-        </p>
-        <p>
-          Another thread can be context too. Type <code>@</code> followed by part of its title to
-          pick one from the same server, or on web and desktop drag a thread out of the sidebar and
-          drop it on the composer; a multi-selection drops together. The chip shows the thread&#39;s
-          current title and opens it when selected. Your prompt only carries a reference: the agent
-          reads the thread&#39;s history on demand, so attaching a long thread costs nothing until
-          the agent looks. Attaching a thread does not change it, and the agent cannot send messages
-          to it unless you ask.
-        </p>
-        <p>
-          Dropping a thread from another environment attaches a saved transcript file. The source
-          environment must be connected and up to date. The transcript includes the visible history
-          and saved text context at the time of the drop; later messages and the contents of
-          attached files are not copied. The agent can read the saved transcript after the source
-          disconnects. Normal file attachment limits apply.
-        </p>
-        <p>
-          Images keep their thumbnail shelf above the text and also get a chip at your cursor, so
-          you can say exactly which image you mean. Deleting an image chip leaves the image on the
-          shelf; removing the thumbnail asks first when the image is still mentioned in your text,
-          then removes both. Files exist only as chips: deleting a file&#39;s last chip removes the
-          file from the message.
-        </p>
-        <p>
-          Copy text that holds chips and paste it into another draft, in the same thread or another
-          one, and the chips come along with what they point to. Images and files are fetched again
-          from the environment they came from; while that happens the chip shows a dashed outline,
-          and if it cannot complete Moonfold tells you and leaves the chip for you to remove or
-          replace. A chip whose context is no longer available shows the same dashed outline; hover
-          it for what to do.
-        </p>
-        <p>
-          Copying a message with the copy button, or copying text out of it, gives other apps
-          readable Markdown with a link in place of each chip. Older messages that were sent before
-          chips still show their context. Stashing a prompt keeps its chips and what they point to;
-          restoring brings them back.
-        </p>
-        <h2 id="attached-files"><a class="anchor" href="#attached-files">Attached files</a></h2>
-        <p>
-          Select a file chip in your draft or a sent message to preview it. Code and JSON use syntax
-          highlighting; Markdown, HTML, CSV, and TSV offer rendered and raw views. Audio files have
-          playback controls. Large text files show a limited preview; save the file to read it in
-          full.
-        </p>
-        <p>
-          On web and desktop, files open beside the conversation with the same controls as a
-          workspace file: a header row with the view toggle, <strong>Copy contents</strong> and
-          <strong>Save file</strong>.
-        </p>
-        <h2 id="images-and-videos-in-messages">
-          <a class="anchor" href="#images-and-videos-in-messages">Images and videos in messages</a>
-        </h2>
-        <p>
-          Select an image or video attachment or link to preview it. Playback support depends on
-          your browser or device; save an unsupported video to open it in another app.
-        </p>
-        <p>On web and desktop, right-click media to save it or copy its path or URL.</p>
-        <p>
-          File links refer to the environment&#39;s machine, including when you connect remotely.
-          Previews use the original file, even outside the workspace. Moving or deleting it can
-          break the preview, so save a copy if you need to keep it.
-        </p>
-        <h2 id="files-outside-the-workspace">
-          <a class="anchor" href="#files-outside-the-workspace">Files outside the workspace</a>
-        </h2>
-        <p>
-          Follow an agent&#39;s file link to read a report or other file outside the workspace.
-          These files open read-only. An HTML file outside the workspace cannot load scripts,
-          styles, or images from neighboring files.
-        </p>
-        <h2 id="html-and-pdf-files-in-the-file-viewer">
-          <a class="anchor" href="#html-and-pdf-files-in-the-file-viewer"
-            >HTML and PDF files in the file viewer</a
-          >
-        </h2>
-        <p>
-          On web and desktop, HTML and PDF files open as rendered pages. Switch an HTML file to
-          source view to read its markup; a link to a specific line opens source automatically. HTML
-          previews cannot access your Moonfold session.
-        </p>
-        <p>
-          The file viewer recognizes images, HTML, and PDF files by their filename extension,
-          including filenames or folders containing <code>#</code> or <code>?</code>.
-        </p>
+<h2 id="model-defaults"><a class="anchor" href="#model-defaults">Model defaults</a></h2>
+<p>Moonfold remembers your provider, model, and model options for new threads. A
+project&#39;s configured model takes precedence; resetting that project setting
+returns to the remembered selection.</p>
+<p>Leaving reasoning level or service tier unset uses the provider&#39;s own configuration.</p>
+<h2 id="quote-an-assistant-response"><a class="anchor" href="#quote-an-assistant-response">Quote an assistant response</a></h2>
+<p>On web and desktop, select text within one assistant response and choose
+<strong>Cite in composer</strong>. You can add a comment about the quote and write instructions
+around it.</p>
+<p>Select the quote in a draft or sent message to return to its source. If the source
+is unavailable or has changed, the saved quote remains readable.</p>
+<p>The chip shows your comment when it has one, or a short quote preview otherwise. Use the pencil
+button to add or change the comment. To remove the citation, place the caret beside its chip and
+delete it like other inline context. Copying, reloading, and restoring a
+<a href="#prompt-stash">stashed prompt</a> keep each comment
+with its quote, and sending tells the agent which words were quoted and which comment you wrote.
+The quoted text and comment count toward the message limit.</p>
+<h2 id="recall-a-sent-prompt"><a class="anchor" href="#recall-a-sent-prompt">Recall a sent prompt</a></h2>
+<p>Press <code>ArrowUp</code> in an empty composer to bring back the last prompt you sent in this thread. Press
+<code>ArrowUp</code> again to go further back, and <code>ArrowDown</code> to come forward. Moving forward past the newest
+prompt clears the composer. Recall walks the prompts loaded in the thread. Attachments, terminal
+context, and other extras from the original message are not restored, only the text you typed. A
+composer that holds an attachment or a picked element does not count as empty.</p>
+<p>When the composer has text, the arrow keys move the caret as usual. Recall takes over only while
+the text is an unedited recalled prompt, with the caret on the first visual line for <code>ArrowUp</code> or
+the last visual line for <code>ArrowDown</code>, counting wrapped lines. Editing a recalled prompt turns it
+into a normal draft.</p>
+<h2 id="ask-on-the-side"><a class="anchor" href="#ask-on-the-side">Ask on the side</a></h2>
+<p>Select the question-mark bubble in the thread header to ask a quick question about the thread,
+such as &quot;which files did the agent change?&quot;. The thread&#39;s model answers from the recent
+conversation in that popover. Nothing is added to the thread, and a turn that is running carries
+on. The model has no tools here, so it answers only from what the conversation shows. Answers are
+gone when you leave the thread.</p>
+<h2 id="answer-an-agents-question-card"><a class="anchor" href="#answer-an-agents-question-card">Answer an agent&#39;s question card</a></h2>
+<p>Any agent can stop and ask you to choose while it works, such as how many designs to make or which
+direction to take. The question appears as a card in the thread, sometimes with a picture for each
+choice; select a picture to see it larger. Pick your answers, or type one under <strong>Other</strong> when the
+card offers it, then select <strong>Submit</strong>. <strong>Dismiss</strong> tells the agent to go on without an answer. The
+agent waits up to 30 minutes, and the card closes if its turn ends first.</p>
+<h2 id="send-a-failed-message-again"><a class="anchor" href="#send-a-failed-message-again">Send a failed message again</a></h2>
+<p>When the agent&#39;s latest turn fails, select <strong>Send again</strong> under the error to send the same message
+and attachments as a new turn, with the thread&#39;s current model and settings. Earlier turns stay as
+they were. A usage-limit error offers no resend, because it would fail again until the limit
+resets.</p>
+<h2 id="edit-an-earlier-prompt"><a class="anchor" href="#edit-an-earlier-prompt">Edit an earlier prompt</a></h2>
+<p>On web and desktop, choose <strong>Edit from here</strong> beneath a sent message to rewind
+the conversation to before that message. Choose <strong>Revert and keep changes</strong> to
+leave workspace files as they are, or <strong>Revert files too</strong> to put the workspace back
+to its checkpoint from before that message. That also undoes edits you made yourself.
+File restore is only offered for threads running in a worktree, and it is
+refused when another thread or agent session also uses that directory, a folder
+inside it, or a folder that contains it, since
+restoring would erase their changes. A thread that works in the project directory
+rewinds the conversation only. The selected prompt and its attachments return to the composer for editing and
+resending. Any unsent draft stays above the restored prompt.</p>
+<p>This removes the selected message and later conversation from the active thread
+and provider history. It does not undo external actions or separate provider
+memory. The action is available only when the provider supports rewind.</p>
+<h2 id="prompt-stash"><a class="anchor" href="#prompt-stash">Prompt stash</a></h2>
+<p>On web and desktop, press <code>Cmd+S</code> on macOS or <code>Ctrl+S</code> on Windows and Linux to save
+the current prompt and its attachments for later. Wait for uploads to finish first.
+With an empty composer, the same shortcut restores a single stash or opens the
+stash menu when there are several.</p>
+<p>Stashes containing uploaded files must be restored in their original environment.
+Those files are retained for 24 hours. After an upload expires, restore the prompt
+and use <strong>Attach again</strong> or remove the missing file before sending.</p>
+<h2 id="voice-input-on-web-and-desktop"><a class="anchor" href="#voice-input-on-web-and-desktop">Voice input on web and desktop</a></h2>
+<p>Use the composer&#39;s microphone or <code>mod+shift+d</code> to dictate into your draft. Audio
+is transcribed on an environment you choose in <strong>Settings → Voice</strong>; nothing is
+sent until you choose one. See <a href="/docs/voice-input/">Voice input</a>.</p>
+<h2 id="queued-messages"><a class="anchor" href="#queued-messages">Queued messages</a></h2>
+<p>On web and desktop, the composer shows <strong>Interrupt</strong> while the agent is working and the draft is
+empty. Adding text or attachments replaces it with a send button that shows your
+<a href="#send-while-the-agent-is-working">Follow-up behavior</a>: a queue icon for Queue or a steer arrow for
+Steer. Click it or press your send shortcut to use that action. Hold <code>Cmd</code> on macOS or <code>Ctrl</code> on
+Windows and Linux to switch the button to the opposite action, then click, or use the opposite-action
+shortcut described above.</p>
+<p>On web and desktop, queued messages appear at the end of the thread as dashed messages that have
+not been sent yet. On mobile they appear above the composer. Each shows its text and any attached
+images. <strong>Send now</strong> sends a message right away, into the running turn if there is one. You can
+also edit or remove it.</p>
+<p>If you stop the agent or the server restarts, queued messages keep their order and are held.
+Press <strong>Resume</strong> in an empty composer to continue. <strong>Resume</strong> also continues a stopped
+run or one that hit a usage limit, even with nothing queued. Sending a new message also resumes the queue, unless it steers a turn that is already
+running. You can edit or remove held messages without starting them.</p>
+<p>The pencil on a queued message opens it in the composer for editing. The original message
+stays in the queue until you save, and it is highlighted while you edit. The message&#39;s
+attachments appear above the text with a remove control, and new images can be added the usual way.
+The checkmark saves the queued message in place; <strong>Cancel</strong> next to it leaves it unchanged. Whatever
+you had typed in the composer before starting the edit is restored afterwards. If the queued
+message starts or is removed while you are editing, the edit ends: changed content moves into the
+composer when it is empty, and is discarded otherwise.</p>
+<h2 id="commands-and-skills"><a class="anchor" href="#commands-and-skills">Commands and skills</a></h2>
+<p>Type <code>/</code> for commands or <code>$</code> to add a skill from the selected environment and
+provider.</p>
+<p>The slash menu also includes skills unless you turn off <strong>Settings → Chat →
+Show skills in slash menu</strong>, under Advanced. Only skills enabled for the provider are listed.</p>
+<p>After you add or change skills, plugins, or MCP servers, use <strong>Restart agent
+session</strong> in the command palette on web and desktop. The conversation continues,
+and your next message starts the agent again with the new setup.</p>
+<p>Provider commands must start the message to run. Moonfold commands such as
+<code>/model</code> and <code>/plan</code>, and skill mentions, work on any line.</p>
+<p>Send <code>/compact</code> in an existing conversation to reduce context usage when the
+provider supports it, even with the context meter turned off.</p>
+<p>Send <code>/clear</code> on its own, or pick it from the slash menu, to start a fresh session
+in the same thread. Your next message goes to a new provider session that doesn&#39;t see the
+earlier messages, and the thread marks where it began with <strong>New session</strong>.
+Earlier messages and diffs stay in the thread. Dismiss the notice above the
+composer to keep the current session instead.</p>
+<p>On web and desktop, turn on <strong>Settings → Labs → Legacy → Context
+window indicator (legacy)</strong> to see context usage. The meter is off by default
+and appears once the provider reports usage. Open it for usage details and
+<strong>Compact context</strong> when the provider supports compaction.</p>
+<p>Claude instances can also compact idle threads for you. See
+<a href="/docs/providers-claude/#compact-long-conversations">compact long conversations</a>.</p>
+<h2 id="plans"><a class="anchor" href="#plans">Plans</a></h2>
+<p>Switch to plan mode (<code>/plan</code>) to have the agent propose a plan before it changes anything. Send
+feedback to refine the plan, or send an empty message (or select <strong>Implement</strong>) to start the work.
+To change the plan yourself first, open the plan&#39;s menu and choose <strong>Edit plan</strong>; implementing then
+sends your version. <strong>Use the original plan</strong> discards your edit. Edits stay on this device.</p>
+<h2 id="goals"><a class="anchor" href="#goals">Goals</a></h2>
+<p>With Codex and Claude, send <code>/goal</code> followed by what &quot;done&quot; means, for example
+<code>/goal all tests in packages/api pass</code>. The agent keeps working across turns
+until it judges the goal met. The thread shows <strong>Goal</strong> while it works, and a
+line at the end of the thread (above the composer on mobile) shows the goal and
+its progress.</p>
+<ul>
+<li><code>/goal</code> alone shows the current goal. <code>/goal clear</code> removes it.</li>
+<li>Codex also supports <code>/goal pause</code> and <code>/goal resume</code>. Stopping a Codex goal
+pauses it, and so does Codex ending its work without meeting the goal.</li>
+<li>Codex goals can have a token budget: <code>/goal --budget 200k all tests pass</code>
+sets one with the goal, and <code>/goal budget 500k</code> or <code>/goal budget off</code> changes
+it later. The goal row shows tokens used against the budget, and Codex stops
+the goal when it runs out.</li>
+<li>Stopping Claude ends the current turn, but the goal stays set. Claude checks it
+again at the end of your next message.</li>
+<li>Sending a new goal, or <code>/goal resume</code>, while the agent works stops the current
+turn and starts the goal, unless you queue it. <code>/goal clear</code> and <code>/goal pause</code>
+stop the turn only when it is working on the goal. Other goal commands wait for
+the turn to end.</li>
+</ul>
+<h2 id="context-in-your-message"><a class="anchor" href="#context-in-your-message">Context in your message</a></h2>
+<p>Context you attach lands where your cursor is, as a chip inside your text: a terminal excerpt,
+a review comment from a diff or file, a preview annotation, or a file. You can type before and
+after a chip, move it by cutting and pasting, and delete it like a character. Hover a chip for
+its brief details. Select a terminal excerpt to open its captured output, or select a review
+comment, picked element, or preview annotation to open its full details. Chips read as &quot;Terminal
+excerpt, Terminal 1 lines 3-4&quot; and similar to screen readers.</p>
+<p>A pull request appears as its icon and number. Its color reflects whether it was open, draft,
+merged, or closed when it was attached. Select it to inspect the captured title and branches,
+then choose <strong>Open pull request</strong> to visit the pull request. On web and desktop, type <code>#</code> to browse the newest
+pull requests in the current project&#39;s repository. Pull requests linked to the thread are included
+from any repository and listed first, after any exact number match. Continue typing digits to filter the recent list
+by any part of its pull request numbers. A complete number is also resolved directly, even when that
+pull request is older than the recent list. Type a single word after <code>#</code> to search pull requests in
+the repository by text. Choose a result to insert it as a chip.</p>
+<p>Another thread can be context too. Type <code>@</code> followed by part of its title to pick one from
+the same server, or from a machine it links to while the Linked environments beta is on; those
+show the machine&#39;s name. On web and desktop you can also drag a thread out of the sidebar and
+drop it on the composer; a multi-selection drops together. On any client, <strong>Copy thread</strong> copies a
+link to the thread that pastes into a composer as its chip. The chip shows the thread&#39;s
+current title and opens it when selected. Your prompt only carries a reference: the agent reads the thread&#39;s
+history on demand, so attaching a long thread costs nothing until the agent looks. Attaching a
+thread does not change it, and the agent cannot send messages to it unless you ask.</p>
+<p>A thread from a linked machine, picked, pasted or dropped, stays a reference that the agent reads
+on that machine. A pasted link to a thread on any other machine stays a link. Dropping a thread
+from any other environment attaches a saved transcript file. The source
+environment must be connected and up to date. The transcript includes the visible history and
+saved text context at the time of the drop; later messages and the contents of attached files
+are not copied. The agent can read the saved transcript after the source disconnects. Normal
+file attachment limits apply.</p>
+<p>Images keep their thumbnail shelf above the text and also get a chip at your cursor, so you can
+say exactly which image you mean. Deleting an image chip leaves the image on the shelf; removing
+the thumbnail asks first when the image is still mentioned in your text, then removes both. Files
+exist only as chips: deleting a file&#39;s last chip removes the file from the message.</p>
+<p>Copy text that holds chips and paste it into another draft, in the same thread or another one,
+and the chips come along with what they point to. Images and files are fetched again from the
+environment they came from; while that happens the chip shows a dashed outline, and if it cannot
+complete Moonfold tells you and leaves the chip for you to remove or replace. A chip whose
+context is no longer available shows the same dashed outline; hover it for what to do.</p>
+<p>Copying a message with the copy button, or copying text out of it, gives other apps readable
+Markdown with a link in place of each chip. Older messages that were sent before chips still
+show their context. Stashing a prompt keeps its chips and what they point to; restoring brings
+them back.</p>
+<h2 id="attached-files"><a class="anchor" href="#attached-files">Attached files</a></h2>
+<p>Select a file chip in your draft or a sent message to preview it. Code and JSON use syntax
+highlighting; Markdown, HTML, CSV, and TSV offer rendered and raw views. Audio files have
+playback controls. Large text files show a limited preview; save the file to read it in full.</p>
+<p>On web and desktop, files open beside the conversation with the same controls as a workspace
+file: a header row with the view toggle, <strong>Copy contents</strong> and <strong>Save file</strong>.</p>
+<h2 id="images-and-videos-in-messages"><a class="anchor" href="#images-and-videos-in-messages">Images and videos in messages</a></h2>
+<p>Select an image or video attachment or link to preview it. Playback support depends
+on your browser or device; save an unsupported video to open it in another app.</p>
+<p>On web and desktop, right-click media to save it or copy its path or URL.</p>
+<p>File links refer to the environment&#39;s machine, including when you connect remotely.
+Previews use the original file, even outside the workspace. Moving or deleting it
+can break the preview, so save a copy if you need to keep it.</p>
+<h2 id="files-outside-the-workspace"><a class="anchor" href="#files-outside-the-workspace">Files outside the workspace</a></h2>
+<p>Follow an agent&#39;s file link to read a report or other file outside the workspace.
+These files open read-only. An HTML file outside the workspace cannot load scripts,
+styles, or images from neighboring files.</p>
+<h2 id="html-and-pdf-files-in-the-file-viewer"><a class="anchor" href="#html-and-pdf-files-in-the-file-viewer">HTML and PDF files in the file viewer</a></h2>
+<p>On web and desktop, HTML and PDF files open as rendered pages. Switch an HTML
+file to source view to read its markup; a link to a specific line opens source
+automatically. HTML previews cannot access your Moonfold session.</p>
+<p>The file viewer recognizes images, HTML, and PDF files by their filename extension,
+including filenames or folders containing <code>#</code> or <code>?</code>.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/composer.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/thread-sidebar/"
-            ><small>Previous</small><span>Working with threads</span></a
-          ><a class="next" href="/docs/permission-modes/"
-            ><small>Next</small><span>Permission modes</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#formatting">Formatting</a></li>
-            <li><a href="#attach-files">Attach files</a></li>
-            <li><a href="#send-while-the-agent-is-working">Send while the agent is working</a></li>
-            <li><a href="#custom-models">Custom models</a></li>
-            <li><a href="#model-defaults">Model defaults</a></li>
-            <li><a href="#quote-an-assistant-response">Quote an assistant response</a></li>
-            <li><a href="#recall-a-sent-prompt">Recall a sent prompt</a></li>
-            <li><a href="#ask-on-the-side">Ask on the side</a></li>
-            <li><a href="#send-a-failed-message-again">Send a failed message again</a></li>
-            <li><a href="#edit-an-earlier-prompt">Edit an earlier prompt</a></li>
-            <li><a href="#prompt-stash">Prompt stash</a></li>
-            <li><a href="#queued-messages">Queued messages</a></li>
-            <li><a href="#commands-and-skills">Commands and skills</a></li>
-            <li><a href="#plans">Plans</a></li>
-            <li><a href="#goals">Goals</a></li>
-            <li><a href="#context-in-your-message">Context in your message</a></li>
-            <li><a href="#attached-files">Attached files</a></li>
-            <li><a href="#images-and-videos-in-messages">Images and videos in messages</a></li>
-            <li><a href="#files-outside-the-workspace">Files outside the workspace</a></li>
-            <li>
-              <a href="#html-and-pdf-files-in-the-file-viewer"
-                >HTML and PDF files in the file viewer</a
-              >
-            </li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/composer.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/thread-sidebar/"><small>Previous</small><span>Working with threads</span></a><a class="next" href="/docs/permission-modes/"><small>Next</small><span>Permission modes</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#formatting">Formatting</a></li><li><a href="#attach-files">Attach files</a></li><li><a href="#send-while-the-agent-is-working">Send while the agent is working</a></li><li><a href="#custom-models">Custom models</a></li><li><a href="#model-defaults">Model defaults</a></li><li><a href="#quote-an-assistant-response">Quote an assistant response</a></li><li><a href="#recall-a-sent-prompt">Recall a sent prompt</a></li><li><a href="#ask-on-the-side">Ask on the side</a></li><li><a href="#answer-an-agents-question-card">Answer an agent's question card</a></li><li><a href="#send-a-failed-message-again">Send a failed message again</a></li><li><a href="#edit-an-earlier-prompt">Edit an earlier prompt</a></li><li><a href="#prompt-stash">Prompt stash</a></li><li><a href="#voice-input-on-web-and-desktop">Voice input on web and desktop</a></li><li><a href="#queued-messages">Queued messages</a></li><li><a href="#commands-and-skills">Commands and skills</a></li><li><a href="#plans">Plans</a></li><li><a href="#goals">Goals</a></li><li><a href="#context-in-your-message">Context in your message</a></li><li><a href="#attached-files">Attached files</a></li><li><a href="#images-and-videos-in-messages">Images and videos in messages</a></li><li><a href="#files-outside-the-workspace">Files outside the workspace</a></li><li><a href="#html-and-pdf-files-in-the-file-viewer">HTML and PDF files in the file viewer</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

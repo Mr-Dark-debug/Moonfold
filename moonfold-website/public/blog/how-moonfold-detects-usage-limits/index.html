@@ -1,282 +1,105 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>How Moonfold detects that an agent hit its usage limit | Moonfold</title>
-    <meta
-      name="description"
-      content="Each provider reports limits differently. This is what each adapter reads today, where reset times come from, and where handoff is still manual."
-    />
-    <link
-      rel="canonical"
-      href="https://moonfold-website.vercel.app/blog/how-moonfold-detects-usage-limits/"
-    />
-    <meta property="og:type" content="article" />
-    <meta
-      property="og:url"
-      content="https://moonfold-website.vercel.app/blog/how-moonfold-detects-usage-limits/"
-    />
-    <meta
-      property="og:title"
-      content="How Moonfold detects that an agent hit its usage limit | Moonfold"
-    />
-    <meta
-      property="og:description"
-      content="Each provider reports limits differently. This is what each adapter reads today, where reset times come from, and where handoff is still manual."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "How Moonfold detects that an agent hit its usage limit",
-        "description": "Each provider reports limits differently. This is what each adapter reads today, where reset times come from, and where handoff is still manual.",
-        "datePublished": "2026-10-24",
-        "author": { "@type": "Organization", "name": "The Moonfold team" },
-        "mainEntityOfPage": "https://moonfold-website.vercel.app/blog/how-moonfold-detects-usage-limits/"
-      }
-    </script>
-  </head>
-  <body class="page-post">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/">Docs</a>
-        <a href="/blog/" aria-current="page">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <main class="post" id="content">
-      <div class="post-head">
-        <p class="crumbs">
-          <a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a
-          ><span aria-hidden="true">/</span><a href="/blog/#handoff">Handoff</a>
-        </p>
-        <p class="eyebrow">Handoff</p>
-        <h1>How Moonfold detects that an agent hit its usage limit</h1>
-        <p class="lede">
-          Each provider reports limits differently. This is what each adapter reads today, where
-          reset times come from, and where handoff is still manual.
-        </p>
-        <dl class="post-facts">
-          <div>
-            <dt>Written by</dt>
-            <dd>The Moonfold team</dd>
-          </div>
-          <div>
-            <dt>Published</dt>
-            <dd><time datetime="2026-10-24">Oct 24, 2026</time></dd>
-          </div>
-          <div>
-            <dt>Reading time</dt>
-            <dd>2 min</dd>
-          </div>
-        </dl>
-      </div>
-      <div class="post-body-wrap">
-        <nav class="post-toc" aria-label="In this post">
-          <h2>In this post</h2>
-          <ul>
-            <li><a href="#the-rule">The rule</a></li>
-            <li><a href="#what-each-provider-tells-us">What each provider tells us</a></li>
-            <li><a href="#why-reset-times-matter">Why reset times matter</a></li>
-            <li><a href="#adding-a-provider">Adding a provider</a></li>
-          </ul>
-        </nav>
-        <article class="prose">
-          <p>
-            Provider handoff only works if Moonfold knows a run ended because of a usage limit, not
-            because of a bug or a network blip. There is no shared standard for that, so each
-            provider adapter reads what its own agent reports.
-          </p>
-          <h2 id="the-rule"><a class="anchor" href="#the-rule">The rule</a></h2>
-          <p>
-            A handoff offer, or an automatic handoff, starts when a run ends with a failure of class
-            <code>usage_limit</code>. Retries a provider performs on its own, such as a transient
-            429 it will try again, never start a handoff. Only the failure that ends the run does.
-          </p>
-          <h2 id="what-each-provider-tells-us">
-            <a class="anchor" href="#what-each-provider-tells-us">What each provider tells us</a>
-          </h2>
-          <ul>
-            <li>
-              <strong>Codex</strong> reports limits through its app-server. A notification carrying
-              a usage-limit or rate-limit error with no retry pending ends the run as a limit. The
-              reset time comes from the account&#39;s rate-limit windows, and the percent used per
-              window also drives the optional usage warning.
-            </li>
-            <li>
-              <strong>Claude Code</strong> reports a blocking limit or a 429 in its result. When a
-              gateway wraps the error and names a reset time, Moonfold reads it from the text.
-            </li>
-            <li>
-              <strong>OpenCode</strong> surfaces a terminal 429, rate-limit identifiers, or quota
-              text in the provider error. Beta 2 added this mapping, contributed by an outside
-              developer.
-            </li>
-            <li>
-              <strong>Gemini CLI and other ACP agents</strong> are matched on error text such as an
-              exhausted quota or too many requests. Reset times are not reported.
-            </li>
-            <li><strong>Grok</strong> uses a dedicated ACP error code, without a reset time.</li>
-            <li>
-              <strong>Cursor</strong> is not mapped yet. Its limit errors arrive as ordinary
-              provider errors, so you hand off from it by hand with <strong>Hand off to…</strong>.
-            </li>
-          </ul>
-          <h2 id="why-reset-times-matter">
-            <a class="anchor" href="#why-reset-times-matter">Why reset times matter</a>
-          </h2>
-          <p>
-            When a provider names a reset time, the notice can offer to wait for it as an
-            alternative to switching. When it does not, Moonfold shows the limit without a countdown
-            instead of guessing one.
-          </p>
-          <h2 id="adding-a-provider">
-            <a class="anchor" href="#adding-a-provider">Adding a provider</a>
-          </h2>
-          <p>
-            A maintainer adding a provider maps the agent&#39;s terminal limit error to the
-            <code>usage_limit</code> class, includes the reset time when the provider names one,
-            keeps self-retried limits as retries, and adds a test that feeds a recorded error
-            through the adapter. The full table, with the source files for each adapter, lives in
-            the repository at
-            <a
-              href="https://github.com/Mr-Dark-debug/Moonfold/blob/main/docs/HANDOFF-SIGNALS.md"
-              target="_blank"
-              rel="noopener noreferrer"
-              ><code>docs/HANDOFF-SIGNALS.md</code></a
-            >.
-          </p>
-          <p>
-            If your agent reports limits in a way we do not read yet,
-            <a
-              href="https://github.com/Mr-Dark-debug/Moonfold/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              >open an issue</a
-            >
-            with the recorded error. It is one of the most useful contributions you can make.
-          </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>How Moonfold detects that an agent hit its usage limit | Moonfold</title>
+<meta name="description" content="Each provider reports limits differently. This is what each adapter reads today, where reset times come from, and where handoff is still manual.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/blog/how-moonfold-detects-usage-limits/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://moonfold-website.vercel.app/blog/how-moonfold-detects-usage-limits/">
+<meta property="og:title" content="How Moonfold detects that an agent hit its usage limit | Moonfold">
+<meta property="og:description" content="Each provider reports limits differently. This is what each adapter reads today, where reset times come from, and where handoff is still manual.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"How Moonfold detects that an agent hit its usage limit","description":"Each provider reports limits differently. This is what each adapter reads today, where reset times come from, and where handoff is still manual.","datePublished":"2026-10-24","author":{"@type":"Organization","name":"The Moonfold team"},"mainEntityOfPage":"https://moonfold-website.vercel.app/blog/how-moonfold-detects-usage-limits/"}</script>
+</head>
+<body class="page-post">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/">Docs</a>
+    <a href="/blog/" aria-current="page">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<main class="post" id="content">
+<div class="post-head">
+<p class="crumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><a href="/blog/#handoff">Handoff</a></p>
+<p class="eyebrow">Handoff</p>
+<h1>How Moonfold detects that an agent hit its usage limit</h1>
+<p class="lede">Each provider reports limits differently. This is what each adapter reads today, where reset times come from, and where handoff is still manual.</p>
+<dl class="post-facts">
+<div><dt>Written by</dt><dd>The Moonfold team</dd></div>
+<div><dt>Published</dt><dd><time datetime="2026-10-24">Oct 24, 2026</time></dd></div>
+<div><dt>Reading time</dt><dd>2 min</dd></div>
+</dl>
+</div>
+<div class="post-body-wrap">
+<nav class="post-toc" aria-label="In this post"><h2>In this post</h2><ul><li><a href="#the-rule">The rule</a></li><li><a href="#what-each-provider-tells-us">What each provider tells us</a></li><li><a href="#why-reset-times-matter">Why reset times matter</a></li><li><a href="#adding-a-provider">Adding a provider</a></li></ul></nav>
+<article class="prose">
+<p>Provider handoff only works if Moonfold knows a run ended because of a usage limit, not because of a bug or a network blip. There is no shared standard for that, so each provider adapter reads what its own agent reports.</p>
+<h2 id="the-rule"><a class="anchor" href="#the-rule">The rule</a></h2>
+<p>A handoff offer, or an automatic handoff, starts when a run ends with a failure of class <code>usage_limit</code>. Retries a provider performs on its own, such as a transient 429 it will try again, never start a handoff. Only the failure that ends the run does.</p>
+<h2 id="what-each-provider-tells-us"><a class="anchor" href="#what-each-provider-tells-us">What each provider tells us</a></h2>
+<ul>
+<li><strong>Codex</strong> reports limits through its app-server. A notification carrying a usage-limit or rate-limit error with no retry pending ends the run as a limit. The reset time comes from the account&#39;s rate-limit windows, and the percent used per window also drives the optional usage warning.</li>
+<li><strong>Claude Code</strong> reports a blocking limit or a 429 in its result. When a gateway wraps the error and names a reset time, Moonfold reads it from the text.</li>
+<li><strong>OpenCode</strong> surfaces a terminal 429, rate-limit identifiers, or quota text in the provider error. Beta 2 added this mapping, contributed by an outside developer.</li>
+<li><strong>Gemini CLI and other ACP agents</strong> are matched on error text such as an exhausted quota or too many requests. Reset times are not reported.</li>
+<li><strong>Grok</strong> uses a dedicated ACP error code, without a reset time.</li>
+<li><strong>Cursor</strong> is not mapped yet. Its limit errors arrive as ordinary provider errors, so you hand off from it by hand with <strong>Hand off to…</strong>.</li>
+</ul>
+<h2 id="why-reset-times-matter"><a class="anchor" href="#why-reset-times-matter">Why reset times matter</a></h2>
+<p>When a provider names a reset time, the notice can offer to wait for it as an alternative to switching. When it does not, Moonfold shows the limit without a countdown instead of guessing one.</p>
+<h2 id="adding-a-provider"><a class="anchor" href="#adding-a-provider">Adding a provider</a></h2>
+<p>A maintainer adding a provider maps the agent&#39;s terminal limit error to the <code>usage_limit</code> class, includes the reset time when the provider names one, keeps self-retried limits as retries, and adds a test that feeds a recorded error through the adapter. The full table, with the source files for each adapter, lives in the repository at <a href="https://github.com/Mr-Dark-debug/Moonfold/blob/main/docs/HANDOFF-SIGNALS.md" target="_blank" rel="noopener noreferrer"><code>docs/HANDOFF-SIGNALS.md</code></a>.</p>
+<p>If your agent reports limits in a way we do not read yet, <a href="https://github.com/Mr-Dark-debug/Moonfold/issues" target="_blank" rel="noopener noreferrer">open an issue</a> with the recorded error. It is one of the most useful contributions you can make.</p>
 
-          <div class="post-cta">
-            <p>
-              <strong>Try Moonfold.</strong> It is free, open source and runs the agents you already
-              use, with your own logins.
-            </p>
-            <a
-              class="btn btn-solid"
-              href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Download the beta</a
-            >
-          </div>
-        </article>
-      </div>
-      <section class="related">
-        <h2>Keep reading</h2>
-        <div class="post-grid">
-          <article class="post-card">
-            <a href="/blog/when-your-agent-hits-its-limit/">
-              <span class="post-no" aria-hidden="true">01</span>
-              <span class="post-cat">Handoff</span>
-              <h3>When your agent hits its limit, the task should keep going</h3>
-              <p>
-                How Moonfold moves a thread from one coding agent to another at a usage limit, what
-                you see before anything is sent, and how to go back.
-              </p>
-              <span class="post-meta">Oct 27, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-          <article class="post-card">
-            <a href="/blog/what-a-handoff-brief-contains/">
-              <span class="post-no" aria-hidden="true">02</span>
-              <span class="post-cat">Handoff</span>
-              <h3>What goes into a handoff brief, and what is left out</h3>
-              <p>
-                The brief the next agent receives is built from the thread's history without a
-                model. Here is exactly what it holds and how secrets are redacted.
-              </p>
-              <span class="post-meta">Oct 23, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-          <article class="post-card">
-            <a href="/blog/moonfold-0-1-0-beta-4/">
-              <span class="post-no" aria-hidden="true">03</span>
-              <span class="post-cat">Releases</span>
-              <h3>Moonfold 0.1.0-beta.4: your agents on your phone, with no account</h3>
-              <p>
-                Beta 4 adds Moonfold for Android, paired with one QR scan over an encrypted
-                connection to your own computer, plus content exclusions and a token limit for one
-                run.
-              </p>
-              <span class="post-meta">Nov 2, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-        </div>
-      </section>
-    </main>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<div class="post-cta"><p><strong>Try Moonfold.</strong> It is free, open source and runs the agents you already use, with your own logins.</p><a class="btn btn-solid" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download the beta</a></div>
+</article>
+</div>
+<section class="related"><h2>Keep reading</h2><div class="post-grid"><article class="post-card"><a href="/blog/when-your-agent-hits-its-limit/">
+<span class="post-no" aria-hidden="true">01</span>
+<span class="post-cat">Handoff</span>
+<h3>When your agent hits its limit, the task should keep going</h3>
+<p>How Moonfold moves a thread from one coding agent to another at a usage limit, what you see before anything is sent, and how to go back.</p>
+<span class="post-meta">Oct 27, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/what-a-handoff-brief-contains/">
+<span class="post-no" aria-hidden="true">02</span>
+<span class="post-cat">Handoff</span>
+<h3>What goes into a handoff brief, and what is left out</h3>
+<p>The brief the next agent receives is built from the thread's history without a model. Here is exactly what it holds and how secrets are redacted.</p>
+<span class="post-meta">Oct 23, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/moonfold-1-0-0-beta-6/">
+<span class="post-no" aria-hidden="true">03</span>
+<span class="post-cat">Releases</span>
+<h3>Moonfold 1.0.0-beta.6: Orbit, your phone on any network, and self-fixing pull requests</h3>
+<p>Beta 6 adds Orbit, a crew that keeps working on your project, lets the Android app reach your computer from anywhere, and fixes failing pull request checks.</p>
+<span class="post-meta">Nov 13, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article></div></section>
+</main>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

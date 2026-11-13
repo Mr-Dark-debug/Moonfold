@@ -1,343 +1,146 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Pi · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Moonfold can use your existing Pi coding agent installation while keeping Pi's models, auth, extensions, skills, context files, and native session history."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-pi/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-pi/" />
-    <meta property="og:title" content="Pi · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Moonfold can use your existing Pi coding agent installation while keeping Pi's models, auth, extensions, skills, context files, and native session history."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/" aria-current="page">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
-        <h1 id="pi">Pi</h1>
-        <p>
-          Moonfold can use your existing Pi coding agent installation while keeping Pi&#39;s models,
-          auth, extensions, skills, context files, and native session history.
-        </p>
-        <h2 id="set-up-pi"><a class="anchor" href="#set-up-pi">Set Up Pi</a></h2>
-        <ol>
-          <li>
-            Install <a href="https://pi.dev" target="_blank" rel="noopener noreferrer">Pi</a> on the
-            machine running the Moonfold server. Pi requires Node.js 22.19 or newer; its platform
-            installers can install Node if needed. Moonfold supports Pi 0.80.5 or newer.
-          </li>
-          <li>
-            Run <code>pi</code> in a terminal, then <code>/login</code> to connect your model
-            provider or configure its API key.
-          </li>
-          <li>Open Moonfold Settings, enable Pi, and refresh the provider.</li>
-        </ol>
-        <p>For an npm installation, use:</p>
-        <pre><code class="language-sh">npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Pi · Moonfold docs</title>
+<meta name="description" content="Moonfold can use your existing Pi coding agent installation while keeping Pi's models, auth, extensions, skills, context files, and native session history.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-pi/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-pi/">
+<meta property="og:title" content="Pi · Moonfold docs">
+<meta property="og:description" content="Moonfold can use your existing Pi coding agent installation while keeping Pi's models, auth, extensions, skills, context files, and native session history.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/" aria-current="page">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
+<h1 id="pi">Pi</h1>
+<p>Moonfold can use your existing Pi coding agent installation while keeping Pi&#39;s models, auth,
+extensions, skills, context files, and native session history.</p>
+<h2 id="set-up-pi"><a class="anchor" href="#set-up-pi">Set Up Pi</a></h2>
+<ol>
+<li>Install <a href="https://pi.dev" target="_blank" rel="noopener noreferrer">Pi</a> on the machine running the Moonfold server. Pi requires Node.js
+22.19 or newer; its platform installers can install Node if needed. Moonfold supports Pi
+0.80.5 or newer.</li>
+<li>Run <code>pi</code> in a terminal, then <code>/login</code> to connect your model provider or configure its API key.</li>
+<li>Open Moonfold Settings, enable Pi, and refresh the provider.</li>
+</ol>
+<p>For an npm installation, use:</p>
+<pre><code class="language-sh">npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 </code></pre>
-        <p>
-          If <code>pi</code> is not on the server&#39;s <code>PATH</code>, set Pi&#39;s binary path
-          to the executable. Provider environment variables and launch arguments are also available
-          for installations that need a custom agent directory, endpoint, or model configuration.
-          <code>--provider</code> must be paired with <code>--model</code>. Moonfold rejects launch
-          arguments that change Pi&#39;s execution mode or select a session because Moonfold owns
-          those parts of the process lifecycle.
-        </p>
-        <p>
-          On a remote or headless server, connect to that machine over SSH and run <code>pi</code>,
-          then <code>/login</code>. Open the authorization URL on your own computer. If the callback
-          cannot reach the server, paste the final redirect URL or authorization code back into Pi
-          when prompted. You can also set your model provider&#39;s API-key environment variable in
-          the Pi instance&#39;s settings; mark secret values as sensitive.
-        </p>
-        <p>
-          Update installer-managed Pi with <code>pi update</code>. If another package manager owns
-          the installation, update it through that manager instead. For example, a Nix profile
-          installation uses <code>nix profile upgrade pi</code>.
-        </p>
-        <h2 id="local-models"><a class="anchor" href="#local-models">Local Models</a></h2>
-        <p>
-          Turn on <strong>Local models</strong> in the Pi instance&#39;s settings to use models
-          served on the same machine by
-          <a href="https://ollama.com" target="_blank" rel="noopener noreferrer">Ollama</a> (port
-          11434) or
-          <a href="https://lmstudio.ai" target="_blank" rel="noopener noreferrer">LM Studio</a>
-          (port 1234). Moonfold looks for them when it checks Pi and when a thread starts; it never
-          downloads models or starts the servers. Their models appear in the model picker as
-          <code>ollama-local/&lt;model&gt;</code> or <code>lmstudio-local/&lt;model&gt;</code> and
-          run through Pi&#39;s own tools and approvals. Your <code>~/.pi</code> files are not
-          changed.
-        </p>
-        <p>
-          Small local models often struggle with tool calls; a coding model of 7B parameters or more
-          works better. A local model never hits a usage limit, so it is a good last entry in
-          <strong>Settings → Handoff → Fallback order</strong>.
-        </p>
-        <h2 id="what-carries-over">
-          <a class="anchor" href="#what-carries-over">What Carries Over</a>
-        </h2>
-        <p>
-          Moonfold discovers the models reported by Pi and exposes their supported thinking levels.
-          The thinking picker marks the discovered active model&#39;s configured level as its
-          default without overriding it. Other models keep their Pi defaults when no level is
-          selected. Threads use Pi&#39;s native session files for resume, rollback, and forks within
-          the same Pi instance. Forks preserve the native conversation through the selected turn in
-          the destination workspace. Switching providers uses portable conversation context.
-          Extension dialogs appear in the Moonfold composer, and the composer context meter follows
-          Pi&#39;s own usage reporting while a response streams and after it settles.
-        </p>
-        <p>
-          Pi skills appear in the composer&#39;s <code>$</code> menu. This includes user skills and
-          project skills that Pi loads for the current workspace; selecting one uses Pi&#39;s native
-          skill expansion.
-        </p>
-        <p>
-          Pi loads its normal user and project extensions. Blocking <code>select</code>,
-          <code>confirm</code>, <code>input</code>, and <code>editor</code> dialogs work in
-          Moonfold. Notifications appear in the work log. Pi terminal decoration such as titles,
-          status lines, and widgets does not have a Moonfold equivalent.
-        </p>
-        <h2 id="permission-modes">
-          <a class="anchor" href="#permission-modes">Permission Modes</a>
-        </h2>
-        <p>Moonfold applies the composer permission mode through Pi&#39;s blocking tool hook:</p>
-        <ul>
-          <li>
-            <strong>Supervised</strong> asks before commands, file changes, and extension tools.
-            Read-only tools continue.
-          </li>
-          <li>
-            <strong>Auto-accept edits</strong> allows Pi&#39;s edit and write tools, but asks before
-            commands and extension tools.
-          </li>
-          <li><strong>Full access</strong> allows tools without Moonfold approval prompts.</li>
-        </ul>
-        <p>
-          The <strong>Auto</strong> option is not shown for Pi because Pi does not expose an AI
-          approval reviewer. Threads that already stored Auto before Pi support was added behave and
-          display as Supervised.
-        </p>
-        <p>
-          Changing the mode restarts the Pi provider session and resumes the same native
-          conversation. The policy covers Pi tool calls; it is not an operating-system sandbox, and
-          code that a trusted Pi extension runs outside a tool call remains governed by Pi&#39;s own
-          extension trust model.
-        </p>
-        <p>
-          Moonfold&#39;s <code>delegate_task</code> tool creates durable child threads in the shared
-          subagent UI. If the user installs Pi&#39;s example <code>subagent</code> extension,
-          Moonfold also shows its task progress and results in that UI. Pi runs those children
-          without a session, so they cannot be opened or resumed as Moonfold threads.
-        </p>
-        <h2 id="troubleshooting"><a class="anchor" href="#troubleshooting">Troubleshooting</a></h2>
-        <ul>
-          <li>
-            If Pi is unavailable, confirm that the configured binary runs on the server machine,
-            then refresh the provider in Settings.
-          </li>
-          <li>
-            If no models appear, open Pi directly and confirm its authentication and model
-            configuration.
-          </li>
-          <li>
-            If discovery cannot complete, Moonfold keeps Pi available with the
-            <code>Pi default</code> model. Start a thread to let the interactive Pi session handle
-            any startup prompt.
-          </li>
-          <li>
-            If a project extension is missing, approve the project in Pi, then start a fresh
-            provider session.
-          </li>
-          <li>
-            If a project skill is missing from the <code>$</code> menu, approve the project in Pi
-            and refresh the provider.
-          </li>
-          <li>
-            The context meter appears once Pi reports usage for the thread. Some model providers
-            only report usage when a response completes, so the meter can wait for the first reply.
-          </li>
-        </ul>
+<p>If <code>pi</code> is not on the server&#39;s <code>PATH</code>, set Pi&#39;s binary path to the executable. Provider environment
+variables and launch arguments are also available for installations that need a custom agent
+directory, endpoint, or model configuration. <code>--provider</code> must be paired with <code>--model</code>. Moonfold
+rejects launch arguments that change Pi&#39;s execution mode or select a session because Moonfold owns those
+parts of the process lifecycle.</p>
+<p>On a remote or headless server, connect to that machine over SSH and run <code>pi</code>, then <code>/login</code>.
+Open the authorization URL on your own computer. If the callback cannot reach the server,
+paste the final redirect URL or authorization code back into Pi when prompted. You can also
+set your model provider&#39;s API-key environment variable in the Pi instance&#39;s settings; mark
+secret values as sensitive.</p>
+<p>Update installer-managed Pi with <code>pi update</code>. If another package manager owns the installation,
+update it through that manager instead. For example, a Nix profile installation uses
+<code>nix profile upgrade pi</code>.</p>
+<h2 id="local-models"><a class="anchor" href="#local-models">Local Models</a></h2>
+<p>Turn on <strong>Local models</strong> in the Pi instance&#39;s settings to use models served on the same machine by
+<a href="https://ollama.com" target="_blank" rel="noopener noreferrer">Ollama</a> (port 11434) or <a href="https://lmstudio.ai" target="_blank" rel="noopener noreferrer">LM Studio</a> (port 1234). Moonfold
+looks for them when it checks Pi and when a thread starts; it never downloads models or starts the
+servers. Their models appear in the model picker as <code>ollama-local/&lt;model&gt;</code> or
+<code>lmstudio-local/&lt;model&gt;</code> and run through Pi&#39;s own tools and approvals. Your <code>~/.pi</code> files are not
+changed.</p>
+<p>Small local models often struggle with tool calls; a coding model of 7B parameters or more works
+better. A local model never hits a usage limit, so it is a good last entry in
+<strong>Settings → Handoff → Fallback order</strong>.</p>
+<h2 id="what-carries-over"><a class="anchor" href="#what-carries-over">What Carries Over</a></h2>
+<p>Moonfold discovers the models reported by Pi and exposes their supported thinking levels. The
+thinking picker marks the discovered active model&#39;s configured level as its default without
+overriding it. Other models keep their Pi defaults when no level is selected. Threads
+use Pi&#39;s native session files for resume, rollback, and forks within the same Pi instance. Forks
+preserve the native conversation through the selected turn in the destination workspace.
+Switching providers uses portable conversation context. Extension
+dialogs appear in the Moonfold composer, and the composer context meter follows Pi&#39;s own usage
+reporting while a response streams and after it settles.</p>
+<p>Pi skills appear in the composer&#39;s <code>$</code> menu. This includes user skills and project skills that Pi
+loads for the current workspace; selecting one uses Pi&#39;s native skill expansion.</p>
+<p>Pi loads its normal user extensions, and project extensions once the folder is trusted in Pi.
+Blocking <code>select</code>, <code>confirm</code>, <code>input</code>, and <code>editor</code> dialogs work in Moonfold. Notifications appear in
+the work log. Extensions can publish status text near the composer. Terminal titles and generic
+widgets do not have a Moonfold equivalent.</p>
+<h2 id="permission-modes"><a class="anchor" href="#permission-modes">Permission Modes</a></h2>
+<p>Moonfold applies the composer permission mode through Pi&#39;s blocking tool hook:</p>
+<ul>
+<li><strong>Supervised</strong> asks before commands, file changes, and extension tools. Read-only tools continue.</li>
+<li><strong>Auto-accept edits</strong> allows Pi&#39;s edit and write tools, but asks before commands and extension
+tools.</li>
+<li><strong>Full access</strong> allows tools without Moonfold approval prompts.</li>
+</ul>
+<p>The <strong>Auto</strong> option is not shown for Pi because Pi does not expose an AI approval reviewer.
+Threads that already stored Auto before Pi support was added behave and display as Supervised.</p>
+<p>Changing the mode restarts the Pi provider session and resumes the same native conversation. The
+policy covers Pi tool calls; it is not an operating-system sandbox, and code that a trusted Pi
+extension runs outside a tool call remains governed by Pi&#39;s own extension trust model.</p>
+<p>Moonfold&#39;s <code>delegate_task</code> tool creates durable child threads in the shared subagent UI. If the user
+installs Pi&#39;s example <code>subagent</code> extension, Moonfold also shows its task progress and results in that
+UI. Pi runs those children without a session, so they cannot be opened or resumed as Moonfold
+threads.</p>
+<h2 id="troubleshooting"><a class="anchor" href="#troubleshooting">Troubleshooting</a></h2>
+<ul>
+<li>If Pi is unavailable, confirm that the configured binary runs on the server machine, then refresh
+the provider in Settings.</li>
+<li>If no models appear, open Pi directly and confirm its authentication and model configuration.</li>
+<li>If discovery cannot complete, Moonfold keeps Pi available with the <code>Pi default</code> model. Start a
+thread to let the interactive Pi session handle any startup prompt.</li>
+<li>If Pi skips project settings, extensions, skills, prompts, MCP servers, or system prompt files
+because the folder is not trusted, the thread shows a notice on the first turn of the Pi session.
+Run the configured Pi binary in that folder on the server machine, using the same provider
+environment, including <code>PI_CODING_AGENT_DIR</code> if set. Trust the folder or its parent with <code>/trust</code>,
+then start a new thread using that same worktree. Launch arguments with <code>--no-approve</code> keep
+project files off without the notice.</li>
+<li>The context meter is off by default; see <a href="/docs/composer/#commands-and-skills">commands and skills</a>
+to enable it on web and desktop. It appears once Pi reports usage for the thread. Some model
+providers only report usage when a response completes, so the meter can wait for the first reply.</li>
+</ul>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-pi.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/providers-antigravity/"><small>Previous</small><span>Antigravity</span></a
-          ><a class="next" href="/docs/providers-muse/"
-            ><small>Next</small><span>Muse Code</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#set-up-pi">Set Up Pi</a></li>
-            <li><a href="#local-models">Local Models</a></li>
-            <li><a href="#what-carries-over">What Carries Over</a></li>
-            <li><a href="#permission-modes">Permission Modes</a></li>
-            <li><a href="#troubleshooting">Troubleshooting</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-pi.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/providers-antigravity/"><small>Previous</small><span>Antigravity</span></a><a class="next" href="/docs/providers-muse/"><small>Next</small><span>Muse Code</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#set-up-pi">Set Up Pi</a></li><li><a href="#local-models">Local Models</a></li><li><a href="#what-carries-over">What Carries Over</a></li><li><a href="#permission-modes">Permission Modes</a></li><li><a href="#troubleshooting">Troubleshooting</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

@@ -1,278 +1,96 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Computer use · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Computer use lets agents see and operate desktop apps on the environment's computer: read a window's controls, take screenshots, click, type, press keys and scroll. It works on Windows environments an"
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/computer-use/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/computer-use/" />
-    <meta property="og:title" content="Computer use · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Computer use lets agents see and operate desktop apps on the environment's computer: read a window's controls, take screenshots, click, type, press keys and scroll. It works on Windows environments an"
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/" aria-current="page">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs">
-          <a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents
-        </p>
-        <h1 id="computer-use">Computer use</h1>
-        <p>
-          Computer use lets agents see and operate desktop apps on the environment&#39;s computer:
-          read a window&#39;s controls, take screenshots, click, type, press keys and scroll. It
-          works on Windows environments and is off until you turn it on in
-          <strong>Settings → Computer use</strong>.
-        </p>
-        <h2 id="before-you-turn-it-on">
-          <a class="anchor" href="#before-you-turn-it-on">Before you turn it on</a>
-        </h2>
-        <p>
-          What an agent does in another app happens for real and can&#39;t be undone from Moonfold.
-          An app may also hold more than you expect: an editor can reopen documents from your last
-          session, a mail app shows your inbox. Approve only apps you are ready for an agent to
-          change, and keep the Stop button in view.
-        </p>
-        <h2 id="approving-apps"><a class="anchor" href="#approving-apps">Approving apps</a></h2>
-        <p>
-          The first time a thread wants an app, every connected Moonfold window asks you, naming the
-          thread and the window:
-        </p>
-        <ul>
-          <li>
-            <strong>Allow in this chat</strong> lets this thread use the app until Moonfold
-            restarts.
-          </li>
-          <li>
-            <strong>Always allow</strong> lets every thread use it; the app then appears under
-            <strong>Always-allowed apps</strong>, where you can remove it.
-          </li>
-          <li>
-            <strong>Deny</strong>, or closing the question, refuses. The agent is told and should
-            ask you in chat.
-          </li>
-        </ul>
-        <p>
-          Some windows are never available to agents, whatever you approve: Moonfold&#39;s own
-          (including a browser tab showing Moonfold), the Windows screens for passwords and
-          permission prompts, File Explorer, Settings, Task Manager and other system tools, Store
-          apps (which share one Windows process, so approving one would approve them all), and
-          password managers. Windows itself keeps apps running as administrator out of reach.
-          Password fields are never read, and the Windows key can&#39;t be pressed. Agents see the
-          titles of only the windows they may use.
-        </p>
-        <p>
-          Typing stops the moment another window takes focus, so text never lands in a different
-          app.
-        </p>
-        <h2 id="while-an-agent-works">
-          <a class="anchor" href="#while-an-agent-works">While an agent works</a>
-        </h2>
-        <p>
-          A bar at the bottom of every Moonfold window shows which app an agent is using and in
-          which thread. <strong>Stop</strong> turns computer use off at once and refuses anything
-          still waiting; turn it on again in settings when you want.
-        </p>
-        <h2 id="activity-log"><a class="anchor" href="#activity-log">Activity log</a></h2>
-        <p>
-          Settings lists every read and action with its thread, app, time and result. Typed text is
-          never stored, only how many characters were typed. <strong>Clear</strong> empties the log.
-        </p>
-        <h2 id="providers-with-their-own-computer-use">
-          <a class="anchor" href="#providers-with-their-own-computer-use"
-            >Providers with their own computer use</a
-          >
-        </h2>
-        <p>
-          If a provider has its own computer-use feature turned on (some Codex installs do), an
-          agent may use it instead of Moonfold&#39;s, and then Moonfold&#39;s approvals, log and
-          Stop don&#39;t apply. Turn the provider&#39;s own feature off in its settings if you want
-          Moonfold&#39;s controls on everything.
-        </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Computer use · Moonfold docs</title>
+<meta name="description" content="Computer use lets agents see and operate desktop apps on the environment's computer: read a window's controls, take screenshots, click, type, press keys and scroll. It works on Windows environments an">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/computer-use/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/computer-use/">
+<meta property="og:title" content="Computer use · Moonfold docs">
+<meta property="og:description" content="Computer use lets agents see and operate desktop apps on the environment's computer: read a window's controls, take screenshots, click, type, press keys and scroll. It works on Windows environments an">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/" aria-current="page">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents</p>
+<h1 id="computer-use">Computer use</h1>
+<p>Computer use lets agents see and operate desktop apps on the environment&#39;s computer: read a
+window&#39;s controls, take screenshots, click, type, press keys and scroll. It works on Windows
+environments and is off until you turn it on in <strong>Settings → Computer use</strong>.</p>
+<h2 id="before-you-turn-it-on"><a class="anchor" href="#before-you-turn-it-on">Before you turn it on</a></h2>
+<p>What an agent does in another app happens for real and can&#39;t be undone from Moonfold. An app may
+also hold more than you expect: an editor can reopen documents from your last session, a mail app
+shows your inbox. Approve only apps you are ready for an agent to change, and keep the Stop
+button in view.</p>
+<h2 id="approving-apps"><a class="anchor" href="#approving-apps">Approving apps</a></h2>
+<p>The first time a thread wants an app, every connected Moonfold window asks you, naming the thread
+and the window:</p>
+<ul>
+<li><strong>Allow in this chat</strong> lets this thread use the app until Moonfold restarts.</li>
+<li><strong>Always allow</strong> lets every thread use it; the app then appears under <strong>Always-allowed apps</strong>,
+where you can remove it.</li>
+<li><strong>Deny</strong>, or closing the question, refuses. The agent is told and should ask you in chat.</li>
+</ul>
+<p>Some windows are never available to agents, whatever you approve: Moonfold&#39;s own (including a
+browser tab showing Moonfold), the Windows screens for passwords and permission prompts, File
+Explorer, Settings, Task Manager and other system tools, Store apps (which share one Windows
+process, so approving one would approve them all), and password managers. Windows itself keeps
+apps running as administrator out of reach. Password fields are never read, and the Windows key
+can&#39;t be pressed. Agents see the titles of only the windows they may use.</p>
+<p>Typing stops the moment another window takes focus, so text never lands in a different app.</p>
+<h2 id="while-an-agent-works"><a class="anchor" href="#while-an-agent-works">While an agent works</a></h2>
+<p>A bar at the bottom of every Moonfold window shows which app an agent is using and in which
+thread. <strong>Stop</strong> turns computer use off at once and refuses anything still waiting; turn it on
+again in settings when you want.</p>
+<h2 id="activity-log"><a class="anchor" href="#activity-log">Activity log</a></h2>
+<p>Settings lists every read and action with its thread, app, time and result. Typed text is never
+stored, only how many characters were typed. <strong>Clear</strong> empties the log.</p>
+<h2 id="providers-with-their-own-computer-use"><a class="anchor" href="#providers-with-their-own-computer-use">Providers with their own computer use</a></h2>
+<p>If a provider has its own computer-use feature turned on (some Codex installs do), an agent may
+use it instead of Moonfold&#39;s, and then Moonfold&#39;s approvals, log and Stop don&#39;t apply. Turn the
+provider&#39;s own feature off in its settings if you want Moonfold&#39;s controls on everything.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/computer-use.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/artifacts/"><small>Previous</small><span>Artifacts</span></a
-          ><a class="next" href="/docs/agent-browsing/"
-            ><small>Next</small><span>Agent browsing</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#before-you-turn-it-on">Before you turn it on</a></li>
-            <li><a href="#approving-apps">Approving apps</a></li>
-            <li><a href="#while-an-agent-works">While an agent works</a></li>
-            <li><a href="#activity-log">Activity log</a></li>
-            <li>
-              <a href="#providers-with-their-own-computer-use"
-                >Providers with their own computer use</a
-              >
-            </li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/computer-use.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/artifacts/"><small>Previous</small><span>Artifacts</span></a><a class="next" href="/docs/agent-browsing/"><small>Next</small><span>Agent browsing</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#before-you-turn-it-on">Before you turn it on</a></li><li><a href="#approving-apps">Approving apps</a></li><li><a href="#while-an-agent-works">While an agent works</a></li><li><a href="#activity-log">Activity log</a></li><li><a href="#providers-with-their-own-computer-use">Providers with their own computer use</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

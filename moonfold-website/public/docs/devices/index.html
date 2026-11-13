@@ -1,340 +1,198 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Devices · Moonfold docs</title>
-    <meta
-      name="description"
-      content="The Device panel shows a live iOS Simulator or Android Emulator next to a thread, so you can watch an agent verify mobile work and tap the device yourself. Agents get the same device through device_* "
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/devices/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/devices/" />
-    <meta property="og:title" content="Devices · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="The Device panel shows a live iOS Simulator or Android Emulator next to a thread, so you can watch an agent verify mobile work and tap the device yourself. Agents get the same device through device_* "
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/" aria-current="page">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
-        <h1 id="devices">Devices</h1>
-        <p>
-          The Device panel shows a live iOS Simulator or Android Emulator next to a thread, so you
-          can watch an agent verify mobile work and tap the device yourself. Agents get the same
-          device through <code>device_*</code> tools and the <code>agent-device</code> command line,
-          which Moonfold sets up for them.
-        </p>
-        <h2 id="open-a-device"><a class="anchor" href="#open-a-device">Open a device</a></h2>
-        <p>
-          Open the right panel in a project thread and choose <strong>Device</strong>. On first use,
-          the panel walks through three steps: starting the device hub, checking iOS and Android
-          support, and choosing whether agents may control devices. Opening the panel alone does not
-          download or start anything. If the hub is already installed, the setup screen says so and
-          reuses it.
-        </p>
-        <p>
-          Choose a running device to watch it, or choose <strong>Start</strong> next to a stopped
-          device to boot it. The panel shows when you or an agent starts a device. Each device opens
-          in its own tab. Use <strong>+ → Device</strong> to open another, and double-click a tab
-          name or choose <strong>Rename</strong> from its context menu to rename it. Only the
-          visible tab streams video; switching tabs keeps both devices running. Choose
-          <strong>Float device over chat</strong> in the toolbar to keep watching and tapping the
-          device in a small window while the right panel shows something else; drag the window by
-          its handle, resize it from any edge, and use <strong>Open in right panel</strong> to bring
-          it back. Turn off the device hub in <strong>Settings → Integrations → Devices</strong> to
-          stop the helper processes; simulators and emulators keep running until you power them off.
-        </p>
-        <p>
-          Simulators run on the machine that hosts the environment server. iOS needs macOS with
-          Xcode. Android needs the SDK Platform-Tools, Android Emulator, and Command-line Tools
-          (latest), plus a virtual device created in Android Studio&#39;s Device Manager. Moonfold
-          detects standard SDK locations; set <code>ANDROID_HOME</code> for a custom location. The
-          panel explains missing dependencies. After installing them, restart the environment server
-          and refresh devices.
-        </p>
-        <p>
-          The screen is interactive: click and drag to touch, type while the screen is focused, and
-          use the toolbar for Home, Back, and Recents on Android, rotate on iOS, and power off.
-          Close the tab to stop watching; the device keeps running unless you power it off. Closed
-          tabs stay closed after a reload. To watch the device again, choose it from
-          <strong>+ → Device</strong>.
-        </p>
-        <p>
-          Choose <strong>3D view</strong> to inspect supported devices while the live screen stays
-          interactive. On iPhone Duo, use the fold and stance controls to change its physical pose,
-          or pinch over the device to adjust the hinge. Turning the model to the other screen
-          switches the live display and touch input to that screen.
-          <strong>Restore 3D view</strong> returns the device to a screen-facing position. On
-          supported Android foldables, use <strong>Fold device</strong> and
-          <strong>Unfold device</strong> beside the screen to change its posture in either view.
-        </p>
-        <h2 id="tools"><a class="anchor" href="#tools">Tools</a></h2>
-        <p>
-          The toolbar&#39;s <strong>Tools</strong> button opens a drawer for the open device. It
-          shows the foreground app, and lets you switch light and dark mode, change text size, flip
-          accessibility settings, overlay the accessibility element frames on the screen, set a fake
-          location, and grant or revoke app permissions. iOS also exposes Liquid Glass, color
-          filters, VoiceOver, and sending a test push notification; Android adds orientation and
-          toggling the network. The drawer only shows what the platform can do, and every control
-          reflects the value read back from the device after a change.
-        </p>
-        <h2 id="agents-and-devices">
-          <a class="anchor" href="#agents-and-devices">Agents and devices</a>
-        </h2>
-        <p>
-          When an agent opens a device, it floats over the chat in web and desktop clients connected
-          to the thread, the same way an agent-driven browser does. Turn off
-          <strong>Auto-show floating preview</strong> in
-          <strong>Settings → Integrations → Browser</strong> to open a right-panel tab instead. If
-          the thread has several devices open, choose one in the viewer. Closing the viewer stops
-          streaming and leaves the device available to the agent. Device activity also appears in
-          the thread timeline.
-        </p>
-        <p>
-          Agents drive the device through the <code>agent-device</code> command line. Moonfold Code
-          installs and starts it only after <strong>Agent device access</strong> is enabled. iOS
-          taps build a small test runner on first use, which takes a couple of minutes once per
-          server. Restart an existing agent session after granting access so it receives the device
-          CLI environment.
-        </p>
-        <p>
-          To keep agents away from simulators, turn off <strong>Agent device access</strong> in
-          <strong>Settings → Integrations → Devices</strong>. This hides the device tools from
-          agents started from then on; your own Device panel is unaffected.
-        </p>
-        <h2 id="remote-connections">
-          <a class="anchor" href="#remote-connections">Remote connections</a>
-        </h2>
-        <p>
-          The device stream goes through the environment server, so it works over the local network,
-          Tailscale, and Moonfold Connect. Live video needs a secure page (HTTPS or localhost); on a
-          plain-HTTP remote origin iOS falls back to a slower still-image stream and Android cannot
-          show video.
-        </p>
-        <h2 id="ssh-device-hosts">
-          <a class="anchor" href="#ssh-device-hosts">SSH device hosts</a>
-        </h2>
-        <p>
-          In Settings → Integrations → Devices, choose the environments that should use the host and
-          add it under <strong>Device hosts</strong>. Enter an SSH alias or <code>user@host</code>,
-          with an optional identity file and port. These resolve on the environment server, so use
-          the SSH configuration and keys available there. Password prompts are not supported.
-        </p>
-        <p>
-          <strong>Test connection</strong> checks SSH, Node, npm, and platform tools without
-          installing anything, with a result for each selected environment. Targets that resolve to
-          the environment’s own machine are skipped, since its devices are already local. The first
-          device listing installs pinned device tools on the host. Node 22 or newer and npm must be
-          available to non-interactive SSH commands. Moonfold checks common Homebrew and Android SDK
-          locations; custom installations need the appropriate PATH and ANDROID_HOME on the host.
-        </p>
-        <p>
-          The picker identifies devices by host when several hosts are configured. Connections
-          recover after interruptions. Removing a host closes its device sessions and stops its
-          Moonfold helpers when reachable; simulators keep running.
-        </p>
-        <p>
-          Moonfold provides discovery, streaming, and control. Arrange app builds, installation, and
-          connectivity to development servers such as Metro separately. A simulator on another
-          machine cannot reach Metro through your environment&#39;s localhost without forwarding or
-          another reachable address.
-        </p>
-        <h2 id="device-tool-updates">
-          <a class="anchor" href="#device-tool-updates">Device tool updates</a>
-        </h2>
-        <p>
-          The connected Moonfold server manages the device hub and agent tools on its own machine
-          and configured SSH hosts. Required versions install automatically the next time those
-          tools are used. Settings → Integrations → Check device tool versions reads installed
-          versions without installing tools or starting devices.
-        </p>
-        <p>
-          To receive newer tool versions on a remote environment, update that environment&#39;s
-          Moonfold server. Updating only the browser does not update the remote server. An offline
-          host keeps its installed files, but an update needs network access before device support
-          can start; Moonfold does not fall back to an older version. Reconnect the host and use
-          Retry if installation fails. Existing device and agent-access settings are preserved.
-        </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Devices · Moonfold docs</title>
+<meta name="description" content="The Device panel shows a live iOS Simulator or Android Emulator next to a thread, so you can watch an agent verify mobile work and tap the device yourself. Agents get the same device through device_* ">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/devices/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/devices/">
+<meta property="og:title" content="Devices · Moonfold docs">
+<meta property="og:description" content="The Device panel shows a live iOS Simulator or Android Emulator next to a thread, so you can watch an agent verify mobile work and tap the device yourself. Agents get the same device through device_* ">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/" aria-current="page">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
+<h1 id="devices">Devices</h1>
+<p>The Device panel shows a live iOS Simulator or Android Emulator next to a
+thread, so you can watch an agent verify mobile work and tap the device
+yourself. Agents get the same device through <code>device_*</code> tools and the
+<code>agent-device</code> command line, which Moonfold sets up for them.</p>
+<h2 id="open-a-device"><a class="anchor" href="#open-a-device">Open a device</a></h2>
+<p>Open the right panel in a project thread and choose <strong>Device</strong>. On first use,
+the panel walks through three steps: starting the device hub, checking iOS and
+Android support, and choosing whether agents may control devices. Opening the
+panel alone does not download or start anything. If the hub is already
+installed, the setup screen says so and reuses it.</p>
+<p>Choose a running device to watch it, or choose <strong>Start</strong> next to a stopped
+device to boot it. The panel shows when you or an agent starts a device.
+Each device opens in its own tab. Use <strong>+ → Device</strong> to open another, and
+double-click a tab name or choose <strong>Rename</strong> from its context menu to rename it.
+Only the visible tab streams video; switching tabs keeps both devices running.
+Choose <strong>Float device over chat</strong> in the toolbar to keep watching and tapping the
+device in a small window while the right panel shows something else; drag the
+window by its handle, resize it from any edge, and use <strong>Open in right panel</strong>
+to bring it back.
+Turn off <strong>Use devices</strong> in <strong>Settings → Devices</strong> to stop the
+helper processes; simulators and emulators keep running until you power them
+off.</p>
+<p>Simulators run on the machine that hosts the environment server. iOS needs
+macOS with Xcode. Android needs the SDK Platform-Tools, Android Emulator,
+and Command-line Tools (latest), plus a virtual device created in Android
+Studio&#39;s Device Manager. Moonfold detects standard SDK locations; set
+<code>ANDROID_HOME</code> for a custom location. The panel explains missing dependencies.
+After installing SDK tools, restart the environment server and refresh devices.</p>
+<p>Android emulator video also needs <code>ffmpeg</code> with the libx264 encoder on the device
+host&#39;s PATH, or an executable selected by <code>SERVE_EMU_FFMPEG</code> on that host. If
+opening an emulator reports an ffmpeg problem, install or fix the executable
+and retry opening it. After changing PATH or <code>SERVE_EMU_FFMPEG</code>, restart the
+environment server for local devices, or turn device support off and on for SSH
+devices, so the running tools inherit the new environment. Physical Android
+devices and iOS do not need ffmpeg.</p>
+<p>The screen is interactive: click and drag to touch, type while the screen is
+focused, and use the toolbar for Home, Back, and Recents on Android, rotate on
+iOS, and power off. Close the tab to stop watching; the device keeps running
+unless you power it off. Closed tabs stay closed after a reload. To watch the
+device again, choose it from <strong>+ → Device</strong>.</p>
+<p>Choose <strong>3D view</strong> to inspect supported devices while the live screen stays
+interactive. On iPhone Duo, use the fold and stance controls to change its
+physical pose, or pinch over the device to adjust the hinge. Turning the model
+to the other screen switches the live display and touch input to that screen.
+<strong>Restore 3D view</strong> returns the device to a screen-facing position.
+On supported Android foldables, use <strong>Fold device</strong> and <strong>Unfold device</strong> beside
+the screen to change its posture in either view.</p>
+<h2 id="tools"><a class="anchor" href="#tools">Tools</a></h2>
+<p>The toolbar&#39;s <strong>Tools</strong> button opens a drawer for the open device. It shows the
+foreground app, and lets you switch light and dark mode, change text size,
+flip accessibility settings, overlay the accessibility element frames on the
+screen, set a fake location, and grant or revoke app permissions. iOS also
+exposes Liquid Glass, color filters, VoiceOver, and sending a test push
+notification; Android adds orientation and toggling the network. The drawer
+only shows what the platform can do, and every control reflects the value read
+back from the device after a change.</p>
+<h2 id="agents-and-devices"><a class="anchor" href="#agents-and-devices">Agents and devices</a></h2>
+<p>When an agent opens a device, it floats over the chat in web and desktop clients
+connected to the thread, the same way an agent-driven browser does. Turn off
+<strong>Auto-show floating preview</strong> in <strong>Settings → Browser</strong> to open a
+right-panel tab instead.
+If the thread has several devices open, choose one in the viewer. Closing the
+viewer stops streaming and leaves the device available to the agent. Device
+activity also appears in the thread timeline.</p>
+<p>Agents drive the device through the <code>agent-device</code> command line. Moonfold
+Code installs and starts it only after <strong>Agents can use devices</strong> is on. iOS
+taps build a small test runner on first use, which takes a couple of minutes
+once per server. Restart an existing agent session after granting access so it
+receives the device CLI environment.</p>
+<p>To keep agents away from simulators, turn off <strong>Agents can use devices</strong> in
+<strong>Settings → Devices</strong>. This hides the device tools from agents
+started from then on; your own Device panel is unaffected.</p>
+<h2 id="remote-connections"><a class="anchor" href="#remote-connections">Remote connections</a></h2>
+<p>The device stream goes through the environment server, so it works over the
+local network, Tailscale, and Moonfold Connect. Live video needs a secure page
+(HTTPS or localhost); on a plain-HTTP remote origin iOS falls back to a slower
+still-image stream and Android cannot show video, except on EAS Simulator.</p>
+<h2 id="ssh-device-hosts"><a class="anchor" href="#ssh-device-hosts">SSH device hosts</a></h2>
+<p>In Settings → Devices, choose the environments that should use
+the host and choose <strong>Add source → Machine over SSH</strong>. Enter an SSH alias or <code>user@host</code>, with
+an optional identity file and port. These resolve on the environment server,
+so use the SSH configuration and keys available there. Password prompts are
+not supported.</p>
+<p><strong>Test connection</strong>, in the host&#39;s menu, checks SSH, Node, npm, and platform tools without installing
+anything, with a result for each selected environment. Targets that resolve to
+the environment’s own machine are skipped, since its devices are already local.
+The first device listing installs pinned device tools on the host.
+SSH device hosts currently need macOS or Linux. To use devices on a Windows
+machine, run Moonfold on that machine and connect to its environment.
+Node 22 or newer and npm must be available to non-interactive SSH commands.
+Moonfold checks common Homebrew and Android SDK locations; custom installations need
+the appropriate PATH and ANDROID_HOME on the host. Android emulator video needs
+<code>ffmpeg</code> with libx264 on that host; physical Android devices use scrcpy and do
+not need ffmpeg.</p>
+<p>The picker identifies devices by host when several hosts are configured.
+Connections recover after interruptions. Removing a host closes its device
+sessions and stops its Moonfold helpers when reachable; simulators keep running.</p>
+<p>Moonfold provides discovery, streaming, and control. Arrange app builds,
+installation, and connectivity to development servers such as Metro separately.
+A simulator on another machine cannot reach Metro through your environment&#39;s
+localhost without forwarding or another reachable address.</p>
+<h2 id="simlock-hosts-alpha"><a class="anchor" href="#simlock-hosts-alpha">Simlock hosts (alpha)</a></h2>
+<p><a href="https://incubator.callstack.com/simlock/" target="_blank" rel="noopener noreferrer">Simlock</a> pools iOS simulators and
+Android emulators across machines. If you run a Simlock gateway, Moonfold can lease
+devices from it. Simlock is new and unreleased, so this integration is an
+alpha: it may change or stop working with a newer Simlock. Moonfold does not install
+or manage Simlock; set up the gateway and its workers yourself. It needs a
+gateway and workers built from Simlock&#39;s <code>main</code> at
+<a href="https://github.com/callstackincubator/simlock/commit/6316e10" target="_blank" rel="noopener noreferrer">6316e10</a> or
+later, the first with a lease holder&#39;s screen and input.</p>
+<p>Turn on <strong>Settings → Labs → Simlock device hosts (alpha)</strong> and <strong>Use devices</strong>
+in Settings → Devices, then choose <strong>Add source → Simlock pool</strong> with an <strong>agent token</strong>
+(<code>simlock --gateway token create --role agent</code>). Give each Moonfold server its own
+token: Simlock counts every lease made with one token against the same
+requester, and allows one at a time unless the gateway&#39;s
+<code>lease.maxPerRequester</code> is raised to the host&#39;s <strong>Devices at once</strong>. The token
+leases devices and reaches only its own leases, but commands on a leased device
+run on its worker, so treat it like shell access to your workers. Moonfold sends it
+with every request, so use an HTTPS gateway URL, or plain HTTP only over an
+encrypted network such as Tailscale. The gateway
+and workers need <code>capabilities.stream.enabled</code> and <code>capabilities.input.enabled</code>
+for the live screen and for input.</p>
+<p>The picker lists the models your workers can make. Opening one takes a lease;
+closing it with <strong>Return device to the pool</strong>, or removing the host, returns it
+wiped. The panel keeps a watched device leased up to the host&#39;s lease limit.
+You can tap, swipe, type, and press Home, and Back and Recents on Android.
+Rotation, appearance, text size, device tools, and screenshots are not offered
+for Simlock devices; agents can still do them through <code>device_open</code>. On iOS 27
+simulators, typing on your keyboard does nothing; tap the on-screen keyboard
+instead. Workers must run the same agent-device
+version as Moonfold (see Device tool updates), and agent-device accepts app installs
+for a lease only from the folder it was opened from, which <code>device_open</code>
+names. A device cannot reach development servers on your machine through
+localhost; use an address its worker can reach.</p>
+<h2 id="device-tool-updates"><a class="anchor" href="#device-tool-updates">Device tool updates</a></h2>
+<p>The connected Moonfold server manages the device hub and agent tools on its own machine and configured SSH hosts. Required versions install automatically the next time those tools are used. In Settings → Devices, select a version and choose <strong>Check versions</strong> to read installed versions without installing tools or starting devices.</p>
+<p>To receive newer tool versions on a remote environment, update that environment&#39;s Moonfold server. Updating only the browser does not update the remote server. An offline host keeps its installed files, but an update needs network access before device support can start; Moonfold does not fall back to an older version. Reconnect the host and use Retry if installation fails. Existing device and agent-access settings are preserved.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/devices.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/default-browser/"
-            ><small>Previous</small><span>Use Moonfold as your default browser</span></a
-          ><a class="next" href="/docs/html-renders/"
-            ><small>Next</small><span>Visual replies</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#open-a-device">Open a device</a></li>
-            <li><a href="#tools">Tools</a></li>
-            <li><a href="#agents-and-devices">Agents and devices</a></li>
-            <li><a href="#remote-connections">Remote connections</a></li>
-            <li><a href="#ssh-device-hosts">SSH device hosts</a></li>
-            <li><a href="#device-tool-updates">Device tool updates</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/devices.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/default-browser/"><small>Previous</small><span>Use Moonfold as your default browser</span></a><a class="next" href="/docs/html-renders/"><small>Next</small><span>Visual replies</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#open-a-device">Open a device</a></li><li><a href="#tools">Tools</a></li><li><a href="#agents-and-devices">Agents and devices</a></li><li><a href="#remote-connections">Remote connections</a></li><li><a href="#ssh-device-hosts">SSH device hosts</a></li><li><a href="#simlock-hosts-alpha">Simlock hosts (alpha)</a></li><li><a href="#device-tool-updates">Device tool updates</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

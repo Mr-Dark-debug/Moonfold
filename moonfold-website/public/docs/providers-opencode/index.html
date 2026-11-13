@@ -1,284 +1,115 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>OpenCode · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Install and authenticate OpenCode on the machine running your environment, then enable it in Settings &gt; Providers. See provider setup. Moonfold requires OpenCode 1.14.19 or newer, including when you c"
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-opencode/" />
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://moonfold-website.vercel.app/docs/providers-opencode/"
-    />
-    <meta property="og:title" content="OpenCode · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Install and authenticate OpenCode on the machine running your environment, then enable it in Settings &gt; Providers. See provider setup. Moonfold requires OpenCode 1.14.19 or newer, including when you c"
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/" aria-current="page">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
-        <h1 id="opencode">OpenCode</h1>
-        <p>
-          Install and authenticate OpenCode on the machine running your environment, then enable it
-          in <strong>Settings &gt; Providers</strong>. See
-          <a href="/docs/install/#providers">provider setup</a>. Moonfold requires OpenCode 1.14.19
-          or newer, including when you connect an existing OpenCode server.
-        </p>
-        <h2 id="opencode-2"><a class="anchor" href="#opencode-2">OpenCode 2</a></h2>
-        <p>
-          Moonfold supports OpenCode 2.0.18 and newer. It detects the version on its own, so the
-          same provider settings work for OpenCode 1.x and 2.x. OpenCode 1.x shows
-          <strong>Limited support</strong> in its provider settings.
-        </p>
-        <p>
-          OpenCode 2 is a separate package, <code>@opencode/cli</code>. To move from 1.x, install it
-          yourself, for example <code>npm install -g @opencode/cli</code>. Then refresh provider
-          status. Moonfold&#39;s update button updates whichever package you have installed. It
-          never switches a 1.x install to 2.x.
-        </p>
-        <p>
-          OpenCode 2 converts the shared OpenCode database to its own format the first time it runs.
-          Don&#39;t run OpenCode 1.x and 2.x side by side on the same machine. Threads you started
-          on 1.x continue on 2.x.
-        </p>
-        <p>Plan mode uses OpenCode&#39;s <code>plan</code> agent.</p>
-        <h2 id="local-or-external-server">
-          <a class="anchor" href="#local-or-external-server">Local or external server</a>
-        </h2>
-        <p>
-          Leave <strong>Server URL</strong> empty to let Moonfold start OpenCode locally. A password
-          in provider settings applies to both that server and Moonfold&#39;s connection. With no
-          password setting, the local server uses <code>OPENCODE_SERVER_PASSWORD</code> from its
-          environment.
-        </p>
-        <p>
-          To use an existing OpenCode server, set <strong>Server URL</strong> and its password in
-          provider settings. Moonfold uses only that configured password for an external server; it
-          does not forward a local <code>OPENCODE_SERVER_PASSWORD</code>. If connection or version
-          checks fail, check the URL, credentials, and OpenCode version, then refresh provider
-          status.
-        </p>
-        <p>
-          After a lost connection, send another prompt to reconnect to the same OpenCode session.
-        </p>
-        <h2 id="approvals"><a class="anchor" href="#approvals">Approvals</a></h2>
-        <p>
-          OpenCode follows the shared <a href="/docs/permission-modes/">permission modes</a>.
-          <strong>Auto</strong> has the same rules as <strong>Supervised</strong> because OpenCode
-          has no AI approval reviewer. Environment files such as <code>.env</code> and
-          <code>.env.local</code> need approval in restricted modes even though normal file reads do
-          not; <code>.env.example</code> is allowed.
-        </p>
-        <p>
-          <strong>Allow for workspace</strong> applies to matching requests in other OpenCode
-          sessions using the same workspace. It is broader than the current thread, especially on a
-          shared external server. Use <strong>Allow once</strong> for a single request. Denying an
-          action does not stop the whole turn.
-        </p>
-        <h2 id="refresh-models-commands-and-skills">
-          <a class="anchor" href="#refresh-models-commands-and-skills"
-            >Refresh models, commands, and skills</a
-          >
-        </h2>
-        <p>
-          After changing an OpenCode login or configuration, use
-          <strong>Refresh provider status</strong> in <strong>Settings &gt; Providers</strong> for
-          that environment.Reconnecting also refreshes the catalog; periodic provider health checks
-          do not.
-        </p>
-        <p>
-          Credential changes are read on refresh. Native OpenCode configuration can remain cached
-          while the local helper is running. Let it sit for 30 seconds without model refreshes or
-          text-generation work, then refresh again to reload the files. Repeated refreshes keep the
-          helper alive. An external server may need its own reload or restart before Moonfold can
-          see configuration changes.
-        </p>
-        <p>
-          Existing threads keep their selected model and options even when it disappears from the
-          catalog. If OpenCode rejects that model, select an available one and retry.
-        </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>OpenCode · Moonfold docs</title>
+<meta name="description" content="Install and authenticate OpenCode on the machine running your environment, then enable it in Settings &gt; Providers. See provider setup. Moonfold requires OpenCode 1.14.19 or newer, including when you c">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-opencode/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-opencode/">
+<meta property="og:title" content="OpenCode · Moonfold docs">
+<meta property="og:description" content="Install and authenticate OpenCode on the machine running your environment, then enable it in Settings &gt; Providers. See provider setup. Moonfold requires OpenCode 1.14.19 or newer, including when you c">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/" aria-current="page">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
+<h1 id="opencode">OpenCode</h1>
+<p>Install and authenticate OpenCode on the machine running your environment, then
+enable it in <strong>Settings &gt; Providers</strong>. See <a href="/docs/install/#providers">provider setup</a>.
+Moonfold requires OpenCode 1.14.19 or newer, including when you connect an existing
+OpenCode server.</p>
+<h2 id="opencode-2"><a class="anchor" href="#opencode-2">OpenCode 2</a></h2>
+<p>Moonfold supports OpenCode 2.0.18 and newer. It detects the version on its own, so
+the same provider settings work for OpenCode 1.x and 2.x. OpenCode 1.x shows
+<strong>Limited support</strong> in its provider settings.</p>
+<p>OpenCode 2 is a separate package, <code>@opencode/cli</code>. To move from 1.x, install it
+yourself, for example <code>npm install -g @opencode/cli</code>. Then refresh provider status.
+Moonfold&#39;s update button updates whichever package you have installed. It never
+switches a 1.x install to 2.x.</p>
+<p>OpenCode 2 converts the shared OpenCode database to its own format the first time it
+runs. Don&#39;t run OpenCode 1.x and 2.x side by side on the same machine. Threads you
+started on 1.x continue on 2.x.</p>
+<p>Plan mode uses OpenCode&#39;s <code>plan</code> agent.</p>
+<h2 id="compaction"><a class="anchor" href="#compaction">Compaction</a></h2>
+<p>OpenCode compacts long conversations itself, and Moonfold has no setting for it. On
+OpenCode 2, change it under <code>compaction</code> in an OpenCode configuration file, such as
+<code>opencode.json</code>: <code>auto</code> turns
+automatic compaction on or off, <code>buffer</code> sets the token headroom, and <code>keep.tokens</code>
+sets how much recent context stays. OpenCode 1.x configures compaction differently.
+Send <code>/compact</code> to compact a thread yourself.</p>
+<h2 id="local-or-external-server"><a class="anchor" href="#local-or-external-server">Local or external server</a></h2>
+<p>Leave <strong>Server URL</strong> empty to let Moonfold start OpenCode locally. A password in
+provider settings applies to both that server and Moonfold&#39;s connection. With no
+password setting, the local server uses <code>OPENCODE_SERVER_PASSWORD</code> from its
+environment.</p>
+<p>To use an existing OpenCode server, set <strong>Server URL</strong> and its password in provider
+settings. Moonfold uses only that configured password for an external server; it
+does not forward a local <code>OPENCODE_SERVER_PASSWORD</code>. If connection or version checks
+fail, check the URL, credentials, and OpenCode version, then refresh provider status.</p>
+<p>After a lost connection, send another prompt to reconnect to the same OpenCode
+session.</p>
+<h2 id="approvals"><a class="anchor" href="#approvals">Approvals</a></h2>
+<p>OpenCode follows the shared <a href="/docs/permission-modes/">permission modes</a>. <strong>Auto</strong> has
+the same rules as <strong>Supervised</strong> because OpenCode has no AI approval reviewer.
+Environment files such as <code>.env</code> and <code>.env.local</code> need approval in restricted
+modes even though normal file reads do not; <code>.env.example</code> is allowed.</p>
+<p><strong>Allow for workspace</strong> applies to matching requests in other OpenCode sessions
+using the same workspace. It is broader than the current thread, especially on a
+shared external server. Use <strong>Allow once</strong> for a single request. Denying an action
+does not stop the whole turn.</p>
+<h2 id="refresh-models-commands-and-skills"><a class="anchor" href="#refresh-models-commands-and-skills">Refresh models, commands, and skills</a></h2>
+<p>After changing an OpenCode login or configuration, use <strong>Refresh provider status</strong>
+in <strong>Settings &gt; Providers</strong> for that environment.Reconnecting also refreshes the catalog; periodic provider
+health checks do not.</p>
+<p>Credential changes are read on refresh. Native OpenCode configuration can remain
+cached while the local helper is running. Let it sit for 30 seconds without model
+refreshes or text-generation work, then refresh again to reload the files. Repeated
+refreshes keep the helper alive. An external server may need its own reload or
+restart before Moonfold can see configuration changes.</p>
+<p>Existing threads keep their selected model and options even when it disappears
+from the catalog. If OpenCode rejects that model, select an available one and retry.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-opencode.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/cursor/"><small>Previous</small><span>Cursor</span></a
-          ><a class="next" href="/docs/providers-antigravity/"
-            ><small>Next</small><span>Antigravity</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#opencode-2">OpenCode 2</a></li>
-            <li><a href="#local-or-external-server">Local or external server</a></li>
-            <li><a href="#approvals">Approvals</a></li>
-            <li>
-              <a href="#refresh-models-commands-and-skills">Refresh models, commands, and skills</a>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-opencode.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/cursor/"><small>Previous</small><span>Cursor</span></a><a class="next" href="/docs/providers-antigravity/"><small>Next</small><span>Antigravity</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#opencode-2">OpenCode 2</a></li><li><a href="#compaction">Compaction</a></li><li><a href="#local-or-external-server">Local or external server</a></li><li><a href="#approvals">Approvals</a></li><li><a href="#refresh-models-commands-and-skills">Refresh models, commands, and skills</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

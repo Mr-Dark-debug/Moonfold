@@ -1,298 +1,135 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Welcome wizard · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Moonfold shows a setup flow when you open a new installation or connect to the hosted app for the first time. Existing workspaces skip this flow."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/welcome-wizard/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/welcome-wizard/" />
-    <meta property="og:title" content="Welcome wizard · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Moonfold shows a setup flow when you open a new installation or connect to the hosted app for the first time. Existing workspaces skip this flow."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/" aria-current="page">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Get started</p>
-        <h1 id="welcome-wizard">Welcome wizard</h1>
-        <p>
-          Moonfold shows a setup flow when you open a new installation or connect to the hosted app
-          for the first time. Existing workspaces skip this flow.
-        </p>
-        <h2 id="connect-your-computers">
-          <a class="anchor" href="#connect-your-computers">Connect your computers</a>
-        </h2>
-        <p>
-          Select one or more computers to set up. If you opened Moonfold directly from a server or
-          the desktop app, that computer is already connected and selected. It is identified by its
-          name, which may differ from the device running your browser.
-        </p>
-        <p>You can add more computers before continuing:</p>
-        <ul>
-          <li>
-            <strong>Moonfold Connect</strong> appears only in builds configured with a self-hosted
-            relay; see
-            <a href="/docs/remote-access/#moonfold-connect-self-hosted-only">Remote access</a>.
-          </li>
-          <li>
-            <strong>Add a computer</strong> connects directly to a server on your network or
-            tailnet. Start the server with <code>moonfold serve</code>, then run
-            <code>moonfold pair --tailscale</code> and paste the pairing link. You can also run
-            <code>moonfold serve --host &lt;address&gt;</code> and use
-            <code>moonfold pair</code> when the server is already reachable on your network.
-          </li>
-        </ul>
-        <p>
-          Saved computers and computers discovered through Moonfold Connect are selected by default.
-          Uncheck any you do not want to set up; this does not disconnect them. Continue when your
-          selected computers are connected. Setup checks agents across the selected computers, then
-          offers project import grouped by computer.
-        </p>
-        <p>
-          If Moonfold cannot confirm the workspace during startup, the setup flow shows
-          <strong>Still connecting</strong> instead of opening the app. Select
-          <strong>Reload</strong> to try again.
-        </p>
-        <p>
-          If Moonfold cannot read your saved settings, it shows
-          <strong>Could not read settings</strong>. Select <strong>Retry</strong> after storage
-          becomes available. Setup does not replace unreadable settings with defaults.
-        </p>
-        <h2 id="check-your-agents">
-          <a class="anchor" href="#check-your-agents">Check your agents</a>
-        </h2>
-        <p>
-          Moonfold checks each selected computer for Claude Code and Codex. If an agent is not
-          installed or signed in, select its action to open a terminal with the correct command
-          ready to run. Install uses the vendor&#39;s own installer, which keeps
-          <strong>Update now</strong> working in Settings. Other providers can be enabled in
-          Settings.
-        </p>
-        <p>
-          The setup terminal uses the home directory and environment configured for the selected
-          provider instance. Sensitive values remain redacted in Settings and terminal metadata
-          while the terminal process can use them.
-        </p>
-        <h2 id="import-your-projects">
-          <a class="anchor" href="#import-your-projects">Import your projects</a>
-        </h2>
-        <p>
-          Moonfold finds directories that Claude Code or Codex has used. Git repositories are listed
-          first, newest activity on top. When the remote is on GitHub, the group shows the
-          repository as <code>owner/name</code>. Clones with the same remote share one group.
-          Directories that are not git repositories sit under &quot;Other folders&quot;.
-        </p>
-        <p>
-          The default selection includes git repositories active within the last 30 days with at
-          least three conversations. Use the checkboxes, or &quot;Select all&quot; and &quot;Select
-          none&quot;, to change the selection. Linked git worktrees, Codex scratch directories under
-          <code>Documents/Codex</code>, and anything under <code>Downloads</code> are not offered.
-        </p>
-        <p>
-          A large or malformed history can reach the scan limit. Moonfold keeps the projects it
-          found and warns when projects or conversations may be missing.
-        </p>
-        <p>
-          Imported projects include Codex and Claude conversations active within the last 30 days.
-          You can continue those conversations in Moonfold.
-        </p>
-        <p>
-          Conversation import is best effort. Moonfold keeps the first user prompt and the newest
-          remaining visible user and assistant messages, with 200 messages total. It omits tool
-          activity and attachments. For Codex, it omits generated setup context only when a
-          canonical user event and a valid shared turn ID identify the same user turn. Ambiguous
-          legacy or response-only context stays in the imported conversation so Moonfold does not
-          remove user text. It reads one conversation at a time and skips files larger than 16 MiB.
-          It ignores malformed records and skips unreadable or unparseable conversations.
-        </p>
-        <p>
-          Each import attempt reads up to 100 conversation files and 64 MiB per project, with up to
-          100,000 input records. Run import again to continue a large batch. Completed conversations
-          are not imported again. You can continue without the remaining history.
-        </p>
-        <p>
-          You can continue without configuring agents or importing projects, or return to an earlier
-          step using the setup progress bar. Navigation pauses while an import is running.
-        </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Welcome wizard · Moonfold docs</title>
+<meta name="description" content="Moonfold shows a setup flow when you open a new installation. Existing workspaces skip this flow.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/welcome-wizard/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/welcome-wizard/">
+<meta property="og:title" content="Welcome wizard · Moonfold docs">
+<meta property="og:description" content="Moonfold shows a setup flow when you open a new installation. Existing workspaces skip this flow.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/" aria-current="page">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Get started</p>
+<h1 id="welcome-wizard">Welcome wizard</h1>
+<p>Moonfold shows a setup flow when you open a new installation. Existing
+workspaces skip this flow.</p>
+<p>Close setup while no import is running to go straight to the app. You can connect
+computers and agents later from Settings, or open <code>/welcome</code> to run setup again.
+Direct links, such as Settings, open normally before setup is done.</p>
+<h2 id="connect-your-computers"><a class="anchor" href="#connect-your-computers">Connect your computers</a></h2>
+<p>Select one or more computers to set up. If you opened Moonfold directly from a
+server or the desktop app, that computer is already connected and selected.
+It is identified by its name, which may differ from the device running your
+browser.</p>
+<p>You can add more computers before continuing:</p>
+<ul>
+<li><strong>Moonfold Connect</strong> appears only in builds configured with a self-hosted relay; see
+<a href="/docs/remote-access/#moonfold-connect-self-hosted-only">Remote access</a>.</li>
+<li><strong>Add a computer</strong> connects directly to a server on your network or tailnet.
+Start the server with <code>moonfold serve</code>, then run <code>moonfold pair --tailscale</code> and paste
+the pairing link. You can also run <code>moonfold serve --host &lt;address&gt;</code> and use
+<code>moonfold pair</code> when the server is already reachable on your network.</li>
+</ul>
+<p>A computer marked <strong>Client not supported</strong> runs a Moonfold version that cannot
+talk to this app. The message under its name says which side to update.</p>
+<p>Saved computers and computers discovered through Moonfold Connect are selected by
+default. Uncheck any you do not want to set up; this does not disconnect them.
+Continue when your selected computers are connected. Setup checks
+agents across the selected computers, then offers project import grouped by computer.</p>
+<p>If Moonfold cannot confirm the workspace during startup, the setup flow shows
+<strong>Still connecting</strong> instead of opening the app. Select <strong>Reload</strong> to try again.</p>
+<p>If Moonfold cannot read your saved settings, it shows <strong>Could not read settings</strong>.
+Select <strong>Retry</strong> after storage becomes available. Setup does not replace
+unreadable settings with defaults.</p>
+<h2 id="check-your-agents"><a class="anchor" href="#check-your-agents">Check your agents</a></h2>
+<p>Moonfold checks each selected computer for Claude Code and Codex. If an agent is
+not installed or signed in, select its action to open a terminal with the
+correct command ready to run. Install uses the vendor&#39;s own installer, which
+keeps <strong>Update now</strong> working in Settings. Other providers can be enabled in
+Settings.</p>
+<p>The setup terminal uses the home directory and environment configured for the
+selected provider instance. Sensitive values remain redacted in Settings and
+terminal metadata while the terminal process can use them.</p>
+<h2 id="import-your-projects"><a class="anchor" href="#import-your-projects">Import your projects</a></h2>
+<p>Moonfold finds directories that Claude Code, Codex or Pi has used. Git repositories
+are listed first, newest activity on top. When the remote is on GitHub, the
+group shows the repository as <code>owner/name</code>. Clones with the same remote share
+one group. Directories that are not git repositories sit under &quot;Other folders&quot;.</p>
+<p>The default selection includes git repositories active within the last 30 days
+with at least three conversations. Use the checkboxes, or &quot;Select all&quot; and
+&quot;Select none&quot;, to change the selection. Linked worktrees of bare repositories
+can be offered as separate projects. Other linked git worktrees, Codex scratch
+directories under <code>Documents/Codex</code>, and anything under <code>Downloads</code> are not
+offered.</p>
+<p>A large or malformed history can reach the scan limit. Moonfold keeps the
+projects it found and warns when projects or conversations may be missing.</p>
+<p>Imported projects include Claude, Codex and Pi conversations active within the last
+30 days. You can continue those conversations in Moonfold. Pi is off by default:
+enable it in Settings, then open <code>/welcome</code> to import its sessions. Pi sessions
+are read from each enabled Pi provider&#39;s session directory, which follows
+<code>PI_CODING_AGENT_SESSION_DIR</code> and <code>PI_CODING_AGENT_DIR</code> in its environment. A
+Pi conversation imports its active branch, the one Pi reopens.</p>
+<p>Conversation import is best effort. Moonfold keeps the first user prompt and the
+newest remaining visible user and assistant messages, with 200 messages total.
+It omits tool activity and attachments. For Codex, it omits generated setup
+context only when a canonical user event and a valid shared turn ID identify the
+same user turn. Ambiguous legacy or response-only context stays in the imported
+conversation so Moonfold does not remove user text. It reads one conversation at
+a time and skips files larger than 4 GiB. It also skips a conversation when the
+message text and metadata it keeps need more than 32 MiB of memory. Tool output
+does not count toward that limit. It ignores malformed records and skips
+unreadable or unparseable conversations.</p>
+<p>Each import attempt reads up to 100 conversation files and 4 GiB per project,
+with up to 100,000 input records. Run import again to continue a large batch.
+Completed conversations are not imported again. You can continue without the
+remaining history.</p>
+<p>You can continue without configuring agents or importing projects, or return to an earlier step
+using the setup progress bar. Navigation pauses while an import is running.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/welcome-wizard.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/install/"><small>Previous</small><span>Install Moonfold</span></a
-          ><a class="next" href="/docs/updating/"
-            ><small>Next</small><span>Updating Moonfold</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#connect-your-computers">Connect your computers</a></li>
-            <li><a href="#check-your-agents">Check your agents</a></li>
-            <li><a href="#import-your-projects">Import your projects</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/welcome-wizard.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/install/"><small>Previous</small><span>Install Moonfold</span></a><a class="next" href="/docs/updating/"><small>Next</small><span>Updating Moonfold</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#connect-your-computers">Connect your computers</a></li><li><a href="#check-your-agents">Check your agents</a></li><li><a href="#import-your-projects">Import your projects</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

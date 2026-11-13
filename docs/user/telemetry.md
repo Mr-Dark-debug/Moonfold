@@ -42,7 +42,7 @@ managed policy do not disable mobile tracing.
 
 When **Publish agent activity** is enabled on a host, it sends project and thread titles, model
 names, activity status, and environment and thread identifiers to the Moonfold Connect relay for
-[mobile notifications and live activities](./mobile-notifications.md). This is separate from
+mobile notifications and live activities. This is separate from
 product events and relay diagnostics. The telemetry opt-out does not disable it.
 
 To stop publishing, turn off **Publish agent activity** under **Settings > Sharing & access** on

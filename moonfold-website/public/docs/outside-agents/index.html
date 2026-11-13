@@ -1,316 +1,155 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Outside agents · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Agents that Moonfold did not start can work with an environment through its MCP server. They can read projects and threads, start and message threads, and check which providers and models are availabl"
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/outside-agents/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/outside-agents/" />
-    <meta property="og:title" content="Outside agents · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Agents that Moonfold did not start can work with an environment through its MCP server. They can read projects and threads, start and message threads, and check which providers and models are availabl"
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/" aria-current="page">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
-        <h1 id="outside-agents">Outside agents</h1>
-        <p>
-          Agents that Moonfold did not start can work with an environment through its MCP server.
-          They can read projects and threads, start and message threads, and check which providers
-          and models are available. This covers Claude Code or Codex in your own terminal, ChatGPT,
-          and bots that support MCP. Each agent signs in once, and you choose what it may do.
-        </p>
-        <h2 id="get-the-mcp-url"><a class="anchor" href="#get-the-mcp-url">Get the MCP URL</a></h2>
-        <p>
-          In <strong>Settings → Connections</strong>, open a saved environment&#39;s menu and choose
-          <strong>Copy MCP URL</strong>. The URL is the environment&#39;s address followed by
-          <code>/mcp</code>, for example:
-        </p>
-        <pre><code class="language-text">https://&lt;environment-address&gt;/mcp
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Outside agents · Moonfold docs</title>
+<meta name="description" content="Agents that Moonfold did not start can work with an environment through its MCP server. They can read projects and threads, start and message threads, and check which providers and models are availabl">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/outside-agents/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/outside-agents/">
+<meta property="og:title" content="Outside agents · Moonfold docs">
+<meta property="og:description" content="Agents that Moonfold did not start can work with an environment through its MCP server. They can read projects and threads, start and message threads, and check which providers and models are availabl">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/" aria-current="page">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
+<h1 id="outside-agents">Outside agents</h1>
+<p>Agents that Moonfold did not start can work with an environment through its MCP
+server. They can read projects and threads, start and message threads, and
+check which providers and models are available. This covers Claude Code or
+Codex in your own terminal, ChatGPT, and bots that support MCP. Each agent signs
+in once, and you choose what it may do.</p>
+<h2 id="get-the-mcp-url"><a class="anchor" href="#get-the-mcp-url">Get the MCP URL</a></h2>
+<p>In <strong>Settings → Environments</strong>, open a saved environment&#39;s menu and choose
+<strong>Copy MCP URL</strong>. The URL is the environment&#39;s address followed by <code>/mcp</code>, for
+example:</p>
+<pre><code class="language-text">https://&lt;environment-address&gt;/mcp
 </code></pre>
-        <p>
-          The copied URL uses the route this device is connected over, so an agent on the same
-          device can reach it.
-        </p>
-        <ul>
-          <li>
-            <strong>An agent on your own computers</strong> can use any address that computer
-            reaches the environment at: a LAN or Tailscale address, Moonfold Connect, or
-            <code>localhost</code> on the host. See
-            <a href="/docs/remote-access/">remote access</a>.
-          </li>
-          <li>
-            <strong>A hosted agent</strong>, such as ChatGPT or a bot running in the cloud, must
-            reach the environment from the internet. Use the Moonfold Connect address. A Tailscale
-            address only works from your own tailnet.
-          </li>
-        </ul>
-        <h2 id="approve-a-sign-in">
-          <a class="anchor" href="#approve-a-sign-in">Approve a sign-in</a>
-        </h2>
-        <p>
-          The first time an agent connects, it opens a sign-in page on the environment. The page
-          names the agent and where its access goes:
-        </p>
-        <ul>
-          <li>
-            For an agent on your computer, approval returns to a <code>localhost</code> address on
-            the computer that opened the page.
-          </li>
-          <li>
-            For a hosted agent, approval goes to that service, such as <code>chatgpt.com</code>.
-            Anyone who runs that service gets the access.
-          </li>
-        </ul>
-        <p>
-          Only approve a sign-in you just started. To approve, enter a pairing code from
-          <strong>Settings → Connections</strong> or from
-          <code>moonfold auth pairing create</code> on the host. A browser already signed in to the
-          environment as an administrator can approve without a code.
-        </p>
-        <p>Then choose what the agent may do:</p>
-        <ul>
-          <li>
-            <strong>Read only</strong> is the default. The agent can read projects and threads and
-            see the available providers and models. It cannot change anything.
-          </li>
-          <li>
-            <strong>Supervised</strong> through <strong>Full access</strong> also let it start,
-            message and stop threads in every project. A thread it starts or steers cannot run with
-            more permissions than the mode you chose.
-          </li>
-        </ul>
-        <h2 id="claude-code"><a class="anchor" href="#claude-code">Claude Code</a></h2>
-        <pre><code class="language-sh">claude mcp add --transport http moonfold https://&lt;environment-address&gt;/mcp
+<p>The copied URL uses the route this device is connected over, so an agent on the
+same device can reach it.</p>
+<ul>
+<li><strong>An agent on your own computers</strong> can use <code>localhost</code> on the host, Moonfold
+Connect, or any <code>https</code> address, such as
+<a href="/docs/remote-access/#tailscale-https">Tailscale HTTPS</a>. Signing in sends the
+agent&#39;s credentials to the environment, and agents only do that over <code>https</code>
+or to <code>localhost</code>. A plain-<code>http</code> LAN or Tailscale address, like
+<code>http://100.x.y.z:3773</code>, lets an agent find the environment but not finish
+signing in.</li>
+<li><strong>A hosted agent</strong>, such as ChatGPT or a bot running in the cloud, must reach
+the environment from the internet. Use the Moonfold Connect address. A Tailscale
+address only works from your own tailnet.</li>
+</ul>
+<h2 id="approve-a-sign-in"><a class="anchor" href="#approve-a-sign-in">Approve a sign-in</a></h2>
+<p>The first time an agent connects, it opens a sign-in page on the environment.
+The page names the agent and where its access goes:</p>
+<ul>
+<li>For an agent on your computer, approval returns to a <code>localhost</code> address on
+the computer that opened the page.</li>
+<li>For a hosted agent, approval goes to that service, such as <code>chatgpt.com</code>.
+Anyone who runs that service gets the access.</li>
+</ul>
+<p>Only approve a sign-in you just started. To approve, enter a pairing code from
+<strong>Settings → Sharing &amp; access</strong> or from <code>moonfold auth pairing create</code> on the host. A
+browser already signed in to the environment with permission to manage access
+can approve without a code.</p>
+<p>Then choose what the agent may do:</p>
+<ul>
+<li><strong>Read only</strong> is the default. The agent can read projects and threads and see
+the available providers and models. It cannot change anything.</li>
+<li><strong>Supervised</strong> through <strong>Full access</strong> also let it start, message and stop
+threads in every project. A thread it starts or steers cannot run with more
+permissions than the mode you chose.</li>
+</ul>
+<h2 id="claude-code"><a class="anchor" href="#claude-code">Claude Code</a></h2>
+<pre><code class="language-sh">claude mcp add --transport http moonfold https://&lt;environment-address&gt;/mcp
 claude mcp login moonfold
 </code></pre>
-        <p>
-          <code>claude mcp login</code> opens the sign-in page in your browser. On a machine without
-          a browser, add <code>--no-browser</code>, open the printed URL elsewhere, and paste the
-          final URL back when asked. <code>claude mcp list</code> shows <code>moonfold</code> as
-          connected once you approve.
-        </p>
-        <h2 id="codex"><a class="anchor" href="#codex">Codex</a></h2>
-        <pre><code class="language-sh">codex mcp add moonfold --url https://&lt;environment-address&gt;/mcp
+<p><code>claude mcp login</code> opens the sign-in page in your browser. On a machine
+without a browser, add <code>--no-browser</code>, open the printed URL elsewhere, and
+paste the final URL back when asked. <code>claude mcp list</code> shows <code>moonfold</code> as connected
+once you approve.</p>
+<h2 id="codex"><a class="anchor" href="#codex">Codex</a></h2>
+<pre><code class="language-sh">codex mcp add moonfold --url https://&lt;environment-address&gt;/mcp
 codex mcp login moonfold
 </code></pre>
-        <p>
-          <code>codex mcp login --no-browser</code> prints the sign-in URL instead of opening it.
-          <code>codex mcp list</code> shows <code>moonfold</code> with OAuth once you approve.
-        </p>
-        <h2 id="chatgpt"><a class="anchor" href="#chatgpt">ChatGPT</a></h2>
-        <p>Add the environment as a custom MCP app in ChatGPT&#39;s apps settings:</p>
-        <ol>
-          <li>Create a new app or plugin with a custom MCP server.</li>
-          <li>
-            Set the server URL to <code>https://&lt;environment-address&gt;/mcp</code>, using the
-            Moonfold Connect address.
-          </li>
-          <li>
-            Choose <strong>OAuth</strong> for authentication. ChatGPT discovers the rest; you do not
-            need a client ID or secret.
-          </li>
-          <li>Create the app, then approve the sign-in page that opens.</li>
-        </ol>
-        <h2 id="other-agents-and-bots">
-          <a class="anchor" href="#other-agents-and-bots">Other agents and bots</a>
-        </h2>
-        <p>
-          Any agent that supports remote MCP servers over HTTP with OAuth can connect. Give it the
-          MCP URL and choose OAuth, and the agent finds the sign-in settings itself. Agents without
-          OAuth support cannot connect.
-        </p>
-        <h2 id="remove-an-agent"><a class="anchor" href="#remove-an-agent">Remove an agent</a></h2>
-        <p>
-          Approved agents appear under <strong>Settings → Connections</strong> like other clients.
-          Revoke one there to cut off its access immediately. A sign-in lasts 30 days; after that
-          the agent asks you to approve it again.
-        </p>
+<p><code>codex mcp login --no-browser</code> prints the sign-in URL instead of opening it.
+<code>codex mcp list</code> shows <code>moonfold</code> with OAuth once you approve.</p>
+<h2 id="chatgpt"><a class="anchor" href="#chatgpt">ChatGPT</a></h2>
+<p>Add the environment as a custom MCP app in ChatGPT&#39;s apps settings:</p>
+<ol>
+<li>Create a new app or plugin with a custom MCP server.</li>
+<li>Set the server URL to <code>https://&lt;environment-address&gt;/mcp</code>, using the Moonfold
+Connect address.</li>
+<li>Choose <strong>OAuth</strong> for authentication. ChatGPT discovers the rest; you do not
+need a client ID or secret.</li>
+<li>Create the app, then approve the sign-in page that opens.</li>
+</ol>
+<h2 id="other-agents-and-bots"><a class="anchor" href="#other-agents-and-bots">Other agents and bots</a></h2>
+<p>Any agent that supports remote MCP servers over HTTP with OAuth can connect. Give
+it the MCP URL and choose OAuth, and the agent finds the sign-in settings itself.
+Agents without OAuth support cannot connect.</p>
+<h2 id="scripts-on-the-host"><a class="anchor" href="#scripts-on-the-host">Scripts on the host</a></h2>
+<p>On the machine that runs the environment, <code>moonfold thread</code> uses the same tools
+without a sign-in:</p>
+<pre><code class="language-sh">id=$(moonfold thread start . &quot;Find why the tests are slow&quot;)
+moonfold thread send &quot;$id&quot; &quot;Now fix it&quot; --wait
+moonfold thread show &quot;$id&quot;
+moonfold thread list
+</code></pre>
+<p><code>.</code> means the project that contains the current folder; a project id also
+works. A new thread uses the project&#39;s default model and permission mode, and
+runs in the project folder unless you pass <code>--worktree &lt;base-branch&gt;</code>. <code>send</code>
+never interrupts: a busy thread gets the message as its next turn. Pass <code>-</code> as
+the message to read it from stdin.</p>
+<p><code>--wait</code> prints the agent&#39;s reply. It exits 1 when the run fails or stops, and
+2 when the agent waits for an answer you give in the app. Add <code>--json</code> for a
+result that always includes the thread id.</p>
+<h2 id="remove-an-agent"><a class="anchor" href="#remove-an-agent">Remove an agent</a></h2>
+<p>Approved agents appear under <strong>Settings → Sharing &amp; access</strong> like other clients.
+Revoke one there to cut off its access immediately. A sign-in lasts 30 days;
+after that the agent asks you to approve it again.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/outside-agents.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/open-source-licenses/"
-            ><small>Previous</small><span>Open source licenses</span></a
-          ><a class="next" href="/docs/project-settings/"
-            ><small>Next</small><span>Settings and project overrides</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#get-the-mcp-url">Get the MCP URL</a></li>
-            <li><a href="#approve-a-sign-in">Approve a sign-in</a></li>
-            <li><a href="#claude-code">Claude Code</a></li>
-            <li><a href="#codex">Codex</a></li>
-            <li><a href="#chatgpt">ChatGPT</a></li>
-            <li><a href="#other-agents-and-bots">Other agents and bots</a></li>
-            <li><a href="#remove-an-agent">Remove an agent</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/outside-agents.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/orbit/"><small>Previous</small><span>Orbit</span></a><a class="next" href="/docs/project-settings/"><small>Next</small><span>Settings and project overrides</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#get-the-mcp-url">Get the MCP URL</a></li><li><a href="#approve-a-sign-in">Approve a sign-in</a></li><li><a href="#claude-code">Claude Code</a></li><li><a href="#codex">Codex</a></li><li><a href="#chatgpt">ChatGPT</a></li><li><a href="#other-agents-and-bots">Other agents and bots</a></li><li><a href="#scripts-on-the-host">Scripts on the host</a></li><li><a href="#remove-an-agent">Remove an agent</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

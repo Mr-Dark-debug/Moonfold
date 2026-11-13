@@ -1,389 +1,170 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>ACP providers · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Moonfold can run installed ACP commands or coding agents from the official ACP Registry. Registry agents bring their own models, tools, and sign-in, while Moonfold provides projects, threads, checkpoi"
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-acp/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-acp/" />
-    <meta property="og:title" content="ACP providers · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Moonfold can run installed ACP commands or coding agents from the official ACP Registry. Registry agents bring their own models, tools, and sign-in, while Moonfold provides projects, threads, checkpoi"
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/" aria-current="page">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
-        <h1 id="acp-providers">ACP providers</h1>
-        <p>
-          Moonfold can run installed ACP commands or coding agents from the official
-          <a
-            href="https://agentclientprotocol.com/get-started/registry"
-            target="_blank"
-            rel="noopener noreferrer"
-            >ACP Registry</a
-          >. Registry agents bring their own models, tools, and sign-in, while Moonfold provides
-          projects, threads, checkpoints, and task delegation.
-        </p>
-        <p>
-          Google Antigravity is available through its official <code>antigravity-acp</code> Registry
-          entry. Add it like any other Registry agent; it does not need an Antigravity-specific
-          Moonfold provider.
-        </p>
-        <p>
-          Moonfold prefers the current ACP v2 preview protocol and uses its richer messages, usage,
-          plans, configuration, compaction, and agent-terminal updates when the agent supports them.
-          It also negotiates ACP v1 for Registry agents that have not migrated yet, so agents such
-          as Pi continue to work through the same generic integration.
-        </p>
-        <h2 id="add-an-agent"><a class="anchor" href="#add-an-agent">Add an agent</a></h2>
-        <ol>
-          <li>Open <strong>Settings → Providers</strong>.</li>
-          <li>Select <strong>Add provider</strong> and search the ACP Registry.</li>
-          <li>Search for the agent and select <strong>Add</strong> on its result.</li>
-          <li>Confirm the name and instance ID, then complete the agent&#39;s sign-in step.</li>
-        </ol>
-        <p>
-          Search only shows agents that can run on the connected server. Registry agents are
-          third-party code; review an agent&#39;s source and license before adding it.
-        </p>
-        <h2 id="add-a-local-command">
-          <a class="anchor" href="#add-a-local-command">Add a local command</a>
-        </h2>
-        <p>
-          In <strong>Settings → Providers → Add provider</strong>, select
-          <strong>Local ACP command</strong>. Enter the executable name or path on the selected
-          environment, add one literal argument per row, and choose a display name. DeepSeek Harness
-          has its own entry in the agent search; see
-          <a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a>.
-        </p>
-        <p>
-          Local commands require no registry entry or download. Environment overrides apply to the
-          command; credentials and skills remain managed by the installed agent or its wrapper.
-          Models and reasoning options come from ACP, including model IDs that contain JSON.
-          Moonfold launches the executable directly without expanding shell expressions.
-        </p>
-        <h2 id="where-agents-run">
-          <a class="anchor" href="#where-agents-run">Where agents run</a>
-        </h2>
-        <p>
-          Registry agents always run on the machine that hosts your Moonfold server. That stays true
-          when you connect from another device, through Moonfold Connect, or a relay.
-        </p>
-        <p>
-          Agents install under <code>tools/&lt;agent-id&gt;/&lt;version&gt;/</code> inside Moonfold
-          home. Moonfold verifies SHA-256 when the Registry entry provides one; entries without a
-          checksum retain the Registry&#39;s HTTPS distribution guarantee. Registry
-          <code>npx</code> and <code>uvx</code> packages use Moonfold-owned npm prefixes and Python
-          tool directories at the exact version published by the Registry. Their commands are
-          available in a new server terminal for sign-in and direct use. Removing an agent&#39;s
-          last provider instance removes Moonfold-managed binary files but keeps package installs.
-          To use an existing local binary, set <strong>Executable override</strong> explicitly.
-        </p>
-        <h2 id="signing-in"><a class="anchor" href="#signing-in">Signing in</a></h2>
-        <p>
-          Open the agent&#39;s account section in <strong>Settings → Providers</strong> on web or
-          desktop. Choose <strong>Sign in</strong> and, if the agent offers several methods, select
-          one.
-        </p>
-        <p>
-          Browser sign-in shows the agent&#39;s URL and waits for you to open or copy it before
-          telling the agent to proceed. The page opens on your device, while the agent runs on the
-          environment. Terminal methods run in an in-app terminal on that environment.Moonfold
-          reconnects after terminal login and waits for the agent to confirm sign-in before
-          reporting success. You can cancel or retry an expired attempt.
-        </p>
-        <p>
-          Browser and terminal sign-in leave credentials in the agent&#39;s own store. Agents that
-          use API keys through environment variables still take those keys in the instance&#39;s
-          environment settings. A configured environment or agent home applies to both sign-in and
-          chat.
-        </p>
-        <p>
-          If the agent advertises logout, choose <strong>Sign out</strong>. Changing a shared agent
-          login stops running threads for instances of that same agent on the environment. Thread
-          history and workspace files are kept. ACP does not describe account isolation, so adding
-          another instance does not guarantee a separate account; use the agent&#39;s own
-          configuration to isolate accounts when supported.
-        </p>
-        <p>
-          If an agent cannot complete its advertised flow remotely, its CLI remains available on the
-          server. For example, Codex supports <code>codex login --device-auth</code>, and Grok Build
-          supports <code>grok login --device-auth</code>.
-        </p>
-        <h2 id="models-and-options">
-          <a class="anchor" href="#models-and-options">Models and options</a>
-        </h2>
-        <p>
-          The model picker lists the models the agent reports. If the agent reports none, or hides
-          some, add your own model IDs under <strong>Custom models</strong> in the instance
-          settings.
-        </p>
-        <p>
-          Other settings the agent offers, such as reasoning effort or approval mode, appear in the
-          composer&#39;s model options menu like they do for built-in providers. Agents with their
-          own plan and build modes follow Moonfold&#39;s Plan and Build toggle. Models and options
-          that change while an agent is running update the picker without waiting for another
-          provider probe.
-        </p>
-        <h2 id="commands-and-skills">
-          <a class="anchor" href="#commands-and-skills">Commands and skills</a>
-        </h2>
-        <p>
-          Slash commands the agent provides appear under <strong>Provider</strong> in the
-          <code>/</code> menu while a session is running. Commands the agent names with a
-          <code>$</code> prefix appear in Moonfold&#39;s <code>$</code> skill menu instead.
-        </p>
-        <h2 id="native-sessions"><a class="anchor" href="#native-sessions">Native sessions</a></h2>
-        <p>
-          When an agent advertises ACP session listing and import support, expand its provider card,
-          choose a project, and select <strong>List sessions</strong>. Importing one creates a
-          deterministic Moonfold thread backed by that native session. Importing the same agent
-          session again returns the existing thread, including when another client performs the
-          import.
-        </p>
-        <p>
-          The thread keeps the native session&#39;s title and last-update value as provider metadata
-          without overwriting a title you set in Moonfold. Agents that report ACP context usage
-          drive the composer&#39;s context meter and cumulative cost metadata. Text resources and
-          links render as assistant output; binary resources, images, and audio that Moonfold cannot
-          render yet appear as explicit placeholders instead of disappearing.
-        </p>
-        <h2 id="permissions-and-terminals">
-          <a class="anchor" href="#permissions-and-terminals">Permissions and terminals</a>
-        </h2>
-        <p>
-          Registry agents read files, edit, and run commands themselves, under their own sandbox and
-          approval rules. They start in their own default mode, and their mode picker in the model
-          options menu switches it. How far an agent is confined depends on that mode and the
-          agent&#39;s own settings, so use its sandbox and permission controls when that matters.
-        </p>
-        <p>
-          When a registry agent asks for approval, Moonfold answers by the thread&#39;s
-          <a href="/docs/permission-modes/">permission mode</a>: <strong>Supervised</strong> shows
-          the request in the conversation, <strong>Auto-accept edits</strong> approves edits and
-          shows the rest, and <strong>Auto</strong> and <strong>Full access</strong> approve
-          automatically. File reads and searches never wait for approval.
-        </p>
-        <p>
-          Devin runs its commands through Moonfold&#39;s terminals, and those commands follow the
-          thread&#39;s permission mode. For other agents, Moonfold shows the command, output, and
-          exit status the agent reports but does not run or stop their terminals.
-        </p>
-        <p>
-          Registry agents can schedule work and use Moonfold&#39;s MCP tools. Child-task
-          presentation depends on what the agent exposes: ACP has no portable native
-          subagent-lineage contract, so richer delegation views remain agent-specific.
-        </p>
-        <h2 id="checkpoints"><a class="anchor" href="#checkpoints">Checkpoints</a></h2>
-        <p>
-          Checkpoint rollback restores your files as usual. ACP agents cannot rewind their own
-          conversation, so the next turn after a rollback starts a fresh agent session that no
-          longer remembers the conversation from before the checkpoint.
-        </p>
-        <p>
-          Registry instances are not used for Moonfold&#39;s app-owned text generation, such as
-          thread titles, commit messages, branch names, or pull request descriptions. Configure a
-          text-generation-capable provider for those actions.
-        </p>
-        <h2 id="advanced-configuration">
-          <a class="anchor" href="#advanced-configuration">Advanced configuration</a>
-        </h2>
-        <ul>
-          <li>
-            <strong>Executable override</strong> runs an existing local executable instead of the
-            managed distribution, keeping the registry-declared arguments and environment.
-          </li>
-          <li>
-            <strong>Authentication method</strong> picks a specific method when the agent advertises
-            more than one.
-          </li>
-          <li><strong>Custom models</strong> adds model IDs the agent does not report.</li>
-        </ul>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>ACP providers · Moonfold docs</title>
+<meta name="description" content="Moonfold can run installed ACP commands or coding agents from the official ACP Registry. Registry agents bring their own models, tools, and sign-in, while Moonfold provides projects, threads, checkpoi">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-acp/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-acp/">
+<meta property="og:title" content="ACP providers · Moonfold docs">
+<meta property="og:description" content="Moonfold can run installed ACP commands or coding agents from the official ACP Registry. Registry agents bring their own models, tools, and sign-in, while Moonfold provides projects, threads, checkpoi">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/" aria-current="page">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
+<h1 id="acp-providers">ACP providers</h1>
+<p>Moonfold can run installed ACP commands or coding agents from the official
+<a href="https://agentclientprotocol.com/get-started/registry" target="_blank" rel="noopener noreferrer">ACP Registry</a>. Registry agents bring their
+own models, tools, and sign-in, while Moonfold provides projects, threads, checkpoints, and task
+delegation.</p>
+<p>Agents that Moonfold supports as their own providers, such as Codex, Claude, Cursor, Grok, OpenCode,
+Pi, and <a href="/docs/providers-antigravity/">Antigravity</a>, don&#39;t appear in the Registry list. Enable them in
+<strong>Settings → Providers</strong> instead.</p>
+<p>Moonfold prefers the current ACP v2 preview protocol and uses its richer messages, usage, plans,
+configuration, compaction, and agent-terminal updates when the agent supports them. It also
+negotiates ACP v1 for Registry agents that have not migrated yet, so they continue to work through
+the same generic integration.</p>
+<p>Claude Agent uses the ACP v2 preview by default for Registry and local <code>claude-agent-acp</code>
+commands. If you encounter preview issues, set <code>CLAUDE_AGENT_ACP_EXPERIMENTAL_V2=0</code> in the
+provider instance&#39;s environment overrides to use ACP v1.</p>
+<h2 id="add-an-agent"><a class="anchor" href="#add-an-agent">Add an agent</a></h2>
+<ol>
+<li>Open <strong>Settings → Providers</strong>.</li>
+<li>Select <strong>Add provider</strong>, then <strong>Show more</strong>.</li>
+<li>Search the ACP Registry for the agent and select <strong>Add</strong> on its result.</li>
+<li>Confirm the name and instance ID, then complete the agent&#39;s sign-in step.</li>
+</ol>
+<p>Search only shows agents that can run on the connected server. Registry agents are third-party
+code; review an agent&#39;s source and license before adding it.</p>
+<h2 id="add-a-local-command"><a class="anchor" href="#add-a-local-command">Add a local command</a></h2>
+<p>In <strong>Settings → Providers → Add provider</strong>, select <strong>Show more</strong>, then <strong>Local ACP command</strong>. Enter the executable
+name or path on the selected environment, add one literal argument per row, and choose a display
+name. DeepSeek Harness has its own entry in the agent search; see
+<a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a>.</p>
+<p>Local commands require no registry entry or download. Environment overrides apply to the command;
+credentials and skills remain managed by the installed agent or its wrapper. Models and reasoning
+options come from ACP, including model IDs that contain JSON. Moonfold launches the executable directly
+without expanding shell expressions.</p>
+<h2 id="where-agents-run"><a class="anchor" href="#where-agents-run">Where agents run</a></h2>
+<p>Registry agents always run on the machine that hosts your Moonfold server. That stays true when you
+connect from another device, through Moonfold Connect, or a relay.</p>
+<p>Agents install under <code>tools/&lt;agent-id&gt;/&lt;version&gt;/</code> inside Moonfold home. Moonfold verifies SHA-256 when the Registry entry
+provides one; entries without a checksum retain the Registry&#39;s HTTPS distribution guarantee.
+Registry <code>npx</code> and <code>uvx</code> packages use Moonfold-owned npm prefixes and Python tool directories at the exact
+version published by the Registry. Their commands are available in a new server terminal for
+sign-in and direct use. Removing an agent&#39;s last provider instance removes Moonfold-managed binary files
+but keeps package installs. To use an existing local binary, set <strong>Executable override</strong> explicitly.</p>
+<h2 id="signing-in"><a class="anchor" href="#signing-in">Signing in</a></h2>
+<p>Open the agent&#39;s account section in <strong>Settings → Providers</strong> on web or desktop. Choose
+<strong>Sign in</strong> and, if the agent offers several methods, select one.</p>
+<p>Browser sign-in shows the agent&#39;s URL and waits for you to open or copy it before telling the
+agent to proceed. The page opens on your device, while the agent runs on the environment.
+Terminal methods run in an in-app terminal on that environment.Moonfold reconnects after terminal login and waits for the
+agent to confirm sign-in before reporting success. You can cancel or retry an expired attempt.</p>
+<p>Browser and terminal sign-in leave credentials in the agent&#39;s own store. Agents that use API keys
+through environment variables still take those keys in the instance&#39;s environment settings.
+A configured environment or agent home applies to both sign-in and chat.</p>
+<p>If the agent advertises logout, choose <strong>Sign out</strong>. Changing a shared agent login stops running
+threads for instances of that same agent on the environment. Thread history and workspace files
+are kept. ACP does not describe account isolation, so adding another instance does not guarantee
+a separate account; use the agent&#39;s own configuration to isolate accounts when supported.</p>
+<p>If an agent cannot complete its advertised flow remotely, its CLI remains available on the
+server. For example, Codex supports <code>codex login --device-auth</code>, and Grok Build supports
+<code>grok login --device-auth</code>.</p>
+<h2 id="models-and-options"><a class="anchor" href="#models-and-options">Models and options</a></h2>
+<p>The model picker lists the models the agent reports. If the agent reports none, or hides some, add
+your own model IDs under <strong>Custom models</strong> in the instance settings.</p>
+<p>Other settings the agent offers, such as reasoning effort or approval mode, appear in the
+composer&#39;s model picker, beside the model list, like they do for built-in providers. Agents with their own plan and
+build modes follow Moonfold&#39;s Plan and Build toggle. Models and options that change while an agent
+is running update the picker without waiting for another provider probe.</p>
+<h2 id="commands-and-skills"><a class="anchor" href="#commands-and-skills">Commands and skills</a></h2>
+<p>Slash commands the agent provides appear under <strong>Provider</strong> in the <code>/</code> menu while a session is
+running. Commands the agent names with a <code>$</code> prefix appear in Moonfold&#39;s <code>$</code> skill menu instead.</p>
+<h2 id="native-sessions"><a class="anchor" href="#native-sessions">Native sessions</a></h2>
+<p>When an agent advertises ACP session listing and import support, expand its provider card,
+choose a project, and select <strong>List sessions</strong>. Importing one creates a deterministic Moonfold thread
+backed by that native session. Importing the same agent session again returns the existing thread,
+including when another client performs the import.</p>
+<p>The thread keeps the native session&#39;s title and last-update value as provider metadata without
+overwriting a title you set in Moonfold. Agents that report ACP context usage drive the composer&#39;s
+context meter and cumulative cost metadata. The meter is off by default; see
+<a href="/docs/composer/#commands-and-skills">commands and skills</a> to enable it on web and desktop.
+Text resources and links render as assistant output;
+binary resources, images, and audio that Moonfold cannot render yet appear as explicit placeholders
+instead of disappearing.</p>
+<h2 id="permissions-and-terminals"><a class="anchor" href="#permissions-and-terminals">Permissions and terminals</a></h2>
+<p>Registry agents read files, edit, and run commands themselves, under their own sandbox and
+approval rules. They start in their own default mode, and their mode picker in the model options
+menu switches it. How far an agent is confined depends on that mode and the agent&#39;s own settings,
+so use its sandbox and permission controls when that matters.</p>
+<p>When a registry agent asks for approval, Moonfold answers by the thread&#39;s
+<a href="/docs/permission-modes/">permission mode</a>: <strong>Supervised</strong> shows the request in the conversation,
+<strong>Auto-accept edits</strong> approves edits and shows the rest, and <strong>Auto</strong> and <strong>Full access</strong> approve
+automatically. File reads and searches never wait for approval.</p>
+<p>Devin runs its commands through Moonfold&#39;s terminals, and those commands follow the thread&#39;s
+permission mode. For other agents, Moonfold shows the command, output, and exit status the agent
+reports but does not run or stop their terminals.</p>
+<p>Registry agents can schedule work and use Moonfold&#39;s MCP tools. Child-task presentation depends on what
+the agent exposes: ACP has no portable native subagent-lineage contract, so richer delegation views
+remain agent-specific.</p>
+<h2 id="checkpoints"><a class="anchor" href="#checkpoints">Checkpoints</a></h2>
+<p>Checkpoint rollback restores your files as usual. ACP agents cannot rewind their own conversation,
+so the next turn after a rollback starts a fresh agent session that no longer remembers the
+conversation from before the checkpoint.</p>
+<p>Registry instances are not used for Moonfold&#39;s app-owned text generation, such as thread titles, commit
+messages, branch names, or pull request descriptions. Configure a text-generation-capable provider
+for those actions.</p>
+<h2 id="advanced-configuration"><a class="anchor" href="#advanced-configuration">Advanced configuration</a></h2>
+<ul>
+<li><strong>Executable override</strong> runs an existing local executable instead of the managed distribution,
+keeping the registry-declared arguments and environment.</li>
+<li><strong>Authentication method</strong> picks a specific method when the agent advertises more than one.</li>
+<li><strong>Custom models</strong> adds model IDs the agent does not report.</li>
+</ul>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-acp.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/providers-gemini/"><small>Previous</small><span>Gemini CLI</span></a
-          ><a class="next" href="/docs/cursor/"><small>Next</small><span>Cursor</span></a>
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#add-an-agent">Add an agent</a></li>
-            <li><a href="#add-a-local-command">Add a local command</a></li>
-            <li><a href="#where-agents-run">Where agents run</a></li>
-            <li><a href="#signing-in">Signing in</a></li>
-            <li><a href="#models-and-options">Models and options</a></li>
-            <li><a href="#commands-and-skills">Commands and skills</a></li>
-            <li><a href="#native-sessions">Native sessions</a></li>
-            <li><a href="#permissions-and-terminals">Permissions and terminals</a></li>
-            <li><a href="#checkpoints">Checkpoints</a></li>
-            <li><a href="#advanced-configuration">Advanced configuration</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-acp.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/providers-gemini/"><small>Previous</small><span>Gemini CLI</span></a><a class="next" href="/docs/cursor/"><small>Next</small><span>Cursor</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#add-an-agent">Add an agent</a></li><li><a href="#add-a-local-command">Add a local command</a></li><li><a href="#where-agents-run">Where agents run</a></li><li><a href="#signing-in">Signing in</a></li><li><a href="#models-and-options">Models and options</a></li><li><a href="#commands-and-skills">Commands and skills</a></li><li><a href="#native-sessions">Native sessions</a></li><li><a href="#permissions-and-terminals">Permissions and terminals</a></li><li><a href="#checkpoints">Checkpoints</a></li><li><a href="#advanced-configuration">Advanced configuration</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

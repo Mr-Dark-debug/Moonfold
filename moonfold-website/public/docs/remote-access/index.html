@@ -1,625 +1,404 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Remote access · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Connect a phone, browser, or another desktop app to Moonfold running on a different machine. That machine must stay running and reachable while you work. For Android, use the mobile app, which pairs w"
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/remote-access/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/remote-access/" />
-    <meta property="og:title" content="Remote access · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Connect a phone, browser, or another desktop app to Moonfold running on a different machine. That machine must stay running and reachable while you work. For Android, use the mobile app, which pairs w"
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/" aria-current="page">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Get started</p>
-        <h1 id="remote-access">Remote access</h1>
-        <p>
-          Connect a phone, browser, or another desktop app to Moonfold running on a different
-          machine. That machine must stay running and reachable while you work. For Android, use the
-          <a href="/docs/mobile-app/">mobile app</a>, which pairs with one scan.
-        </p>
-        <h2 id="moonfold-connect-self-hosted-only">
-          <a class="anchor" href="#moonfold-connect-self-hosted-only"
-            >Moonfold Connect (self-hosted only)</a
-          >
-        </h2>
-        <p>
-          Moonfold Connect reaches an environment from your other devices through a relay, without
-          router forwarding. Moonfold does not run a relay or an account service, so release builds
-          have Connect turned off. To use it, deploy your own relay from
-          <code>infra/relay</code> and your own sign-in service, and build Moonfold with their
-          settings (see <code>.env.example</code>). Otherwise use one of the options below: direct
-          pairing on your network, Tailscale, or an SSH tunnel.
-        </p>
-        <h2 id="pair-over-a-lan-or-private-network">
-          <a class="anchor" href="#pair-over-a-lan-or-private-network"
-            >Pair over a LAN or private network</a
-          >
-        </h2>
-        <p>Use direct pairing when the other device can reach the host&#39;s network address.</p>
-        <p>
-          On a desktop host, open <strong>Settings → Connections</strong>, enable
-          <strong>Network access</strong>, then create a pairing link using an address the other
-          device can reach. Changing network access restarts the desktop app. You can turn it off in
-          the same place.
-        </p>
-        <p>
-          For a command-line host, replace <code>&lt;private-ip&gt;</code> with the host&#39;s LAN
-          or tailnet address:
-        </p>
-        <pre><code class="language-bash">moonfold serve --host &lt;private-ip&gt;
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Remote access · Moonfold docs</title>
+<meta name="description" content="Connect a phone, browser, or another desktop app to Moonfold running on a different machine. That machine must stay running and reachable while you work. For Android, use the mobile app, which pairs w">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/remote-access/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/remote-access/">
+<meta property="og:title" content="Remote access · Moonfold docs">
+<meta property="og:description" content="Connect a phone, browser, or another desktop app to Moonfold running on a different machine. That machine must stay running and reachable while you work. For Android, use the mobile app, which pairs w">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/" aria-current="page">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Get started</p>
+<h1 id="remote-access">Remote access</h1>
+<p>Connect a phone, browser, or another desktop app to Moonfold running on a different
+machine. That machine must stay running and reachable while you work. For Android, use the
+<a href="/docs/mobile-app/">mobile app</a>, which pairs with one scan.</p>
+<p>For the Android app on any network, use <strong>Reach from anywhere</strong> in Settings → Mobile App; see
+the <a href="/docs/mobile-app/#reaching-your-computer">mobile app</a>. It works for the app only, because a
+browser cannot pin the computer&#39;s certificate.</p>
+<h2 id="moonfold-connect-self-hosted-only"><a class="anchor" href="#moonfold-connect-self-hosted-only">Moonfold Connect (self-hosted only)</a></h2>
+<p>Moonfold Connect reaches an environment from your other devices through a relay, without router
+forwarding. Moonfold does not run a relay or an account service, so release builds have Connect
+turned off. To use it, deploy your own relay from <code>infra/relay</code> and your own sign-in service, and
+build Moonfold with their settings (see <code>.env.example</code>). Otherwise use one of the options below:
+direct pairing on your network, Tailscale, or an SSH tunnel.</p>
+<h3 id="scripts-and-agents"><a class="anchor" href="#scripts-and-agents">Scripts and agents</a></h3>
+<p><code>moonfold up</code> asks nothing when you name a choice: <code>--connect</code>, <code>--lan</code>, or their
+<code>--no-</code> forms. Choices you do not name keep their settings, and <code>--yes</code> takes
+the defaults. Without a terminal:</p>
+<ul>
+<li>Moonfold Connect sign-in prints a URL and a code. Approve it on any device.</li>
+<li>A needed restart runs without asking, and stops running agent turns.</li>
+<li>With nothing set up and no choice named, <code>moonfold up</code> stops and names the flags.</li>
+</ul>
+<p><code>moonfold status --json</code> prints the settings. <code>moonfold up --help</code> lists every flag with
+examples.</p>
+<h3 id="more-machines-with-moonfold-chat"><a class="anchor" href="#more-machines-with-moonfold-chat">More machines with Moonfold Chat</a></h3>
+<p>Each Moonfold Connect account can link up to 3 machines. Phones and browsers do not
+count. A paid Moonfold Chat plan raises the limit to 10 machines with Pro, or 100 with
+Premier.</p>
+<p>To link Moonfold Chat, open your account menu on the web or desktop app, go to
+<strong>Moonfold Chat</strong>, and select <strong>Link Moonfold Chat</strong>. Sign in to Moonfold Chat in the window that
+opens and approve. The new limit applies the next time you add a machine. If you
+cancel or downgrade Moonfold Chat, machines you already linked stay linked, but you
+cannot add more until you are under the limit again.</p>
+<h2 id="pair-over-a-lan-or-private-network"><a class="anchor" href="#pair-over-a-lan-or-private-network">Pair over a LAN or private network</a></h2>
+<p>Use direct pairing when the other device can reach the host&#39;s network address.</p>
+<p>On a desktop host, open <strong>Settings → Sharing &amp; access</strong>, enable <strong>Network access</strong>,
+then create a pairing link using an address the other device can reach. Changing
+network access restarts the desktop app. You can turn it off in the same place.</p>
+<p>For a command-line host, choose the local network in <code>moonfold up</code>, or run:</p>
+<pre><code class="language-bash">moonfold up --lan
 </code></pre>
-        <p>If a server is already running, generate a fresh link without restarting it:</p>
-        <pre><code class="language-bash">moonfold pair
+<p>For a server in a terminal, run <code>moonfold serve --lan</code>. Either way, Moonfold then
+accepts connections from your local network and tailnet, so a pairing code is
+all that keeps other devices on them out.</p>
+<p>If a server is already running, generate a fresh link without restarting it:</p>
+<pre><code class="language-bash">moonfold pair
 </code></pre>
-        <p>
-          Scan the QR code on your phone or paste the pairing URL into
-          <strong>Add environment</strong> in the receiving app. Connection settings are under
-          <strong>Settings → Connections</strong> on web and desktop. A loopback address such as
-          <code>127.0.0.1</code> reaches only the device opening the link.
-        </p>
-        <p>
-          Pairing authorizes that device for future connections. Use a fresh one-time link for each
-          new device; you do not need the original token to reconnect. Links created in Settings can
-          only be copied from the client that created them while its Connections page stays open. If
-          you leave or reload that page, create another link to share.
-        </p>
-        <h3 id="reach-one-machine-several-ways">
-          <a class="anchor" href="#reach-one-machine-several-ways"
-            >Reach one machine several ways</a
-          >
-        </h3>
-        <p>
-          A machine can have more than one route: LAN, Tailscale, another VPN, a public URL, SSH, or
-          Moonfold Connect. Tailscale shares its <code>100.64.0.0/10</code> address range with other
-          VPNs such as Cloudflare WARP, so an address in that range shows as VPN unless the machine
-          confirms it is on Tailscale. To add a route, choose <strong>Add route</strong> in the
-          machine&#39;s route list, or next to it in the Moonfold Connect list. Pairing the same
-          machine again over another address also adds a route instead of a second machine. A new
-          route is placed by speed, in that order, and you can reorder routes at any time.
-        </p>
-        <p>
-          While connected through Moonfold Connect or a paired address, Moonfold also learns the
-          machine&#39;s current LAN and Tailscale addresses and adds them as routes, so pairing once
-          through Moonfold Connect is enough to use the LAN at home. When the machine&#39;s LAN
-          address changes, for example after it joins another Wi-Fi network, the learned route
-          follows it. The machine must allow network access for its LAN address to be learned. You
-          can reorder a learned route, but not remove it; it goes away with the route it was learned
-          through, or when the machine stops reporting that address.
-        </p>
-        <p>
-          Moonfold connects over the first route that answers. Away from home, a LAN address that
-          does not answer is checked briefly and skipped. It is only tried again, after the other
-          routes, if none of them connect. While connected over a later route, Moonfold checks the
-          earlier ones when your network changes, when you return to the app, and every minute, and
-          moves back as soon as one works.
-        </p>
-        <p>
-          On web and desktop, select the route count under the machine&#39;s name in
-          <strong>Settings → Connections</strong> to see its routes. Drag a route to change the
-          order, or remove it.Signing out of Moonfold Connect removes only that route; a machine you
-          can still reach another way stays saved.
-        </p>
-        <p>
-          Open <strong>Permissions</strong> next to <strong>Routes</strong> in web or desktop to see
-          what your current connection can do on that environment. For a remote environment, this is
-          in its route details. Permissions shown there apply only to the route marked
-          <strong>In use</strong>; other routes are not checked. Direct pairing and Moonfold Connect
-          have separate sessions and may grant different permissions.
-        </p>
-        <h3 id="balance-new-threads-across-machines">
-          <a class="anchor" href="#balance-new-threads-across-machines"
-            >Balance new threads across machines</a
-          >
-        </h3>
-        <p>
-          Auto balance is off by default. On web and desktop, enable it in
-          <strong>Settings → Connections → Load balancing</strong> to automatically choose a machine
-          for new threads in projects grouped across connected environments. The section appears
-          once two or more machines are switched on. Each machine starts at <strong>Normal</strong>.
-          Choose <strong>Prefer</strong> to favor it when it has CPU and memory available,
-          <strong>Less often</strong> to reduce its share, or <strong>Manual only</strong> to
-          exclude it from automatic selection. These are preferences, not fixed traffic percentages.
-          Preferences are saved separately in each client.
-        </p>
-        <p>
-          The composer checks eligible machines when choosing a draft&#39;s environment, then keeps
-          that choice stable. Choose <strong>Auto balance</strong> again to check current resources,
-          or choose a specific machine to override it. Choosing a branch or worktree also keeps the
-          draft on that machine. Existing threads stay where they started. If resource checks are
-          unavailable or all eligible machines are full, choose a machine manually to continue.
-        </p>
-        <h3 id="tailscale-https"><a class="anchor" href="#tailscale-https">Tailscale HTTPS</a></h3>
-        <p>
-          Join both devices to the same tailnet. In the desktop app, enable
-          <strong>Tailscale HTTPS</strong> in <strong>Settings → Connections</strong>. Turn it off
-          there to remove that route.
-        </p>
-        <p>To start a command-line server with Tailscale HTTPS:</p>
-        <pre><code class="language-bash">moonfold serve --tailscale-serve
+<p>Scan the QR code on your phone or paste the pairing URL into <strong>Add environment</strong>
+in the receiving app. Connection settings are under <strong>Settings → Environments</strong>
+on web and desktop. A loopback address
+such as <code>127.0.0.1</code> reaches only the device opening the link.</p>
+<p>On a computer with the desktop app, you can open the printed <code>moonfold://pair</code>
+app link instead. The desktop app asks you to confirm the server address, then
+adds it.</p>
+<p>If your HTTPS endpoint uses a certificate from your own certificate authority,
+install that CA on Android as a <strong>CA certificate</strong> in its security settings; the
+Android app then trusts it.</p>
+<p>Pairing authorizes that device for future connections. Use a fresh one-time link
+for each new device; you do not need the original token to reconnect. Links
+created in Settings can only be copied from the client that created them while
+its Sharing &amp; access page stays open. If you leave or reload that page, create
+another link to share.</p>
+<h3 id="reach-one-machine-several-ways"><a class="anchor" href="#reach-one-machine-several-ways">Reach one machine several ways</a></h3>
+<p>A machine can have more than one route: LAN, Tailscale, another VPN, a public
+URL, SSH, or Moonfold Connect. Tailscale shares its <code>100.64.0.0/10</code> address range with
+other VPNs such as Cloudflare WARP, so an address in that range shows as VPN
+unless the machine confirms it is on Tailscale. To add a route, choose <strong>Add
+route</strong> in the machine&#39;s route list, or next to it in the Moonfold Connect list.
+A pairing link for a saved machine is refused when it comes from an address
+that machine does not have yet; add that address with <strong>Add route</strong> instead.
+Pairing again over an address the machine already has still works. A new route
+is placed by speed, in that order, and you can reorder routes at any time.</p>
+<p>While connected through Moonfold Connect or a paired address, Moonfold also learns the
+machine&#39;s current LAN and Tailscale addresses and adds them as routes, so
+pairing once through Moonfold Connect is enough to use the LAN at home. When the
+machine&#39;s LAN address changes, for example after it joins another Wi-Fi network,
+the learned route follows it. The machine must allow network access for its LAN
+address to be learned: <strong>Network access</strong> in the desktop app, or the
+<a href="/docs/background-service/#local-network-access">local network</a> choice in <code>moonfold up</code>.
+You can reorder a learned route, but not remove it; it
+goes away with the route it was learned through, or when the machine stops
+reporting that address.</p>
+<p>Moonfold connects over the first route that answers. Away from home, a LAN
+address that does not answer is checked briefly and skipped. It is only tried
+again, after the other routes, if none of them connect. While connected over a
+later route, Moonfold checks the earlier ones when your network changes, when you
+return to the app, and every minute, and moves back as soon as one works.</p>
+<p>On web and desktop, select the route count under the machine&#39;s name in
+<strong>Settings → Environments</strong> to see its routes. Drag a route to change the order,
+or remove it. Signing out of Moonfold Connect removes only that route; a machine
+you can still reach another way stays saved.</p>
+<p>Open <strong>Permissions</strong> next to <strong>Routes</strong> in web or desktop to see what your current connection can do on that
+environment. For a remote environment, this is in its route details. Permissions
+shown there apply only to the route marked <strong>In use</strong>; other routes are not
+checked. Direct pairing and Moonfold Connect have separate sessions and may grant
+different permissions.</p>
+<h3 id="balance-new-threads-across-machines"><a class="anchor" href="#balance-new-threads-across-machines">Balance new threads across machines</a></h3>
+<p>Auto balance is off by default. On web and desktop, enable it in
+<strong>Settings → Environments → Load balancing</strong> to automatically choose a machine for
+new threads in projects grouped across connected environments. The section
+appears once two or more machines are switched on.
+Each machine starts at <strong>Normal</strong>. Choose <strong>Prefer</strong> to favor it when it has CPU and
+memory available, <strong>Less often</strong> to reduce its share, or <strong>Manual only</strong> to exclude
+it from automatic selection. These are preferences, not fixed traffic percentages.
+Preferences are saved separately in each client.</p>
+<p>The composer checks eligible machines when choosing a draft&#39;s environment, then keeps
+that choice stable. Choose <strong>Auto balance</strong> again to check current resources, or choose
+a specific machine to override it. Choosing a branch or worktree also keeps the draft
+on that machine. Existing threads stay where they started. If resource checks are
+unavailable or all eligible machines are full, choose a machine manually to continue.</p>
+<h3 id="tailscale-https"><a class="anchor" href="#tailscale-https">Tailscale HTTPS</a></h3>
+<p>Join both devices to the same tailnet. In the desktop app, enable <strong>Tailscale
+HTTPS</strong> in <strong>Settings → Sharing &amp; access</strong>. Turn it off there to remove that route.</p>
+<p>To start a command-line server with Tailscale HTTPS:</p>
+<pre><code class="language-bash">moonfold serve --tailscale-serve
 </code></pre>
-        <p>For an already-running server:</p>
-        <pre><code class="language-bash">moonfold pair --tailscale
+<p>For an already-running server:</p>
+<pre><code class="language-bash">moonfold pair --tailscale
 </code></pre>
-        <p>
-          The pairing link uses an address such as <code>https://machine.tailnet.ts.net/</code>. The
-          mapping created by <code>pair --tailscale</code> persists across restarts. Remove its
-          default-port mapping with:
-        </p>
-        <pre><code class="language-bash">tailscale serve --https=443 off
+<p>The pairing link uses an address such as <code>https://machine.tailnet.ts.net/</code>.
+The mapping created by <code>pair --tailscale</code> persists across restarts. Remove its
+default-port mapping with:</p>
+<pre><code class="language-bash">tailscale serve --https=443 --set-path=/ off
 </code></pre>
-        <p>
-          If that port is already in use, choose another with <code>--tailscale-serve-port</code>.
-          See <code>moonfold pair --help</code> for other pairing options.
-        </p>
-        <h3 id="browser-access"><a class="anchor" href="#browser-access">Browser access</a></h3>
-        <p>
-          Moonfold has no hosted web app: a browser connects to the web client your server serves.
-          For a plain HTTP LAN endpoint, use the direct pairing URL in a browser that can open it,
-          or pair from the desktop app. An IP address entered without a scheme uses HTTP, so include
-          <code>https://</code> when your server uses HTTPS.
-        </p>
-        <h2 id="desktop-managed-ssh">
-          <a class="anchor" href="#desktop-managed-ssh">Desktop-managed SSH</a>
-        </h2>
-        <p>
-          In the desktop app, open <strong>Settings → Connections → Add environment</strong>, choose
-          <strong>SSH</strong>, and enter a host or SSH alias such as <code>user@example.com</code>.
-          Moonfold starts or reuses a server there and opens the port forward for you. Projects,
-          provider credentials, and agent work stay on the remote machine.
-        </p>
-        <p>
-          The remote host must be Linux or an Apple Silicon Mac with <code>curl</code> or
-          <code>wget</code>, <code>tar</code>, <code>sha256sum</code> or <code>shasum</code>, and
-          <a href="/docs/install/#providers">provider setup</a>. The first launch downloads
-          Moonfold&#39;s server to <code>~/.moonfold/runtime</code> on the host, so it takes longer
-          than later ones. Provider CLIs must be on the <code>PATH</code> of a non-interactive login
-          shell there; check with:
-        </p>
-        <pre><code class="language-bash">ssh user@example.com &#39;sh -lc &quot;command -v claude codex&quot;&#39;
+<p>If that port is already in use, choose another with
+<code>--tailscale-serve-port</code>. See <code>moonfold pair --help</code> for other pairing options.</p>
+<h3 id="browser-access"><a class="anchor" href="#browser-access">Browser access</a></h3>
+<p>Moonfold has no hosted web app: a browser connects to the web client your server serves. For a
+plain HTTP LAN endpoint, use the direct pairing URL in a browser that can open it, or pair from
+the desktop app. An IP address entered without a scheme uses HTTP, so include <code>https://</code> when
+your server uses HTTPS.</p>
+<h2 id="desktop-managed-ssh"><a class="anchor" href="#desktop-managed-ssh">Desktop-managed SSH</a></h2>
+<p>In the desktop app, open <strong>Settings → Environments → Add environment</strong>, choose
+<strong>SSH</strong>, and enter a host or SSH alias such as <code>user@example.com</code>. Moonfold starts
+or reuses a server there and opens the port forward for you. Projects, provider
+credentials, and agent work stay on the remote machine.</p>
+<p>The remote host must be Linux or an Apple Silicon Mac with <code>curl</code> or <code>wget</code>,
+<code>tar</code>, <code>sha256sum</code> or <code>shasum</code>, and <a href="/docs/install/#providers">provider setup</a>.
+The first launch downloads Moonfold&#39;s server to <code>~/.moonfold/runtime</code> on the host, so
+it takes longer than later ones.
+Provider CLIs must be on the <code>PATH</code> of a non-interactive login shell there;
+check with:</p>
+<pre><code class="language-bash">ssh user@example.com &#39;sh -lc &quot;command -v claude codex&quot;&#39;
 </code></pre>
-        <p>
-          If SSH reconnecting fails after an app update, retry the launch once. Removing the
-          connection stops a server that Moonfold launched; a server that was already running is
-          left alone.
-        </p>
-        <p>
-          For Antigravity&#39;s Google callback on a remote host, see
-          <a href="/docs/providers-antigravity/#sign-in-from-a-remote-device">remote sign-in</a>.
-        </p>
-        <h2 id="browser-on-a-remote-environment">
-          <a class="anchor" href="#browser-on-a-remote-environment"
-            >Browser on a remote environment</a
-          >
-        </h2>
-        <p>
-          Browser tabs belong to the environment, so you and your agents see the same tabs from any
-          device. The desktop app shows its own environment&#39;s tabs directly. Every other device,
-          and the desktop app for other environments, streams them from the host. Agents keep using
-          them while no device is connected, and <code>localhost</code> addresses reach servers on
-          the host.
-        </p>
-        <p>
-          The first tab downloads a headless Chrome, about 120 MB, into the Moonfold home. It is the
-          same browser <a href="/docs/html-renders/">HTML renders</a> use, so a host downloads it
-          only once. Some Linux hosts need <a href="#browser-host-setup">setup</a> before it can
-          start.
-        </p>
-        <p>
-          Agent tabs have separate storage and share a Chromium process. Take control before typing
-          into an agent&#39;s tab, then release control when you want the agent to continue.
-          Read-only connections can watch without changing the page.
-        </p>
-        <p>
-          While you have control, the tab works with your device: text the page copies or cuts goes
-          to your clipboard, a file picker on the page opens your device&#39;s picker, and a
-          finished download is offered for you to save. Popups such as sign-in windows open as their
-          own tabs. Downloads stay on the host until the tab closes. Audio does not play on your
-          device.
-        </p>
-        <p>
-          On a phone, tap the floating preview&#39;s corner dot to show its controls, then
-          <strong>Pop into separate window</strong> to keep watching in picture-in-picture over
-          other apps.
-        </p>
-        <h3 id="browser-host-setup">
-          <a class="anchor" href="#browser-host-setup">Browser host setup</a>
-        </h3>
-        <p>
-          macOS, Windows, and Linux desktops run the browser as is. Some Linux hosts need one-time
-          setup: Ubuntu 23.10 and later block the sandbox the browser runs in, and minimal images
-          and containers lack libraries it loads. When that happens, the server says so at startup,
-          and browser tabs and HTML previews show the command to run on the host:
-        </p>
-        <pre><code class="language-sh">sudo moonfold browser setup
+<p>If SSH reconnecting fails after an app update, retry the launch once. Removing
+the connection stops a server that Moonfold launched; a server that was already
+running is left alone.</p>
+<p>Each desktop app keeps one session on the host for its SSH connection and reuses
+it when it reconnects. Revoke sessions you no longer use in <strong>Settings →
+Sharing &amp; access</strong> on the host, or on a headless host with <code>moonfold auth session list</code> and
+<code>moonfold auth session revoke &lt;id&gt;</code>. A desktop that can still sign in over SSH pairs
+again on its next connect.</p>
+<p>For Antigravity&#39;s Google callback on a remote host, see
+<a href="/docs/providers-antigravity/#sign-in-from-a-remote-device">remote sign-in</a>.</p>
+<h2 id="browser-on-a-remote-environment"><a class="anchor" href="#browser-on-a-remote-environment">Browser on a remote environment</a></h2>
+<p>Browser tabs belong to the environment, so you and your agents see the same
+tabs from any device. The desktop app shows its own environment&#39;s tabs
+directly. Every other device, and the desktop app for other environments,
+streams them from the host. Agents keep using them while no device is
+connected, and <code>localhost</code> addresses reach servers on the host.</p>
+<p>The first tab downloads a headless Chrome, about 120 MB, into the Moonfold home. It
+is the same browser <a href="/docs/html-renders/">HTML renders</a> use, so a host downloads it
+only once. Some Linux hosts need <a href="#browser-host-setup">setup</a> before it can
+start.</p>
+<p>Agent tabs have separate storage and share a Chromium process. Take control before
+typing into an agent&#39;s tab, then release control when you want the agent to
+continue. Read-only connections can watch without changing the page.</p>
+<p>While you have control, the tab works with your device: text the page copies or
+cuts goes to your clipboard, a file picker on the page opens your device&#39;s
+picker, and a finished download is offered for you to save. Popups such as
+sign-in windows open as their own tabs. Downloads stay on the host until the
+tab closes. Audio does not play on your device.</p>
+<p>On a phone, tap the floating preview&#39;s corner dot to show its controls, then
+<strong>Pop into separate window</strong> to keep watching in picture-in-picture over other
+apps.</p>
+<h3 id="local-servers"><a class="anchor" href="#local-servers">Local servers</a></h3>
+<p>The browser lists ports held by processes your terminals and agents started.
+Moonfold reads which process holds each port and never connects to it, so a
+listed port opens as <code>http://localhost:&lt;port&gt;</code> and might not be a web page. For
+an HTTPS server or a specific path, set the <strong>Preview URL</strong> on the project
+script that starts it; Moonfold checks that address and opens it as written.</p>
+<p>To stop listing ports, set <code>MOONFOLD_PORT_DISCOVERY=0</code> in the environment that
+starts the Moonfold server, such as
+<a href="/docs/background-service/#configure-the-service-environment"><code>service.env</code></a> for
+the background service, and restart it. Script preview URLs still appear.</p>
+<h3 id="browser-host-setup"><a class="anchor" href="#browser-host-setup">Browser host setup</a></h3>
+<p>macOS, Windows, and Linux desktops run the browser as is. Some Linux hosts need
+one-time setup: Ubuntu 23.10 and later block the sandbox the browser runs in,
+and minimal images and containers lack libraries it loads. When that happens,
+the server says so at startup, and browser tabs and HTML previews show the
+command to run on the host:</p>
+<pre><code class="language-sh">sudo moonfold browser setup
 </code></pre>
-        <p>
-          The server shows the exact line for how you started it, such as
-          <code>sudo npx moonfold browser setup</code>, and keeps your <code>PATH</code> when Node
-          is installed only for your user. Where <code>moonfold</code> is not on your
-          <code>PATH</code>, such as with only the desktop app installed, it names the full path of
-          the app&#39;s own <code>moonfold</code> instead. It allows Chrome&#39;s sandbox with an
-          AppArmor profile and installs any missing libraries with apt. It is safe to run again.
-          Without <code>sudo</code>, it only reports what it would change.
-        </p>
-        <p>
-          The browser always runs in Chrome&#39;s sandbox. Where you cannot change the host, set
-          <code>MOONFOLD_SERVER_BROWSER_SANDBOX=0</code> for the environment to run without it.
-        </p>
-        <h2 id="connect-an-outside-agent">
-          <a class="anchor" href="#connect-an-outside-agent">Connect an outside agent</a>
-        </h2>
-        <p>
-          Claude Code, Codex, ChatGPT and other agents Moonfold did not start can drive threads on
-          an environment through its MCP server. See
-          <a href="/docs/outside-agents/">outside agents</a> for setup.
-        </p>
-        <h2 id="manage-or-revoke-access">
-          <a class="anchor" href="#manage-or-revoke-access">Manage or revoke access</a>
-        </h2>
-        <p>
-          On the host, <strong>Settings → Connections</strong> lets authorized administrators create
-          pairing links and revoke client sessions. Revoking an unused link prevents new pairings;
-          revoke a device&#39;s session to remove its existing access. Command-line management is
-          available through <code>moonfold auth --help</code>.
-        </p>
-        <p>A session with an open connection stays listed after its access credential expires.</p>
-        <p>
-          To choose a token&#39;s permissions, pass <code>--scope</code> once for each scope you
-          want:
-        </p>
-        <pre><code class="language-sh">npx moonfold pair --scope orchestration:read --scope relay:read
+<p>The server shows the exact line for how you started it, such as
+<code>sudo npx moonfold browser setup</code>, and keeps your <code>PATH</code> when Node is installed only
+for your user. Where <code>moonfold</code> is not on your <code>PATH</code>, such as with only the
+desktop app installed, it names the full path of the app&#39;s own <code>moonfold</code> instead. It allows Chrome&#39;s sandbox with an AppArmor profile and installs
+any missing libraries and system fonts with apt; pages that load without text
+can mean the host has no fonts. It is safe to run again. Without <code>sudo</code>, it only
+reports what it would change.</p>
+<p>The browser runs in Chrome&#39;s sandbox by default. Chrome cannot start that sandbox
+as root. If your Moonfold server runs as root, run it as a nonroot user to keep
+sandboxing enabled. <code>moonfold browser setup</code> does not fix this root restriction.</p>
+<p>If you need to run as root, or cannot enable the sandbox on your host, set
+<code>MOONFOLD_SERVER_BROWSER_SANDBOX=0</code> in the <strong>Moonfold server&#39;s environment</strong> and restart
+the server. This disables Chrome&#39;s sandbox. For a manual launch:</p>
+<pre><code class="language-sh">MOONFOLD_SERVER_BROWSER_SANDBOX=0 moonfold serve
 </code></pre>
-        <p>
-          The selected scopes replace the default permissions. The same option works with
-          <code>npx moonfold auth pairing create</code> and
-          <code>npx moonfold auth session issue</code>; each command&#39;s <code>--help</code> lists
-          the available scopes. Without <code>--scope</code>, pairing tokens retain standard client
-          permissions and issued bearer sessions retain administrative permissions.
-        </p>
-        <p>
-          To change an existing client&#39;s permissions, create a fresh pairing link with the
-          scopes it needs. In a browser opened directly on the environment, open that link to
-          replace the browser&#39;s current grant. For a saved remote environment in web or desktop,
-          use <strong>Add Environment</strong> with the fresh link or code; pairing the same
-          environment replaces its saved grant. Reconnecting alone does not change permissions.
-        </p>
-        <p>
-          Grouping checkouts does not combine their permissions. Shared project settings require
-          <code>orchestration:operate</code> on every member environment; actions on one checkout
-          use that checkout&#39;s permissions.
-        </p>
-        <p>
-          <code>source-control:write</code> covers direct Git and pull request changes made from the
-          client: pushing, switching or creating branches, cloning, and removing worktrees. It does
-          not restrict what a task does. Starting a task in a new worktree still creates that branch
-          and worktree with <code>orchestration:operate</code>, and the agent it runs can use Git
-          however the environment allows.
-        </p>
-        <p>
-          Settings changes, provider management, and environment maintenance can be granted
-          separately from access administration. New standard pairings include these permissions.
-          Existing clients can stay connected after an update, but newly separated features may
-          require pairing again with the permissions they need. Older clients may show controls that
-          the server denies. Create a fresh pairing link to change a client&#39;s permissions.
-        </p>
-        <p>
-          <code>filesystem:read</code> allows browsing host files, opening workspace files, and
-          viewing local changes. Add <code>filesystem:write</code> to allow editing files or saving
-          plans to the workspace. These scopes control direct file access from the client.
-        </p>
-        <p>
-          To remove an environment from Moonfold Connect, open your account menu&#39;s
-          <strong>Moonfold Connect</strong>
-          page. This revokes its cloud access and frees its host space even when the environment is
-          offline or has been wiped. When Moonfold Connect rejects a host&#39;s link, the host shows
-          that it was removed from Moonfold Connect. To link it again, turn on
-          <strong>Moonfold Connect</strong> in <strong>Settings → Connections</strong> on a desktop
-          host, or run <code>moonfold connect link</code> on a command-line host and then restart
-          Moonfold there. A command-line host that released its tunnel when it last stopped may link
-          itself again on its next start; run <code>moonfold connect unlink</code> on that host to
-          keep it off. Removing an environment from a device&#39;s connection settings only forgets
-          it on that device; it stays registered to your account.
-        </p>
-        <p>
-          When idle tunnel cleanup is enabled, Moonfold Connect removes a linked environment&#39;s
-          tunnel after it stays offline for several minutes. The environment stays linked and keeps
-          the same address. When the host starts again or wakes, Moonfold Connect creates a
-          replacement tunnel on its own. You do not need to pair again. Cleanup usually runs five to
-          ten minutes after the tunnel goes down.
-        </p>
-        <p>
-          Moonfold Connect also removes the tunnel of an environment running an older version of
-          Moonfold once it has been offline for seven days. That environment shows a message asking
-          you to update. Start Moonfold on that computer and update it to the latest version; it
-          reconnects at the same address without pairing again.
-        </p>
-        <p>
-          On a command-line host, <code>moonfold connect unlink</code> disables exposure while
-          retaining your login; <code>moonfold connect logout</code> also clears that login.
-          Background-service <a href="/docs/background-service/#manage-the-service">removal</a> is
-          separate.
-        </p>
-        <p>
-          Treat pairing URLs and authorization codes as passwords. Do not include them in
-          screenshots, logs, or bug reports.
-        </p>
-        <h2 id="moonfold-connect-troubleshooting">
-          <a class="anchor" href="#moonfold-connect-troubleshooting"
-            >Moonfold Connect troubleshooting</a
-          >
-        </h2>
-        <p>
-          Run <code>moonfold connect status</code> on the host to inspect saved authorization and
-          link configuration. It is not a live reachability check. If the environment appears
-          offline, run <code>moonfold service status</code> and read the displayed log. If it
-          disappears when SSH closes, see
-          <a href="/docs/background-service/#troubleshooting">background-service troubleshooting</a
-          >.
-        </p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Error</th>
-                <th>Recovery</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>environment_link_limit_exceeded</code> or managed tunnel limit</td>
-                <td>Deregister an unused environment, then restart Moonfold on the host.</td>
-              </tr>
-              <tr>
-                <td><code>auth_invalid</code> or <code>invalid_bearer</code></td>
-                <td>
-                  Run <code>moonfold connect login</code>. If credentials were revoked, run
-                  <code>moonfold connect logout</code>, then <code>moonfold connect</code> again.
-                  Restart the server after signing in.
-                </td>
-              </tr>
-              <tr>
-                <td>Expired or invalid link proof</td>
-                <td>Check the host&#39;s date and time, update Moonfold, then restart it.</td>
-              </tr>
-              <tr>
-                <td>HTTP 403 without a recognized error</td>
-                <td>
-                  Check relay access, proxies, and firewall rules. Keep any Cloudflare Ray ID for a
-                  bug report.
-                </td>
-              </tr>
-              <tr>
-                <td>HTTP 408, 429, or 5xx</td>
-                <td>
-                  Check network and relay availability. Startup retries temporary failures for up to
-                  ten minutes.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          After fixing a permanent rejection, restart the host&#39;s server. On Linux, use
-          <code>systemctl --user restart moonfold.service</code> for the background service. For a
-          foreground server, stop it and run <code>moonfold serve</code> again with your usual
-          options. Include the diagnostic message and trace ID when reporting a persistent failure.
-        </p>
-        <p>
-          For a connection that still fails after linking, check the date and time on both devices.
-          For server version warnings, follow <a href="/docs/updating/">Updating Moonfold</a>.
-        </p>
-        <h2 id="using-the-desktop-app-as-a-remote-only">
-          <a class="anchor" href="#using-the-desktop-app-as-a-remote-only"
-            >Using the Desktop App as a Remote Only</a
-          >
-        </h2>
-        <p>
-          If a computer should only drive work running elsewhere, turn off its local environment. In
-          the desktop app, open <strong>Settings → Connections</strong> and switch off
-          <strong>Local environment</strong>. Moonfold restarts without a local server: no local
-          agents or terminals run, WSL backends stay off, and other devices can no longer connect to
-          this computer. Your projects, history, and saved connections are kept, and you keep
-          working through pairing, Moonfold Connect, or SSH.
-        </p>
-        <p>
-          Switch <strong>Local environment</strong> back on in the same place to restart with your
-          previous local settings.
-        </p>
+<p>For a systemd service, add <code>Environment=MOONFOLD_SERVER_BROWSER_SANDBOX=0</code> under
+<code>[Service]</code> in its configuration, run <code>sudo systemctl daemon-reload</code>, then restart
+your Moonfold service. Setting the variable in an agent&#39;s terminal does not change the
+environment of an already running Moonfold server.</p>
+<h2 id="connect-an-outside-agent"><a class="anchor" href="#connect-an-outside-agent">Connect an outside agent</a></h2>
+<p>Claude Code, Codex, ChatGPT and other agents Moonfold did not start can drive
+threads on an environment through its MCP server. See
+<a href="/docs/outside-agents/">outside agents</a> for setup.</p>
+<h2 id="link-another-environment"><a class="anchor" href="#link-another-environment">Link another environment</a></h2>
+<p>Link two machines, such as your laptop and a VPS, and agents on one can work on
+the other: launch, message, wait on and stop its threads, answer their
+questions, and manage its queues, projects and scheduled tasks.</p>
+<p>Linked environments is a beta. Turn it on for both machines in <strong>Settings →
+Labs</strong>; on mobile, <strong>Settings → Labs</strong> lists each connected machine. While it is
+off on either machine, agents start nothing over a link between them. A task
+already running on the other machine still finishes, and if that machine has it
+off, its result arrives once it is back on.</p>
+<p>On the machine you will work from, open <strong>Settings → Environments → Linked environments</strong>,
+choose <strong>Link</strong>, and pick the other machine or enter its address. The list
+holds the machines this app knows and those on your Moonfold Connect account. If this
+app is connected to that machine with a session that manages access there, it
+makes the pairing code itself; otherwise paste one from that machine&#39;s
+<strong>Settings → Sharing &amp; access</strong>. From a terminal, use
+<code>moonfold environment link &lt;address&gt; --pairing-code &lt;code&gt; --access &lt;mode&gt;</code>.</p>
+<p>You can also ask an agent to link a machine by name, such as &quot;delegate this to
+my vps&quot;. It shows a card in the thread where you pick the machine the same way
+and the access, then approve.</p>
+<ul>
+<li>The access you pick is the most agents from this machine may do there. An
+agent also never gets more there than its own mode here.</li>
+<li>Threads a link starts are marked <strong>From</strong> and this machine&#39;s name there.</li>
+<li>A full-access link works there like that machine&#39;s own agents. Below full
+access, the link&#39;s agents can change only threads it started, not that
+machine&#39;s own threads, projects or settings, and they skip its project setup
+scripts.</li>
+<li>The link shows up in that machine&#39;s <strong>Settings → Sharing &amp; access</strong> like any
+outside agent. Revoke it there to end it. <strong>Forget</strong> on this machine only
+removes it here.</li>
+<li>Links last 30 days. Link again with a new pairing code to renew one.</li>
+</ul>
+<p>An agent can also hand a task to a linked machine with <code>delegate_task</code>: it runs
+there as an ordinary thread, in the project with the same repository (or the
+one <code>target.projectId</code> names), and this thread wakes with its result when it
+ends, as for any delegated task. It keeps following the task across restarts.
+If the other machine revokes the link, or the link is removed here, the task
+fails with that reason.</p>
+<h2 id="manage-or-revoke-access"><a class="anchor" href="#manage-or-revoke-access">Manage or revoke access</a></h2>
+<p>On the host, <strong>Settings → Sharing &amp; access</strong> lets authorized administrators create
+pairing links and revoke client sessions. Revoking an unused link prevents new
+pairings; revoke a device&#39;s session to remove its existing access. Command-line
+management is available through <code>moonfold auth --help</code>.</p>
+<p>When the app connects to more than one environment, choose one at the top of the
+page. A desktop app with <strong>Local environment</strong> off can manage a background
+service on the same machine this way, including its Moonfold Connect link.</p>
+<p>A session with an open connection stays listed after its access credential
+expires.</p>
+<p>To choose a token&#39;s permissions, pass <code>--scope</code> once for each scope you want:</p>
+<pre><code class="language-sh">npx moonfold pair --scope orchestration:read --scope relay:read
+</code></pre>
+<p>The selected scopes replace the default permissions. The same option works with
+<code>npx moonfold auth pairing create</code> and <code>npx moonfold auth session issue</code>; each command&#39;s
+<code>--help</code> lists the available scopes. Without <code>--scope</code>, pairing tokens and issued
+bearer sessions get every permission, including managing access and Moonfold Connect.
+A terminal or a full-access agent on the host can reach those as well, so a
+client that should not manage access also needs to go without <code>terminal:operate</code>
+and <code>orchestration:operate</code>.</p>
+<p>To change an existing client&#39;s permissions, create a fresh pairing link with the
+scopes it needs. In a browser opened directly on the environment, open that link
+to replace the browser&#39;s current grant. For a saved remote environment
+in web or desktop, use <strong>Add Environment</strong> with the fresh link or code; pairing
+the same environment replaces its saved grant. Reconnecting alone does not change
+permissions.</p>
+<p>Grouping checkouts does not combine their permissions. Shared project settings
+require <code>orchestration:operate</code> on every member environment; actions on one
+checkout use that checkout&#39;s permissions.</p>
+<p><code>source-control:write</code> covers direct Git and pull request changes made from the
+client: pushing, switching or creating branches, cloning, and removing
+worktrees. It does not restrict what a task does. Starting a task in a new
+worktree still creates that branch and worktree with <code>orchestration:operate</code>,
+and the agent it runs can use Git however the environment allows.</p>
+<p>Settings changes, provider management, environment maintenance, access
+management, and Moonfold Connect management can each be granted separately. New
+pairings without <code>--scope</code> include all of them. Existing clients keep the
+permissions they paired with and can stay connected after an update, but newly
+separated features may require pairing again with the permissions they need.
+Older clients may show controls that the server denies. Create a fresh pairing
+link to change a client&#39;s permissions.</p>
+<p><code>filesystem:read</code> allows browsing host files, opening workspace files, and viewing
+local changes. Add <code>filesystem:write</code> to allow editing files or saving plans to
+the workspace. These scopes control direct file access from the client.</p>
+<p>To remove an environment from Moonfold Connect, open your account menu&#39;s <strong>Moonfold Connect</strong>
+page. This
+revokes its cloud access and frees its host space even when the environment is
+offline or has been wiped. When Moonfold Connect rejects a host&#39;s link, the host
+shows that it was removed from Moonfold Connect. To link it again, turn on
+<strong>Moonfold Connect</strong> in <strong>Settings → Sharing &amp; access</strong> on a desktop host, or run
+<code>moonfold connect link</code> on a command-line host and then restart Moonfold there. A
+command-line host that released its tunnel when it last stopped may link itself
+again on its next start; run <code>moonfold connect unlink</code> on that host to keep it off.
+Removing an environment from a device&#39;s connection settings only forgets it on
+that device and doesn&#39;t change your Moonfold Connect account. A device keeps a saved
+environment after it&#39;s deregistered until you remove it from that device.</p>
+<p>When idle tunnel cleanup is enabled, Moonfold Connect removes a linked environment&#39;s
+tunnel after it stays offline for several minutes. The environment stays linked
+and keeps the same address. When the host starts again or wakes, Moonfold Connect
+creates a replacement tunnel on its own. You do not need to pair again. Cleanup
+usually runs five to ten minutes after the tunnel goes down.</p>
+<p>Moonfold Connect also removes the tunnel of an environment running an older version of
+Moonfold once it has been offline for seven days. That environment shows a message
+asking you to update. Start Moonfold on that computer and update it to the latest
+version; it reconnects at the same address without pairing again.</p>
+<p>On a command-line host, <code>moonfold connect unlink</code> disables exposure while retaining
+your login; <code>moonfold connect logout</code> also clears that login. Background-service
+<a href="/docs/background-service/#manage-the-service">removal</a> is separate.</p>
+<p>Treat pairing URLs and authorization codes as passwords. Do not include them in
+screenshots, logs, or bug reports.</p>
+<h2 id="moonfold-connect-troubleshooting"><a class="anchor" href="#moonfold-connect-troubleshooting">Moonfold Connect troubleshooting</a></h2>
+<p>Run <code>moonfold connect status</code> on the host to inspect saved authorization and link
+configuration. It is not a live reachability check. If the environment appears
+offline, run <code>moonfold service status</code> and read the displayed log. If it disappears
+when SSH closes, see <a href="/docs/background-service/#troubleshooting">background-service troubleshooting</a>.</p>
+<div class="table-wrap"><table><thead><tr><th>Error</th><th>Recovery</th></tr></thead><tbody><tr><td><code>environment_link_limit_exceeded</code> or managed tunnel limit</td><td>Deregister an unused environment, then restart Moonfold on the host.</td></tr><tr><td><code>auth_invalid</code> or <code>invalid_bearer</code></td><td>Run <code>moonfold connect login</code>. If credentials were revoked, run <code>moonfold connect logout</code>, then <code>moonfold connect</code> again. Restart the server after signing in.</td></tr><tr><td>Expired or invalid link proof</td><td>Check the host&#39;s date and time, update Moonfold, then restart it.</td></tr><tr><td>HTTP 403 without a recognized error</td><td>Check relay access, proxies, and firewall rules. Keep any Cloudflare Ray ID for a bug report.</td></tr><tr><td>HTTP 408, 429, or 5xx</td><td>Check network and relay availability. Startup retries temporary failures for up to ten minutes.</td></tr></tbody></table></div>
+<p>After fixing a permanent rejection, restart the host&#39;s server. On Linux, use
+<code>systemctl --user restart moonfold.service</code> for the background service. For a
+foreground server, stop it and run <code>moonfold serve</code> again with your usual options.
+Include the diagnostic message and trace ID when reporting a persistent failure.</p>
+<p>For a connection that still fails after linking, check the date and time on both
+devices. For server version warnings, follow <a href="/docs/updating/">Updating Moonfold</a>.</p>
+<h2 id="using-the-desktop-app-as-a-remote-only"><a class="anchor" href="#using-the-desktop-app-as-a-remote-only">Using the Desktop App as a Remote Only</a></h2>
+<p>If a computer should only drive work running elsewhere, turn off its local environment. In the
+desktop app, open <strong>Settings → Environments</strong> and switch off <strong>Local
+environment</strong>. Moonfold restarts without a local server: no local agents or terminals run, WSL
+backends stay off, and other devices can no longer connect to this computer. Your projects,
+history, and saved connections are kept, and you keep working through pairing, Moonfold Connect, or SSH.</p>
+<p>Switch <strong>Local environment</strong> back on in the same place to restart with your previous local
+settings.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/remote-access.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/updating/"><small>Previous</small><span>Updating Moonfold</span></a
-          ><a class="next" href="/docs/mobile-app/"><small>Next</small><span>Mobile app</span></a>
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li>
-              <a href="#moonfold-connect-self-hosted-only">Moonfold Connect (self-hosted only)</a>
-            </li>
-            <li>
-              <a href="#pair-over-a-lan-or-private-network">Pair over a LAN or private network</a>
-            </li>
-            <li><a href="#desktop-managed-ssh">Desktop-managed SSH</a></li>
-            <li><a href="#browser-on-a-remote-environment">Browser on a remote environment</a></li>
-            <li><a href="#connect-an-outside-agent">Connect an outside agent</a></li>
-            <li><a href="#manage-or-revoke-access">Manage or revoke access</a></li>
-            <li>
-              <a href="#moonfold-connect-troubleshooting">Moonfold Connect troubleshooting</a>
-            </li>
-            <li>
-              <a href="#using-the-desktop-app-as-a-remote-only"
-                >Using the Desktop App as a Remote Only</a
-              >
-            </li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/remote-access.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/updating/"><small>Previous</small><span>Updating Moonfold</span></a><a class="next" href="/docs/mobile-app/"><small>Next</small><span>Mobile app</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#moonfold-connect-self-hosted-only">Moonfold Connect (self-hosted only)</a></li><li><a href="#pair-over-a-lan-or-private-network">Pair over a LAN or private network</a></li><li><a href="#desktop-managed-ssh">Desktop-managed SSH</a></li><li><a href="#browser-on-a-remote-environment">Browser on a remote environment</a></li><li><a href="#connect-an-outside-agent">Connect an outside agent</a></li><li><a href="#link-another-environment">Link another environment</a></li><li><a href="#manage-or-revoke-access">Manage or revoke access</a></li><li><a href="#moonfold-connect-troubleshooting">Moonfold Connect troubleshooting</a></li><li><a href="#using-the-desktop-app-as-a-remote-only">Using the Desktop App as a Remote Only</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

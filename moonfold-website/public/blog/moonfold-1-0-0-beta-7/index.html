@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Moonfold 1.0.0-beta.7: safer Windows upgrades, settings that stay put, Stable or Beta | Moonfold</title>
+<meta name="description" content="Beta 7 fixes Windows upgrades that left Moonfold missing, stops seven settings pages from crashing, and lets you choose Stable or Beta updates.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/blog/moonfold-1-0-0-beta-7/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://moonfold-website.vercel.app/blog/moonfold-1-0-0-beta-7/">
+<meta property="og:title" content="Moonfold 1.0.0-beta.7: safer Windows upgrades, settings that stay put, Stable or Beta | Moonfold">
+<meta property="og:description" content="Beta 7 fixes Windows upgrades that left Moonfold missing, stops seven settings pages from crashing, and lets you choose Stable or Beta updates.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Moonfold 1.0.0-beta.7: safer Windows upgrades, settings that stay put, Stable or Beta","description":"Beta 7 fixes Windows upgrades that left Moonfold missing, stops seven settings pages from crashing, and lets you choose Stable or Beta updates.","datePublished":"2026-11-13","author":{"@type":"Organization","name":"The Moonfold team"},"mainEntityOfPage":"https://moonfold-website.vercel.app/blog/moonfold-1-0-0-beta-7/"}</script>
+</head>
+<body class="page-post">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/">Docs</a>
+    <a href="/blog/" aria-current="page">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<main class="post" id="content">
+<div class="post-head">
+<p class="crumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><a href="/blog/#releases">Releases</a></p>
+<p class="eyebrow">Releases</p>
+<h1>Moonfold 1.0.0-beta.7: safer Windows upgrades, settings that stay put, Stable or Beta</h1>
+<p class="lede">Beta 7 fixes Windows upgrades that left Moonfold missing, stops seven settings pages from crashing, and lets you choose Stable or Beta updates.</p>
+<dl class="post-facts">
+<div><dt>Written by</dt><dd>The Moonfold team</dd></div>
+<div><dt>Published</dt><dd><time datetime="2026-11-13">Nov 13, 2026</time></dd></div>
+<div><dt>Reading time</dt><dd>1 min</dd></div>
+</dl>
+</div>
+<div class="post-body-wrap">
+<nav class="post-toc" aria-label="In this post"><h2>In this post</h2><ul><li><a href="#windows-upgrades-no-longer-leave-moonfold-missing">Windows upgrades no longer leave Moonfold missing</a></li><li><a href="#settings-pages-no-longer-crash">Settings pages no longer crash</a></li><li><a href="#stable-or-beta">Stable or Beta</a></li></ul></nav>
+<article class="prose">
+<p>Beta 7 is a fix release with one new setting. Beta 6 updates to it by itself, and there are no database changes.</p>
+<h2 id="windows-upgrades-no-longer-leave-moonfold-missing"><a class="anchor" href="#windows-upgrades-no-longer-leave-moonfold-missing">Windows upgrades no longer leave Moonfold missing</a></h2>
+<p>If a Moonfold helper was still running in the background, an upgrade could remove the app and then fail to write the new one. Windows then said it was &quot;searching for Moonfold (Beta).exe&quot;. The installer now closes every process running from the install folder first. If this happened to you, run the beta 7 installer over it; your projects, threads and settings are kept. The full story is in <a href="/blog/windows-searching-for-exe-after-update/">Windows is searching for an .exe after an update</a>.</p>
+<h2 id="settings-pages-no-longer-crash"><a class="anchor" href="#settings-pages-no-longer-crash">Settings pages no longer crash</a></h2>
+<p>Memories, Mobile app, Plugins, Handoff, Computer use, Personalization and Prompt profiles opened full-window and failed with &quot;Something went wrong&quot;. They now open in the settings panel like every other page.</p>
+<p><video controls preload="metadata" playsinline width="1440" height="810" poster="/assets/demo-beta7-settings-panel-poster.jpg" src="/assets/demo-beta7-settings-panel.mp4"></video></p>
+<h2 id="stable-or-beta"><a class="anchor" href="#stable-or-beta">Stable or Beta</a></h2>
+<p><strong>Settings → About → Update track</strong> chooses between Stable releases and Beta builds, which get new features first. Switching installs the newest build of that track in place and keeps your data. There is no Stable release yet, so for now everyone is on Beta, and choosing Stable tells you so. See <a href="/docs/updating/#switch-between-stable-and-beta">Switch between Stable and Beta</a>.</p>
+
+<div class="post-cta"><p><strong>Try Moonfold.</strong> It is free, open source and runs the agents you already use, with your own logins.</p><a class="btn btn-solid" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download the beta</a></div>
+</article>
+</div>
+<section class="related"><h2>Keep reading</h2><div class="post-grid"><article class="post-card"><a href="/blog/moonfold-1-0-0-beta-6/">
+<span class="post-no" aria-hidden="true">01</span>
+<span class="post-cat">Releases</span>
+<h3>Moonfold 1.0.0-beta.6: Orbit, your phone on any network, and self-fixing pull requests</h3>
+<p>Beta 6 adds Orbit, a crew that keeps working on your project, lets the Android app reach your computer from anywhere, and fixes failing pull request checks.</p>
+<span class="post-meta">Nov 13, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/moonfold-0-1-0-beta-5/">
+<span class="post-no" aria-hidden="true">02</span>
+<span class="post-cat">Releases</span>
+<h3>Moonfold 0.1.0-beta.5: a redesigned workspace and home screen artwork</h3>
+<p>Beta 5 brings a redesigned thread and composer, artwork behind the new thread screen, brand kits with /brand, question cards and better review tools.</p>
+<span class="post-meta">Nov 10, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/moonfold-0-1-0-beta-4/">
+<span class="post-no" aria-hidden="true">03</span>
+<span class="post-cat">Releases</span>
+<h3>Moonfold 0.1.0-beta.4: your agents on your phone, with no account</h3>
+<p>Beta 4 adds Moonfold for Android, paired with one QR scan over an encrypted connection to your own computer, plus content exclusions and a token limit for one run.</p>
+<span class="post-meta">Nov 2, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article></div></section>
+</main>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

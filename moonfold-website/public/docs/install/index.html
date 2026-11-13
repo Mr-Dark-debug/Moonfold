@@ -1,520 +1,192 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Install Moonfold · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Moonfold runs coding agents on your computer and lets you control them from its desktop app or a web browser. Set up the machine where the agents will work first."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/install/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/install/" />
-    <meta property="og:title" content="Install Moonfold · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Moonfold runs coding agents on your computer and lets you control them from its desktop app or a web browser. Set up the machine where the agents will work first."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/" aria-current="page">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Get started</p>
-        <h1 id="install-moonfold">Install Moonfold</h1>
-        <p>
-          Moonfold runs coding agents on your computer and lets you control them from its desktop
-          app or a web browser. Set up the machine where the agents will work first.
-        </p>
-        <h2 id="requirements"><a class="anchor" href="#requirements">Requirements</a></h2>
-        <p>
-          You need an installed, authenticated provider before starting a thread. You can launch
-          Moonfold and configure providers afterwards.
-        </p>
-        <h2 id="command-line"><a class="anchor" href="#command-line">Command line</a></h2>
-        <pre><code class="language-bash">curl -fsSL https://raw.githubusercontent.com/Mr-Dark-debug/Moonfold/main/scripts/install.sh | sh
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Install Moonfold · Moonfold docs</title>
+<meta name="description" content="Moonfold runs coding agents on your computer and lets you control them from its desktop app or a web browser. Set up the machine where the agents will work first.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/install/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/install/">
+<meta property="og:title" content="Install Moonfold · Moonfold docs">
+<meta property="og:description" content="Moonfold runs coding agents on your computer and lets you control them from its desktop app or a web browser. Set up the machine where the agents will work first.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/" aria-current="page">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Get started</p>
+<h1 id="install-moonfold">Install Moonfold</h1>
+<p>Moonfold runs coding agents on your computer and lets you control them from its
+desktop app or a web browser. Set up the machine where the agents will work first.</p>
+<h2 id="requirements"><a class="anchor" href="#requirements">Requirements</a></h2>
+<p>You need an installed, authenticated provider before starting a thread. You can
+launch Moonfold and configure providers afterwards.</p>
+<h2 id="command-line"><a class="anchor" href="#command-line">Command line</a></h2>
+<pre><code class="language-bash">curl -fsSL https://raw.githubusercontent.com/Mr-Dark-debug/Moonfold/main/scripts/install.sh | sh
 </code></pre>
-        <p>On Windows, in PowerShell:</p>
-        <pre><code class="language-powershell">irm https://raw.githubusercontent.com/Mr-Dark-debug/Moonfold/main/scripts/install.ps1 | iex
+<p>On Windows, in PowerShell:</p>
+<pre><code class="language-powershell">irm https://raw.githubusercontent.com/Mr-Dark-debug/Moonfold/main/scripts/install.ps1 | iex
 </code></pre>
-        <p>
-          This installs the <code>moonfold</code> binary to <code>~/.local/bin</code>. If your shell
-          reports <code>command not found</code> afterwards, that directory is not on your
-          <code>PATH</code> yet; the installer prints the line to add. Set
-          <code>MOONFOLD_VERSION</code> to pin an exact version, for example
-          <code>MOONFOLD_VERSION=0.1.0-beta.1</code>.
-        </p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Task</th>
-                <th>Command</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Start the server and open the web app</td>
-                <td><code>moonfold</code></td>
-              </tr>
-              <tr>
-                <td>Start the server without a browser</td>
-                <td><code>moonfold serve</code></td>
-              </tr>
-              <tr>
-                <td>Keep it running in the background (macOS, Linux)</td>
-                <td>
-                  <code>moonfold service install</code> (<a href="/docs/background-service/"
-                    >details</a
-                  >)
-                </td>
-              </tr>
-              <tr>
-                <td>Move to the newest release</td>
-                <td><code>moonfold update</code></td>
-              </tr>
-              <tr>
-                <td>Remove it again</td>
-                <td><code>moonfold uninstall</code></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          Run <code>moonfold help</code> or <code>moonfold --help</code> for the full reference. To
-          start in a new working directory, use an explicit path such as
-          <code>moonfold ./my-project</code>. A bare directory name is accepted only if it already
-          exists.
-        </p>
-        <p>
-          If <code>moonfold</code> or <code>moonfold start</code> reports an already running server,
-          connect to that server instead. Stop it before starting a replacement, or use a different
-          <code>--base-dir</code> for an independent server.
-        </p>
-        <h3 id="intel-macs"><a class="anchor" href="#intel-macs">Intel Macs</a></h3>
-        <p>
-          There is no <code>moonfold</code> executable for Intel Macs (the desktop app is
-          available). To run a server there, build it from source with Node.js 24 and
-          <code>vp</code> (<a
-            href="https://github.com/Mr-Dark-debug/Moonfold#install-vp"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Install vp</a
-          >):
-        </p>
-        <pre><code class="language-bash">git clone https://github.com/Mr-Dark-debug/Moonfold
+<p>This installs the <code>moonfold</code> binary to <code>~/.local/bin</code>. If your shell reports <code>command not found</code>
+afterwards, that directory is not on your <code>PATH</code> yet; the installer prints the
+line to add. Set <code>MOONFOLD_VERSION</code> to pin an exact version, for example
+<code>MOONFOLD_VERSION=0.1.0-beta.1</code>.</p>
+<div class="table-wrap"><table><thead><tr><th>Task</th><th>Command</th></tr></thead><tbody><tr><td>Start the server and open the web app</td><td><code>moonfold</code></td></tr><tr><td>Start the server without a browser</td><td><code>moonfold serve</code></td></tr><tr><td>Use it from your other devices</td><td><code>moonfold up</code> (<a href="/docs/remote-access/">details</a>)</td></tr><tr><td>Keep it running in the background (macOS, Linux)</td><td><code>moonfold service install</code> (<a href="/docs/background-service/">details</a>)</td></tr><tr><td>Move to the newest release</td><td><code>moonfold update</code></td></tr><tr><td>Reclaim database space</td><td><code>moonfold doctor</code> (<a href="/docs/background-service/#reclaim-database-space">details</a>)</td></tr><tr><td>Remove it again</td><td><code>moonfold uninstall</code></td></tr></tbody></table></div>
+<p>Run <code>moonfold help</code> or <code>moonfold --help</code> for the full reference. To start in a new working
+directory, use an explicit path such as <code>moonfold ./my-project</code>. A bare directory name
+is accepted only if it already exists.</p>
+<p>If <code>moonfold</code> or <code>moonfold start</code> reports an already running server, connect to that server
+instead. Stop it before starting a replacement, or use a different <code>--base-dir</code>
+for an independent server.</p>
+<h3 id="intel-macs"><a class="anchor" href="#intel-macs">Intel Macs</a></h3>
+<p>There is no <code>moonfold</code> executable for Intel Macs (the desktop app is available). To
+run a server there, build it from source with <code>vp</code>, which provides the Node version it needs
+(<a href="https://github.com/Mr-Dark-debug/Moonfold#install-vp" target="_blank" rel="noopener noreferrer">Install vp</a>):</p>
+<pre><code class="language-bash">git clone https://github.com/Mr-Dark-debug/Moonfold
 cd moonfold &amp;&amp; vp i &amp;&amp; vp run build:desktop
 node apps/server/dist/bin.mjs
 </code></pre>
-        <p>
-          <code>moonfold update</code> and the background service do not apply to a server run this
-          way; update it with <code>git pull</code> and a rebuild.
-        </p>
-        <h2 id="desktop-app"><a class="anchor" href="#desktop-app">Desktop app</a></h2>
-        <p>
-          Download a release from
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub Releases</a
-          >. On Debian and Ubuntu, install the <code>.deb</code> with
-          <code>sudo apt install ./Moonfold-*.deb</code>. Each release has a
-          <code>SHA256SUMS</code> file if you want to check a download.
-        </p>
-        <h3 id="opening-an-unsigned-build">
-          <a class="anchor" href="#opening-an-unsigned-build">Opening an unsigned build</a>
-        </h3>
-        <p>Beta builds are not code-signed yet, so the first launch shows a warning:</p>
-        <ul>
-          <li>
-            <strong>macOS:</strong> open the <code>.dmg</code> and drag Moonfold to Applications.
-            The first time, Control-click the app in Applications and choose <strong>Open</strong>,
-            then <strong>Open</strong> again. If macOS only offers to move it to the Bin, open
-            <strong>System Settings → Privacy &amp; Security</strong>, find the note about Moonfold,
-            and choose <strong>Open Anyway</strong>.
-          </li>
-          <li>
-            <strong>Windows:</strong> SmartScreen shows &quot;Windows protected your PC&quot;.
-            Choose <strong>More info</strong>, then <strong>Run anyway</strong>.
-          </li>
-          <li>
-            <strong>Linux:</strong> make the AppImage executable (<code
-              >chmod +x Moonfold-*.AppImage</code
-            >) and run it, or install the <code>.deb</code>.
-          </li>
-        </ul>
-        <p>You only need to do this once per install; updates open normally.</p>
-        <p>
-          The <code>.deb</code> updates itself like the other desktop builds. It asks for your
-          password to install each update. If your desktop has no password prompt, the update fails.
-          Download the new <code>.deb</code> and install it the same way.
-        </p>
-        <h3 id="the-moonfold-command">
-          <a class="anchor" href="#the-moonfold-command">The <code>moonfold</code> command</a>
-        </h3>
-        <p>
-          The desktop app includes the <code>moonfold</code> command-line tool. To run it from any
-          terminal, open <strong>Settings → General → About</strong> and choose
-          <strong>Install</strong> next to <strong>moonfold command</strong>. On macOS and Linux it
-          adds a <code>moonfold</code> link to a folder on your <code>PATH</code>; on Windows it
-          adds the app&#39;s command folder to your <code>PATH</code>. Open a new terminal
-          afterwards. <strong>Remove</strong> takes it off again. If you already have
-          <code>moonfold</code> from npm, it stays as it is.
-        </p>
-        <h3 id="windows-subsystem-for-linux">
-          <a class="anchor" href="#windows-subsystem-for-linux">Windows Subsystem for Linux</a>
-        </h3>
-        <p>
-          Choose a WSL distro in <strong>Settings → Connections</strong> to run agents and projects
-          there. Install the provider CLIs inside that distro. Moonfold installs its own server
-          runtime there automatically; the first launch after an app update can take longer.
-        </p>
-        <h3 id="open-a-project-from-a-terminal">
-          <a class="anchor" href="#open-a-project-from-a-terminal"
-            >Open a project from a terminal</a
-          >
-        </h3>
-        <p>With the desktop app already running on the same machine:</p>
-        <pre><code class="language-bash">moonfold app
+<p><code>moonfold update</code> and the background service do not apply to a server run this way;
+update it with <code>git pull</code> and a rebuild.</p>
+<h2 id="desktop-app"><a class="anchor" href="#desktop-app">Desktop app</a></h2>
+<p>Download a release from <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a>.
+On Debian and Ubuntu, install the <code>.deb</code> with <code>sudo apt install ./Moonfold-*.deb</code>. Each release
+has a <code>SHA256SUMS</code> file if you want to check a download.</p>
+<h3 id="opening-an-unsigned-build"><a class="anchor" href="#opening-an-unsigned-build">Opening an unsigned build</a></h3>
+<p>Beta builds are not code-signed yet, so the first launch shows a warning:</p>
+<ul>
+<li><strong>macOS:</strong> open the <code>.dmg</code> and drag Moonfold to Applications. The first time, Control-click
+the app in Applications and choose <strong>Open</strong>, then <strong>Open</strong> again. If macOS only offers to move
+it to the Bin, open <strong>System Settings → Privacy &amp; Security</strong>, find the note about Moonfold,
+and choose <strong>Open Anyway</strong>.</li>
+<li><strong>Windows:</strong> SmartScreen shows &quot;Windows protected your PC&quot;. Choose <strong>More info</strong>, then
+<strong>Run anyway</strong>.</li>
+<li><strong>Linux:</strong> make the AppImage executable (<code>chmod +x Moonfold-*.AppImage</code>) and run it, or install
+the <code>.deb</code>.</li>
+</ul>
+<p>You only need to do this once per install; updates open normally.</p>
+<p>The <code>.deb</code> updates itself like the other desktop builds. It asks for your
+password to install each update. If your desktop has no password prompt, the
+update fails. Download the new <code>.deb</code> and install it the same way.</p>
+<p>The AUR packages currently support x86_64 only; on ARM64, use the AppImage.
+Update AUR installs with your AUR helper, such as <code>yay -Syu</code>, instead of the
+in-app updater.</p>
+<h3 id="nix-nixpkgs"><a class="anchor" href="#nix-nixpkgs">Nix (nixpkgs)</a></h3>
+<p>Moonfold is maintained in <a href="https://github.com/NixOS/nixpkgs/tree/nixos-unstable/pkgs/by-name/moonfold/moonfold" target="_blank" rel="noopener noreferrer">nixpkgs</a>.
+The command above installs from <code>nixos-unstable</code> and requires Nix 2.30 or later with
+<code>nix-command</code> and <code>flakes</code> enabled. Launch the desktop app with <code>moonfold-desktop</code>;
+the package also includes the <code>moonfold</code> command.</p>
+<p>On NixOS, you can instead add the package to your system configuration, using
+a nixpkgs revision that includes <code>moonfold</code>:</p>
+<pre><code class="language-nix">environment.systemPackages = [ pkgs.moonfold ];
 </code></pre>
-        <p>
-          This opens a new thread for the current directory, adding the project if needed. Pass a
-          path, such as <code>moonfold app ../my-project</code>, to open another directory. It
-          requires the desktop app, so a standalone server or an SSH session is not enough. If the
-          command cannot reach the app, start or update the desktop app and try again.
-        </p>
-        <h2 id="providers"><a class="anchor" href="#providers">Providers</a></h2>
-        <p>
-          Open <strong>Settings → Providers</strong> in the web or desktop app, select the
-          environment, and enable the provider you want. Installation, login, and configuration
-          belong to that environment&#39;s machine, even when you connect from a phone or another
-          computer.
-        </p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Provider</th>
-                <th>Install and authenticate</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Codex</td>
-                <td>
-                  <a href="/docs/providers-codex/#connect-with-chatgpt">Connect with ChatGPT</a>, or
-                  install
-                  <a
-                    href="https://developers.openai.com/codex/cli"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Codex CLI</a
-                  >
-                  and run <code>codex login</code>.
-                </td>
-              </tr>
-              <tr>
-                <td>Claude</td>
-                <td>
-                  Install
-                  <a
-                    href="https://claude.com/product/claude-code"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Claude Code</a
-                  >, then run <code>claude auth login</code>.
-                </td>
-              </tr>
-              <tr>
-                <td>Cursor</td>
-                <td>
-                  Install
-                  <a href="https://cursor.com/cli" target="_blank" rel="noopener noreferrer"
-                    >Cursor CLI</a
-                  >, then run <code>agent login</code>.
-                </td>
-              </tr>
-              <tr>
-                <td>Grok Build</td>
-                <td>
-                  Install
-                  <a href="https://x.ai/cli" target="_blank" rel="noopener noreferrer"
-                    >Grok Build CLI</a
-                  >, then run <code>grok login</code>.
-                </td>
-              </tr>
-              <tr>
-                <td>OpenCode</td>
-                <td>
-                  Install
-                  <a href="https://opencode.ai" target="_blank" rel="noopener noreferrer"
-                    >OpenCode</a
-                  >, then run <code>opencode auth login</code>.
-                </td>
-              </tr>
-              <tr>
-                <td>Antigravity</td>
-                <td>Install and sign in with Google from Moonfold&#39;s provider settings.</td>
-              </tr>
-              <tr>
-                <td>Pi</td>
-                <td>
-                  Install <a href="/docs/providers-pi/#set-up-pi">Pi</a> with Node.js 22.19 or
-                  newer, then run <code>pi</code> and <code>/login</code>.
-                </td>
-              </tr>
-              <tr>
-                <td>Muse Code</td>
-                <td>
-                  Install
-                  <a
-                    href="https://dev.meta.ai/docs/muse-code"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Muse Code</a
-                  >
-                  on the server, run <code>muse login</code>, then enable it in Settings →
-                  Providers.
-                </td>
-              </tr>
-              <tr>
-                <td>DeepSeek Harness</td>
-                <td>
-                  Add it from the agent search in Settings → Providers, then give it a model; see
-                  <a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a>.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          Provider CLIs must be on the server&#39;s <code>PATH</code>. If Moonfold cannot find one,
-          set its <strong>Binary path</strong> in provider settings, especially when using a version
-          manager. Cursor&#39;s executable is <code>cursor-agent</code>, although its login command
-          is <code>agent login</code>. Codex connected through ChatGPT and Antigravity can use their
-          managed runtimes without a <code>PATH</code> entry.
-        </p>
-        <p>
-          Moonfold warns when a provider version has known compatibility problems with your release.
-          Check <strong>Settings → Providers</strong> on that environment for the recommended
-          version or range. When its package manager supports installing a specific version, you can
-          install the recommendation there. Otherwise use the provider&#39;s installer on the
-          environment&#39;s machine. An unlisted version is unverified.
-        </p>
-        <p>
-          When a provider CLI is behind its latest release, its provider card shows the available
-          version. <strong>Update now</strong> runs the installer that owns the CLI (Homebrew, or a
-          global npm, pnpm, Yarn, Bun, Volta, or Vite+ install), or the CLI&#39;s own update command
-          when Moonfold cannot tell. Update a CLI installed with mise through mise. Cursor and
-          Antigravity update with Moonfold. Homebrew installs compare against the version Homebrew
-          offers, which can trail the npm release by a few hours.
-        </p>
-        <p>
-          Add another provider instance for a separate account or configuration. Each instance can
-          have its own environment variables, such as API keys or a custom base URL. Mark secret
-          values as sensitive; after saving, Moonfold does not display their original values.
-        </p>
-        <p>
-          For provider-specific setup and accounts, see <a href="/docs/providers-codex/">Codex</a>,
-          <a href="/docs/providers-claude/">Claude</a>,
-          <a href="/docs/providers-opencode/">OpenCode</a>,
-          <a href="/docs/providers-antigravity/">Antigravity</a>,
-          <a href="/docs/providers-pi/">Pi</a>, and <a href="/docs/providers-muse/">Muse Code</a>.
-        </p>
-        <h2 id="next-steps"><a class="anchor" href="#next-steps">Next steps</a></h2>
-        <ul>
-          <li>
-            <a href="/docs/thread-sidebar/">Working with threads</a>: start tasks and organize
-            parallel work.
-          </li>
-          <li>
-            <a href="/docs/permission-modes/">Permission modes</a>: choose when agents ask before
-            acting.
-          </li>
-          <li><a href="/docs/remote-access/">Remote access</a>: connect from another device.</li>
-          <li>
-            <a href="/docs/background-service/">Running in the background</a>: keep a Linux or macOS
-            host available.
-          </li>
-          <li>
-            <a href="/docs/updating/">Updating Moonfold</a>: update the app and connected servers.
-          </li>
-        </ul>
+<p>Apply the change with <code>sudo nixos-rebuild switch</code>. For Home Manager, add
+<code>pkgs.moonfold</code> to <code>home.packages</code> and run <code>home-manager switch</code>.</p>
+<p>Update a profile installation with <code>nix profile upgrade moonfold</code>. For NixOS or
+Home Manager, update your configuration&#39;s nixpkgs input or channel and rebuild.
+Nix manages both the desktop app and the bundled
+<code>moonfold</code> command; use Nix to update them instead of the in-app updater or <code>moonfold update</code>.</p>
+<h3 id="the-moonfold-command"><a class="anchor" href="#the-moonfold-command">The <code>moonfold</code> command</a></h3>
+<p>The desktop app includes the <code>moonfold</code> command-line tool. To run it from any
+terminal, open <strong>Settings → About</strong> and choose <strong>Install</strong> next to
+<strong>moonfold command</strong>. On macOS and Linux it adds a <code>moonfold</code> link to a folder on your
+<code>PATH</code>; on Windows it adds the app&#39;s command folder to your <code>PATH</code>. Open a new
+terminal afterwards. <strong>Remove</strong> takes it off again. If you already have <code>moonfold</code>
+from npm, it stays as it is.</p>
+<h3 id="windows-subsystem-for-linux"><a class="anchor" href="#windows-subsystem-for-linux">Windows Subsystem for Linux</a></h3>
+<p>Choose a WSL distro in <strong>Settings → Sharing &amp; access</strong> to run agents and projects
+there. Install the provider CLIs inside that distro. Moonfold installs its own
+server runtime there automatically; the first launch after an app update can
+take longer.</p>
+<h3 id="open-a-project-from-a-terminal"><a class="anchor" href="#open-a-project-from-a-terminal">Open a project from a terminal</a></h3>
+<p>With the desktop app already running on the same machine:</p>
+<pre><code class="language-bash">moonfold app
+</code></pre>
+<p>This opens a new thread for the current directory, adding the project if needed.
+Pass a path, such as <code>moonfold app ../my-project</code>, to open another directory. It requires
+the desktop app, so a standalone server or an SSH session is not enough. If the
+command cannot reach the app, start or update the desktop app and try again.</p>
+<h2 id="providers"><a class="anchor" href="#providers">Providers</a></h2>
+<p>Open <strong>Settings → Providers</strong> in the web or desktop app, select the environment,
+and enable the provider you want. Installation, login, and configuration belong
+to that environment&#39;s machine, even when you connect from a phone or another
+computer.</p>
+<div class="table-wrap"><table><thead><tr><th>Provider</th><th>Install and authenticate</th></tr></thead><tbody><tr><td>Codex</td><td><a href="/docs/providers-codex/#connect-with-chatgpt">Connect with ChatGPT</a>, or install <a href="https://developers.openai.com/codex/cli" target="_blank" rel="noopener noreferrer">Codex CLI</a> and run <code>codex login</code>.</td></tr><tr><td>Claude</td><td>Install <a href="https://claude.com/product/claude-code" target="_blank" rel="noopener noreferrer">Claude Code</a>, then run <code>claude auth login</code>.</td></tr><tr><td>Cursor</td><td>Install <a href="https://cursor.com/cli" target="_blank" rel="noopener noreferrer">Cursor CLI</a>, then run <code>agent login</code>.</td></tr><tr><td>Grok Build</td><td>Install <a href="https://x.ai/cli" target="_blank" rel="noopener noreferrer">Grok Build CLI</a>, then run <code>grok login</code>.</td></tr><tr><td>Kiro</td><td>Install <a href="https://kiro.dev/docs/cli/" target="_blank" rel="noopener noreferrer">Kiro CLI</a>, then run <code>kiro-cli login</code>.</td></tr><tr><td>OpenCode</td><td>Install <a href="https://opencode.ai" target="_blank" rel="noopener noreferrer">OpenCode</a>, then run <code>opencode auth login</code>.</td></tr><tr><td>Antigravity</td><td>Install and sign in with Google from Moonfold&#39;s provider settings.</td></tr><tr><td>Pi</td><td>Install <a href="/docs/providers-pi/#set-up-pi">Pi</a> with Node.js 22.19 or newer, then run <code>pi</code> and <code>/login</code>.</td></tr><tr><td>Muse Code</td><td>Install <a href="https://dev.meta.ai/docs/muse-code" target="_blank" rel="noopener noreferrer">Muse Code</a> on the server, run <code>muse login</code>, then enable it in Settings → Providers.</td></tr><tr><td>fx</td><td>Install <a href="https://fx.sh" target="_blank" rel="noopener noreferrer">fx</a> with <code>curl -fsSL https://fx.sh/setup.sh | bash</code>, then run <code>fx login</code>.</td></tr><tr><td>DeepSeek Harness</td><td>Add it from the agent search in Settings → Providers, then give it a model; see <a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a>.</td></tr></tbody></table></div>
+<p>Provider CLIs must be on the server&#39;s <code>PATH</code>. If Moonfold cannot find one, set its
+<strong>Binary path</strong> in provider settings, especially when using a version manager.
+Cursor&#39;s executable is <code>cursor-agent</code>, although its login command is
+<code>agent login</code>. Codex connected through ChatGPT and Antigravity can use their
+managed runtimes without a <code>PATH</code> entry.</p>
+<p>Moonfold warns when a provider version has known compatibility problems with your
+release. Check <strong>Settings → Providers</strong> on that environment for the recommended
+version or range. When its package manager supports installing a specific version,
+you can install the recommendation there. Otherwise use the provider&#39;s installer
+on the environment&#39;s machine. An unlisted version is unverified.</p>
+<p>When a provider CLI is behind its latest release, its provider card shows the
+available version. <strong>Update now</strong> runs the installer that owns the CLI
+(Homebrew, or a global npm, pnpm, Yarn, Bun, Volta, or Vite+ install), or the
+CLI&#39;s own update command when Moonfold cannot tell. Update a CLI installed with
+mise through mise. Cursor and Antigravity update with Moonfold. Homebrew and
+Chocolatey installs compare against the version their package manager offers,
+which can trail the npm release; update Claude installed with Chocolatey
+through Chocolatey.</p>
+<p>Add another provider instance for a separate account or configuration. Each
+instance can have its own environment variables, such as API keys or a custom
+base URL. Mark secret values as sensitive; after saving, Moonfold does not display
+their original values.</p>
+<p>For provider-specific setup and accounts, see <a href="/docs/providers-codex/">Codex</a>,
+<a href="/docs/providers-claude/">Claude</a>, <a href="/docs/providers-opencode/">OpenCode</a>,
+<a href="/docs/providers-antigravity/">Antigravity</a>, <a href="/docs/providers-kiro/">Kiro</a>,
+<a href="/docs/providers-pi/">Pi</a>, <a href="/docs/providers-muse/">Muse Code</a>, and <a href="/docs/providers-fx/">fx</a>.</p>
+<h2 id="next-steps"><a class="anchor" href="#next-steps">Next steps</a></h2>
+<ul>
+<li><a href="/docs/thread-sidebar/">Working with threads</a>: start tasks and organize parallel work.</li>
+<li><a href="/docs/permission-modes/">Permission modes</a>: choose when agents ask before acting.</li>
+<li><a href="/docs/remote-access/">Remote access</a>: connect from another device.</li>
+<li><a href="/docs/background-service/">Running in the background</a>: keep a Linux or macOS host available.</li>
+<li><a href="/docs/updating/">Updating Moonfold</a>: update the app and connected servers.</li>
+<li><a href="/docs/managed-policy/">Managed policy</a>: configure Moonfold for everyone on a machine.</li>
+</ul>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/install.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <span></span
-          ><a class="next" href="/docs/welcome-wizard/"
-            ><small>Next</small><span>Welcome wizard</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#requirements">Requirements</a></li>
-            <li><a href="#command-line">Command line</a></li>
-            <li><a href="#desktop-app">Desktop app</a></li>
-            <li><a href="#providers">Providers</a></li>
-            <li><a href="#next-steps">Next steps</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/install.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><span></span><a class="next" href="/docs/welcome-wizard/"><small>Next</small><span>Welcome wizard</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#requirements">Requirements</a></li><li><a href="#command-line">Command line</a></li><li><a href="#desktop-app">Desktop app</a></li><li><a href="#providers">Providers</a></li><li><a href="#next-steps">Next steps</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

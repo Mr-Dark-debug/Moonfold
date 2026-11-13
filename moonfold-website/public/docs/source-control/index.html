@@ -1,651 +1,335 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Source control · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Moonfold integrates with GitHub, GitLab, Forgejo, Gitea, Bitbucket, Azure DevOps, and GitCafe to clone and publish repositories, create pull requests, and review changes."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/source-control/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/source-control/" />
-    <meta property="og:title" content="Source control · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Moonfold integrates with GitHub, GitLab, Forgejo, Gitea, Bitbucket, Azure DevOps, and GitCafe to clone and publish repositories, create pull requests, and review changes."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/" aria-current="page">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
-        <h1 id="source-control">Source control</h1>
-        <p>
-          Moonfold integrates with GitHub, GitLab, Forgejo, Gitea, Bitbucket, Azure DevOps, and
-          GitCafe to clone and publish repositories, create pull requests, and review changes.
-        </p>
-        <h2 id="review-turn-changes">
-          <a class="anchor" href="#review-turn-changes">Review turn changes</a>
-        </h2>
-        <p>
-          A turn&#39;s changed files and diff show only the turn&#39;s own work. When a turn pulls,
-          merges, or rebases, the files Git brought in are left out. A file stays in the list when
-          the turn edited it, committed it, or fixed a conflict in it. Use the branch comparison to
-          review everything that changed against your base branch. Restore still returns the
-          complete saved workspace.
-        </p>
-        <h2 id="connect-an-account">
-          <a class="anchor" href="#connect-an-account">Connect an account</a>
-        </h2>
-        <p>
-          Install Git and configure authentication on the machine running your Moonfold server. For
-          a remote environment, do this on the remote machine. After signing in, open
-          <strong>Settings → Source Control</strong> and choose <strong>Rescan</strong>.
-        </p>
-        <h3 id="github"><a class="anchor" href="#github">GitHub</a></h3>
-        <p>
-          Moonfold talks to GitHub&#39;s API directly and only needs a token. Any of these works, in
-          this order of precedence:
-        </p>
-        <ol>
-          <li>
-            A token saved in <strong>Settings → Source Control → GitHub</strong>. It is kept in the
-            server&#39;s secret store, and works without the GitHub CLI.
-          </li>
-          <li>
-            <code>GH_TOKEN</code> (<code>GH_ENTERPRISE_TOKEN</code> with <code>GH_HOST</code> for
-            GitHub Enterprise Server) in the server&#39;s environment.
-          </li>
-          <li>
-            <a href="https://cli.github.com/" target="_blank" rel="noopener noreferrer"
-              >GitHub CLI</a
-            >
-            2.81.0 or newer, signed in with <code>gh auth login</code>.
-          </li>
-        </ol>
-        <p>
-          If <code>gh</code> is signed in to several accounts or hosts, expand
-          <strong>GitHub</strong> in the same place to pick the account each host uses or turn a
-          host off. A saved token or <code>GH_TOKEN</code> takes precedence over that choice; a host
-          turned off stays off either way.
-        </p>
-        <p>
-          For GitHub Enterprise, sign in with <code>gh auth login --hostname YOUR_HOST</code>.
-          Moonfold treats a custom server name as GitHub once it has a credential for that host.
-        </p>
-        <h3 id="forgejo-and-gitea">
-          <a class="anchor" href="#forgejo-and-gitea">Forgejo and Gitea</a>
-        </h3>
-        <p>
-          Install
-          <a
-            href="https://codeberg.org/forgejo-contrib/forgejo-cli"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Forgejo CLI (<code>fj</code>)</a
-          >
-          or
-          <a href="https://gitea.com/gitea/tea" target="_blank" rel="noopener noreferrer"
-            >Gitea CLI (<code>tea</code>)</a
-          >
-          0.16 or later on your Moonfold server. Sign in with
-          <code>fj --host https://your-server auth add-token</code> or <code>tea login add</code>.
-          Repeat for each server you use, including Codeberg.
-        </p>
-        <p>
-          Moonfold prefers a matching <code>fj</code> login and falls back to <code>tea</code> when
-          <code>fj</code> is unavailable or has no login for that server. Once an account is
-          selected, failed actions stay on that account. Settings shows the detected CLI. Forgejo
-          and Gitea share one integration entry. Servers hosted under a URL subpath, such as
-          <code>https://example.com/forgejo</code>, use <code>tea</code> because fj 0.6 does not
-          preserve the subpath when checking its account.
-        </p>
-        <p>
-          When cloning or publishing, use a full repository URL to select a specific server. You can
-          use <code>owner/repo</code> when only one fj server is configured, or with your default
-          <code>tea</code> login when fj is unavailable or unconfigured. With multiple fj servers,
-          use the full URL. If you have multiple <code>tea</code> accounts on one server, select one
-          with <code>tea login default &lt;login-name&gt;</code>. Git push and clone also need Git
-          credentials or an SSH key for that server.
-        </p>
-        <h3 id="gitlab"><a class="anchor" href="#gitlab">GitLab</a></h3>
-        <p>
-          Install
-          <a href="https://gitlab.com/gitlab-org/cli" target="_blank" rel="noopener noreferrer"
-            >GitLab CLI</a
-          >, then sign in:
-        </p>
-        <pre><code class="language-bash">glab auth login
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Source control · Moonfold docs</title>
+<meta name="description" content="Moonfold integrates with GitHub, GitLab, Forgejo, Gitea, Bitbucket, Azure DevOps, and GitCafe to clone and publish repositories, create pull requests, and review changes.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/source-control/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/source-control/">
+<meta property="og:title" content="Source control · Moonfold docs">
+<meta property="og:description" content="Moonfold integrates with GitHub, GitLab, Forgejo, Gitea, Bitbucket, Azure DevOps, and GitCafe to clone and publish repositories, create pull requests, and review changes.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/" aria-current="page">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
+<h1 id="source-control">Source control</h1>
+<p>Moonfold integrates with GitHub, GitLab, Forgejo, Gitea, Bitbucket, Azure DevOps, and GitCafe to clone
+and publish repositories, create pull requests, and review changes.</p>
+<h2 id="review-turn-changes"><a class="anchor" href="#review-turn-changes">Review turn changes</a></h2>
+<p>A turn&#39;s changed files and diff show only the turn&#39;s own work. When a turn pulls, merges, or
+rebases, the files Git brought in are left out. A file stays in the list when the turn edited it,
+committed it, or fixed a conflict in it. Use the branch comparison to review everything that changed
+against your base branch. Restore still returns the complete saved workspace.</p>
+<p>On web and desktop, open the Diff pane source picker and choose <strong>Commits</strong> to review one local
+commit at a time. The list shows the newest 100 commits in the branch comparison. A merge commit
+shows its changes against its first parent.</p>
+<p>A commit link from a supported code host opens in the Diff pane when the thread&#39;s repository has
+that commit locally, on any branch. Otherwise a pull request commit link opens the pull request. Other
+commit links follow your <strong>Open links in</strong> setting; on web, when that opens a new tab, Moonfold first
+shows an <strong>Open link</strong> button. Command/Ctrl+Click always opens the link in your browser. Commit links follow the <strong>Open pull requests in Moonfold</strong>
+setting in <strong>Settings → Diffs</strong>.</p>
+<h2 id="connect-an-account"><a class="anchor" href="#connect-an-account">Connect an account</a></h2>
+<p>Install Git and configure authentication on the machine running your Moonfold server. For a remote
+environment, do this on the remote machine. After signing in, open <strong>Settings → Source control</strong>
+and choose <strong>Rescan</strong>.</p>
+<h3 id="github"><a class="anchor" href="#github">GitHub</a></h3>
+<p>Moonfold talks to GitHub&#39;s API directly and only needs a token. Any of these works, in this
+order of precedence:</p>
+<ol>
+<li>A token saved in <strong>Settings → Source control → GitHub</strong>. It is kept in the server&#39;s secret
+store, and works without the GitHub CLI.</li>
+<li><code>GH_TOKEN</code> (<code>GH_ENTERPRISE_TOKEN</code> with <code>GH_HOST</code> for GitHub Enterprise Server) in the
+server&#39;s environment.</li>
+<li><a href="https://cli.github.com/" target="_blank" rel="noopener noreferrer">GitHub CLI</a> 2.81.0 or newer, signed in with <code>gh auth login</code>.</li>
+</ol>
+<p>If <code>gh</code> is signed in to several accounts or hosts, expand <strong>GitHub</strong> in the same place to pick
+the account each host uses or turn a host off. A saved token or <code>GH_TOKEN</code> takes precedence
+over that choice; a host turned off stays off either way.</p>
+<p>For GitHub Enterprise, sign in with <code>gh auth login --hostname YOUR_HOST</code>. Moonfold treats a
+custom server name as GitHub once it has a credential for that host.</p>
+<h3 id="forgejo-and-gitea"><a class="anchor" href="#forgejo-and-gitea">Forgejo and Gitea</a></h3>
+<p>Install <a href="https://codeberg.org/forgejo-contrib/forgejo-cli" target="_blank" rel="noopener noreferrer">Forgejo CLI (<code>fj</code>)</a> or
+<a href="https://gitea.com/gitea/tea" target="_blank" rel="noopener noreferrer">Gitea CLI (<code>tea</code>)</a> 0.16 or later on your Moonfold server.
+Sign in with <code>fj --host https://your-server auth add-token</code> or <code>tea login add</code>.
+Repeat for each server you use, including Codeberg.</p>
+<p>Moonfold prefers a matching <code>fj</code> login and falls back to <code>tea</code> when <code>fj</code> is unavailable
+or has no login for that server. Once an account is selected, failed actions stay on that
+account. Settings shows the detected CLI. Forgejo and Gitea share one integration entry.
+Servers hosted under a URL subpath, such as <code>https://example.com/forgejo</code>, use <code>tea</code> because
+fj 0.6 does not preserve the subpath when checking its account.</p>
+<p>When cloning or publishing, use a full repository URL to select a specific server.
+You can use <code>owner/repo</code> when only one fj server is configured, or with your default <code>tea</code>
+login when fj is unavailable or unconfigured. With multiple fj servers, use the full URL.
+If you have multiple <code>tea</code> accounts on one server, select one with
+<code>tea login default &lt;login-name&gt;</code>. Git push and clone also need Git credentials or an SSH key
+for that server.</p>
+<h3 id="gitlab"><a class="anchor" href="#gitlab">GitLab</a></h3>
+<p>Install <a href="https://gitlab.com/gitlab-org/cli" target="_blank" rel="noopener noreferrer">GitLab CLI</a>, then sign in:</p>
+<pre><code class="language-bash">glab auth login
 </code></pre>
-        <h3 id="bitbucket"><a class="anchor" href="#bitbucket">Bitbucket</a></h3>
-        <p>
-          Open <strong>Settings → Source Control</strong>, expand <strong>Bitbucket</strong>, and
-          enter one of:
-        </p>
-        <ul>
-          <li>
-            <strong>Access token</strong>: a token created for one repository, project, or
-            workspace. It can only reach what it was created for.
-          </li>
-          <li>
-            <strong>Atlassian account email</strong> and <strong>API token</strong>: an Atlassian
-            API token for your account. It can reach every repository you can. Give it read/write
-            access to repositories and pull requests, plus user read access
-            (<code>read:user:bitbucket</code>).
-          </li>
-        </ul>
-        <p>
-          A field saves when you leave it, and applies right away. The access token wins when both
-          are saved. Credentials are saved on the environment&#39;s server, so select a remote
-          environment to configure it. Saved tokens can&#39;t be viewed again; enter a new one to
-          replace it, or choose <strong>Remove</strong> to clear everything saved for Bitbucket.
-        </p>
-        <p>
-          If no credentials are saved, Moonfold falls back to these variables in the server&#39;s
-          environment. Restart the server after changing them:
-        </p>
-        <pre><code class="language-bash">export MOONFOLD_BITBUCKET_ACCESS_TOKEN=&quot;your-access-token&quot;
+<h3 id="bitbucket"><a class="anchor" href="#bitbucket">Bitbucket</a></h3>
+<p>Open <strong>Settings → Source control</strong>, expand <strong>Bitbucket</strong>, and enter one of:</p>
+<ul>
+<li><strong>Access token</strong>: a token created for one repository, project, or workspace. It can only reach
+what it was created for.</li>
+<li><strong>Atlassian account email</strong> and <strong>API token</strong>: an Atlassian API token for your account. It can
+reach every repository you can. Give it read/write access to repositories and pull requests, plus
+user read access (<code>read:user:bitbucket</code>).</li>
+</ul>
+<p>A field saves when you leave it, and applies right away. The access token wins when both are saved.
+Credentials are saved on the environment&#39;s server, so select a remote environment to configure
+it. Saved tokens can&#39;t be viewed again; enter a new one to replace it, or choose <strong>Remove</strong> to clear
+everything saved for Bitbucket.</p>
+<p>If no credentials are saved, Moonfold falls back to these variables in the server&#39;s environment.
+Restart the server after changing them:</p>
+<pre><code class="language-bash">export MOONFOLD_BITBUCKET_ACCESS_TOKEN=&quot;your-access-token&quot;
 # or
 export MOONFOLD_BITBUCKET_EMAIL=&quot;you@example.com&quot;
 export MOONFOLD_BITBUCKET_API_TOKEN=&quot;your-token&quot;
 </code></pre>
-        <h3 id="azure-devops"><a class="anchor" href="#azure-devops">Azure DevOps</a></h3>
-        <p>
-          Install
-          <a
-            href="https://learn.microsoft.com/en-us/cli/azure/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Azure CLI</a
-          >, add the DevOps extension, and sign in:
-        </p>
-        <pre><code class="language-bash">az extension add --name azure-devops
+<p>For a background service, put these <code>KEY=VALUE</code> entries in
+<a href="/docs/background-service/#configure-the-service-environment"><code>service.env</code></a>
+under Moonfold home, then run <code>moonfold service restart</code>. Service installation and updates
+preserve that file.</p>
+<h3 id="azure-devops"><a class="anchor" href="#azure-devops">Azure DevOps</a></h3>
+<p>Install <a href="https://learn.microsoft.com/en-us/cli/azure/" target="_blank" rel="noopener noreferrer">Azure CLI</a>, add the DevOps extension, and sign in:</p>
+<pre><code class="language-bash">az extension add --name azure-devops
 az login
 </code></pre>
-        <h3 id="gitcafe"><a class="anchor" href="#gitcafe">GitCafe</a></h3>
-        <p>Install the GitCafe CLI and sign in:</p>
-        <pre><code class="language-bash">bun install -g @gitcafe/cli
+<h3 id="gitcafe"><a class="anchor" href="#gitcafe">GitCafe</a></h3>
+<p>Install the GitCafe CLI and sign in:</p>
+<pre><code class="language-bash">bun install -g @gitcafe/cli
 cafe auth login --host https://git.cafe/api
 </code></pre>
-        <p>
-          Alternatively, open <strong>Settings → Source Control</strong>, expand
-          <strong>GitCafe</strong>, and enter a token. It is kept in the server&#39;s secret store,
-          applies right away, and is used before <code>CAFE_TOKEN</code> and the
-          <code>cafe</code> login. Or set <code>CAFE_TOKEN</code> in the server&#39;s environment
-          and restart it. Both tokens are only sent to <code>git.cafe</code>;
-          <code>CAFE_TOKEN</code> follows <code>CAFE_HOST</code> if you set it. Repositories on
-          <code>staging.git.cafe</code> need their own login with
-          <code>--host https://staging.git.cafe/api</code>.
-        </p>
-        <p>
-          Line comments, reviewer requests, and labels are not available for GitCafe pull requests
-          yet. Merging a stack lands it through GitCafe, and updating a branch restacks the layers
-          above it.
-        </p>
-        <h2 id="start-clone-or-publish-a-project">
-          <a class="anchor" href="#start-clone-or-publish-a-project"
-            >Start, clone, or publish a project</a
-          >
-        </h2>
-        <p>
-          To start from nothing, choose <strong>New project</strong> in the command palette
-          (<code>Cmd/Ctrl+K</code>), or <strong>New project</strong> under
-          <strong>Add Project</strong> on any client, and type a name. Moonfold makes a Git
-          repository in <code>~/.moonfold/projects</code> (the <code>projects</code> folder of your
-          Moonfold data directory) with a README, an icon, and a first commit, then opens a new
-          thread in it. Until the project has a thread, new threads work in its folder, even when
-          your default is a new worktree. The folder is named after the project, like
-          <code>pinball-stats</code> for &quot;Pinball Stats&quot;. Turn on
-          <strong>Create private repository on GitHub</strong> to also publish it. If Git has no
-          name or email on that machine, the project is created without the first commit.
-        </p>
-        <p>
-          Use <strong>Add Project</strong> in the command palette (<code>Cmd/Ctrl+K</code>) to clone
-          a repository. Choose a hosting provider or paste a Git URL, then choose where to save it.
-          The project opens right away while the clone runs in the background: you can write your
-          first prompt, and sending waits until the files are in place. A toast tracks progress and
-          lets you cancel; if the clone fails, retry it from the toast or from the banner above the
-          composer.
-        </p>
-        <p>
-          For a local Git repository without a remote, <strong>Publish Repository</strong> creates a
-          hosted repository, adds it as <code>origin</code>, and pushes your commits. If there are
-          no commits yet, it creates the remote; make your first commit before pushing.
-        </p>
-        <h2 id="move-a-thread-between-the-project-folder-and-a-worktree">
-          <a class="anchor" href="#move-a-thread-between-the-project-folder-and-a-worktree"
-            >Move a thread between the project folder and a worktree</a
-          >
-        </h2>
-        <p>
-          A thread that started in the project folder can move into a worktree of its own:
-          right-click it in the sidebar (or open the thread menu in its header) and choose
-          <strong>Move to new worktree…</strong>. Name a new branch, or pick
-          <strong>Existing worktree</strong> to join one the project already has. With
-          <strong>Take uncommitted changes along</strong> on, the folder&#39;s uncommitted changes,
-          new files included, go with it and the project folder is left clean; an existing worktree
-          must have no uncommitted changes of its own for that.
-        </p>
-        <p>
-          <strong>Bring back to project folder…</strong> does the reverse. Commits on the
-          worktree&#39;s branch are merged into the branch the project folder has checked out,
-          uncommitted changes come over, and the thread works in the project folder again. The
-          worktree itself stays on disk. The project folder needs to be free of uncommitted changes
-          first, and a merge conflict leaves everything as it was; resolve it in the worktree (for
-          example by merging the project&#39;s branch there) and try again.
-        </p>
-        <p>Both moves wait until the agent is not working in the thread.</p>
-        <h2 id="create-a-pull-request">
-          <a class="anchor" href="#create-a-pull-request">Create a pull request</a>
-        </h2>
-        <p>
-          Use a thread&#39;s Git actions to commit, push, and create a pull request. Moonfold can
-          generate commit messages, review titles, and descriptions from your changes.
-        </p>
-        <p>
-          An existing fork PR can appear beside the branch even if you pushed without setting an
-          upstream. If its badge is missing because several remotes hold that branch, set the
-          branch&#39;s upstream to the intended remote with
-          <code>git branch --set-upstream-to=&lt;remote&gt;/&lt;branch&gt;</code>.
-        </p>
-        <p>
-          Choose the writing style and model in <strong>Settings → Source Control</strong>.
-          <strong>Repository conventions</strong> uses the project&#39;s instructions and recent
-          commit subjects.
-        </p>
-        <h2 id="review-and-merge">
-          <a class="anchor" href="#review-and-merge">Review and merge</a>
-        </h2>
-        <p>
-          Open <strong>Pull requests</strong> to review changes and comments, request reviewers,
-          check out a branch, or merge. You can edit review titles and descriptions and your own
-          comments where the host allows it. GitLab calls these merge requests.
-        </p>
-        <p>
-          Open a review to read its description, activity, commits, and changed files. Line comments
-          stay as drafts until you submit the review. <strong>Work on PR</strong> opens a chat with
-          the review attached; sending the first message prepares a worktree from the review&#39;s
-          branch.
-        </p>
-        <p>
-          Enable <strong>Remove agent credits when merging</strong> in Settings → Source Control to
-          remove recognized agent co-author and generated-by lines from GitHub merge and squash
-          commit messages. Human co-authors stay credited. The setting is off by default and
-          projects can override it. It also applies to auto-merge, but not merge queues or native
-          stack merges. Original commits keep their messages, so merge and rebase can still retain
-          agent credits in those commits.
-        </p>
-        <p>
-          On web and desktop, hold <strong>Shift</strong> in the GitHub pull request list for quick
-          actions. To close several, press <strong>Close</strong>, drag across the rows in the same
-          group, and release. Press <strong>Escape</strong> before releasing to cancel. Failed
-          closes stay in the list so you can retry them.
-        </p>
-        <p>
-          GitHub, GitLab, and Azure DevOps support auto-merge while checks are outstanding. GitHub
-          also supports approving waiting fork workflows and opening a revert pull request for a
-          merged change.
-        </p>
-        <p>
-          GitHub sharing is off by default. In Settings → Connections → GitHub sharing, choose
-          <strong>Read PRs</strong> or <strong>Read and act</strong> for each environment you trust
-          to share GitHub access. Enable both the original environment and the environment answering
-          its requests on this client. <strong>Read and act</strong> can use broader GitHub
-          permissions than the original environment&#39;s credential; only enable it for
-          environments you control and trust. Changing a saved endpoint or removing an environment
-          clears its permission.
-        </p>
-        <p>
-          GitHub review details, linked PR status, and permitted review actions can then use another
-          connected environment signed in to the same GitHub account. Each needs a project on that
-          host. A connected local environment is preferred for actions and can answer slow or failed
-          reads. Browsers need a paired environment to use its GitHub credentials. Credentials stay
-          on their machines. Previously verified credentials remain usable for routing for ten
-          minutes during a GitHub outage; new credentials must be verified first. An action with an
-          uncertain result is never automatically retried elsewhere. Listings, diffs, and checkout
-          or PR creation from Git actions continue to use the project&#39;s environment.
-        </p>
-        <p>
-          For Azure DevOps, use the host website to change comments. Bitbucket does not support
-          reopening a declined pull request.
-        </p>
-        <h3 id="review-guides"><a class="anchor" href="#review-guides">Review guides</a></h3>
-        <p>
-          Review guides are in beta. Turn on <strong>Review guides</strong> in Settings → Source
-          Control to add the <strong>Guide</strong> tab to pull requests on that server.
-        </p>
-        <p>
-          The <strong>Guide</strong> tab gives you a tour of a pull request without reading it line
-          by line: stops through the change in reading order. Each stop points at the lines worth
-          reading, and a stop marked <strong>Look closely</strong> has a call only a maintainer can
-          make. Mechanical changes such as renames and snapshots are grouped at the end, and every
-          changed file appears somewhere on the tour. Conversations already resolved in review are
-          left out. For a pull request in a stack, the guide covers that layer only, and may point
-          out what a lower layer introduced or what a higher one uses.
-        </p>
-        <p>
-          Choose <strong>Write guide</strong> to have the review guide model from Settings → Source
-          Control read the change in a temporary checkout; without one set, the source control
-          writer model is used. Nothing in the checkout is changed, and a large pull request takes a
-          few minutes; you can go elsewhere in the app. On web and desktop, you are told when the
-          guide is ready. Claude and Codex can write guides. The guide is kept for everyone using
-          this server. To write it again, for example after a push or after changing the model or
-          instructions, choose <strong>Rewrite guide</strong> from the pull request&#39;s
-          <strong>⋯</strong> menu.
-        </p>
-        <p>
-          On web, while reading a stop, select lines in an excerpt to add a comment to your review
-          or ask an agent about them; comments wait with the ones from the <strong>Code</strong> tab
-          until you send the review. Choose a suggested question, or
-          <strong>Ask about this stop</strong>, to open a thread that already knows which stop you
-          are on. <strong>Finish review</strong> on the last stop opens the review with everything
-          you collected.
-        </p>
-        <p>
-          Agents can write guides too: ask one to prepare guides for a set of pull requests, and it
-          starts them for you. Each is read through the project whose checkout has that repository.
-        </p>
-        <p>
-          To shape guides to your taste, write <strong>Review guide instructions</strong> in
-          Settings → Source Control, such as what to show first or what to skip; projects can
-          override them. They change emphasis and ordering, not the guide&#39;s layout or which
-          files it covers.
-        </p>
-        <h3 id="mark-files-as-viewed">
-          <a class="anchor" href="#mark-files-as-viewed">Mark files as viewed</a>
-        </h3>
-        <p>
-          Tick a file off in the <strong>Code</strong> tab once you have read it and it collapses;
-          the toolbar keeps a running count. A tick belongs to the pull request rather than to a
-          commit, so scoping the tab to a single commit keeps them. A file pushed to after you
-          cleared it comes back marked <strong>Changed</strong>.
-        </p>
-        <p>
-          On GitHub these are GitHub&#39;s own viewed marks, so a review carries between Moonfold
-          and github.com in either direction. Forgejo, GitLab, Bitbucket, and Azure DevOps expose no
-          record Moonfold can read, so the server you are connected to keeps them instead: they
-          follow you across the apps connected to that server, but the host&#39;s own site will not
-          show them, and the count reads <strong>viewed in Moonfold</strong>.
-        </p>
-        <p>Viewed files collapse, and their marks follow the same rules as on web and desktop.</p>
-        <h2 id="troubleshooting"><a class="anchor" href="#troubleshooting">Troubleshooting</a></h2>
-        <ul>
-          <li>
-            <strong>Not authenticated:</strong> run the provider&#39;s login command on the server,
-            then rescan. For Bitbucket, check the credentials saved in Settings → Source Control, or
-            confirm the running server received the environment variables.
-          </li>
-          <li>
-            <strong>GitHub sign-in cannot be verified:</strong> update GitHub CLI to at least
-            2.81.0, or save a token in Settings → Source Control.
-          </li>
-          <li>
-            <strong>Push fails despite a connected account:</strong> check the Git remote&#39;s
-            credentials. SSH and HTTPS remotes can require separate setup from the hosting
-            provider&#39;s API access.
-          </li>
-          <li>
-            <strong>A review cannot load:</strong> open it on the host website while resolving
-            connectivity, permissions, or rate limits.
-          </li>
-        </ul>
-        <h2 id="linked-pull-requests">
-          <a class="anchor" href="#linked-pull-requests">Linked pull requests</a>
-        </h2>
-        <p>
-          A thread can hold several pull requests, including reviews from another repository on the
-          same host. Use <strong>Link pull request</strong> in the command palette or
-          <strong>Linked pull requests</strong> panel, or right-click a pull request link in the
-          conversation. Creating a pull request from Git actions links it automatically. Agents can
-          link their pull requests with the <code>link_pull_request</code> tool.
-        </p>
-        <p>
-          Use <strong>Link this PR</strong> in a branch-detected badge&#39;s tooltip to keep it with
-          the thread. From a review on the Pull Requests page, <strong>Link to thread</strong> lets
-          you search for an active thread. The review header also lists the threads that link to it,
-          including archived threads, so you can return to their context.
-        </p>
-        <p>
-          Thread badges show a stack&#39;s layer count or the current review number with a count of
-          additional links. Clicking a badge with more than one review opens the
-          <strong>Linked pull requests</strong> panel. Linking and unlinking are available in the
-          web and desktop clients.
-        </p>
-        <p>
-          The <strong>Linked pull requests</strong> panel lists every review and groups stacks.
-          Unlink a review from its row menu. An unlinked stack layer stays out of later syncs. Open
-          linked reviews refresh on the server; closed reviews refresh periodically so reopening one
-          on the host is detected. Merged reviews refresh when requested. A settled thread&#39;s
-          reviews stop refreshing until you unsettle it. With
-          <strong>Auto-settle merged threads</strong> enabled, a thread can settle after every
-          linked review is terminal. An open or unsynced link keeps it active.
-        </p>
-        <p>
-          Ask the agent to watch, monitor, or babysit a pull request and it calls
-          <code>watch_pull_request</code>. While the thread is active, the server checks the pull
-          request every two minutes and wakes the agent when a check fails, the required checks
-          pass, someone else comments or reviews, or the branch starts to conflict. Threads in a
-          project that watch the same pull request share one check. On GitHub, a check first asks
-          whether anything changed and reads the pull request only when it did, which keeps watching
-          inside GitHub&#39;s rate limit. Comments from your own account do not wake it. Watching
-          ends when the pull request merges or closes, after 10 wakes in a row that bring only
-          comments, after 8 failed reads in a row, or when you press Stop on the thread. A rate
-          limit only pauses watching. Settling or archiving a thread also ends all its watches.
-          Unsettle the thread before starting a new watch. Subagents cannot watch pull requests; the
-          thread that delegated to them does. To start or stop it yourself, use the row menu in the
-          <strong>Linked pull requests</strong> panel. In the thread details card, a watched pull
-          request shows an eye; click it to stop watching.
-        </p>
-        <p>
-          A watched thread counts as working between wakes, so it stays in the
-          <strong>Working</strong> section and does not auto-settle. Agents stop watching when they
-          hand the work back to you, and the thread then returns to your inbox.
-        </p>
-        <p>
-          Cross-repository links use a project on the same host. Azure DevOps reviews require a
-          project checked out from the matching organization and repository.
-        </p>
-        <h2 id="github-stacks"><a class="anchor" href="#github-stacks">GitHub stacks</a></h2>
-        <p>
-          The Pull Requests page shows each PR&#39;s position in its GitHub stack. Open the stack
-          badge in a review to navigate its layers. <strong>Merge stack</strong> submits the
-          selected pull request and every unmerged layer below it to GitHub together, respecting
-          branch rules and merge queues. The confirmation shows the scope and merge strategy. GitHub
-          rebases the remaining stack after merging.
-        </p>
-        <p>
-          <strong>Rebase stack</strong> updates remote branches from bottom to top without changing
-          your local checkout. It can rewrite history and restart checks. If a layer fails, earlier
-          updates remain; resolve that layer before retrying. GitHub may require manual conflict
-          resolution after a lower layer is amended, even when its changes look independent. Stack
-          actions require an environment that supports them.
-        </p>
+<p>Alternatively, open <strong>Settings → Source control</strong>, expand <strong>GitCafe</strong>, and enter a token. It is
+kept in the server&#39;s secret store, applies right away, and is used before <code>CAFE_TOKEN</code> and the
+<code>cafe</code> login. Or set <code>CAFE_TOKEN</code> in the server&#39;s environment and restart it. Both tokens are only
+sent to <code>git.cafe</code>; <code>CAFE_TOKEN</code> follows <code>CAFE_HOST</code> if you set it. Repositories on
+<code>staging.git.cafe</code> need their own login with <code>--host https://staging.git.cafe/api</code>.</p>
+<p>Line comments are not available for GitCafe pull requests yet.
+Merging a stack lands it through GitCafe, and updating a branch restacks the layers above it.</p>
+<h2 id="start-clone-or-publish-a-project"><a class="anchor" href="#start-clone-or-publish-a-project">Start, clone, or publish a project</a></h2>
+<p>To start from nothing, choose <strong>New project</strong> in the command palette (<code>Cmd/Ctrl+K</code>), or
+<strong>New project</strong> under <strong>Add Project</strong> on any client, and type a name. Moonfold makes a Git
+repository in <code>~/.moonfold/projects</code> (the <code>projects</code> folder of your Moonfold data directory) with a README,
+an icon, and a first commit, then opens a new thread in it. Until the project has a thread, new
+threads work in its folder, even when your default is a new worktree. The folder is named after the project,
+like <code>pinball-stats</code> for &quot;Pinball Stats&quot;. Turn on <strong>Create private repository on GitHub</strong> to also
+publish it. If Git has no name or email on that machine, the project is created without the
+first commit.</p>
+<p>Use <strong>Add Project</strong> in the command palette (<code>Cmd/Ctrl+K</code>) to clone a repository. Choose a hosting
+provider or paste a Git URL, then choose where to save it. The project opens right away while the
+clone runs in the background: you can write your first prompt, and sending waits until the files
+are in place. A toast tracks progress and lets you cancel; if the clone fails, retry it from the
+toast or from the banner above the composer. When the host refuses the machine&#39;s SSH key, Moonfold
+clones over HTTPS with Git&#39;s credentials for that host instead, and the project&#39;s remote uses the
+HTTPS URL.</p>
+<p>To lay clones out like <a href="https://github.com/x-motemen/ghq" target="_blank" rel="noopener noreferrer">ghq</a>, turn on <strong>Clone into host folders</strong>
+under <strong>Settings → Threads</strong> (or <strong>Source control</strong> on mobile). Clones then default to
+<code>&lt;host&gt;/&lt;owner&gt;/&lt;repo&gt;</code> under <strong>Add project starts in</strong>, so set that to <code>~/ghq</code> to share ghq&#39;s
+folders. You can still change the destination before cloning.</p>
+<p>For a local Git repository without a remote, <strong>Publish Repository</strong> creates a hosted repository,
+adds it as <code>origin</code>, and pushes your commits. If there are no commits yet, it creates the remote;
+make your first commit before pushing.</p>
+<h2 id="move-a-thread-between-the-project-folder-and-a-worktree"><a class="anchor" href="#move-a-thread-between-the-project-folder-and-a-worktree">Move a thread between the project folder and a worktree</a></h2>
+<p>A thread that started in the project folder can move into a worktree of its own: right-click it
+in the sidebar (or open the thread menu in its header) and choose <strong>Move to new worktree…</strong>. Name
+a new branch, or pick <strong>Existing worktree</strong> to join one the project already has. With <strong>Take
+uncommitted changes along</strong> on, the folder&#39;s uncommitted changes, new files included, go with it
+and the project folder is left clean; an existing worktree must have no uncommitted changes of
+its own for that.</p>
+<p><strong>Bring back to project folder…</strong> does the reverse. Commits on the worktree&#39;s branch are merged
+into the branch the project folder has checked out, uncommitted changes come over, and the thread
+works in the project folder again. The worktree itself stays on disk. The project folder needs to
+be free of uncommitted changes first, and a merge conflict leaves everything as it was; resolve
+it in the worktree (for example by merging the project&#39;s branch there) and try again.</p>
+<p>Both moves wait until the agent is not working in the thread.</p>
+<h2 id="create-a-pull-request"><a class="anchor" href="#create-a-pull-request">Create a pull request</a></h2>
+<p>Use a thread&#39;s Git actions to commit, push, and create a pull request. Moonfold can generate commit
+messages, review titles, and descriptions from your changes. Descriptions also draw on the work in
+the thread, including the checks it ran.</p>
+<p>An existing fork PR can appear beside the branch even if you pushed without setting an upstream.
+If its badge is missing because several remotes hold that branch, set the branch&#39;s upstream to
+the intended remote with <code>git branch --set-upstream-to=&lt;remote&gt;/&lt;branch&gt;</code>.</p>
+<p>Choose the writing style and model in <strong>Settings → Source control</strong>. <strong>Repository conventions</strong>
+uses the project&#39;s instructions and recent commit subjects.</p>
+<h2 id="review-and-merge"><a class="anchor" href="#review-and-merge">Review and merge</a></h2>
+<p>Open <strong>Pull requests</strong> to review changes and comments, request reviewers, check out a branch,
+or merge. You can edit review titles and descriptions and your own comments where the host allows it.
+Where you can edit a description, you can also tick its checkboxes from the Summary tab
+(the Overview tab on mobile).
+GitLab calls these merge requests.</p>
+<p>Open a review
+to read its description, activity, commits, and changed files. Line comments stay as drafts
+until you submit the review. <strong>Work on PR</strong> opens a chat with the review attached; sending
+the first message prepares a worktree from the review&#39;s branch.</p>
+<p>Enable <strong>Remove agent credits when merging</strong> in Settings → Source control to remove recognized
+agent co-author and generated-by lines from GitHub merge and squash commit messages. Human
+co-authors stay credited. The setting is off by default and projects can override it. It also
+applies to auto-merge, but not merge queues or native stack merges. Original commits keep their
+messages, so merge and rebase can still retain agent credits in those commits.</p>
+<p>On web and desktop, hold <strong>Shift</strong> in the GitHub pull request list for quick actions.
+To close several, press <strong>Close</strong>, drag across the rows in the same group, and release.
+Press <strong>Escape</strong> before releasing to cancel. Failed closes stay in the list so you can retry them.</p>
+<p>GitHub, GitLab, and Azure DevOps support auto-merge while checks are outstanding. GitHub also
+supports approving waiting fork workflows and opening a revert pull request for a merged change.</p>
+<p>Pull request sharing is off by default. In Settings → Environments → Pull request sharing,
+choose <strong>Read PRs</strong> or <strong>Read and act</strong> for each environment you trust to share its source
+control access.
+Enable both the original environment and the environment answering its requests on this client.
+<strong>Read and act</strong> can use broader permissions than the original environment&#39;s credential;
+only enable it for environments you control and trust. Changing a saved endpoint or removing an
+environment clears its permission.</p>
+<p>Review details, linked PR status, and permitted review actions can then use another connected
+environment signed in to the same account on the same host. Each needs a project on that host.
+A connected local environment is preferred for actions and can answer slow or failed reads.
+Browsers need a paired environment to use its GitHub credentials.
+Credentials stay on their machines. Previously verified credentials remain usable for routing
+for ten minutes during a GitHub outage; new credentials must be verified first. An action with
+an uncertain result is never automatically retried elsewhere. Listings, diffs, and checkout or
+PR creation from Git actions continue to use the project&#39;s environment.</p>
+<p>For Azure DevOps, use the host website to change comments. Bitbucket does not support reopening a
+declined pull request.</p>
+<h3 id="review-guides"><a class="anchor" href="#review-guides">Review guides</a></h3>
+<p>Review guides are in beta. Turn on <strong>Review guides</strong> in Settings → Source control to add the
+<strong>Guide</strong> tab to pull requests on that server.</p>
+<p>The <strong>Guide</strong> tab gives you a tour of a pull request without reading it line by line: stops
+through the change in reading order. Each stop points at the lines worth reading, and a stop marked
+<strong>Look closely</strong> has a call only a maintainer can make. Mechanical changes such as renames and
+snapshots are grouped at the end, and every changed file appears somewhere on the tour.
+Conversations already resolved in review are left out. For a pull request in a stack, the guide
+covers that layer only, and may point out what a lower layer introduced or what a higher one uses.</p>
+<p>Choose <strong>Write guide</strong> to have the review guide model from Settings → Source control read the
+change in a temporary checkout; without one set, the source control writer model is used. Nothing
+in the checkout is changed, and a large pull request takes a few minutes; you can go elsewhere in
+the app. On web and desktop, you are told when the guide is ready. Claude and Codex can write guides. The guide is
+kept for everyone using this server. To write it again, for example after a push or after changing
+the model or instructions, choose <strong>Rewrite guide</strong> from the pull request&#39;s <strong>⋯</strong> menu.</p>
+<p>On web, while reading a stop, select lines in an excerpt to add a comment to your review or ask an agent
+about them; comments wait with the ones from the <strong>Code</strong> tab until you send the review. Choose a
+suggested question, or <strong>Ask about this stop</strong>, to open a thread that already knows which stop you
+are on. <strong>Finish review</strong> on the last stop opens the review with everything you collected.</p>
+<p>Agents can write guides too: ask one to prepare guides for a set of pull requests, and it starts
+them for you. Each is read through the project whose checkout has that repository.</p>
+<p>To shape guides to your taste, write <strong>Review guide instructions</strong> in Settings → Source control,
+such as what to show first or what to skip; projects can override them. They change emphasis and
+ordering, not the guide&#39;s layout or which files it covers.</p>
+<h3 id="mark-files-as-viewed"><a class="anchor" href="#mark-files-as-viewed">Mark files as viewed</a></h3>
+<p>Tick a file off in the <strong>Code</strong> tab once you have read it and it collapses; the toolbar keeps a
+running count. A tick belongs to the pull request rather than to a commit, so scoping the tab to a
+single commit keeps them. A file pushed to after you cleared it comes back marked <strong>Changed</strong>.</p>
+<p>On GitHub these are GitHub&#39;s own viewed marks, so a review carries between Moonfold and github.com
+in either direction. Forgejo, GitLab, Bitbucket, and Azure DevOps expose no record Moonfold can read, so the
+server you are connected to keeps them instead: they follow you across the apps connected to that
+server, but the host&#39;s own site will not show them, and the count reads <strong>viewed in Moonfold</strong>.</p>
+<p>Viewed files collapse,
+and their marks follow the same rules as on web and desktop.</p>
+<h2 id="troubleshooting"><a class="anchor" href="#troubleshooting">Troubleshooting</a></h2>
+<ul>
+<li><strong>Not authenticated:</strong> run the provider&#39;s login command on the server, then rescan. For Bitbucket,
+check the credentials saved in Settings → Source control, or confirm the running server received
+the environment variables.</li>
+<li><strong>GitHub sign-in cannot be verified:</strong> update GitHub CLI to at least 2.81.0, or save a token in Settings → Source control.</li>
+<li><strong>Push fails despite a connected account:</strong> check the Git remote&#39;s credentials. SSH and HTTPS
+remotes can require separate setup from the hosting provider&#39;s API access.</li>
+<li><strong>A review cannot load:</strong> open it on the host website while resolving connectivity, permissions,
+or rate limits.</li>
+</ul>
+<h2 id="linked-pull-requests"><a class="anchor" href="#linked-pull-requests">Linked pull requests</a></h2>
+<p>A thread can hold several pull requests, including reviews from another repository on the same host.
+Use <strong>Link pull request</strong> in the command palette or <strong>Linked pull requests</strong> panel, or right-click a
+pull request link in the conversation. Creating a pull request from Git actions links it automatically,
+and so does an agent creating one with <code>gh pr create</code> or <code>glab mr create</code>. Agents can link other
+pull requests with the <code>link_pull_request</code> tool.</p>
+<p>Use <strong>Link pull request to thread</strong> in the command palette to keep a pull request with the thread. From a review
+on the Pull requests page, <strong>Link to thread</strong> lets you search for an active thread. The review header
+also lists the threads that link to it, including archived threads, so you can return to their context.</p>
+<p>Thread badges show a stack&#39;s layer count or the current review number with a count of additional
+links. Clicking a badge with more than one review opens the <strong>Linked pull requests</strong> panel.
+Linking and unlinking are available in the web and desktop clients.</p>
+<p>The <strong>Linked pull requests</strong> panel lists every review and groups stacks. Unlink a review from its
+row menu. An unlinked stack layer stays out of later syncs. Open linked reviews refresh on the server;
+closed reviews refresh periodically so reopening one on the host is detected. Merged reviews refresh
+when requested. A settled thread&#39;s reviews stop refreshing until you unsettle it. With <strong>Auto-settle merged threads</strong> enabled, a thread can settle after every linked
+review is terminal. An open or unsynced link keeps it active.</p>
+<p>Ask the agent to watch, monitor, or babysit a pull request and it calls <code>watch_pull_request</code>. While
+the thread is active, the server checks the pull request every two minutes and wakes the agent when a
+check fails, the required checks pass, someone else comments or reviews, or the branch starts to
+conflict. Threads in a project that watch the same pull request share one check. On GitHub, a check
+first asks whether anything changed and reads the pull request only when it did, which keeps
+watching inside GitHub&#39;s rate limit. Comments from your own account do not wake it. Watching ends
+when the pull request merges or closes, after 10 wakes in a row that bring only comments, after 8
+failed reads in a row, or when you press Stop on the thread. A rate limit only pauses watching.
+Settling or archiving a thread also ends all its watches. Unsettle the thread before starting a new
+watch. Watching a pull request again does not repeat check or conflict news its last
+watch already reported; unlinking the pull request clears that. Subagents cannot watch pull requests; the thread that delegated to them does. To start or stop
+it yourself, use the row menu in the <strong>Linked pull requests</strong> panel. In the thread details card, a
+watched pull request shows an eye; click it to stop watching.</p>
+<p>A watched thread counts as working between wakes, so it stays in the <strong>Working</strong> section and does
+not auto-settle. Agents stop watching when they hand the work back to you, and the thread then
+returns to your inbox.</p>
+<h3 id="fix-failing-checks"><a class="anchor" href="#fix-failing-checks">Fix failing checks</a></h3>
+<p>When you create a pull request from a thread, Moonfold watches it for that thread without being
+asked. If a check fails, the agent is woken to read the failure and push a fix. It gets three tries
+per pull request; a pass resets the count. After the last try it stops watching and tells you which
+checks still fail and what it tried. It is told never to weaken a test or a check to get green and
+never to force-push.</p>
+<p>Change the number of tries, or turn this off, in <strong>Settings → Source Control → Fix failing checks</strong>.
+It can be set per project. The eye on a watched pull request shows how many tries were used.</p>
+<p>Cross-repository links use a project on the same host. Azure DevOps reviews require a project checked
+out from the matching organization and repository.</p>
+<h2 id="github-stacks"><a class="anchor" href="#github-stacks">GitHub stacks</a></h2>
+<p>The Pull requests page shows each PR&#39;s position in its GitHub stack. Open the stack badge in a
+review to navigate its layers. <strong>Merge stack</strong> submits the selected pull request and every unmerged
+layer below it to GitHub together, respecting branch rules and merge queues. The confirmation shows
+the scope and merge strategy. GitHub rebases the remaining stack after merging.</p>
+<p><strong>Rebase stack</strong> updates remote branches from bottom to top without changing your local checkout.
+It can rewrite history and restart checks. If a layer fails, earlier updates remain; resolve that
+layer before retrying. GitHub may require manual conflict resolution after a lower layer is amended,
+even when its changes look independent. Stack actions require an environment that supports them.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/source-control.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/snap-shot/"><small>Previous</small><span>SnapShots</span></a
-          ><a class="next" href="/docs/telemetry/"
-            ><small>Next</small><span>Product usage data</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#review-turn-changes">Review turn changes</a></li>
-            <li><a href="#connect-an-account">Connect an account</a></li>
-            <li>
-              <a href="#start-clone-or-publish-a-project">Start, clone, or publish a project</a>
-            </li>
-            <li>
-              <a href="#move-a-thread-between-the-project-folder-and-a-worktree"
-                >Move a thread between the project folder and a worktree</a
-              >
-            </li>
-            <li><a href="#create-a-pull-request">Create a pull request</a></li>
-            <li><a href="#review-and-merge">Review and merge</a></li>
-            <li><a href="#troubleshooting">Troubleshooting</a></li>
-            <li><a href="#linked-pull-requests">Linked pull requests</a></li>
-            <li><a href="#github-stacks">GitHub stacks</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/source-control.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/snap-shot/"><small>Previous</small><span>SnapShots</span></a><a class="next" href="/docs/telemetry/"><small>Next</small><span>Product usage data</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#review-turn-changes">Review turn changes</a></li><li><a href="#connect-an-account">Connect an account</a></li><li><a href="#start-clone-or-publish-a-project">Start, clone, or publish a project</a></li><li><a href="#move-a-thread-between-the-project-folder-and-a-worktree">Move a thread between the project folder and a worktree</a></li><li><a href="#create-a-pull-request">Create a pull request</a></li><li><a href="#review-and-merge">Review and merge</a></li><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#linked-pull-requests">Linked pull requests</a></li><li><a href="#github-stacks">GitHub stacks</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

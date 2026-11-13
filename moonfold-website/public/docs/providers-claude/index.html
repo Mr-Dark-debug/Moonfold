@@ -1,380 +1,162 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Claude · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Moonfold uses Claude Code's login and configuration. Start with the default provider for one account; provider setup covers installation and shared provider settings."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-claude/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-claude/" />
-    <meta property="og:title" content="Claude · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Moonfold uses Claude Code's login and configuration. Start with the default provider for one account; provider setup covers installation and shared provider settings."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/" aria-current="page">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
-        <h1 id="claude">Claude</h1>
-        <p>
-          Moonfold uses Claude Code&#39;s login and configuration. Start with the default provider
-          for one account; <a href="/docs/install/#providers">provider setup</a> covers installation
-          and shared provider settings.
-        </p>
-        <h2 id="separate-accounts-or-configurations">
-          <a class="anchor" href="#separate-accounts-or-configurations"
-            >Separate accounts or configurations</a
-          >
-        </h2>
-        <p>
-          Use a separate Claude config directory for each account. This also works for named presets
-          that need different Claude settings or a router connection.
-        </p>
-        <p>
-          Keep your existing account in the default directory. On the environment&#39;s machine,
-          create the second login:
-        </p>
-        <pre><code class="language-bash">mkdir -p ~/.claude_personal
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Claude · Moonfold docs</title>
+<meta name="description" content="Moonfold uses Claude Code's login and configuration. Start with the default provider for one account; provider setup covers installation and shared provider settings.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-claude/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-claude/">
+<meta property="og:title" content="Claude · Moonfold docs">
+<meta property="og:description" content="Moonfold uses Claude Code's login and configuration. Start with the default provider for one account; provider setup covers installation and shared provider settings.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/" aria-current="page">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
+<h1 id="claude">Claude</h1>
+<p>Moonfold uses Claude Code&#39;s login and configuration. Start with the default provider
+for one account; <a href="/docs/install/#providers">provider setup</a> covers installation and
+shared provider settings.</p>
+<h2 id="separate-accounts-or-configurations"><a class="anchor" href="#separate-accounts-or-configurations">Separate accounts or configurations</a></h2>
+<p>Use a separate Claude config directory for each account. This also works for named
+presets that need different Claude settings or a router connection.</p>
+<p>Keep your existing account in the default directory. On the environment&#39;s machine,
+create the second login:</p>
+<pre><code class="language-bash">mkdir -p ~/.claude_personal
 CLAUDE_CONFIG_DIR=~/.claude_personal claude auth login
 </code></pre>
-        <p>Add another Claude instance in <strong>Settings &gt; Providers</strong>:</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Instance</th>
-                <th>Binary path</th>
-                <th>CLAUDE_CONFIG_DIR path</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Claude Work</td>
-                <td><code>claude</code></td>
-                <td>Leave empty</td>
-              </tr>
-              <tr>
-                <td>Claude Personal</td>
-                <td><code>claude</code></td>
-                <td><code>~/.claude_personal</code></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          An empty config-directory setting uses Claude Code&#39;s normal configuration. The custom
-          setting changes <code>CLAUDE_CONFIG_DIR</code>, leaving <code>HOME</code> and the system
-          keychain location intact. Use the same variable for the login command. Setting
-          <code>HOME</code> instead can put credentials where this provider will not find them.
-        </p>
-        <p>
-          Check the account reported in provider settings after signing in. Existing threads can
-          switch only between Claude instances with the same config directory. Separate account
-          directories stay isolated, including their local conversation state. Claude does not have
-          Codex&#39;s shared-home and shadow-home arrangement.
-        </p>
-        <p>
-          For presets that differ only in API keys or endpoints, use the instance&#39;s
-          <strong>Environment variables</strong>. Variable assignments do not belong in
-          <strong>Launch arguments</strong>.
-        </p>
-        <p>
-          Claude Code&#39;s verbose mode can stay enabled when you use Claude for text generation,
-          including thread titles, branch names, commit messages, and pull request descriptions. On
-          a remote connection, Moonfold uses the Claude configuration on the connected server.
-        </p>
-        <h2 id="compact-long-conversations">
-          <a class="anchor" href="#compact-long-conversations">Compact long conversations</a>
-        </h2>
-        <p>
-          Set <strong>Auto-compact after</strong> in the Claude provider settings to an integer
-          between <code>100000</code> and <code>1000000</code>. For example,
-          <code>300000</code> asks Claude to summarize at about 300,000 tokens. This changes when
-          compaction happens, not the model&#39;s context window. Leave it empty for Claude
-          Code&#39;s default.
-        </p>
-        <p>
-          You can also send <code>/compact</code> in an existing conversation. Web and desktop offer
-          <strong>Compact context</strong> from the context meter. When you return to a large thread
-          after Claude&#39;s prompt cache expires, a <strong>Compact</strong> chip with the
-          thread&#39;s token count shows next to the send button. While it is on, Enter summarizes
-          the history first, then sends your message. Click the chip to switch it to
-          <strong>Full</strong> and keep the full history for that message. The cache lasts about an
-          hour on a Claude subscription and 5 minutes with an API key, Bedrock, or Vertex. See
-          <a href="/docs/composer/#commands-and-skills">commands and skills</a> for using composer
-          commands.
-        </p>
-        <h2 id="usage-limits"><a class="anchor" href="#usage-limits">Usage limits</a></h2>
-        <p>
-          If your Claude subscription runs out of usage mid-turn, the thread shows which limit was
-          reached and the remaining wait when Claude provides a reset time. Claude Code holds the
-          turn until that window reopens, so it can keep showing as working. Wait for the reset, or
-          stop the turn and continue later. The warning&#39;s timestamp shows when the displayed
-          wait started.
-        </p>
-        <h2 id="skills"><a class="anchor" href="#skills">Skills</a></h2>
-        <p>
-          Claude skills come from the config directory&#39;s <code>skills</code> folder and the
-          project&#39;s <code>.claude/skills</code> folder. If both define the same name, the
-          config-directory copy wins. Skills disabled in Claude&#39;s settings do not appear in the
-          composer.
-        </p>
-        <p>
-          Use <code>$</code> in the composer to select a skill. Skills marked
-          <code>disable-model-invocation</code> can still be started by you. Invoke those one per
-          message: Claude directly runs only the last named skill and may try to start earlier ones
-          through its Skill tool, which refuses skills reserved for manual invocation.
-        </p>
-        <h2 id="openrouter"><a class="anchor" href="#openrouter">OpenRouter</a></h2>
-        <p>
-          Create a Claude instance with its own config directory, such as
-          <code>~/.claude_openrouter</code>, and keep <strong>Binary path</strong> set to
-          <code>claude</code>. In that instance&#39;s <strong>Environment variables</strong>, use:
-        </p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Variable</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>ANTHROPIC_BASE_URL</code></td>
-                <td><code>https://openrouter.ai/api</code></td>
-              </tr>
-              <tr>
-                <td><code>ANTHROPIC_AUTH_TOKEN</code></td>
-                <td>Your OpenRouter API key, marked Sensitive</td>
-              </tr>
-              <tr>
-                <td><code>ANTHROPIC_API_KEY</code></td>
-                <td>An explicitly empty value</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          If that Claude config directory has a cached Anthropic login, run <code>/logout</code> in
-          a Claude Code session using that directory before starting the router setup. Cached login
-          credentials can conflict with the router token.
-        </p>
-        <p>
-          Select the model you want in Moonfold. For an OpenRouter model outside the built-in list,
-          open that Claude instance in <strong>Settings &gt; Providers</strong> and add its full
-          model ID with <strong>Add custom model</strong>. Then select it in the chat model picker.
-          <code>ANTHROPIC_DEFAULT_*_MODEL</code> variables map Claude Code aliases such as
-          <code>sonnet</code>; they do not replace the explicit model ID selected in Moonfold.
-          Custom models may have fewer effort, thinking, or context controls than built-in models.
-        </p>
-        <p>
-          Verify the model used in OpenRouter&#39;s activity dashboard. For current compatibility
-          requirements, use the
-          <a
-            href="https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration"
-            target="_blank"
-            rel="noopener noreferrer"
-            >OpenRouter Claude Code guide</a
-          >.
-        </p>
-        <h2 id="other-routers"><a class="anchor" href="#other-routers">Other routers</a></h2>
-        <p>
-          A local router uses an ordinary Claude provider instance. Give it a separate config
-          directory and put the router&#39;s endpoint and credential variables in that
-          instance&#39;s <strong>Environment variables</strong>. The router must run where the
-          environment can reach it. Follow the
-          <a
-            href="https://github.com/musistudio/claude-code-router"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Claude Code Router instructions</a
-          >
-          for its installation and routing configuration.
-        </p>
+<p>Add another Claude instance in <strong>Settings &gt; Providers</strong>:</p>
+<div class="table-wrap"><table><thead><tr><th>Instance</th><th>Binary path</th><th>CLAUDE_CONFIG_DIR path</th></tr></thead><tbody><tr><td>Claude Work</td><td><code>claude</code></td><td>Leave empty</td></tr><tr><td>Claude Personal</td><td><code>claude</code></td><td><code>~/.claude_personal</code></td></tr></tbody></table></div>
+<p>On mobile, tap <strong>Add Claude account</strong> in <strong>Settings &gt; Providers</strong> and enter a name and the
+config folder. The login itself still happens on the environment&#39;s machine.</p>
+<p>An empty config-directory setting uses Claude Code&#39;s normal configuration. The
+custom setting changes <code>CLAUDE_CONFIG_DIR</code>, leaving <code>HOME</code> and the system keychain
+location intact. Use the same variable for the login command. Setting <code>HOME</code>
+instead can put credentials where this provider will not find them.</p>
+<p>Check the account reported in provider settings after signing in. Existing
+threads can switch only between Claude instances with the same config directory.
+Separate account directories stay isolated, including their local conversation
+state. Claude does not have Codex&#39;s shared-home and shadow-home arrangement.</p>
+<p>For presets that differ only in API keys or endpoints, use the instance&#39;s
+<strong>Environment variables</strong>. Variable assignments do not belong in <strong>Launch arguments</strong>.</p>
+<p>Claude Code&#39;s verbose mode can stay enabled when you use Claude for text generation, including
+thread titles, branch names, commit messages, and pull request descriptions. On a remote connection,
+Moonfold uses the Claude configuration on the connected server.</p>
+<h2 id="compact-long-conversations"><a class="anchor" href="#compact-long-conversations">Compact long conversations</a></h2>
+<p>Set <strong>Auto-compact after</strong> in the Claude provider settings to an integer between
+<code>100000</code> and <code>1000000</code>. For example, <code>300000</code> asks Claude to summarize at about
+300,000 tokens. This changes when compaction happens, not the model&#39;s context
+window. Leave it empty for Claude Code&#39;s default.</p>
+<p>You can also send <code>/compact</code> in an existing conversation. Web and desktop offer
+<strong>Compact context</strong> from the context meter. The meter is off by default; see
+<a href="/docs/composer/#commands-and-skills">commands and skills</a> to enable it. Claude Code
+compacts automatically whether the meter is on or off.</p>
+<p>When you return to a large thread after Claude&#39;s prompt cache expires, a
+<strong>Compact</strong> chip with the thread&#39;s token count shows
+next to the send button. While it is on, Enter summarizes the history first, then
+sends your message. Click the chip to switch it to <strong>Keep</strong> and keep the full
+history for that message. The mobile app shows no chip: an eligible message sent
+from it summarizes first. The cache lasts about an hour on a Claude
+subscription and 5 minutes with an API key, Bedrock, or Vertex. See <a href="/docs/composer/#commands-and-skills">commands and skills</a> for using
+composer commands.</p>
+<p><strong>Compact idle threads</strong> in <strong>Settings &gt; Providers &gt; Advanced</strong> controls this for threads
+over 200,000 tokens. Each Claude provider&#39;s settings can override it:</p>
+<ul>
+<li><strong>When you return</strong> shows the <strong>Compact</strong> chip described above. This is the default.</li>
+<li><strong>Before the cache expires (beta)</strong> tries to compact an idle thread shortly before its
+prompt cache expires, while the history is still cached.
+The compaction appears in the thread as a <code>/compact</code> turn sent by Moonfold.
+If the window is missed, such as when you enable this mode after the cache has
+expired or the server restarts before compaction runs, it falls back to
+<strong>When you return</strong>. Switch the chip to <strong>Keep</strong> to keep the full history for that message.</li>
+<li><strong>Never</strong> skips idle compaction and Claude&#39;s resume prompt. <strong>Auto-compact after</strong>
+still applies, and you can still compact by hand.</li>
+</ul>
+<h2 id="usage-limits"><a class="anchor" href="#usage-limits">Usage limits</a></h2>
+<p>If your Claude subscription runs out of usage mid-turn, the thread shows which
+limit was reached and the remaining wait when Claude provides a reset time.
+Claude Code holds the turn until that window reopens, so it can keep showing as
+working. Wait for the reset, or stop the turn and continue later. The warning&#39;s
+timestamp shows when the displayed wait started.</p>
+<h2 id="skills"><a class="anchor" href="#skills">Skills</a></h2>
+<p>Claude skills come from the config directory&#39;s <code>skills</code> folder and the project&#39;s
+<code>.claude/skills</code> folder. If both define the same name, the config-directory copy
+wins. Skills disabled in Claude&#39;s settings do not appear in the composer.</p>
+<p>Use <code>$</code> in the composer to select a skill. Enabled installed Claude plugins also
+contribute skills under names such as <code>plugin:review</code>. Skills marked <code>disable-model-invocation</code>
+can still be started by you. Invoke those one per message: Claude directly runs
+only the last named skill and may try to start earlier ones through its Skill
+tool, which refuses skills reserved for manual invocation.</p>
+<h2 id="task-lists"><a class="anchor" href="#task-lists">Task lists</a></h2>
+<p>To show Claude task lists in the web and desktop apps, add
+<code>CLAUDE_CODE_ENABLE_TODO_TOOLS=1</code> under <strong>Variables</strong> in the Claude instance&#39;s
+<strong>Environment</strong> section in <strong>Settings &gt; Providers</strong>. Each update shows as a Tasks
+row in the thread; open it to see every step.</p>
+<h2 id="openrouter"><a class="anchor" href="#openrouter">OpenRouter</a></h2>
+<p>Create a Claude instance with its own config directory, such as
+<code>~/.claude_openrouter</code>, and keep <strong>Binary path</strong> set to <code>claude</code>. In that instance&#39;s
+<strong>Environment variables</strong>, use:</p>
+<div class="table-wrap"><table><thead><tr><th>Variable</th><th>Value</th></tr></thead><tbody><tr><td><code>ANTHROPIC_BASE_URL</code></td><td><code>https://openrouter.ai/api</code></td></tr><tr><td><code>ANTHROPIC_AUTH_TOKEN</code></td><td>Your OpenRouter API key, marked Sensitive</td></tr><tr><td><code>ANTHROPIC_API_KEY</code></td><td>An explicitly empty value</td></tr></tbody></table></div>
+<p>If that Claude config directory has a cached Anthropic login, run <code>/logout</code> in a
+Claude Code session using that directory before starting the router setup. Cached
+login credentials can conflict with the router token.</p>
+<p>Select the model you want in Moonfold. For an OpenRouter model outside the built-in
+list, open that Claude instance in <strong>Settings &gt; Providers</strong> and add its full model
+ID with <strong>Add custom model</strong>. Then select it in the chat model picker.
+<code>ANTHROPIC_DEFAULT_*_MODEL</code> variables map Claude Code aliases such as <code>sonnet</code>; they
+do not replace the explicit model ID selected in Moonfold. Custom models may have
+fewer effort, thinking, or context controls than built-in models.</p>
+<p>Verify the model used in OpenRouter&#39;s activity dashboard. For current compatibility
+requirements, use the
+<a href="https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration" target="_blank" rel="noopener noreferrer">OpenRouter Claude Code guide</a>.</p>
+<h2 id="other-routers"><a class="anchor" href="#other-routers">Other routers</a></h2>
+<p>A local router uses an ordinary Claude provider instance. Give it a separate
+config directory and put the router&#39;s endpoint and credential variables in that
+instance&#39;s <strong>Environment variables</strong>. The router must run where the environment
+can reach it. Follow the <a href="https://github.com/musistudio/claude-code-router" target="_blank" rel="noopener noreferrer">Claude Code Router instructions</a>
+for its installation and routing configuration.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-claude.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/providers-codex/"><small>Previous</small><span>Codex</span></a
-          ><a class="next" href="/docs/providers-gemini/"
-            ><small>Next</small><span>Gemini CLI</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li>
-              <a href="#separate-accounts-or-configurations">Separate accounts or configurations</a>
-            </li>
-            <li><a href="#compact-long-conversations">Compact long conversations</a></li>
-            <li><a href="#usage-limits">Usage limits</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#openrouter">OpenRouter</a></li>
-            <li><a href="#other-routers">Other routers</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-claude.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/providers-codex/"><small>Previous</small><span>Codex</span></a><a class="next" href="/docs/providers-gemini/"><small>Next</small><span>Gemini CLI</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#separate-accounts-or-configurations">Separate accounts or configurations</a></li><li><a href="#compact-long-conversations">Compact long conversations</a></li><li><a href="#usage-limits">Usage limits</a></li><li><a href="#skills">Skills</a></li><li><a href="#task-lists">Task lists</a></li><li><a href="#openrouter">OpenRouter</a></li><li><a href="#other-routers">Other routers</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

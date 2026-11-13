@@ -1,371 +1,189 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Running Moonfold in the background · Moonfold docs</title>
-    <meta
-      name="description"
-      content="On Linux and macOS, Moonfold can run as a service for your user so you do not need to keep a terminal open."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/background-service/" />
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://moonfold-website.vercel.app/docs/background-service/"
-    />
-    <meta property="og:title" content="Running Moonfold in the background · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="On Linux and macOS, Moonfold can run as a service for your user so you do not need to keep a terminal open."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li>
-                  <a href="/docs/background-service/" aria-current="page"
-                    >Running Moonfold in the background</a
-                  >
-                </li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Get started</p>
-        <h1 id="running-moonfold-in-the-background">Running Moonfold in the background</h1>
-        <p>
-          On Linux and macOS, Moonfold can run as a service for your user so you do not need to keep
-          a terminal open.
-        </p>
-        <h2 id="manage-the-service">
-          <a class="anchor" href="#manage-the-service">Manage the service</a>
-        </h2>
-        <p>
-          Install the <code>moonfold</code> CLI first (<a href="/docs/install/#command-line"
-            >Install Moonfold</a
-          >), then run these commands on the machine that will host Moonfold:
-        </p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Task</th>
-                <th>Command</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Install and start</td>
-                <td><code>moonfold service install</code></td>
-              </tr>
-              <tr>
-                <td>Inspect status and log location</td>
-                <td><code>moonfold service status</code></td>
-              </tr>
-              <tr>
-                <td>Move to a newer release</td>
-                <td><code>moonfold update</code></td>
-              </tr>
-              <tr>
-                <td>Restart</td>
-                <td><code>moonfold service restart</code></td>
-              </tr>
-              <tr>
-                <td>Stop and remove from startup</td>
-                <td><code>moonfold service uninstall</code></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          Uninstalling the service leaves your projects, threads, and settings intact. Running
-          <code>moonfold service install</code> again repairs a service that
-          <code>moonfold service status</code> reports as broken.
-        </p>
-        <p>
-          <code>moonfold update</code> downloads the newest release on your channel and switches
-          <code>moonfold</code> and the service to it. Restarting interrupts running agent turns,
-          terminals, and remote clients, so it asks first; answer no and the service keeps running
-          the old version until you run <code>moonfold service restart</code>. Pass
-          <code>--yes</code> from a script. A server you started by hand is left running; stop and
-          start it again to pick up the new version. Wait for any remote update already in progress
-          before updating; to match a remote client&#39;s version, follow
-          <a href="/docs/updating/">Updating Moonfold</a>.
-        </p>
-        <p>
-          Pass an exact version (<code>moonfold update 0.0.42</code>) to pin one,
-          <code>--channel nightly</code> to switch trains, or <code>--allow-downgrade</code> to move
-          backwards. <code>preview</code> is a maintainers&#39; test train: its builds can be broken
-          and are never offered as updates, so the installer and <code>moonfold update</code> ask
-          for confirmation before installing one.
-        </p>
-        <p>
-          <code>moonfold uninstall</code> removes the background service, the
-          <code>moonfold</code> launcher, and the downloaded versions after showing you the list and
-          asking once. Your projects, threads, and settings under
-          <code>~/.moonfold/userdata</code> are kept. Pass <code>--yes</code> from a script.
-        </p>
-        <h2 id="platform-support">
-          <a class="anchor" href="#platform-support">Platform support</a>
-        </h2>
-        <p>
-          Linux needs systemd user services. Setup enables lingering so Moonfold starts at boot and
-          keeps running after logout. If this needs administrator permission, setup prints a
-          recovery command before changing the service.
-        </p>
-        <p>
-          macOS starts the service when you log in and stops it when you log out. Keep the Mac
-          logged in and awake for unattended remote access. Installing over SSH while nobody is
-          logged in at the Mac&#39;s screen can fail at the final start step; the service is still
-          installed and will start at the next login.
-        </p>
-        <p>Windows background services are not supported.</p>
-        <p>
-          Moonfold Connect can offer service installation during setup, but the two are managed
-          separately. Signing out of Moonfold Connect does not stop or uninstall the service.
-        </p>
-        <h2 id="troubleshooting"><a class="anchor" href="#troubleshooting">Troubleshooting</a></h2>
-        <p>
-          Start with <code>moonfold service status</code> on the host. It prints the log path and,
-          on Linux, checks whether the installed service is running, enabled, and allowed to survive
-          logout.
-        </p>
-        <p>
-          If it stops when your SSH session closes, check for <code>linger-disabled</code>. An
-          administrator can enable lingering with:
-        </p>
-        <pre><code class="language-sh">sudo loginctl enable-linger &quot;$(id -un)&quot;
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Running Moonfold in the background · Moonfold docs</title>
+<meta name="description" content="On Linux and macOS, Moonfold can run as a service for your user so you do not need to keep a terminal open.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/background-service/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/background-service/">
+<meta property="og:title" content="Running Moonfold in the background · Moonfold docs">
+<meta property="og:description" content="On Linux and macOS, Moonfold can run as a service for your user so you do not need to keep a terminal open.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/" aria-current="page">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Get started</p>
+<h1 id="running-moonfold-in-the-background">Running Moonfold in the background</h1>
+<p>On Linux and macOS, Moonfold can run as a service for your user so you do not need
+to keep a terminal open.</p>
+<h2 id="manage-the-service"><a class="anchor" href="#manage-the-service">Manage the service</a></h2>
+<p>Install the <code>moonfold</code> CLI first (<a href="/docs/install/#command-line">Install Moonfold</a>), then
+run these commands on the machine that will host Moonfold:</p>
+<div class="table-wrap"><table><thead><tr><th>Task</th><th>Command</th></tr></thead><tbody><tr><td>Set up access from your other devices</td><td><code>moonfold up</code></td></tr><tr><td>See how your other devices reach it</td><td><code>moonfold status</code></td></tr><tr><td>Install and start</td><td><code>moonfold service install</code></td></tr><tr><td>Inspect status and log location</td><td><code>moonfold service status</code></td></tr><tr><td>Move to a newer release</td><td><code>moonfold update</code></td></tr><tr><td>Restart</td><td><code>moonfold service restart</code></td></tr><tr><td>Stop and remove from startup</td><td><code>moonfold service uninstall</code></td></tr></tbody></table></div>
+<p>Uninstalling the service leaves your projects, threads, and settings intact.
+Running <code>moonfold service install</code> again repairs a service that <code>moonfold service status</code>
+reports as broken.</p>
+<p><code>moonfold update</code> downloads the newest release on your channel and switches <code>moonfold</code>
+and the service to it. Restarting interrupts running agent turns, terminals,
+and remote clients, so it asks first; answer no and the service keeps running
+the old version until you run <code>moonfold service restart</code>. Pass <code>--yes</code> from a
+script. A server you started by hand is left running; stop and start it again
+to pick up the new version. Wait for any remote update already in progress
+before updating; to match a remote client&#39;s version, follow
+<a href="/docs/updating/">Updating Moonfold</a>.</p>
+<p>Pass an exact version (<code>moonfold update 0.0.42</code>) to pin one, <code>--channel nightly</code> to
+switch to the Beta train (betas keep that name on the command line) or <code>--channel stable</code> back,
+or <code>--allow-downgrade</code> to move backwards. <code>preview</code> is a
+maintainers&#39; test train: its builds can be broken and are never offered as
+updates, so the installer and <code>moonfold update</code> ask for confirmation before
+installing one.</p>
+<p><code>moonfold uninstall</code> removes the background service, the <code>moonfold</code> launcher, and the
+downloaded versions after showing you the list and asking once. Your projects,
+threads, and settings under <code>~/.moonfold/userdata</code> are kept, along with <code>service.env</code>
+under Moonfold home. Pass <code>--yes</code> from a script.</p>
+<h2 id="local-network-access"><a class="anchor" href="#local-network-access">Local network access</a></h2>
+<p>A new service answers only on this machine. Other devices reach it directly once you
+choose the local network in <code>moonfold up</code> (or run <code>moonfold up --lan</code>, which sets
+<code>MOONFOLD_LAN=true</code> in <code>service.env</code>). It then listens on your local network and Tailscale
+addresses, so the desktop and mobile apps on the same network connect directly. It still
+does not answer on public addresses. Anyone on the same network can reach the port, so a
+pairing code is all that keeps them out.</p>
+<p>A service installed before <code>MOONFOLD_LAN</code> existed keeps listening on the local
+network. <code>moonfold status</code> says so, and <code>moonfold up --no-lan</code> turns it off. Any
+<code>MOONFOLD_HOST</code> value replaces this setting.</p>
+<h2 id="configure-the-service-environment"><a class="anchor" href="#configure-the-service-environment">Configure the service environment</a></h2>
+<p>Put custom environment variables in <code>service.env</code> under the service&#39;s Moonfold home
+directory, normally <code>~/.moonfold/service.env</code>. This file survives service installation
+and updates. For example:</p>
+<pre><code class="language-dotenv">MOONFOLD_PORT=3773
+MOONFOLD_HOST=127.0.0.1
 </code></pre>
-        <p>Over SSH, allow sudo to prompt:</p>
-        <pre><code class="language-sh">ssh -t your-server &#39;sudo loginctl enable-linger &quot;$(id -un)&quot;&#39;
+<p>Use <code>KEY=VALUE</code> entries, quoting values that contain spaces or <code>#</code>. Values are
+literal: shell commands and variable expansion are not evaluated. Entries
+override the inherited service environment, except for <code>PATH</code>, <code>MOONFOLD_HOME</code>,
+<code>MOONFOLD_BOOT_SERVICE_UNIT</code>, and <code>MOONFOLD_SERVICE_LAUNCHER_CONTEXT</code> (including case variants).</p>
+<p>Run <code>moonfold service restart</code> after changing the file. Changes apply when the service
+starts again; switching the server version alone keeps the current values.
+For a service installed before env-file support, run <code>moonfold service install</code> once
+with an up-to-date CLI.
+A missing file is ignored; other read failures stop service startup.
+If the file contains credentials, restrict access to that file with <code>chmod 600</code>
+(for the default Moonfold home, <code>chmod 600 ~/.moonfold/service.env</code>).</p>
+<h2 id="platform-support"><a class="anchor" href="#platform-support">Platform support</a></h2>
+<p>Linux needs systemd user services. Setup enables lingering so Moonfold starts at
+boot and keeps running after logout. If this needs administrator permission,
+setup prints a recovery command before changing the service.</p>
+<p>macOS starts the service when you log in and stops it when you log out. Keep the
+Mac logged in and awake for unattended remote access. Installing over SSH while
+nobody is logged in at the Mac&#39;s screen can fail at the final start step; the
+service is still installed and will start at the next login.</p>
+<p>Windows background services are not supported. To keep a Windows host available
+through Moonfold Connect, leave the desktop app running with its local environment
+enabled, or keep <code>moonfold serve</code> running in a terminal. Minimize the desktop app rather
+than closing its last window, which stops its local server. Linking Moonfold Connect
+does not configure automatic startup at Windows sign-in.</p>
+<p><code>moonfold up</code> installs the service when you set up Moonfold Connect, but the two are managed
+separately. Signing out of Moonfold Connect does not stop or uninstall the service.</p>
+<h2 id="keep-the-server-responsive-when-agents-use-all-memory"><a class="anchor" href="#keep-the-server-responsive-when-agents-use-all-memory">Keep the server responsive when agents use all memory</a></h2>
+<p>On Linux, agents already run with lower priority than the server. When they
+fill the machine&#39;s memory, though, the kernel may still slow down or stop the
+server, because only an administrator can reserve memory for it. Run, as your
+normal user:</p>
+<pre><code class="language-sh">moonfold service protect
 </code></pre>
-        <p>
-          Then retry service setup as your normal user. Run only the <code>loginctl</code> command
-          with sudo; running Moonfold as root creates a separate installation and Connect identity.
-          Without administrator access, run <code>moonfold serve</code> in a terminal and keep that
-          session open.
-        </p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Status problem</th>
-                <th>Next step</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>linger-unavailable</code></td>
-                <td>
-                  Run <code>loginctl show-user &quot;$(id -un)&quot; --property=Linger</code> and
-                  check that systemd-logind is available.
-                </td>
-              </tr>
-              <tr>
-                <td><code>user-manager-unavailable</code></td>
-                <td>
-                  Run <code>systemctl --user status</code> in a login session for the service user;
-                  check your distribution&#39;s systemd user-session support.
-                </td>
-              </tr>
-              <tr>
-                <td><code>service-disabled</code> or <code>service-stopped</code></td>
-                <td>
-                  Read the log and <code>systemctl --user status moonfold.service</code>, then use
-                  the repair command printed by Moonfold.
-                </td>
-              </tr>
-              <tr>
-                <td><code>restart-pending</code></td>
-                <td>
-                  A newer version is installed but the service still runs the previous one. Run
-                  <code>moonfold service restart</code>.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          On macOS, check <strong>System Settings → General → Login Items</strong> if the service no
-          longer starts at login. If agent work cannot access Desktop, Documents, or Downloads, it
-          may need Full Disk Access for the <code>moonfold</code> executable listed in
-          <code>ProgramArguments</code> in
-          <code>~/Library/LaunchAgents/dev.moonfold.app.service.plist</code>.
-        </p>
-        <p>
-          For failures after signing in to Moonfold Connect, see
-          <a href="/docs/remote-access/#moonfold-connect-troubleshooting"
-            >connection troubleshooting</a
-          >.
-        </p>
+<p>It shows the system settings it will change, asks before applying them, and
+then asks for your sudo password. If the machine runs Tailscale or SSH, it
+also offers to protect them, so you can still reach the machine. Memory
+protection takes effect at once. The server&#39;s protection from the kernel&#39;s
+out-of-memory killer takes effect after <code>moonfold service restart</code>. <code>moonfold service status</code> reports whether
+the protection is in place, and <code>moonfold service protect --undo</code> removes it.</p>
+<h2 id="troubleshooting"><a class="anchor" href="#troubleshooting">Troubleshooting</a></h2>
+<p>Start with <code>moonfold service status</code> on the host. It prints the log path and, on Linux,
+checks whether the installed service is running, enabled, and allowed to survive
+logout.</p>
+<p>If it stops when your SSH session closes, check for <code>linger-disabled</code>. An
+administrator can enable lingering with:</p>
+<pre><code class="language-sh">sudo loginctl enable-linger &quot;$(id -un)&quot;
+</code></pre>
+<p>Over SSH, allow sudo to prompt:</p>
+<pre><code class="language-sh">ssh -t your-server &#39;sudo loginctl enable-linger &quot;$(id -un)&quot;&#39;
+</code></pre>
+<p>Then retry service setup as your normal user. Run only the <code>loginctl</code> command
+with sudo; running Moonfold as root creates a separate installation and Connect
+identity. Without administrator access, run <code>moonfold serve</code> in a terminal and keep
+that session open.</p>
+<div class="table-wrap"><table><thead><tr><th>Status problem</th><th>Next step</th></tr></thead><tbody><tr><td><code>linger-unavailable</code></td><td>Run <code>loginctl show-user &quot;$(id -un)&quot; --property=Linger</code> and check that systemd-logind is available.</td></tr><tr><td><code>user-manager-unavailable</code></td><td>Run <code>systemctl --user status</code> in a login session for the service user; check your distribution&#39;s systemd user-session support.</td></tr><tr><td><code>service-disabled</code> or <code>service-stopped</code></td><td>Read the log and <code>systemctl --user status moonfold.service</code>, then use the repair command printed by Moonfold.</td></tr><tr><td><code>restart-pending</code></td><td>A newer version is installed but the service still runs the previous one. Run <code>moonfold service restart</code>.</td></tr></tbody></table></div>
+<p>On macOS, check <strong>System Settings → General → Login Items</strong> if the service no
+longer starts at login. If agent work cannot access Desktop, Documents, or
+Downloads, it may need Full Disk Access for the <code>moonfold</code> executable listed in
+<code>ProgramArguments</code> in
+<code>~/Library/LaunchAgents/dev.moonfold.app.service.plist</code>.</p>
+<h2 id="reclaim-database-space"><a class="anchor" href="#reclaim-database-space">Reclaim database space</a></h2>
+<p>Moonfold removes internal history older than a day on its own while it runs;
+your conversations are kept. Databases created before this shrank automatically
+still hold the freed space on disk until a one-time offline repair returns it
+and turns on automatic shrinking. Settings &gt; Maintenance (web and desktop) or
+Settings &gt; Maintenance (mobile) suggests the repair when at least 1 GiB can be
+reclaimed.</p>
+<p>Run <code>moonfold doctor</code> on the machine that hosts the environment. It reports the
+database size and the space it can reclaim, then asks which repairs to run;
+pass <code>--fix</code> to run the recommended ones without a prompt (for scripts), or
+<code>--dry-run</code> to only report. An installed background service for the same data
+directory is stopped for the repair and started again afterwards, also when
+the repair fails. Quit a server you started by hand, or the desktop app, first:
+the repair refuses to touch a database that is in use. Use <code>--base-dir</code> for a
+different data directory.</p>
+<p>The repair can take several minutes on a large database. It rebuilds the
+database through a temporary copy, so it needs free space of about the
+database&#39;s size twice over: once in the system temporary directory (<code>TMPDIR</code>
+or <code>/tmp</code> on Linux and macOS) and once next to the database for its
+write-ahead log.</p>
+<p>If you upgraded from a version before 0.1.0, its database (<code>state.sqlite</code>) is
+still kept next to the current one so you can roll back. <code>moonfold doctor</code> offers to
+delete it, but never selects that repair for you and <code>--fix</code> skips it: once it
+is gone, a version before 0.1.0 starts with no threads or settings.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/background-service.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/mobile-app/"><small>Previous</small><span>Mobile app</span></a
-          ><a class="next" href="/docs/thread-sidebar/"
-            ><small>Next</small><span>Working with threads</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#manage-the-service">Manage the service</a></li>
-            <li><a href="#platform-support">Platform support</a></li>
-            <li><a href="#troubleshooting">Troubleshooting</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/background-service.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/mobile-app/"><small>Previous</small><span>Mobile app</span></a><a class="next" href="/docs/thread-sidebar/"><small>Next</small><span>Working with threads</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#manage-the-service">Manage the service</a></li><li><a href="#local-network-access">Local network access</a></li><li><a href="#configure-the-service-environment">Configure the service environment</a></li><li><a href="#platform-support">Platform support</a></li><li><a href="#keep-the-server-responsive-when-agents-use-all-memory">Keep the server responsive when agents use all memory</a></li><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#reclaim-database-space">Reclaim database space</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

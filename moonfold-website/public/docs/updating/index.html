@@ -1,386 +1,206 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Updating Moonfold · Moonfold docs</title>
-    <meta
-      name="description"
-      content="The app you use and the server running your agents can be on different machines. When a server is behind your web or desktop app, an update notice appears in the conversation and Settings → Connection"
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/updating/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/updating/" />
-    <meta property="og:title" content="Updating Moonfold · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="The app you use and the server running your agents can be on different machines. When a server is behind your web or desktop app, an update notice appears in the conversation and Settings → Connection"
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/" aria-current="page">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Get started</p>
-        <h1 id="updating-moonfold">Updating Moonfold</h1>
-        <p>
-          The app you use and the server running your agents can be on different machines. When a
-          server is behind your web or desktop app, an update notice appears in the conversation and
-          <strong>Settings → Connections</strong>. Update the machine named in that notice.
-        </p>
-        <h2 id="update-everything-at-once">
-          <a class="anchor" href="#update-everything-at-once">Update everything at once</a>
-        </h2>
-        <p>
-          The update button at the bottom of the sidebar updates every connected machine in one
-          step. It updates outdated providers, then servers that are behind, then the desktop app
-          you are using. Servers move to the version your desktop app is installing, or to your web
-          app&#39;s version. A background service stays on its current release channel. A remote
-          desktop app installs the latest release from its own channel. Hover the button to see what
-          it will update.
-        </p>
-        <p>
-          While it runs, the button widens to show progress. It names a machine that is taking
-          longer than usual, and offers <strong>Retry</strong> for a server that failed. Click it to
-          see every machine. The desktop app restarts once each server has started its own restart,
-          after a short countdown. Choose <strong>Later</strong> to keep working and restart from
-          the update button when you are ready. A server still restarting finishes on its own, and
-          the button keeps showing it after the desktop app restarts.
-        </p>
-        <p>
-          Server updates appear only after that version is published on Moonfold&#39;s GitHub
-          Releases, where servers download it. Remote desktop apps do not wait. The confirmation
-          lists each machine it skips and why, such as a machine that is offline or needs a manual
-          update. Use the notice or <strong>Settings → Connections</strong> for those.
-        </p>
-        <p>
-          If a desktop app restarts on its old version, Moonfold tells you the update did not apply.
-          It does not install that version again on its own, even when another device asks. Use the
-          update button on that machine to retry.
-        </p>
-        <p>
-          The confirmation counts the running threads that the restarts will interrupt, and how many
-          can resume afterwards. See <strong>Continue threads after restarts</strong> below.
-        </p>
-        <h2 id="coming-from-beta-1-or-beta-2">
-          <a class="anchor" href="#coming-from-beta-1-or-beta-2">Coming from beta 1 or beta 2</a>
-        </h2>
-        <p>
-          The desktop app&#39;s <strong>Check for Updates</strong> in beta 1 and beta 2 never finds
-          a newer release; it reports no update. Install 0.1.0-beta.3 or later by hand once, from
-          the
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >releases page</a
-          >
-          or with the command-line installer. Your projects, threads and settings stay. Later
-          releases then arrive in the app.
-        </p>
-        <h2 id="before-you-update">
-          <a class="anchor" href="#before-you-update">Before you update</a>
-        </h2>
-        <p>
-          Server updates restart the connection and can interrupt active agents and terminal
-          commands. Saved threads, settings, and project files remain.
-        </p>
-        <p>
-          <strong>Settings → General → Continue threads after restarts</strong> is on by default. It
-          resumes supported active threads after an update, crash, or machine restart. Changes are
-          saved to connected environments that support this setting; update older servers first. If
-          a supported environment was offline or has a different value, use
-          <strong>Apply to all</strong> in Settings after it connects. Moonfold must start again on
-          that machine; the setting does not enable automatic startup. Terminal commands may still
-          be interrupted, and threads without saved provider resume state need a new message. A
-          thread that finished its turn to wait on a monitor, subagent, or background task is woken
-          and told that this work stopped. A background shell, such as a dev server, does not wake
-          it; the thread learns about it with your next message. A thread is not resumed while it
-          waits for your approval, answer, or secret, or while it is archived, snoozed, or settled.
-          After three automatic resumes in a row, the thread waits for your next message.
-        </p>
-        <p>
-          Updates from the previous orchestration system preserve conversation transcripts but
-          cannot carry every kind of runtime history forward. Read
-          <a href="/docs/thread-migration/">Threads from older Moonfold versions</a> before
-          continuing an important older thread.
-        </p>
-        <h2 id="when-versions-dont-match">
-          <a class="anchor" href="#when-versions-dont-match">When versions don&#39;t match</a>
-        </h2>
-        <p>
-          A client and server must speak the same orchestration protocol. If they do not, the
-          connection is refused rather than running half-upgraded:
-        </p>
-        <ul>
-          <li>
-            An app newer than the server is blocked before connecting, with a notice telling you to
-            update Moonfold on the machine named in the notice.
-          </li>
-          <li>A server newer than your app refuses the connection with an update message.</li>
-        </ul>
-        <p>Update the side the notice names, then reconnect.</p>
-        <h2 id="update-a-connected-server">
-          <a class="anchor" href="#update-a-connected-server">Update a connected server</a>
-        </h2>
-        <p>The offered action depends on how the server runs:</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Action</th>
-                <th>What to do</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Update server</strong></td>
-                <td>
-                  Keep the client open while it installs and reconnects. Supported background
-                  services update remotely. For a desktop-hosted server, this also closes and
-                  relaunches the desktop app on the host.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Update the desktop app</strong></td>
-                <td>
-                  Update the desktop app on the machine running the server, then reopen it if
-                  needed.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Copy update command</strong></td>
-                <td>
-                  Run the command on the named host to update the detected global npm install, then
-                  restart the server with your usual options.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Copy relaunch command</strong></td>
-                <td>
-                  Stop the command-line server on its host and relaunch with the copied command,
-                  keeping your usual subcommand and options. This does not update an installed
-                  <code>moonfold</code> command.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>On the host, run:</p>
-        <pre><code class="language-sh">moonfold update &lt;client-version&gt;
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Updating Moonfold · Moonfold docs</title>
+<meta name="description" content="The app you use and the server running your agents can be on different machines. When a server is behind your web or desktop app, the update button at the bottom of the sidebar and Settings → Environm">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/updating/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/updating/">
+<meta property="og:title" content="Updating Moonfold · Moonfold docs">
+<meta property="og:description" content="The app you use and the server running your agents can be on different machines. When a server is behind your web or desktop app, the update button at the bottom of the sidebar and Settings → Environm">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/" aria-current="page">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Get started</p>
+<h1 id="updating-moonfold">Updating Moonfold</h1>
+<p>The app you use and the server running your agents can be on different machines.
+When a server is behind your web or desktop app, the update button at the bottom
+of the sidebar and <strong>Settings → Environments</strong> offer to update it.</p>
+<h2 id="update-everything-at-once"><a class="anchor" href="#update-everything-at-once">Update everything at once</a></h2>
+<p>The update button at the bottom of the sidebar updates every connected machine
+in one step. It updates outdated providers, then servers that are behind, then
+the desktop app you are using. Servers move to the
+version your desktop app is installing, or to your web app&#39;s version. A
+background service stays on its current release channel. A remote desktop app
+installs the latest release from its own channel. Hover the button to see what
+it will update.</p>
+<p>While it runs, the button widens to show progress. It names a machine that is
+taking longer than usual, and offers <strong>Retry</strong> for a server that failed. Click
+it to see every machine. The desktop app restarts once each server has started
+its own restart, after a short countdown. Choose <strong>Later</strong> to keep working and
+restart from the update button when you are ready. A server still restarting
+finishes on its own, and the button keeps showing it after the desktop app
+restarts.</p>
+<p>Server updates come from Moonfold&#39;s GitHub Releases. Each server checks that it can install the release before it restarts. If the
+release is not available to a server yet, its update fails, the server keeps
+running, and you can retry. The confirmation lists each machine it skips and
+why, such as a machine that is offline or needs a manual update. Use
+<strong>Settings → Environments</strong> for those.</p>
+<p>If a desktop app restarts on its old version, Moonfold tells you the update did
+not apply. It does not install that version again on its own, even when another
+device asks. Use the update button on that machine to retry.</p>
+<p>The confirmation counts the running threads that the restarts will interrupt,
+and how many can resume afterwards. See <strong>Continue threads after restarts</strong>
+below.</p>
+<h2 id="coming-from-beta-1-or-beta-2"><a class="anchor" href="#coming-from-beta-1-or-beta-2">Coming from beta 1 or beta 2</a></h2>
+<p>The desktop app&#39;s <strong>Check for Updates</strong> in beta 1 and beta 2 never finds a newer release; it
+reports no update. Install 0.1.0-beta.3 or later by hand once, from the
+<a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">releases page</a> or with the command-line
+installer. Your projects, threads and settings stay. Later releases then arrive in the app.</p>
+<h2 id="switch-between-stable-and-beta"><a class="anchor" href="#switch-between-stable-and-beta">Switch between Stable and Beta</a></h2>
+<p><strong>Stable</strong> gets tested releases. <strong>Beta</strong> gets new features first; a beta install stays on Beta
+until you switch. In the desktop app, change <strong>Settings → About → Update track</strong>. Moonfold
+installs the newest build of that track over the one you have, in the same place, so your
+projects, threads, settings and shortcuts stay. It shows each connected machine it will move and
+each one it skips, then moves them in one step. Remote servers install the latest release on the
+new track. Remote desktop apps reinstall on the new track. This app reinstalls last.</p>
+<p>Until the first stable release is out, Stable has nothing to install and the switch says so.</p>
+<p>A background service cannot move to an older release remotely. When Stable is
+older than its Beta, run <code>moonfold update --channel stable --allow-downgrade</code> on
+that machine.</p>
+<p>A switch is blocked for a machine whose database already has changes the
+target release does not support, or when Moonfold cannot confirm that it does.
+The dialog says why: update a machine on its current track first when its
+release is too old to check, or wait until the target track includes the
+changes. A Mac running the desktop app must switch on that Mac.</p>
+<p>Each machine keeps the new track even if its switch did not finish, but it
+moves to that track only through a switch. <strong>Update track</strong> shows how many
+machines still run the other track. <strong>Review</strong> opens the same dialog with fresh
+checks.</p>
+<h2 id="before-you-update"><a class="anchor" href="#before-you-update">Before you update</a></h2>
+<p>Server updates restart the connection and can interrupt active agents and
+terminal commands. Saved threads, settings, and project files remain.</p>
+<p><strong>Settings → Maintenance → Continue threads after restarts</strong> is on by default.
+It resumes supported active threads after an update, crash, or machine
+restart. Changes are saved to connected environments that support this setting;
+update older servers first. If a supported environment was offline or has a
+different value, use <strong>Apply to all</strong> in Settings after it connects.
+Moonfold must start again on that machine;
+the setting does not enable automatic startup. Terminal commands may still be
+interrupted, and threads without saved provider resume state need a new message.
+A thread that finished its turn to wait on a subagent, a background task, or a
+command or monitor the agent said it was waiting on is woken and told that this work
+stopped. Other background shells and monitors, such as a dev server and its
+watchdog, do not wake it; the thread learns about them with your next message.
+A thread is not resumed while it waits for your approval, answer, or secret, or
+while it is archived, snoozed, or settled. After three automatic resumes in a row,
+the thread waits for your next message.</p>
+<p>Updates from the previous orchestration system preserve conversation transcripts but cannot carry
+every kind of runtime history forward. Read <a href="/docs/thread-migration/">Threads from older Moonfold versions</a>
+before continuing an important older thread.</p>
+<h2 id="when-versions-dont-match"><a class="anchor" href="#when-versions-dont-match">When versions don&#39;t match</a></h2>
+<p>A client and server must speak the same orchestration protocol. If they do not, the connection is
+refused rather than running half-upgraded:</p>
+<ul>
+<li>An app newer than the server is blocked before connecting, with a notice telling you to update
+Moonfold on the machine named in the notice.</li>
+<li>A server newer than your app refuses the connection with an update message.</li>
+</ul>
+<p>Update the side the notice names, then reconnect.</p>
+<h2 id="update-a-connected-server"><a class="anchor" href="#update-a-connected-server">Update a connected server</a></h2>
+<p>The offered action depends on how the server runs:</p>
+<div class="table-wrap"><table><thead><tr><th>Action</th><th>What to do</th></tr></thead><tbody><tr><td><strong>Update server</strong></td><td>Keep the client open while it installs and reconnects. Supported background services update remotely. For a desktop-hosted server, this also closes and relaunches the desktop app on the host.</td></tr><tr><td><strong>Update the desktop app</strong></td><td>Update the desktop app on the machine running the server, then reopen it if needed.</td></tr><tr><td><strong>Copy update command</strong></td><td>Run the command on the named host to update the detected global npm install, then restart the server with your usual options.</td></tr><tr><td><strong>Copy relaunch command</strong></td><td>Stop the command-line server on its host and relaunch with the copied command, keeping your usual subcommand and options. This does not update an installed <code>moonfold</code> command.</td></tr></tbody></table></div>
+<p>On the host, run:</p>
+<pre><code class="language-sh">moonfold update &lt;client-version&gt;
 </code></pre>
-        <p>
-          Replace <code>&lt;client-version&gt;</code> with the version shown in the notice. The
-          command asks before restarting the background service; if you decline, run
-          <code>moonfold service restart</code> when you are ready. For a server you started by
-          hand, stop it and start it again afterwards with your usual options such as
-          <code>--host</code> or <code>--tailscale-serve</code>.
-        </p>
-        <h2 id="if-an-update-fails">
-          <a class="anchor" href="#if-an-update-fails">If an update fails</a>
-        </h2>
-        <p>
-          Keep the client open until it reconnects or reports a failure. A failed service update can
-          roll back to the previous version. If the update still fails:
-        </p>
-        <ol>
-          <li>Retry the offered action once.</li>
-          <li>
-            Check that you updated the server&#39;s machine, not only the device you are using.
-          </li>
-          <li>
-            For a command-line server, stop it and relaunch the exact version shown in the notice.
-          </li>
-        </ol>
-        <p>
-          Only one server can use a Moonfold home directory at a time. If startup reports that
-          another server owns it, stop that server before retrying, or use a separate home directory
-          and pair with the running server.
-        </p>
-        <h2 id="update-providers">
-          <a class="anchor" href="#update-providers">Update providers</a>
-        </h2>
-        <p>
-          <strong>Settings → Providers</strong> shows provider updates for the selected environment.
-          <strong>Update all</strong> updates every outdated provider on every connected environment
-          at once. Hover it to see which providers it will update. Providers that only offer a
-          manual update command are not included.
-        </p>
+<p>Replace <code>&lt;client-version&gt;</code> with the version shown in the notice. The command
+asks before restarting the background service; if you decline, run
+<code>moonfold service restart</code> when you are ready. For a server you started by hand,
+stop it and start it again afterwards with your usual options such as <code>--host</code>
+or <code>--tailscale-serve</code>.</p>
+<h2 id="if-an-update-fails"><a class="anchor" href="#if-an-update-fails">If an update fails</a></h2>
+<p>Keep the client open until it reconnects or reports a failure. A failed service
+update can roll back to the previous version. If the update still fails:</p>
+<ol>
+<li>Retry the offered action once.</li>
+<li>Check that you updated the server&#39;s machine, not only the device you are using.</li>
+<li>For a command-line server, stop it and relaunch the exact version shown in the notice.</li>
+</ol>
+<p>Only one server can use a Moonfold home directory at a time. If startup reports that
+another server owns it, stop that server before retrying, or use a separate home
+directory and pair with the running server.</p>
+<h3 id="macos-app-does-not-reopen-after-an-alpha-update"><a class="anchor" href="#macos-app-does-not-reopen-after-an-alpha-update">macOS app does not reopen after an Alpha update</a></h3>
+<p>Updating an older <strong>Moonfold (Alpha)</strong> installation can replace it with
+<strong>Moonfold (Beta)</strong> without reopening the app. Open <strong>Moonfold (Beta)</strong> from
+Applications, or run:</p>
+<pre><code class="language-sh">open &quot;/Applications/Moonfold (Beta).app&quot;
+</code></pre>
+<p>If an old Dock shortcut no longer opens the app, remove it and add the Beta app
+from Applications again.</p>
+<h3 id="windows-says-it-is-searching-for-moonfold-betaexe"><a class="anchor" href="#windows-says-it-is-searching-for-moonfold-betaexe">Windows says it is searching for Moonfold (Beta).exe</a></h3>
+<p>An installer before 1.0.0-beta.7 could leave only <code>Uninstall Moonfold (Beta).exe</code> behind when a
+Moonfold helper was still running, so shortcuts pointed at a missing app. Install the latest
+release from the <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">releases page</a> over it;
+your data stays. From beta 7 the installer closes such helpers first.</p>
+<h2 id="if-the-desktop-app-does-not-start"><a class="anchor" href="#if-the-desktop-app-does-not-start">If the desktop app does not start</a></h2>
+<p>If the desktop app&#39;s server keeps failing at startup, Moonfold shows a &quot;Moonfold
+could not start&quot; window instead of the app. If a newer version is available,
+choose <strong>Update</strong> to install it. If not, the window links to the last version
+that started on your computer. Download and install it to go back. Use <strong>Copy
+details</strong> to include the error in a bug report.</p>
+<h2 id="registries-and-proxies"><a class="anchor" href="#registries-and-proxies">Registries and proxies</a></h2>
+<p>Each server checks Moonfold releases, and providers installed with npm, through
+its own npm, so the checks use npm&#39;s configured registry, authentication, and
+proxy settings. Providers installed with Homebrew or pnpm check through those
+tools.
+Configure npm on the server&#39;s machine. If that registry cannot be reached, the
+release shows as unavailable; Moonfold does not try the public registry instead.
+Machines without npm check the public npm registry directly.</p>
+<h2 id="update-providers"><a class="anchor" href="#update-providers">Update providers</a></h2>
+<p><strong>Settings → Providers</strong> shows provider updates for the selected environment.
+<strong>Update all</strong> updates every outdated provider on every connected environment
+at once. Hover it to see which providers it will update. Providers that only
+offer a manual update command are not included.</p>
+<p>After a successful provider CLI update, Moonfold refreshes model discovery for
+every enabled instance of that provider using its own configuration. Connected
+clients receive the refreshed catalogs automatically. Provider update checks
+must be enabled to download the latest Moonfold model catalog.</p>
+<p>Provider updates do not restart running chats. An existing session can keep
+using the previous CLI until it ends. If discovery fails, check the provider
+status and refresh it again.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/updating.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/welcome-wizard/"><small>Previous</small><span>Welcome wizard</span></a
-          ><a class="next" href="/docs/remote-access/"
-            ><small>Next</small><span>Remote access</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#update-everything-at-once">Update everything at once</a></li>
-            <li><a href="#coming-from-beta-1-or-beta-2">Coming from beta 1 or beta 2</a></li>
-            <li><a href="#before-you-update">Before you update</a></li>
-            <li><a href="#when-versions-dont-match">When versions don't match</a></li>
-            <li><a href="#update-a-connected-server">Update a connected server</a></li>
-            <li><a href="#if-an-update-fails">If an update fails</a></li>
-            <li><a href="#update-providers">Update providers</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/updating.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/welcome-wizard/"><small>Previous</small><span>Welcome wizard</span></a><a class="next" href="/docs/remote-access/"><small>Next</small><span>Remote access</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#update-everything-at-once">Update everything at once</a></li><li><a href="#coming-from-beta-1-or-beta-2">Coming from beta 1 or beta 2</a></li><li><a href="#switch-between-stable-and-beta">Switch between Stable and Beta</a></li><li><a href="#before-you-update">Before you update</a></li><li><a href="#when-versions-dont-match">When versions don't match</a></li><li><a href="#update-a-connected-server">Update a connected server</a></li><li><a href="#if-an-update-fails">If an update fails</a></li><li><a href="#if-the-desktop-app-does-not-start">If the desktop app does not start</a></li><li><a href="#registries-and-proxies">Registries and proxies</a></li><li><a href="#update-providers">Update providers</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

@@ -1,315 +1,137 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Cursor · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Cursor V2 runs through the official @cursor/sdk TypeScript package. It does not use Cursor's ACP transport for V2 execution."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/cursor/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/cursor/" />
-    <meta property="og:title" content="Cursor · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Cursor V2 runs through the official @cursor/sdk TypeScript package. It does not use Cursor's ACP transport for V2 execution."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/" aria-current="page">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
-        <h1 id="cursor">Cursor</h1>
-        <p>
-          Cursor V2 runs through the official
-          <a
-            href="https://cursor.com/docs/api/sdk/typescript"
-            target="_blank"
-            rel="noopener noreferrer"
-            ><code>@cursor/sdk</code></a
-          >
-          TypeScript package. It does not use Cursor&#39;s ACP transport for V2 execution.
-        </p>
-        <h2 id="prerequisites"><a class="anchor" href="#prerequisites">Prerequisites</a></h2>
-        <ul>
-          <li>
-            Node.js 22.13 or newer. The repository&#39;s supported Node version satisfies this
-            requirement.
-          </li>
-          <li>
-            Sign in with Cursor in <strong>Settings &gt; Providers &gt; Cursor</strong>, or provide
-            a Cursor API key in <code>CURSOR_API_KEY</code>.
-          </li>
-          <li>
-            A model accepted by the Cursor SDK. <code>auto</code> is sent to the SDK as its
-            <code>default</code> model selection.
-          </li>
-        </ul>
-        <p>
-          The adapter currently uses the SDK&#39;s local-agent runtime so runs operate in the
-          selected Moonfold workspace. Cursor cloud agents need repository and cloud-environment
-          configuration that Moonfold does not expose yet.
-        </p>
-        <h2 id="sign-in"><a class="anchor" href="#sign-in">Sign in</a></h2>
-        <p>
-          Choose <strong>Sign in</strong>, then open the sign-in page and complete it in your
-          browser. Moonfold updates automatically when sign-in finishes. This works when connected
-          to a remote environment too.
-        </p>
-        <p>
-          Each provider instance keeps its own login on the environment that runs it. Your Cursor
-          editor and CLI login are separate. A configured <code>CURSOR_API_KEY</code> overrides
-          browser sign-in; remove that override to use the browser flow.
-        </p>
-        <p>
-          Use <strong>Change account</strong> or <strong>Sign out</strong> in the same settings
-          section. Both stop that instance&#39;s running threads and keep their history. Sign-out
-          forgets the saved credential; to revoke the generated key before it expires, remove it
-          from your Cursor dashboard&#39;s API keys.
-        </p>
-        <h2 id="v2-capability-mapping">
-          <a class="anchor" href="#v2-capability-mapping">V2 Capability Mapping</a>
-        </h2>
-        <p>The adapter supports:</p>
-        <ul>
-          <li>creating and resuming local Cursor agent threads;</li>
-          <li>changing the model and model parameters between turns;</li>
-          <li>assistant text, reasoning, tool activity, plans, and todo streaming;</li>
-          <li>thread-scoped Moonfold MCP tools;</li>
-          <li>image attachments;</li>
-          <li>
-            interruption, queued app messages, and orchestrator-owned interrupt/restart steering;
-          </li>
-          <li>provider conversation snapshots through <code>Agent.messages.list()</code>;</li>
-          <li>
-            Cursor <code>task</code> subagents, projected as read-only child app threads with their
-            tool activity and final result.
-          </li>
-        </ul>
-        <p>
-          The public SDK does not currently expose native agent fork, conversation rollback, active
-          steering, or interactive approval callbacks. Direct active steering is advertised as
-          unsupported, while V2 steering uses the orchestrator&#39;s interrupt-and-restart path and
-          preserves the app run identity across provider turns. Same-provider Cursor forks use the
-          orchestrator&#39;s portable full-thread context handoff into a fresh Cursor agent. The SDK
-          has in-process custom callback tools, but the V2 adapter intentionally uses the
-          authenticated, thread-scoped MCP server instead.
-        </p>
-        <p>
-          Portable handoffs summarize eligible timeline items and can omit the end of long messages.
-          Read <a href="/docs/portable-handoffs/">Context in portable handoffs</a> before using a
-          fork for work whose exact instructions must carry forward.
-        </p>
-        <p>
-          Cursor task events include an <code>agentId</code>, but the local SDK does not register
-          that identifier as a resumable agent: <code>Agent.resume()</code> returns
-          <code>AgentNotFoundError</code>. The adapter therefore does not attach a provider thread
-          to native task projections or advertise subagent thread IDs. A projected child is
-          read-only: send messages from the parent thread.
-        </p>
-        <p>
-          Runtime modes map to the controls the local SDK exposes: full access disables its sandbox,
-          while restricted modes and explicit non-full-access sandbox policies enable it. Explicit
-          approval policy overrides also control Cursor Auto-review. Auto-review is not represented
-          as an interactive Moonfold approval flow.
-        </p>
-        <p>
-          The existing Cursor binary path and API endpoint settings belong to the CLI/ACP
-          integration. Cursor V2 execution does not launch that binary, and the SDK does not expose
-          an API endpoint override.
-        </p>
-        <h2 id="replay-and-live-testing">
-          <a class="anchor" href="#replay-and-live-testing">Replay And Live Testing</a>
-        </h2>
-        <p>
-          Cursor replay fixtures preserve the SDK boundary: agent open/resume, sends, ordered
-          <code>onDelta</code> updates, terminal results, cancellation, message snapshots, and
-          close. The real V2 adapter, orchestrator, event store, projections, and checkpoint logic
-          still run in tests.
-        </p>
-        <p>Record a fixture against the real SDK with:</p>
-        <pre><code class="language-bash">pnpm --filter moonfold record:cursor-replay --scenario simple
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Cursor · Moonfold docs</title>
+<meta name="description" content="Cursor V2 runs through the official @cursor/sdk TypeScript package. It does not use Cursor's ACP transport for V2 execution.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/cursor/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/cursor/">
+<meta property="og:title" content="Cursor · Moonfold docs">
+<meta property="og:description" content="Cursor V2 runs through the official @cursor/sdk TypeScript package. It does not use Cursor's ACP transport for V2 execution.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/" aria-current="page">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
+<h1 id="cursor">Cursor</h1>
+<p>Cursor V2 runs through the official <a href="https://cursor.com/docs/api/sdk/typescript" target="_blank" rel="noopener noreferrer"><code>@cursor/sdk</code></a>
+TypeScript package. It does not use Cursor&#39;s ACP transport for V2 execution.</p>
+<h2 id="prerequisites"><a class="anchor" href="#prerequisites">Prerequisites</a></h2>
+<ul>
+<li>Node.js 22.13 or newer. The repository&#39;s supported Node version satisfies this requirement.</li>
+<li>Sign in with Cursor in <strong>Settings &gt; Providers &gt; Cursor</strong>, or provide a Cursor API key in
+<code>CURSOR_API_KEY</code>.</li>
+<li>A paid Cursor plan on the account used for browser sign-in or <code>CURSOR_API_KEY</code>.</li>
+<li>A model accepted by the Cursor SDK. <code>auto</code> is sent to the SDK as its <code>default</code> model selection.</li>
+</ul>
+<p>The adapter currently uses the SDK&#39;s local-agent runtime so runs operate in the selected Moonfold
+workspace. Cursor cloud agents need repository and cloud-environment configuration that Moonfold does
+not expose yet.</p>
+<p>Custom Cursor MCP servers and plugins are not configured in Moonfold. They load from the environment
+machine&#39;s Cursor config when the agent opens: project <code>.cursor/mcp.json</code>, user <code>~/.cursor/mcp.json</code>,
+and installed plugins under <code>~/.cursor/plugins</code>. Plugin tools
+can appear without a login; OAuth MCP servers still need credentials. Run <code>agent mcp login &lt;server&gt;</code>
+with the cwd set to the Moonfold project root (tokens land in
+<code>~/.cursor/projects/&lt;folder-slug&gt;/mcp-auth.json</code>). Cursor desktop Connections auth does not write
+that file, and the local SDK cannot complete interactive MCP OAuth itself—auth attempts fail with
+messages such as &quot;MCP authentication is not supported in local SDK runs&quot; or that the auth server
+does not support dynamic client registration. After you add or change skills, plugins, or MCP
+servers, or after a successful CLI login, use <strong>Restart agent session</strong>.</p>
+<h2 id="sign-in"><a class="anchor" href="#sign-in">Sign in</a></h2>
+<p>Choose <strong>Sign in</strong>, then open the sign-in page and complete it in your browser. Moonfold
+updates automatically when sign-in finishes. This works when connected to a remote environment too.</p>
+<p>Each provider instance keeps its own login on the environment that runs it. Your Cursor editor and
+CLI login are separate. A configured <code>CURSOR_API_KEY</code> overrides browser sign-in; remove that override
+to use the browser flow.</p>
+<p>Use <strong>Change account</strong> or <strong>Sign out</strong> in the same settings section. Both stop that
+instance&#39;s running threads and keep their history. Sign-out forgets the saved credential; to revoke
+the generated key before it expires, remove it from your Cursor dashboard&#39;s API keys.</p>
+<h2 id="v2-capability-mapping"><a class="anchor" href="#v2-capability-mapping">V2 Capability Mapping</a></h2>
+<p>The adapter supports:</p>
+<ul>
+<li>creating and resuming local Cursor agent threads;</li>
+<li>changing the model and model parameters between turns;</li>
+<li>assistant text, reasoning, tool activity, plans, and todo streaming;</li>
+<li>thread-scoped Moonfold MCP tools alongside ambient Cursor MCP/plugins from disk;</li>
+<li>image attachments;</li>
+<li>interruption, queued app messages, and orchestrator-owned interrupt/restart steering;</li>
+<li>provider conversation snapshots through <code>Agent.messages.list()</code>;</li>
+<li>Cursor <code>task</code> subagents, projected as read-only child app threads with their tool activity and
+final result.</li>
+</ul>
+<p>The public SDK does not currently expose native agent fork, conversation rollback, active steering,
+or interactive approval callbacks. Direct active steering is advertised as unsupported, while V2
+steering uses the orchestrator&#39;s interrupt-and-restart path and preserves the app run identity across
+provider turns. Same-provider Cursor forks use the orchestrator&#39;s portable full-thread context
+handoff into a fresh Cursor agent. The SDK has in-process custom callback tools, but the V2 adapter
+intentionally uses the authenticated, thread-scoped MCP server instead.</p>
+<p>Portable handoffs summarize eligible timeline items and can omit the end of long messages. Read
+<a href="/docs/portable-handoffs/">Context in portable handoffs</a> before using a fork for work whose exact
+instructions must carry forward.</p>
+<p>Cursor task events include an <code>agentId</code>, but the local SDK does not register that identifier as a
+resumable agent: <code>Agent.resume()</code> returns <code>AgentNotFoundError</code>. The adapter therefore does not attach
+a provider thread to native task projections or advertise subagent thread IDs. A projected child is
+read-only: send messages from the parent thread.</p>
+<p>Runtime modes map to the controls the local SDK exposes: full access disables its sandbox, while
+restricted modes normally enable it. On Windows, Auto and Supervised run without filesystem
+isolation when Cursor Auto-review is enabled, because the SDK does not support a filesystem sandbox
+there. Restricted modes without Auto-review, including the default Auto-accept edits mode, still
+request the sandbox and cannot start on Windows. Explicit sandbox policies remain authoritative,
+including restrictive policies that the Windows SDK rejects. Explicit approval policy overrides
+control Auto-review, which is not represented as an interactive Moonfold approval flow.</p>
+<p>The existing Cursor binary path and API endpoint settings belong to the CLI/ACP integration. Cursor
+V2 execution does not launch that binary, and the SDK does not expose an API endpoint override.</p>
+<h2 id="replay-and-live-testing"><a class="anchor" href="#replay-and-live-testing">Replay And Live Testing</a></h2>
+<p>Cursor replay fixtures preserve the SDK boundary: agent open/resume, sends, ordered <code>onDelta</code>
+updates, terminal results, cancellation, message snapshots, and close. The real V2 adapter,
+orchestrator, event store, projections, and checkpoint logic still run in tests.</p>
+<p>Record a fixture against the real SDK with:</p>
+<pre><code class="language-bash">pnpm --filter moonfold record:cursor-replay --scenario simple
 </code></pre>
-        <p>
-          Use <code>--out &lt;path&gt;</code> to record a temporary probe without replacing a
-          checked-in fixture. Supported scenarios are listed by the recorder when an invalid
-          scenario is supplied.
-        </p>
+<p>Use <code>--out &lt;path&gt;</code> to record a temporary probe without replacing a checked-in fixture. Supported
+scenarios are listed by the recorder when an invalid scenario is supplied.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/cursor.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/providers-acp/"><small>Previous</small><span>ACP providers</span></a
-          ><a class="next" href="/docs/providers-opencode/"
-            ><small>Next</small><span>OpenCode</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#prerequisites">Prerequisites</a></li>
-            <li><a href="#sign-in">Sign in</a></li>
-            <li><a href="#v2-capability-mapping">V2 Capability Mapping</a></li>
-            <li><a href="#replay-and-live-testing">Replay And Live Testing</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/cursor.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/providers-acp/"><small>Previous</small><span>ACP providers</span></a><a class="next" href="/docs/providers-opencode/"><small>Next</small><span>OpenCode</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#sign-in">Sign in</a></li><li><a href="#v2-capability-mapping">V2 Capability Mapping</a></li><li><a href="#replay-and-live-testing">Replay And Live Testing</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

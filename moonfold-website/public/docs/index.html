@@ -1,582 +1,67 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Moonfold docs — install, connect agents, hand off tasks</title>
-    <meta
-      name="description"
-      content="The Moonfold documentation: install, provider guides for Codex, Claude Code and more, permission modes, remote access and provider handoff."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/" />
-    <meta property="og:title" content="Moonfold docs — install, connect agents, hand off tasks" />
-    <meta
-      property="og:description"
-      content="The Moonfold documentation: install, provider guides for Codex, Claude Code and more, permission modes, remote access and provider handoff."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs-home">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <main class="docs-home" id="content">
-      <div class="docs-hero">
-        <p class="eyebrow">Documentation</p>
-        <h1>Learn Moonfold.</h1>
-        <p class="lede">
-          Install it, connect the agents you already use, and keep a task moving when one of them
-          runs out. 48 pages, written in the open and editable on GitHub.
-        </p>
-        <div class="docs-start">
-          <a class="btn btn-solid" href="/docs/install/">Install Moonfold</a>
-          <a class="btn btn-ghost" href="/docs/provider-handoff/">How handoff works</a>
-        </div>
-        <label class="doc-search doc-search-wide"
-          ><span class="sr-only">Search the docs</span
-          ><input type="search" placeholder="Search the docs" autocomplete="off" data-doc-search
-        /></label>
-      </div>
-      <div class="docs-groups">
-        <section class="doc-group">
-          <div class="doc-group-head">
-            <h2>Get started</h2>
-            <p>Install Moonfold, run it the first time and keep it up to date.</p>
-          </div>
-          <ul class="doc-cards">
-            <li data-doc-card>
-              <a href="/docs/install/"
-                ><strong>Install Moonfold</strong
-                ><span
-                  >Moonfold runs coding agents on your computer and lets you control them from its
-                  desktop app or a web browser. Set up the machin…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/welcome-wizard/"
-                ><strong>Welcome wizard</strong
-                ><span
-                  >Moonfold shows a setup flow when you open a new installation or connect to the
-                  hosted app for the first time. Existing workspac…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/updating/"
-                ><strong>Updating Moonfold</strong
-                ><span
-                  >The app you use and the server running your agents can be on different machines.
-                  When a server is behind your web or desktop ap…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/remote-access/"
-                ><strong>Remote access</strong
-                ><span
-                  >Connect a phone, browser, or another desktop app to Moonfold running on a
-                  different machine. That machine must stay running and…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/mobile-app/"
-                ><strong>Mobile app</strong
-                ><span
-                  >Moonfold for Android shows the Moonfold running on your computer: the same
-                  threads, agents, approvals and settings, live. There…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/background-service/"
-                ><strong>Running Moonfold in the background</strong
-                ><span
-                  >On Linux and macOS, Moonfold can run as a service for your user so you do not
-                  need to keep a terminal open.</span
-                ></a
-              >
-            </li>
-          </ul>
-        </section>
-        <section class="doc-group">
-          <div class="doc-group-head">
-            <h2>Work with agents</h2>
-            <p>Threads, permissions, handoff and the tools agents can use.</p>
-          </div>
-          <ul class="doc-cards">
-            <li data-doc-card>
-              <a href="/docs/thread-sidebar/"
-                ><strong>Working with threads</strong
-                ><span
-                  >Use a new thread for a separate task. Choose New worktree when its code changes
-                  need a separate branch and working directory.</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/composer/"
-                ><strong>Messages and context</strong
-                ><span
-                  >Give the agent a task in the composer. Add files, quote a previous response, or
-                  include a skill when the task needs more context.</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/permission-modes/"
-                ><strong>Permission modes</strong
-                ><span
-                  >Permission modes control when an agent needs your approval to act. Choose a mode
-                  in the message composer; it applies to that th…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/provider-handoff/"
-                ><strong>Provider handoff</strong
-                ><span
-                  >When an agent reaches its usage limit, or you want another agent to take over,
-                  Moonfold can move the thread to a different prov…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/prompt-profiles/"
-                ><strong>Prompt profiles</strong
-                ><span
-                  >A prompt profile is a set of standing instructions Moonfold sends with every
-                  turn, to whichever agent the thread uses. It adds…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/portable-handoffs/"
-                ><strong>Context in portable handoffs</strong
-                ><span
-                  >For moving a thread to another provider when one hits its limit, see Provider
-                  handoff. This page explains how much history trav…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/usage/"
-                ><strong>Usage and limits</strong
-                ><span
-                  >Open Usage from the sidebar or the command palette, or press mod+u on web and
-                  desktop when the terminal is not focused. Customi…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/scheduled-tasks/"
-                ><strong>Scheduled tasks</strong
-                ><span
-                  >A scheduled task sends a prompt to an agent on a schedule. Create and edit tasks
-                  in Settings → Scheduled tasks; agents can also…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/memories/"
-                ><strong>Memories</strong
-                ><span
-                  >Memories are short notes that agents receive at the start of every turn, so you
-                  don't have to repeat a preference in each conve…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/plugins/"
-                ><strong>Plugins</strong
-                ><span
-                  >A plugin gives agents extra skills and, optionally, MCP servers. Manage plugins
-                  in Settings → Plugins. Each environment has its…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/agent-instructions/"
-                ><strong>Agent instructions</strong
-                ><span
-                  >Agents read standing instructions from Markdown files: AGENTS.md (Codex and most
-                  agents) and CLAUDE.md (Claude Code), both in y…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/artifacts/"
-                ><strong>Artifacts</strong
-                ><span
-                  >Everything a thread produced or was given is listed under Artifacts in the thread
-                  details panel: each file its agent changed, n…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/computer-use/"
-                ><strong>Computer use</strong
-                ><span
-                  >Computer use lets agents see and operate desktop apps on the environment's
-                  computer: read a window's controls, take screenshots…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/agent-browsing/"
-                ><strong>Agent browsing</strong
-                ><span
-                  >Agents can open web pages in Moonfold's browser and work with them. Settings →
-                  Integrations → Agent browsing decides what they…</span
-                ></a
-              >
-            </li>
-          </ul>
-        </section>
-        <section class="doc-group">
-          <div class="doc-group-head">
-            <h2>Providers</h2>
-            <p>Connect the agent CLIs you already use, with your own logins.</p>
-          </div>
-          <ul class="doc-cards">
-            <li data-doc-card>
-              <a href="/docs/providers-codex/"
-                ><strong>Codex</strong
-                ><span
-                  >Use your ChatGPT plan or an existing Codex CLI login to code in Moonfold.</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/providers-claude/"
-                ><strong>Claude</strong
-                ><span
-                  >Moonfold uses Claude Code's login and configuration. Start with the default
-                  provider for one account; provider setup covers ins…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/providers-gemini/"
-                ><strong>Gemini CLI</strong
-                ><span
-                  >Gemini CLI speaks ACP, so Moonfold runs it through the generic ACP integration;
-                  there is no separate Gemini provider.</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/providers-acp/"
-                ><strong>ACP providers</strong
-                ><span
-                  >Moonfold can run installed ACP commands or coding agents from the official ACP
-                  Registry. Registry agents bring their own models…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/cursor/"
-                ><strong>Cursor</strong
-                ><span
-                  >Cursor V2 runs through the official @cursor/sdk TypeScript package. It does not
-                  use Cursor's ACP transport for V2 execution.</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/providers-opencode/"
-                ><strong>OpenCode</strong
-                ><span
-                  >Install and authenticate OpenCode on the machine running your environment, then
-                  enable it in Settings &gt; Providers. See provider…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/providers-antigravity/"
-                ><strong>Antigravity</strong
-                ><span
-                  >Moonfold runs Google's official Antigravity ACP agent on your selected
-                  environment. It has its own sign-in, separate from the A…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/providers-pi/"
-                ><strong>Pi</strong
-                ><span
-                  >Moonfold can use your existing Pi coding agent installation while keeping Pi's
-                  models, auth, extensions, skills, context files,…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/providers-muse/"
-                ><strong>Muse Code</strong
-                ><span
-                  >Muse Code is a beta integration and is disabled by default. Install Muse Code on
-                  the machine hosting your environment, then run…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/providers-deepseek-harness/"
-                ><strong>DeepSeek Harness</strong
-                ><span
-                  >DeepSeek Harness (dsh) is DeepSeek's open-source, plugin-based agent harness.
-                  Moonfold runs it through its ACP profile (dsh --p…</span
-                ></a
-              >
-            </li>
-          </ul>
-        </section>
-        <section class="doc-group">
-          <div class="doc-group-head">
-            <h2>More</h2>
-            <p>Everything else in the guide.</p>
-          </div>
-          <ul class="doc-cards">
-            <li data-doc-card>
-              <a href="/docs/activity-log/"
-                ><strong>Activity log</strong
-                ><span
-                  >On web and desktop, consecutive tool calls appear as an expandable summary. Open
-                  it to inspect commands, tool inputs, status, a…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/appearance/"
-                ><strong>Appearance and themes</strong
-                ><span
-                  >On web and desktop, open Settings → Appearance to choose a theme and follow the
-                  system appearance or stay in light or dark mode…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/browser-import/"
-                ><strong>Import browser sessions</strong
-                ><span
-                  >The desktop app can import cookies from another browser so you can reuse its
-                  signed-in sessions in the preview browser.</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/default-browser/"
-                ><strong>Use Moonfold as your default browser</strong
-                ><span
-                  >On macOS, the desktop app can be your default web browser. Links you open from
-                  other apps then open in Moonfold. When the threa…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/devices/"
-                ><strong>Devices</strong
-                ><span
-                  >The Device panel shows a live iOS Simulator or Android Emulator next to a thread,
-                  so you can watch an agent verify mobile work…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/html-renders/"
-                ><strong>Visual replies</strong
-                ><span
-                  >Agents can answer with a page instead of only text: a chart, table, diagram,
-                  image collage, or mockup. Ask for one (&quot;show this…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/keybindings/"
-                ><strong>Keybindings</strong
-                ><span
-                  >Customize shortcuts in Settings → Keybindings on web and desktop. That page also
-                  lists the command IDs and defaults available i…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/keyboard-focus/"
-                ><strong>Keyboard focus</strong
-                ><span
-                  >The command palette keeps focus while open. Closing it returns focus to the
-                  composer. While the palette or model picker is open…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/open-source-licenses/"
-                ><strong>Open source licenses</strong
-                ><span
-                  >Moonfold includes third-party software and adapted assets. To read their license
-                  and attribution notices:</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/outside-agents/"
-                ><strong>Outside agents</strong
-                ><span
-                  >Agents that Moonfold did not start can work with an environment through its MCP
-                  server. They can read projects and threads, sta…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/project-settings/"
-                ><strong>Settings and project overrides</strong
-                ><span
-                  >On web and desktop, the &quot;Applying settings for …&quot; sentence at the top
-                  of Settings pages picks the project and environment a cha…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/prompt-links/"
-                ><strong>Prompt links</strong
-                ><span
-                  >A prompt link opens Moonfold with a prompt ready to send. Use one to share a
-                  prompt on social media, or to put a one-click fix…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/question-attachments/"
-                ><strong>Files in question answers</strong
-                ><span
-                  >When an agent asks a question that accepts a custom answer, use Attach files or
-                  paste an image into the answer field.You can se…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/snap-shot/"
-                ><strong>SnapShots</strong
-                ><span
-                  >A SnapShot captures the window you are working in and attaches it to your current
-                  draft. The attachment carries the app name an…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/source-control/"
-                ><strong>Source control</strong
-                ><span
-                  >Moonfold integrates with GitHub, GitLab, Forgejo, Gitea, Bitbucket, Azure DevOps,
-                  and GitCafe to clone and publish repositories…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/telemetry/"
-                ><strong>Product usage data</strong
-                ><span
-                  >Moonfold collects no product usage data by default and ships no analytics
-                  key.</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/terminal/"
-                ><strong>Terminal history</strong
-                ><span
-                  >Each terminal keeps up to 5,000 lines and 8 MiB of scrollback on its environment
-                  server. Moonfold removes the oldest output whe…</span
-                ></a
-              >
-            </li>
-            <li data-doc-card>
-              <a href="/docs/thread-migration/"
-                ><strong>Threads from older Moonfold versions</strong
-                ><span
-                  >On your first V2 launch, Moonfold copies the V1 database, state.sqlite, into
-                  statev2.sqlite in the same data directory and migr…</span
-                ></a
-              >
-            </li>
-          </ul>
-        </section>
-        <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-      </div>
-      <p class="docs-foot">
-        Missing something?
-        <a
-          href="https://github.com/Mr-Dark-debug/Moonfold/tree/main/docs/user"
-          target="_blank"
-          rel="noopener noreferrer"
-          >Every page lives in the repository</a
-        >
-        and takes pull requests.
-      </p>
-    </main>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Moonfold docs — install, connect agents, hand off tasks</title>
+<meta name="description" content="The Moonfold documentation: install, provider guides for Codex, Claude Code and more, permission modes, remote access and provider handoff.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/">
+<meta property="og:title" content="Moonfold docs — install, connect agents, hand off tasks">
+<meta property="og:description" content="The Moonfold documentation: install, provider guides for Codex, Claude Code and more, permission modes, remote access and provider handoff.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs-home">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<main class="docs-home" id="content">
+<div class="docs-hero">
+<p class="eyebrow">Documentation</p>
+<h1>Learn Moonfold.</h1>
+<p class="lede">Install it, connect the agents you already use, and keep a task moving when one of them runs out. 56 pages, written in the open and editable on GitHub.</p>
+<div class="docs-start">
+<a class="btn btn-solid" href="/docs/install/">Install Moonfold</a>
+<a class="btn btn-ghost" href="/docs/provider-handoff/">How handoff works</a>
+</div>
+<label class="doc-search doc-search-wide"><span class="sr-only">Search the docs</span><input type="search" placeholder="Search the docs" autocomplete="off" data-doc-search></label>
+</div>
+<div class="docs-groups"><section class="doc-group">
+<div class="doc-group-head"><h2>Get started</h2><p>Install Moonfold, run it the first time and keep it up to date.</p></div>
+<ul class="doc-cards"><li data-doc-card><a href="/docs/install/"><strong>Install Moonfold</strong><span>Moonfold runs coding agents on your computer and lets you control them from its desktop app or a web browser. Set up the machin…</span></a></li><li data-doc-card><a href="/docs/welcome-wizard/"><strong>Welcome wizard</strong><span>Moonfold shows a setup flow when you open a new installation. Existing workspaces skip this flow.</span></a></li><li data-doc-card><a href="/docs/updating/"><strong>Updating Moonfold</strong><span>The app you use and the server running your agents can be on different machines. When a server is behind your web or desktop ap…</span></a></li><li data-doc-card><a href="/docs/remote-access/"><strong>Remote access</strong><span>Connect a phone, browser, or another desktop app to Moonfold running on a different machine. That machine must stay running and…</span></a></li><li data-doc-card><a href="/docs/mobile-app/"><strong>Mobile app</strong><span>Moonfold for Android shows the Moonfold running on your computer: the same threads, agents, approvals and settings, live. There…</span></a></li><li data-doc-card><a href="/docs/background-service/"><strong>Running Moonfold in the background</strong><span>On Linux and macOS, Moonfold can run as a service for your user so you do not need to keep a terminal open.</span></a></li></ul></section><section class="doc-group">
+<div class="doc-group-head"><h2>Work with agents</h2><p>Threads, permissions, handoff and the tools agents can use.</p></div>
+<ul class="doc-cards"><li data-doc-card><a href="/docs/thread-sidebar/"><strong>Working with threads</strong><span>Use a new thread for a separate task. Choose New worktree when its code changes need a separate branch and working directory.</span></a></li><li data-doc-card><a href="/docs/composer/"><strong>Messages and context</strong><span>Give the agent a task in the composer. Add files, quote a previous response, or include a skill when the task needs more context.</span></a></li><li data-doc-card><a href="/docs/permission-modes/"><strong>Permission modes</strong><span>Permission modes control when an agent needs your approval to act. Choose a mode in the message composer; it applies to that th…</span></a></li><li data-doc-card><a href="/docs/provider-handoff/"><strong>Provider handoff</strong><span>When an agent reaches its usage limit, or you want another agent to take over, Moonfold can move the thread to a different prov…</span></a></li><li data-doc-card><a href="/docs/prompt-profiles/"><strong>Prompt profiles</strong><span>A prompt profile is a set of standing instructions Moonfold sends with every turn, to whichever agent the thread uses. It adds…</span></a></li><li data-doc-card><a href="/docs/portable-handoffs/"><strong>Context in portable handoffs</strong><span>For moving a thread to another provider when one hits its limit, see Provider handoff. This page explains how much history trav…</span></a></li><li data-doc-card><a href="/docs/usage/"><strong>Usage and limits</strong><span>Open Usage from the sidebar or the command palette, or press mod+u on web and desktop when the terminal is not focused. Customi…</span></a></li><li data-doc-card><a href="/docs/scheduled-tasks/"><strong>Scheduled tasks</strong><span>A scheduled task sends a prompt to an agent on a schedule. Create and edit tasks in Settings → Scheduled tasks; agents can also…</span></a></li><li data-doc-card><a href="/docs/memories/"><strong>Memories</strong><span>Memories are short notes that agents receive at the start of every turn, so you don't have to repeat a preference in each conve…</span></a></li><li data-doc-card><a href="/docs/plugins/"><strong>Plugins</strong><span>A plugin gives agents extra skills and, optionally, MCP servers. Manage plugins in Settings → Plugins. Each environment has its…</span></a></li><li data-doc-card><a href="/docs/agent-instructions/"><strong>Agent instructions</strong><span>Agents read standing instructions from Markdown files: AGENTS.md (Codex and most agents) and CLAUDE.md (Claude Code), both in y…</span></a></li><li data-doc-card><a href="/docs/artifacts/"><strong>Artifacts</strong><span>Everything a thread produced or was given is listed under Artifacts in the thread details panel: each file its agent changed, n…</span></a></li><li data-doc-card><a href="/docs/computer-use/"><strong>Computer use</strong><span>Computer use lets agents see and operate desktop apps on the environment's computer: read a window's controls, take screenshots…</span></a></li><li data-doc-card><a href="/docs/agent-browsing/"><strong>Agent browsing</strong><span>Agents can open web pages in Moonfold's browser and work with them. Settings → Integrations → Agent browsing decides what they…</span></a></li></ul></section><section class="doc-group">
+<div class="doc-group-head"><h2>Providers</h2><p>Connect the agent CLIs you already use, with your own logins.</p></div>
+<ul class="doc-cards"><li data-doc-card><a href="/docs/providers-codex/"><strong>Codex</strong><span>Use your ChatGPT plan or an existing Codex CLI login to code in Moonfold.</span></a></li><li data-doc-card><a href="/docs/providers-claude/"><strong>Claude</strong><span>Moonfold uses Claude Code's login and configuration. Start with the default provider for one account; provider setup covers ins…</span></a></li><li data-doc-card><a href="/docs/providers-gemini/"><strong>Gemini CLI</strong><span>Gemini CLI speaks ACP, so Moonfold runs it through the generic ACP integration; there is no separate Gemini provider.</span></a></li><li data-doc-card><a href="/docs/providers-acp/"><strong>ACP providers</strong><span>Moonfold can run installed ACP commands or coding agents from the official ACP Registry. Registry agents bring their own models…</span></a></li><li data-doc-card><a href="/docs/cursor/"><strong>Cursor</strong><span>Cursor V2 runs through the official @cursor/sdk TypeScript package. It does not use Cursor's ACP transport for V2 execution.</span></a></li><li data-doc-card><a href="/docs/providers-opencode/"><strong>OpenCode</strong><span>Install and authenticate OpenCode on the machine running your environment, then enable it in Settings &gt; Providers. See provider…</span></a></li><li data-doc-card><a href="/docs/providers-antigravity/"><strong>Antigravity</strong><span>Moonfold runs Google's official Antigravity ACP agent on your selected environment. It has its own sign-in, separate from the A…</span></a></li><li data-doc-card><a href="/docs/providers-pi/"><strong>Pi</strong><span>Moonfold can use your existing Pi coding agent installation while keeping Pi's models, auth, extensions, skills, context files,…</span></a></li><li data-doc-card><a href="/docs/providers-muse/"><strong>Muse Code</strong><span>Muse Code is disabled by default. Install Muse Code on the machine hosting your environment, then run muse login as the account…</span></a></li><li data-doc-card><a href="/docs/providers-deepseek-harness/"><strong>DeepSeek Harness</strong><span>DeepSeek Harness (dsh) is DeepSeek's open-source, plugin-based agent harness. Moonfold runs it through its ACP profile (dsh --p…</span></a></li></ul></section><section class="doc-group">
+<div class="doc-group-head"><h2>More</h2><p>Everything else in the guide.</p></div>
+<ul class="doc-cards"><li data-doc-card><a href="/docs/activity-log/"><strong>Activity log</strong><span>On web and desktop, consecutive tool calls appear as an expandable summary. Open it to inspect commands, tool inputs, status, a…</span></a></li><li data-doc-card><a href="/docs/appearance/"><strong>Appearance and themes</strong><span>On web and desktop, open Settings → Appearance to choose a theme and follow the system appearance or stay in light or dark mode…</span></a></li><li data-doc-card><a href="/docs/brand-kits/"><strong>Brand kits with Cassandre</strong><span>Cassandre turns one prompt into a brand kit: a name, a logo set, colors with roles for light and dark, type with a hierarchy, s…</span></a></li><li data-doc-card><a href="/docs/browser-import/"><strong>Import browser sessions</strong><span>The desktop app can import cookies from another browser so you can reuse its signed-in sessions in the preview browser.</span></a></li><li data-doc-card><a href="/docs/default-browser/"><strong>Use Moonfold as your default browser</strong><span>On macOS, the desktop app can be your default web browser. Links you open from other apps then open in Moonfold. When the threa…</span></a></li><li data-doc-card><a href="/docs/devices/"><strong>Devices</strong><span>The Device panel shows a live iOS Simulator or Android Emulator next to a thread, so you can watch an agent verify mobile work…</span></a></li><li data-doc-card><a href="/docs/html-renders/"><strong>Visual replies</strong><span>Agents can answer with a page instead of only text: a chart, table, diagram, image collage, or mockup. Ask for one (&quot;show this…</span></a></li><li data-doc-card><a href="/docs/keybindings/"><strong>Keybindings</strong><span>Customize shortcuts in Settings → Keybindings on web and desktop. That page also lists the command IDs and defaults available i…</span></a></li><li data-doc-card><a href="/docs/keyboard-focus/"><strong>Keyboard focus</strong><span>The command palette keeps focus while open. Closing it returns focus to the composer in chat, or to the previous control on oth…</span></a></li><li data-doc-card><a href="/docs/managed-policy/"><strong>Managed policy</strong><span>A managed policy lets an administrator configure Moonfold for every user on a machine. It sets defaults and locks for settings,…</span></a></li><li data-doc-card><a href="/docs/open-source-licenses/"><strong>Open source licenses</strong><span>Moonfold includes third-party software and adapted assets. To read their license and attribution notices:</span></a></li><li data-doc-card><a href="/docs/orbit/"><strong>Orbit</strong><span>Orbit is a crew of agents that keeps working on one of your projects while you are away. It listens to what people say about th…</span></a></li><li data-doc-card><a href="/docs/outside-agents/"><strong>Outside agents</strong><span>Agents that Moonfold did not start can work with an environment through its MCP server. They can read projects and threads, sta…</span></a></li><li data-doc-card><a href="/docs/project-settings/"><strong>Settings and project overrides</strong><span>On web and desktop, the &quot;Applying settings for …&quot; sentence at the top of Settings pages picks the project and environment a cha…</span></a></li><li data-doc-card><a href="/docs/prompt-links/"><strong>Prompt links</strong><span>A prompt link opens Moonfold with a prompt ready to send. Use one to share a prompt on social media, or to put a one-click fix…</span></a></li><li data-doc-card><a href="/docs/providers-fx/"><strong>fx</strong><span>Moonfold can run fx. fx uses the login on the machine that runs the Moonfold server.</span></a></li><li data-doc-card><a href="/docs/providers-kiro/"><strong>Kiro</strong><span>Moonfold runs the Kiro CLI as an agent, using your own Kiro account, custom agents, steering, hooks, and MCP configuration.</span></a></li><li data-doc-card><a href="/docs/question-attachments/"><strong>Files in question answers</strong><span>When an agent asks a question that accepts a custom answer, use Attach files or paste an image into the answer field.You can se…</span></a></li><li data-doc-card><a href="/docs/secrets/"><strong>Secrets</strong><span>Moonfold can read credentials from a secret provider, so the credential stays in your password manager and Moonfold saves only…</span></a></li><li data-doc-card><a href="/docs/snap-shot/"><strong>SnapShots</strong><span>A SnapShot captures the window you are working in and attaches it to your current draft. The attachment carries the app name an…</span></a></li><li data-doc-card><a href="/docs/source-control/"><strong>Source control</strong><span>Moonfold integrates with GitHub, GitLab, Forgejo, Gitea, Bitbucket, Azure DevOps, and GitCafe to clone and publish repositories…</span></a></li><li data-doc-card><a href="/docs/telemetry/"><strong>Product usage data</strong><span>Moonfold collects no product usage data by default and ships no analytics key.</span></a></li><li data-doc-card><a href="/docs/terminal/"><strong>Terminal history</strong><span>Each terminal keeps up to 5,000 lines and 8 MiB of scrollback on its environment server. Moonfold removes the oldest output whe…</span></a></li><li data-doc-card><a href="/docs/thread-migration/"><strong>Threads from older Moonfold versions</strong><span>On your first V2 launch, Moonfold copies the V1 database, state.sqlite, into statev2.sqlite in the same data directory and migr…</span></a></li><li data-doc-card><a href="/docs/triage/"><strong>Triage an issue</strong><span>Triage lets your own coding agent investigate a Moonfold problem. The agent reads the logs and state of the machine, checks the…</span></a></li><li data-doc-card><a href="/docs/voice-input/"><strong>Voice input</strong><span>Dictate into the composer instead of typing. The transcript lands in your draft for review, and only sending the message sends…</span></a></li></ul></section><p class="doc-empty" hidden data-doc-empty>No page matches that.</p></div>
+<p class="docs-foot">Missing something? <a href="https://github.com/Mr-Dark-debug/Moonfold/tree/main/docs/user" target="_blank" rel="noopener noreferrer">Every page lives in the repository</a> and takes pull requests.</p>
+</main>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

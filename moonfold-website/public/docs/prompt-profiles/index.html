@@ -1,297 +1,94 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Prompt profiles · Moonfold docs</title>
-    <meta
-      name="description"
-      content="A prompt profile is a set of standing instructions Moonfold sends with every turn, to whichever agent the thread uses. It adds to the agent's own system prompt and to your AGENTS.md or CLAUDE.md; it n"
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/prompt-profiles/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/prompt-profiles/" />
-    <meta property="og:title" content="Prompt profiles · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="A prompt profile is a set of standing instructions Moonfold sends with every turn, to whichever agent the thread uses. It adds to the agent's own system prompt and to your AGENTS.md or CLAUDE.md; it n"
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/" aria-current="page">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs">
-          <a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents
-        </p>
-        <h1 id="prompt-profiles">Prompt profiles</h1>
-        <p>
-          A prompt profile is a set of standing instructions Moonfold sends with every turn, to
-          whichever agent the thread uses. It adds to the agent&#39;s own system prompt and to your
-          AGENTS.md or CLAUDE.md; it never replaces or edits them.
-        </p>
-        <h2 id="choose-a-profile">
-          <a class="anchor" href="#choose-a-profile">Choose a profile</a>
-        </h2>
-        <ul>
-          <li>
-            <strong>For everything:</strong>
-            <strong>Settings → Prompt Profiles → Default prompt profile</strong>. Pick a project in
-            the settings scope to give that project its own default.
-          </li>
-          <li>
-            <strong>For one thread:</strong> open the thread menu, choose
-            <strong>Prompt profile</strong>, and pick one. <strong>Default</strong> goes back to the
-            project&#39;s or environment&#39;s default.
-          </li>
-        </ul>
-        <p>The built-in profiles:</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Profile</th>
-                <th>What it asks for</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Moonfold default</td>
-                <td>Nothing. Each agent works the way its own harness tells it to.</td>
-              </tr>
-              <tr>
-                <td>Careful engineer</td>
-                <td>
-                  Small, reviewable changes; run the narrowest checks and report real results.
-                </td>
-              </tr>
-              <tr>
-                <td>Terminal-first</td>
-                <td>Inspect with commands, edit with small patches, verify by running things.</td>
-              </tr>
-              <tr>
-                <td>Pair programmer</td>
-                <td>
-                  Explain the plan and trade-offs, point out risks, check in before large moves.
-                </td>
-              </tr>
-              <tr>
-                <td>Minimal</td>
-                <td>Short answers and only the changes asked for.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <h2 id="write-your-own"><a class="anchor" href="#write-your-own">Write your own</a></h2>
-        <p>
-          In <strong>Settings → Prompt Profiles</strong>, choose <strong>New profile</strong>, give
-          it a name and write the instructions (up to 16,000 characters). Your profiles belong to
-          the environment, so every project on it can use them. Deleting a profile sends the threads
-          that used it back to the default.
-        </p>
-        <h2 id="good-to-know"><a class="anchor" href="#good-to-know">Good to know</a></h2>
-        <ul>
-          <li>
-            A profile chosen in the middle of a thread reaches the agent with your next message.
-            Claude Code and Pi receive it as a short note in front of that message, because they
-            keep the system prompt their session started with.
-          </li>
-          <li>
-            A handoff keeps the thread&#39;s profile, so the next agent works under the same
-            instructions.
-          </li>
-          <li>Slash commands (messages that start with <code>/</code>) are sent unchanged.</li>
-        </ul>
-        <h2 id="agent-limits"><a class="anchor" href="#agent-limits">Agent limits</a></h2>
-        <p>
-          <strong>Settings → Prompt Profiles → Agent limits</strong> has two more guardrails. Both
-          can differ per project.
-        </p>
-        <p>
-          <strong>Content exclusions</strong> are paths agents must leave alone, one per line,
-          relative to the project, such as <code>.env</code> or <code>secrets/**</code>. Claude
-          Code&#39;s file tools are blocked from them. Other agents receive them as an instruction,
-          and any agent&#39;s shell commands can still reach them, so keep real secrets out of the
-          project.
-        </p>
-        <p>
-          <strong>Token limit for one run</strong> stops a run once it has added that many tokens to
-          its context, and holds queued messages. Send a message to continue; each message starts
-          with a fresh allowance. It counts what Codex and Claude report during a turn, and agents
-          that report no usage are not limited.
-        </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Prompt profiles · Moonfold docs</title>
+<meta name="description" content="A prompt profile is a set of standing instructions Moonfold sends with every turn, to whichever agent the thread uses. It adds to the agent's own system prompt and to your AGENTS.md or CLAUDE.md; it n">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/prompt-profiles/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/prompt-profiles/">
+<meta property="og:title" content="Prompt profiles · Moonfold docs">
+<meta property="og:description" content="A prompt profile is a set of standing instructions Moonfold sends with every turn, to whichever agent the thread uses. It adds to the agent's own system prompt and to your AGENTS.md or CLAUDE.md; it n">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/" aria-current="page">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents</p>
+<h1 id="prompt-profiles">Prompt profiles</h1>
+<p>A prompt profile is a set of standing instructions Moonfold sends with every turn, to whichever
+agent the thread uses. It adds to the agent&#39;s own system prompt and to your AGENTS.md or CLAUDE.md;
+it never replaces or edits them.</p>
+<h2 id="choose-a-profile"><a class="anchor" href="#choose-a-profile">Choose a profile</a></h2>
+<ul>
+<li><strong>For everything:</strong> <strong>Settings → Prompt Profiles → Default prompt profile</strong>. Pick a project in
+the settings scope to give that project its own default.</li>
+<li><strong>For one thread:</strong> open the thread menu, choose <strong>Prompt profile</strong>, and pick one. <strong>Default</strong>
+goes back to the project&#39;s or environment&#39;s default.</li>
+</ul>
+<p>The built-in profiles:</p>
+<div class="table-wrap"><table><thead><tr><th>Profile</th><th>What it asks for</th></tr></thead><tbody><tr><td>Moonfold default</td><td>Nothing. Each agent works the way its own harness tells it to.</td></tr><tr><td>Careful engineer</td><td>Small, reviewable changes; run the narrowest checks and report real results.</td></tr><tr><td>Terminal-first</td><td>Inspect with commands, edit with small patches, verify by running things.</td></tr><tr><td>Pair programmer</td><td>Explain the plan and trade-offs, point out risks, check in before large moves.</td></tr><tr><td>Minimal</td><td>Short answers and only the changes asked for.</td></tr></tbody></table></div>
+<h2 id="write-your-own"><a class="anchor" href="#write-your-own">Write your own</a></h2>
+<p>In <strong>Settings → Prompt Profiles</strong>, choose <strong>New profile</strong>, give it a name and write the
+instructions (up to 16,000 characters). Your profiles belong to the environment, so every project on
+it can use them. Deleting a profile sends the threads that used it back to the default.</p>
+<h2 id="good-to-know"><a class="anchor" href="#good-to-know">Good to know</a></h2>
+<ul>
+<li>A profile chosen in the middle of a thread reaches the agent with your next message. Claude Code
+and Pi receive it as a short note in front of that message, because they keep the system prompt
+their session started with.</li>
+<li>A handoff keeps the thread&#39;s profile, so the next agent works under the same instructions.</li>
+<li>Slash commands (messages that start with <code>/</code>) are sent unchanged.</li>
+</ul>
+<h2 id="agent-limits"><a class="anchor" href="#agent-limits">Agent limits</a></h2>
+<p><strong>Settings → Prompt Profiles → Agent limits</strong> has two more guardrails. Both can differ per project.</p>
+<p><strong>Content exclusions</strong> are paths agents must leave alone, one per line, relative to the project,
+such as <code>.env</code> or <code>secrets/**</code>. Claude Code&#39;s file tools are blocked from them. Other agents receive
+them as an instruction, and any agent&#39;s shell commands can still reach them, so keep real secrets
+out of the project.</p>
+<p><strong>Token limit for one run</strong> stops a run once it has added that many tokens to its context, and holds
+queued messages. Send a message to continue; each message starts with a fresh allowance. It counts
+what Codex and Claude report during a turn, and agents that report no usage are not limited.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/prompt-profiles.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/provider-handoff/"><small>Previous</small><span>Provider handoff</span></a
-          ><a class="next" href="/docs/portable-handoffs/"
-            ><small>Next</small><span>Context in portable handoffs</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#choose-a-profile">Choose a profile</a></li>
-            <li><a href="#write-your-own">Write your own</a></li>
-            <li><a href="#good-to-know">Good to know</a></li>
-            <li><a href="#agent-limits">Agent limits</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/prompt-profiles.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/provider-handoff/"><small>Previous</small><span>Provider handoff</span></a><a class="next" href="/docs/portable-handoffs/"><small>Next</small><span>Context in portable handoffs</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#choose-a-profile">Choose a profile</a></li><li><a href="#write-your-own">Write your own</a></li><li><a href="#good-to-know">Good to know</a></li><li><a href="#agent-limits">Agent limits</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

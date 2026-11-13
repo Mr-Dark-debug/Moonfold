@@ -1,422 +1,165 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Antigravity · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Moonfold runs Google's official Antigravity ACP agent on your selected environment. It has its own sign-in, separate from the Antigravity IDE or CLI. Google controls which models and account access ar"
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-antigravity/" />
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://moonfold-website.vercel.app/docs/providers-antigravity/"
-    />
-    <meta property="og:title" content="Antigravity · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Moonfold runs Google's official Antigravity ACP agent on your selected environment. It has its own sign-in, separate from the Antigravity IDE or CLI. Google controls which models and account access ar"
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/" aria-current="page">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
-        <h1 id="antigravity">Antigravity</h1>
-        <p>
-          Moonfold runs Google&#39;s official Antigravity ACP agent on your selected environment. It
-          has its own sign-in, separate from the Antigravity IDE or CLI. Google controls which
-          models and account access are available through this agent.
-        </p>
-        <h2 id="set-up-antigravity">
-          <a class="anchor" href="#set-up-antigravity">Set up Antigravity</a>
-        </h2>
-        <p>
-          On web or desktop, open <strong>Settings &gt; Providers</strong>, choose the environment
-          that runs your project, and enable Antigravity. Install its runtime there, then choose
-          <strong>Sign in</strong> and complete the browser sign-in. Wait for Moonfold to confirm
-          account access and load models before starting a thread.
-        </p>
-        <p>
-          Installation continues if you leave settings or reconnect. Setup requires permission to
-          operate the environment; update an older server if it does not offer Antigravity setup.
-        </p>
-        <h3 id="sign-in-from-a-remote-device">
-          <a class="anchor" href="#sign-in-from-a-remote-device">Sign in from a remote device</a>
-        </h3>
-        <p>
-          Google returns to a <code>127.0.0.1</code> address. It can finish directly when your
-          browser is on the environment&#39;s machine. From another device, the final page will
-          usually fail to load because the sign-in listener is on the environment.
-        </p>
-        <p>
-          Copy the full return address, including everything after <code>?</code>, into the return
-          URL field in the client where you started sign-in, then choose <strong>Continue</strong>.
-          Keep the original address; do not replace it with the server&#39;s hostname. Only that
-          Moonfold sign-in session can finish the attempt. If it expires, retry sign-in and use the
-          new link.
-        </p>
-        <p>
-          The return URL contains a temporary sign-in code. Paste it only into the setup field. A
-          successful callback page alone does not confirm account access; wait for Moonfold&#39;s
-          confirmation.
-        </p>
-        <h3 id="other-sign-in-methods">
-          <a class="anchor" href="#other-sign-in-methods">Other sign-in methods</a>
-        </h3>
-        <p>Choose <strong>Sign-in method</strong> in the Antigravity provider settings:</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Credentials</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Google account</td>
-                <td>Personal Google sign-in in the browser</td>
-              </tr>
-              <tr>
-                <td>Gemini Enterprise</td>
-                <td>Browser sign-in, GCP project, and GCP location</td>
-              </tr>
-              <tr>
-                <td>Gemini API key</td>
-                <td>API key; choose Connect without a browser</td>
-              </tr>
-              <tr>
-                <td>Agent Platform / Vertex AI</td>
-                <td>
-                  API key, or GCP project and location with Application Default Credentials on the
-                  environment
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          The Antigravity API key field is stored in plain text in settings on the environment. The
-          agent uses the method and credentials selected for this instance; ambient
-          <code>GEMINI_API_KEY</code> and Google credential variables do not override them. Changing
-          the method stops the instance&#39;s sessions. Sign out before replacing an account.
-        </p>
-        <h2 id="runtime-installation">
-          <a class="anchor" href="#runtime-installation">Runtime installation</a>
-        </h2>
-        <p>
-          Managed installation supports Apple Silicon macOS, Linux x64 or ARM64, and Windows x64 or
-          ARM64. Intel Macs can connect to a supported remote environment. Allow several GB of free
-          disk space, especially on Linux.
-        </p>
-        <h3 id="use-a-manual-installation">
-          <a class="anchor" href="#use-a-manual-installation">Use a manual installation</a>
-        </h3>
-        <p>
-          Download the archive for your environment from the
-          <a
-            href="https://github.com/agentclientprotocol/registry/blob/main/antigravity-acp/agent.json"
-            target="_blank"
-            rel="noopener noreferrer"
-            >official ACP Registry</a
-          >. Extract the ACP executable and its <code>localharness_external</code> helper into the
-          same directory, at the same version. Make both executable on macOS or Linux; Windows uses
-          <code>.exe</code> files.
-        </p>
-        <p>
-          Set <strong>Binary path</strong> to the ACP executable on the environment and update it
-          yourself. Leave the field blank to use the managed runtime, or a compatible executable on
-          <code>PATH</code> if no managed runtime is installed.
-        </p>
-        <h2 id="models-and-threads">
-          <a class="anchor" href="#models-and-threads">Models and threads</a>
-        </h2>
-        <p>
-          The model list comes from your Antigravity account and can differ from other Antigravity
-          apps. A resumed thread keeps its selected model. If access to that model ends, select
-          another available model before continuing.
-        </p>
-        <p>
-          Use Antigravity&#39;s native <code>/plan</code> command for planning. Moonfold&#39;s
-          separate Plan mode is unavailable. Tool approvals follow
-          <a href="/docs/permission-modes/">Permission modes</a>. Questions with fixed choices still
-          need one of the offered answers, even in <strong>Full access</strong>.
-        </p>
-        <p>
-          Moonfold keeps conversation history and file diffs, but Antigravity cannot rewind its
-          conversation. Reverting a thread or editing and resubmitting an earlier turn is
-          unavailable. Continue with a follow-up message or start a new thread.
-        </p>
-        <h3 id="skills-and-attachments">
-          <a class="anchor" href="#skills-and-attachments">Skills and attachments</a>
-        </h3>
-        <p>
-          Put project skills in <code>.agents/skills</code>. Moonfold also reads
-          <code>.gemini/skills</code> and the legacy <code>.agent/skills</code> directory. Among
-          these project locations, the first copy wins in this order: <code>.gemini/skills</code>,
-          <code>.agents/skills</code>, <code>.agent/skills</code>. See
-          <a href="/docs/composer/#commands-and-skills">commands and skills</a> for invoking them.
-        </p>
-        <p>
-          Skills for every project go in <code>~/.gemini/config/skills</code> or
-          <code>~/.gemini/antigravity-cli/skills</code>. Antigravity does not read
-          <code>~/.agents/skills</code>, so a skill there only appears when the project itself is
-          your home directory.
-        </p>
-        <p>
-          Antigravity receives images directly. Every other attachment, including PDFs, text, audio,
-          archives, and videos, is passed as a saved file path for the agent to inspect with its
-          tools. A video path does not enable native video input.
-        </p>
-        <h3 id="subagents"><a class="anchor" href="#subagents">Subagents</a></h3>
-        <p>
-          Antigravity groups subagent activity into batches. You cannot open or control individual
-          subagents, and an idle batch does not confirm that every child succeeded. See
-          <a href="/docs/thread-sidebar/#inspect-agent-work">agent work</a> for where to inspect
-          activity.
-        </p>
-        <h2 id="accounts-and-removal">
-          <a class="anchor" href="#accounts-and-removal">Accounts and removal</a>
-        </h2>
-        <p>
-          Add an Antigravity provider instance for each Google account in
-          <strong>Settings &gt; Providers</strong> on web or desktop. Each has its own sign-in;
-          downloaded runtimes are shared on the environment.
-        </p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Action</th>
-                <th>Effect</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Disable</td>
-                <td>Stops the instance&#39;s sessions and keeps its Google sign-in.</td>
-              </tr>
-              <tr>
-                <td>Sign out</td>
-                <td>Stops the instance&#39;s sessions and removes its saved Google login.</td>
-              </tr>
-              <tr>
-                <td>Remove downloaded runtime</td>
-                <td>Removes the shared installation and keeps Google credentials.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          All three keep thread history and workspace files. Sending <code>/logout</code> by itself
-          in a thread signs out its instance, including stopping that instance&#39;s other sessions.
-          Sign out, then sign in again to replace an account.
-        </p>
-        <p>
-          Before removing a managed runtime, disable its instances and cancel any active
-          installation. Clear any explicit binary path pointing into that runtime. Removal is
-          refused while the runtime is in use.
-        </p>
-        <h2 id="check-access-and-troubleshoot">
-          <a class="anchor" href="#check-access-and-troubleshoot">Check access and troubleshoot</a>
-        </h2>
-        <p>
-          Open <strong>Usage &gt; Limits</strong> to see the remaining Gemini and shared Claude/GPT
-          allowances for Google sign-ins. Each group has separate five-hour and weekly limits and
-          reset times. Limits refresh with provider status and include usage outside Moonfold.
-        </p>
-        <p>
-          A server restart keeps your Google sign-in. The provider shows the saved account until a
-          session, a refresh, or a sign-out reports something new.
-        </p>
-        <p>
-          To check access and reload models, use <strong>Refresh provider status</strong> in web or
-          desktop provider settings. If asked to sign in again, use provider settings on web or
-          desktop.
-        </p>
-        <p>
-          If Google reports <code>SUBSCRIPTION_REQUIRED</code>, an account restriction, or a usage
-          limit, follow the provider&#39;s message and any retry time. See
-          <a href="https://antigravity.google/docs/plans" target="_blank" rel="noopener noreferrer"
-            >Google&#39;s account plans</a
-          >
-          for eligibility.
-        </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Antigravity · Moonfold docs</title>
+<meta name="description" content="Moonfold runs Google's official Antigravity ACP agent on your selected environment. It has its own sign-in, separate from the Antigravity IDE or CLI. Google controls which models and account access ar">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-antigravity/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-antigravity/">
+<meta property="og:title" content="Antigravity · Moonfold docs">
+<meta property="og:description" content="Moonfold runs Google's official Antigravity ACP agent on your selected environment. It has its own sign-in, separate from the Antigravity IDE or CLI. Google controls which models and account access ar">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/" aria-current="page">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
+<h1 id="antigravity">Antigravity</h1>
+<p>Moonfold runs Google&#39;s official Antigravity ACP agent on your selected environment.
+It has its own sign-in, separate from the Antigravity IDE or CLI. Google controls
+which models and account access are available through this agent.</p>
+<h2 id="set-up-antigravity"><a class="anchor" href="#set-up-antigravity">Set up Antigravity</a></h2>
+<p>On web or desktop, open <strong>Settings &gt; Providers</strong>, choose the environment that runs
+your project, and enable Antigravity. Install its runtime there, then choose
+<strong>Sign in</strong> and complete the browser sign-in. Wait for Moonfold to confirm
+account access and load models before starting a thread.</p>
+<p>Installation continues if you leave settings or reconnect. Setup requires
+permission to operate the environment; update an older server if it does not offer
+Antigravity setup.</p>
+<h3 id="sign-in-from-a-remote-device"><a class="anchor" href="#sign-in-from-a-remote-device">Sign in from a remote device</a></h3>
+<p>Google returns to a <code>127.0.0.1</code> address. It can finish directly when your browser is
+on the environment&#39;s machine. From another device, the final page will usually
+fail to load because the sign-in listener is on the environment.</p>
+<p>Copy the full return address, including everything after <code>?</code>, into the return URL
+field in the client where you started sign-in, then choose
+<strong>Continue</strong>. Keep the original address; do not replace it with the server&#39;s
+hostname. Only that Moonfold sign-in session can finish the attempt. If it expires,
+retry sign-in and use the new link.</p>
+<p>The return URL contains a temporary sign-in code. Paste it only into the setup
+field. A successful callback page alone does not confirm account access; wait for
+Moonfold&#39;s confirmation.</p>
+<h3 id="other-sign-in-methods"><a class="anchor" href="#other-sign-in-methods">Other sign-in methods</a></h3>
+<p>Choose <strong>Sign-in method</strong> in the Antigravity provider settings:</p>
+<div class="table-wrap"><table><thead><tr><th>Method</th><th>Credentials</th></tr></thead><tbody><tr><td>Google account</td><td>Personal Google sign-in in the browser</td></tr><tr><td>Gemini Enterprise</td><td>Browser sign-in, GCP project, and GCP location</td></tr><tr><td>Gemini API key</td><td>API key; choose Connect without a browser</td></tr><tr><td>Agent Platform / Vertex AI</td><td>API key, or GCP project and location with Application Default Credentials on the environment</td></tr></tbody></table></div>
+<p>The environment stores the Antigravity API key outside its settings file, and
+clients only see whether one is saved. The agent uses the method and credentials selected for this instance;
+ambient <code>GEMINI_API_KEY</code> and Google credential variables do not override them.
+Changing the method stops the instance&#39;s sessions. Sign out before replacing an
+account.</p>
+<h2 id="runtime-installation"><a class="anchor" href="#runtime-installation">Runtime installation</a></h2>
+<p>Managed installation supports Apple Silicon macOS, Linux x64 or ARM64, and Windows
+x64 or ARM64. Intel Macs can connect to a supported remote environment. Allow
+several GB of free disk space, especially on Linux.</p>
+<h3 id="use-a-manual-installation"><a class="anchor" href="#use-a-manual-installation">Use a manual installation</a></h3>
+<p>Download the archive for your environment from the <a href="https://github.com/agentclientprotocol/registry/blob/main/antigravity-acp/agent.json" target="_blank" rel="noopener noreferrer">official ACP Registry</a>.
+Extract the ACP executable and its <code>localharness_external</code> helper into the same
+directory, at the same version. Make both executable on macOS or Linux; Windows
+uses <code>.exe</code> files.</p>
+<p>Set <strong>Binary path</strong> to the ACP executable on the environment and update it yourself.
+Leave the field blank to use the managed runtime, or a compatible executable on
+<code>PATH</code> if no managed runtime is installed.</p>
+<h2 id="models-and-threads"><a class="anchor" href="#models-and-threads">Models and threads</a></h2>
+<p>The model list comes from your Antigravity account, including Claude and GPT models
+when your plan has them. Pick a thinking level beside the model list in the model picker; it
+shows only the levels the selected model supports. A resumed thread keeps its
+selected model. If access to that model ends, select another available model
+before continuing.</p>
+<p>Antigravity creates empty <code>.gemini/skills</code> and <code>.agents/skills</code> folders in the
+workspace when a session starts. Git does not track empty folders, so they never
+appear in commits.</p>
+<p>Use Antigravity&#39;s native <code>/plan</code> command for planning. Moonfold&#39;s separate Plan mode
+is unavailable. Tool approvals follow <a href="/docs/permission-modes/">Permission modes</a>.
+Questions with fixed choices still need one of the offered answers, even in
+<strong>Full access</strong>.</p>
+<p>Moonfold keeps conversation history and file diffs, but Antigravity cannot rewind
+its conversation. Reverting a thread or editing and resubmitting an earlier turn
+is unavailable. Continue with a follow-up message or start a new thread.</p>
+<p>Manual context compaction is unavailable through Antigravity&#39;s ACP runtime, even
+though its CLI has <code>/compact</code>. Send <code>/clear</code> when you need a fresh context.</p>
+<h3 id="skills-and-attachments"><a class="anchor" href="#skills-and-attachments">Skills and attachments</a></h3>
+<p>Put project skills in <code>.agents/skills</code>. Moonfold also reads <code>.gemini/skills</code> and the
+legacy <code>.agent/skills</code> directory. Among these project locations, the first copy
+wins in this order: <code>.gemini/skills</code>, <code>.agents/skills</code>, <code>.agent/skills</code>. See
+<a href="/docs/composer/#commands-and-skills">commands and skills</a> for invoking them.</p>
+<p>Skills for every project go in <code>~/.gemini/config/skills</code> or
+<code>~/.gemini/antigravity-cli/skills</code>. Antigravity does not read <code>~/.agents/skills</code>,
+so a skill there only appears when the project itself is your home directory.</p>
+<p>Antigravity receives images and audio directly, and reads PDFs and text files as
+documents. With the managed runtime on macOS and Linux, an MP4 video up to 20 MiB
+is sent as video to Gemini models. Other attachments, and videos for other models, are passed as a
+saved file path for the agent to inspect with its tools.</p>
+<h3 id="subagents"><a class="anchor" href="#subagents">Subagents</a></h3>
+<p>Antigravity groups subagent activity into batches. Open a batch and select
+<strong>Subagent work</strong> (<strong>Work</strong> on mobile) to read each child&#39;s role, prompt, and recent steps. This view
+is read only: you cannot message or control individual subagents, and an idle
+batch does not confirm that every child succeeded. If Antigravity did not record
+which children a batch started, the view says so. See
+<a href="/docs/thread-sidebar/#inspect-agent-work">agent work</a> for where to inspect
+activity.</p>
+<h2 id="accounts-and-removal"><a class="anchor" href="#accounts-and-removal">Accounts and removal</a></h2>
+<p>Add an Antigravity provider instance for each Google account in
+<strong>Settings &gt; Providers</strong> on web or desktop. Each has its own sign-in; downloaded
+runtimes are shared on the environment.</p>
+<div class="table-wrap"><table><thead><tr><th>Action</th><th>Effect</th></tr></thead><tbody><tr><td>Disable</td><td>Stops the instance&#39;s sessions and keeps its Google sign-in.</td></tr><tr><td>Sign out</td><td>Stops the instance&#39;s sessions and removes its saved Google login.</td></tr><tr><td>Remove downloaded runtime</td><td>Removes the shared installation and keeps Google credentials.</td></tr></tbody></table></div>
+<p>All three keep thread history and workspace files. Sending <code>/logout</code> by itself in
+a thread signs out its instance, including stopping that instance&#39;s other sessions.
+Sign out, then sign in again to replace an account.</p>
+<p>Before removing a managed runtime, disable its instances and cancel any active
+installation. Clear any explicit binary path pointing into that runtime. Removal
+is refused while the runtime is in use.</p>
+<h2 id="check-access-and-troubleshoot"><a class="anchor" href="#check-access-and-troubleshoot">Check access and troubleshoot</a></h2>
+<p>Open <strong>Usage &gt; Limits</strong> to see the remaining Gemini and shared Claude/GPT allowances
+for Google sign-ins. Each group has separate five-hour and weekly limits and reset
+times. Limits refresh with provider status and include usage outside Moonfold.</p>
+<p>A server restart keeps your Google sign-in. The provider shows the saved account
+until a session, a refresh, or a sign-out reports something new.</p>
+<p>To check access and reload models, use <strong>Refresh provider status</strong> in web or desktop
+provider settings. If asked to
+sign in again, use provider settings on web or desktop.</p>
+<p>If Google reports <code>SUBSCRIPTION_REQUIRED</code>, an account restriction, or a usage limit,
+follow the provider&#39;s message and any retry time. See <a href="https://antigravity.google/docs/plans" target="_blank" rel="noopener noreferrer">Google&#39;s account plans</a>
+for eligibility.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-antigravity.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/providers-opencode/"><small>Previous</small><span>OpenCode</span></a
-          ><a class="next" href="/docs/providers-pi/"><small>Next</small><span>Pi</span></a>
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#set-up-antigravity">Set up Antigravity</a></li>
-            <li><a href="#runtime-installation">Runtime installation</a></li>
-            <li><a href="#models-and-threads">Models and threads</a></li>
-            <li><a href="#accounts-and-removal">Accounts and removal</a></li>
-            <li><a href="#check-access-and-troubleshoot">Check access and troubleshoot</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-antigravity.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/providers-opencode/"><small>Previous</small><span>OpenCode</span></a><a class="next" href="/docs/providers-pi/"><small>Next</small><span>Pi</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#set-up-antigravity">Set up Antigravity</a></li><li><a href="#runtime-installation">Runtime installation</a></li><li><a href="#models-and-threads">Models and threads</a></li><li><a href="#accounts-and-removal">Accounts and removal</a></li><li><a href="#check-access-and-troubleshoot">Check access and troubleshoot</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>
