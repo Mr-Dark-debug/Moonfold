@@ -1,5 +1,30 @@
 # Progress
 
+## Beta 7: Windows upgrades, settings crashes, Stable/Beta switch (2026-11-13)
+
+Owner reports: Windows "Missing Shortcut … Moonfold (Beta).exe" after installing a newer build;
+some settings pages opened full-window and crashed; wanted a Stable/Beta choice in Settings.
+
+- Windows (D-77): electron-builder's running-app check uses a PowerShell `.Count` that 5.1 leaves
+  empty for one match, so a lone helper (agent-device, started from the app's .exe) survived and
+  the upgrade left only the uninstaller. Reproduced on this machine (one helper, beta 6 installer:
+  helper left running); the beta 7 installer closed it, installed, and the shortcut resolved.
+  `apps/desktop/resources/installer.nsh` adds `customCheckAppRunning`.
+- Settings: seven pages (Memories, Mobile app, Plugins, Handoff, Computer use, Personalization,
+  Prompt profiles) were routed outside `_chat`, opening full-window and crashing with "Settings
+  scope must be read inside SettingsScopeProvider" (reproduced). Moved under `_chat.settings.*`;
+  all 28 settings pages walked in a running client without errors; guard test added.
+- Tracks (D-76): Nightly (never published) became Beta = `-alpha`/`-beta` builds; Beta is
+  electron-updater's `beta` channel, Stable the latest GitHub release. Release notes carry
+  `<!-- moonfold:database-migration=N -->` so the switch's database check works without npm.
+  After the first stable release, betas publish as prereleases automatically. Not verified end to
+  end: no stable release exists, so Stable reports none.
+- Released https://github.com/Mr-Dark-debug/Moonfold/releases/tag/v1.0.0-beta.7 (Latest, run
+  43431812167, 26 assets match `SHA256SUMS`, Android 0.3.0-beta.1 attached); dry run 43425008183;
+  main CI 43428035993; REA in docs/REA-BETA7.md. Published beta 7 installed on the owner's machine.
+- Outreach: issues #32–#38 opened; Show HN posted (news.ycombinator.com/item?id=50483285).
+  Reddit is blocked for Claude in Chrome; approved posts are in `.plans/reddit-posts.md` to paste.
+
 ## Beta 6, Android updates and the default relay (2026-11-13)
 
 Owner asked for the Cloudflare relay to be set up through their Chrome, for the new features to
