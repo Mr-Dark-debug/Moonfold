@@ -29,4 +29,22 @@
     <string name="scan_camera_needed">Moonfold needs the camera only to scan the pairing code.</string>
     <string name="scan_allow_camera">Allow camera</string>
     <string name="no_browser">No app here can open that link.</string>
+
+    <string name="shortcut_check_updates">Check for updates</string>
+    <string name="update_title">Moonfold %1$s is ready</string>
+    <string name="update_body">This phone has %1$s. The update comes from Moonfold\'s releases on GitHub, and your computer stays paired.</string>
+    <string name="update_install">Update</string>
+    <string name="update_later">Later</string>
+    <string name="update_stop">Stop checking</string>
+    <string name="update_stopped">Moonfold will not check for updates. Long-press its icon and choose Check for updates to check again.</string>
+    <string name="update_none">Moonfold %1$s is the newest version.</string>
+    <string name="update_check_failed">Could not check for updates. Try again when this phone is online.</string>
+    <string name="update_downloading">Downloading Moonfold %1$s</string>
+    <string name="update_download_failed">The update did not download. Try again later.</string>
+    <string name="update_corrupt">The downloaded update was damaged, so it was not installed.</string>
+    <string name="update_wrong_signer">The update was not signed with Moonfold\'s key, so it was not installed.</string>
+    <string name="update_install_failed">Android did not install the update.</string>
+    <string name="update_permission_title">Allow Moonfold to update itself</string>
+    <string name="update_permission_body">Android asks once before an app may install updates. Turn on Allow from this source for Moonfold, then come back here and the update continues.</string>
+    <string name="update_permission_open">Open settings</string>
 </resources>
