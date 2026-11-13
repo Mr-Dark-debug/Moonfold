@@ -5,7 +5,7 @@ name: Release
 #
 # - Pushing a tag `vX.Y.Z` or `vX.Y.Z-beta.N` builds and publishes that version.
 #   Until 1.0, beta builds are Moonfold's public line, so they publish as full releases marked
-#   latest; only `-alpha.N` and `-rc.N` versions publish as GitHub prereleases.
+#   latest; only `-alpha.N` versions publish as GitHub prereleases. `-rc.N` is refused.
 # - Running it by hand builds a version without publishing unless `publish` is checked.
 # - Pushing a branch `release-dry-run/<version>` builds that version without publishing, which
 #   tests the pipeline before the workflow reaches main.
@@ -74,11 +74,17 @@ jobs:
             echo "Moonfold does not publish nightly, preview or PR channels: $version" >&2
             exit 1
           fi
+          # electron-updater moves alpha and beta installs on to newer betas and stable releases,
+          # but an install of any other prerelease (`-rc.N`) only ever sees that same label.
+          if [[ "$version" == *-* && ! "$version" =~ -(alpha|beta)\.[0-9]+$ ]]; then
+            echo "Testing builds are -alpha.N or -beta.N; other labels strand their installs: $version" >&2
+            exit 1
+          fi
           {
             echo "version=$version"
             echo "tag=v$version"
             echo "publish=$publish"
-            if [[ "$version" =~ -(alpha|rc)\. ]]; then
+            if [[ "$version" =~ -alpha\. ]]; then
               echo "is_prerelease=true"
             else
               echo "is_prerelease=false"

@@ -14,8 +14,8 @@ accounts; those upstream workflows were removed in Phase 1.
 3. Run the REA gate on the dry-run artifacts (docs/REA.md) and record it in `docs/REA-<tag>.md`.
 4. Tag and push: `git tag v0.1.0-beta.2 && git push origin v0.1.0-beta.2`. Until 1.0,
    `X.Y.Z-beta.N` and `X.Y.Z` publish as full releases marked latest, so the repository page
-   lists them; only `-alpha.N` and `-rc.N` versions publish as GitHub prereleases. Clients find
-   versions by listing releases, so this flag only changes how GitHub displays a release.
+   lists them; only `-alpha.N` versions publish as GitHub prereleases. Clients find versions by
+   listing releases, so this flag only changes how GitHub displays a release.
 
 The workflow can also be started by hand from the Actions tab with a version and a `publish`
 switch, once it is on `main`.
@@ -40,8 +40,11 @@ architecture as the WSL runtime, so the Linux job runs first.
 
 Desktop builds made in CI get an electron-builder `publish` entry for this repository
 (`GITHUB_REPOSITORY`), so installed apps update from these GitHub Releases. Local builds have no
-feed. A beta install (`-alpha.N`, `-beta.N`, `-rc.N`) accepts prereleases, so it moves to the next
-beta and then to the stable release; a stable install only sees stable releases.
+feed. An `-alpha.N` or `-beta.N` install accepts prereleases, so it moves to the next beta and
+then to the stable release; a stable install only sees stable releases. electron-updater treats
+any other label as its own channel: an `-rc.N` install would only ever be offered later `-rc.N`
+builds, and beta installs never see it. The workflow refuses those versions (1.0.0-rc.1 shipped
+before this rule and was replaced by 1.0.0-beta.6).
 
 Moonfold does not publish nightly or preview channels; the workflow refuses those versions.
 
@@ -69,6 +72,6 @@ open an unsigned build.
 
 ## Version scheme
 
-`X.Y.Z` for releases, `X.Y.Z-beta.N` (or `-alpha.N`, `-rc.N`) for testing builds.
+`X.Y.Z` for releases, `X.Y.Z-beta.N` (or `-alpha.N`) for testing builds. No `-rc.N`.
 `scripts/update-release-package-versions.ts` writes the version into every package before the
 build.
