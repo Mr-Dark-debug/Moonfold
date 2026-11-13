@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
-    "check": "node --check src/main.js && node scripts/check.mjs",
+    "check": "node --check src/main.js && node --check src/folders.js && node --check src/season.js && node --check src/seasonal.js && node scripts/check.mjs",
     "preview": "node scripts/serve.mjs --dist",
     "content": "node scripts/build-content.mjs"
   },

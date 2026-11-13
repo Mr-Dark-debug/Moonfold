@@ -11,6 +11,8 @@ for (const file of [
   "styles.css",
   "main.js",
   "folders.js",
+  "season.js",
+  "seasonal.js",
   "content.css",
   "content.js",
 ]) {
