@@ -21,6 +21,14 @@ npm run preview
 
 `src/` contains the page, stylesheet, and small interaction script. `public/` contains self-hosted assets. The build copies these into `dist/`. The source validator checks local assets, navigation and ARIA references, unique IDs, image dimensions, external link attributes, and deployment configuration. JavaScript syntax is checked by Node.
 
+## Seasonal overlay
+
+In the local winter or autumn the homepage dresses for the season: snow settles on the top edges of the cards, tiles, buttons and the hero hill, leaves drift down and pile up the same way. Moving the pointer across a pile brushes it away. With `prefers-reduced-motion` the scene renders already settled and still answers the brush.
+
+The mode is chosen automatically from the visitor's rough location and the live weather there (geojs.io, falling back to ipwho.is, then Open-Meteo), recalculated at most every 12 hours and cached for the week in `localStorage`; without a location answer the calendar alone decides. The snowflake button in the header cycles automatic → snow → leaves → off and remembers the choice, and `?season=snow|leaves|off|auto` forces a mode without storing anything.
+
+Two things must stay in sync when touching these files: `season.js` and `seasonal.js` belong in the copy list of `scripts/build.mjs`, and the CSP in `vercel.json` must keep `get.geojs.io`, `ipwho.is` and `api.open-meteo.com` allowed under `connect-src`, or the automatic choice silently degrades to the calendar.
+
 ## Docs and blog
 
 `/docs/` and `/blog/` are generated static pages, committed under `public/` so the Vercel build stays a plain copy.
