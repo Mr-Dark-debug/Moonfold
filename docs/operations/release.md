@@ -36,6 +36,24 @@ The CLI archives are what `scripts/install.sh` and `scripts/install.ps1` downloa
 archive against `SHA256SUMS`. Windows installers embed the Linux CLI archive of the same
 architecture as the WSL runtime, so the Linux job runs first.
 
+## Release content
+
+A release is not finished until its content is out:
+
+- **A demo video for each new feature.** Record the feature working in a real build against
+  real data, with no mock screens. Keep it short and readable. Attach it to the GitHub release and
+  embed it in the release post (`moonfold-website/public/assets/video/`, webm or mp4, a few MB).
+- **A blog post for every change.** Features get their own post. Fixes and small changes can share
+  the release post. Posts live in `moonfold-website/content/blog/`. See that folder's README for
+  the build and deploy steps.
+
+Separately, each week brings ten posts about problems people really hit with coding agents. Each
+one cites where the problem was reported and gives a fix that was tested. Moonfold comes up only
+where it really solves the problem. Never invent a problem to reach ten.
+
+Deploy the website from a clean checkout of `main`, not from a working folder that may hold
+uncommitted changes.
+
 ## Updates
 
 Desktop builds made in CI get an electron-builder `publish` entry for this repository
