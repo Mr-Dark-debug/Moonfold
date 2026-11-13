@@ -4,6 +4,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- In-app updates (D-73): the system still asks the owner before every install. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <uses-feature
         android:name="android.hardware.camera.any"
@@ -40,10 +42,17 @@
                     android:host="mobile-pair"
                     android:scheme="moonfold" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
         <activity
             android:name=".ScanActivity"
+            android:exported="false" />
+
+        <receiver
+            android:name=".UpdateStatusReceiver"
             android:exported="false" />
     </application>
 </manifest>

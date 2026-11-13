@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/moonfold_mark"
+        android:shortcutId="check_updates"
+        android:shortcutLongLabel="@string/shortcut_check_updates"
+        android:shortcutShortLabel="@string/shortcut_check_updates">
+        <intent
+            android:action="dev.moonfold.mobile.CHECK_UPDATES"
+            android:targetClass="dev.moonfold.mobile.MainActivity"
+            android:targetPackage="dev.moonfold.mobile" />
+    </shortcut>
+</shortcuts>

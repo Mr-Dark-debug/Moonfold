@@ -111,10 +111,11 @@ export const CiFixAttempts = Schema.Int.check(
 export type CiFixAttempts = typeof CiFixAttempts.Type;
 
 /**
- * The relay a release build uses when the user names none. Null until the project runs one
- * (docs/operations/anywhere-relay.md); the setting then asks for an address.
+ * The relay used when the user names none: the project's Cloudflare Worker
+ * (infra/anywhere-relay, docs/operations/anywhere-relay.md). Null makes the setting ask for one.
  */
-export const DEFAULT_ANYWHERE_RELAY_URL: string | null = null;
+export const DEFAULT_ANYWHERE_RELAY_URL: string | null =
+  "wss://moonfold-anywhere-relay.moonfold.workers.dev";
 export const AnywhereRelayUrl = TrimmedNonEmptyString.check(
   Schema.isMaxLength(512),
   Schema.isPattern(/^wss?:\/\/[^\s?#@]+$/i),

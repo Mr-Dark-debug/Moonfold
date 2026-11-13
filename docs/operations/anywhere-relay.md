@@ -13,15 +13,19 @@ npx wrangler@4 deploy
 ```
 
 The relay is then at `wss://moonfold-anywhere-relay.<account>.workers.dev`. A custom domain is
-optional. One Durable Object holds each room, and its WebSockets hibernate, so a computer that is
+optional. The project's own deployment, the default in release builds, is
+`wss://moonfold-anywhere-relay.moonfold.workers.dev` on the owner's account (subdomain `moonfold`).
+Wrangler only needs `account:read user:read workers:write workers_scripts:write`; log in with
+`wrangler login --scopes` and those four, and `wrangler logout` afterwards. One Durable Object holds each room, and its WebSockets hibernate, so a computer that is
 only waiting costs nothing; pings are answered without waking it.
 
 The free plan allows 100,000 requests and 13,000 GB-seconds of Durable Object time a day. An
 active stream keeps its room's object awake, about 28 object-hours a day in total across every user
 of the deployment. Past that, the Workers Paid plan applies.
 
-To make it the default for a release, set `DEFAULT_ANYWHERE_RELAY_URL` in
-`packages/contracts/src/settings.ts` to its address before building.
+The default for a build is `DEFAULT_ANYWHERE_RELAY_URL` in `packages/contracts/src/settings.ts`.
+Moving the deployment means changing it there and releasing; installs keep the old address until
+they update, so keep the old Worker running until then.
 
 ## On any machine with Node
 

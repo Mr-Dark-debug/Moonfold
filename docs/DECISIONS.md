@@ -635,3 +635,31 @@ have not run against a real provider: Codex is limited until 19 November and Cla
 signed in on the build machine. CLAUDE.md does not call such work done. So the release is
 `1.0.0-rc.1`, which GitHub lists as a prerelease, and `0.1.0-beta.5` stays Latest. Promoting to
 `1.0.0` is one tag on the same commit once those runs pass and a default relay is deployed.
+D-74 replaces the `-rc` label.
+
+## D-73 The Android app updates itself from GitHub releases
+
+Asked for by the owner on 2026-11-13. The app is not in a store, so it checks this repository's
+releases about once a day for the newest `Moonfold-Android-<version>.apk`, downloads it, and
+installs it only if its SHA-256 matches the digest GitHub reports for that asset and its signer is
+the installed app's own. Android's package installer still asks before replacing the app, and
+Android itself refuses a different signer. Only `api.github.com` and GitHub's download host are
+contacted, with no identifiers beyond the app version. The daily check can be stopped from the
+prompt and restarted from the launcher shortcut. No new dependency (OkHttp and `org.json` were
+already there).
+
+## D-74 Testing builds are -beta.N; -rc.N is retired
+
+electron-updater treats any prerelease label other than `alpha` and `beta` as its own channel: a
+beta install never sees an `-rc` release, and an `-rc` install never sees a beta or the stable
+release. 1.0.0-rc.1 therefore reached nobody through the updater. Its contents ship again as
+`1.0.0-beta.6`, which beta 5 installs pick up, and the release workflow now refuses any prerelease
+label other than `alpha` or `beta`.
+
+## D-75 The default Anywhere relay is the project's Cloudflare Worker
+
+Deployed on 2026-11-13 to the owner's Cloudflare account at
+`wss://moonfold-anywhere-relay.moonfold.workers.dev`, Workers free plan. The account's workers.dev
+subdomain was renamed from the owner's email name to `moonfold` (owner's choice) so no personal
+identifier ships in the app. A TLS session through it from a test phone to a test computer
+completed and the phone saw the computer's own certificate. Users can still enter their own relay.

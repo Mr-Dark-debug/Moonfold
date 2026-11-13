@@ -13,6 +13,7 @@ import android.net.http.SslError
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.CookieManager
@@ -38,6 +39,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import java.io.File
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -46,6 +48,8 @@ private const val CHECK_WHILE_WAITING_MS = 3_000L
 /** A single missed check can be the radio waking up, so one miss does not cover the host's UI. */
 private const val MISSES_BEFORE_WAITING = 2
 private const val THEME_SETTLE_MS = 400L
+/** Sent by the launcher shortcut; also turns automatic checks back on. */
+private const val ACTION_CHECK_UPDATES = "dev.moonfold.mobile.CHECK_UPDATES"
 /** A canvas normalises any CSS color, oklch() included, to the #rrggbb that Android can parse. */
 private const val READ_PAGE_BACKGROUND =
     "(() => { const context = document.createElement('canvas').getContext('2d');" +
@@ -75,6 +79,11 @@ class MainActivity : ComponentActivity() {
     private var resumed = false
     private var fileCallback: ValueCallback<Array<Uri>>? = null
     private var proxy: RelayProxy? = null
+    private lateinit var updater: Updater
+    private val updateWork = Executors.newSingleThreadExecutor()
+    private val updating = AtomicBoolean(false)
+    private var updateDialog: AlertDialog? = null
+    private var pendingApk: File? = null
 
     private val scheduledCheck = Runnable { checkHost() }
 
@@ -98,6 +107,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         store = PairingStore(this)
+        updater = Updater(this)
         root = findViewById(R.id.root)
         webContainer = findViewById(R.id.webContainer)
         status = findViewById(R.id.status)
@@ -130,13 +140,13 @@ class MainActivity : ComponentActivity() {
         })
 
         if (store.host == null) showWelcome() else showConnecting(store.host!!)
-        handleLink(intent)
+        handleIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        handleLink(intent)
+        handleIntent(intent)
     }
 
     override fun onResume() {
@@ -145,6 +155,12 @@ class MainActivity : ComponentActivity() {
         webView.onResume()
         store.host?.let(::startRelay)
         checkHost()
+        val waiting = pendingApk
+        if (waiting != null && packageManager.canRequestPackageInstalls()) {
+            installOrAskPermission(waiting)
+        } else if (waiting == null && updater.due(System.currentTimeMillis())) {
+            checkForUpdate(manual = false)
+        }
     }
 
     override fun onPause() {
@@ -160,7 +176,9 @@ class MainActivity : ComponentActivity() {
     override fun onDestroy() {
         main.removeCallbacksAndMessages(null)
         stopRelay()
+        updateDialog?.dismiss()
         background.shutdown()
+        updateWork.shutdown()
         webView.destroy()
         super.onDestroy()
     }
@@ -290,6 +308,116 @@ class MainActivity : ComponentActivity() {
             Toast.makeText(this, R.string.no_browser, Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun handleIntent(intent: Intent?) {
+        if (intent?.action == ACTION_CHECK_UPDATES) {
+            intent.action = null
+            updater.automatic = true
+            checkForUpdate(manual = true)
+        } else {
+            handleLink(intent)
+        }
+    }
+
+    private fun checkForUpdate(manual: Boolean) {
+        if (!updating.compareAndSet(false, true)) return
+        updateWork.execute {
+            val result = runCatching { updater.check(System.currentTimeMillis()) }
+            main.post {
+                updating.set(false)
+                if (isFinishing || isDestroyed) return@post
+                result.fold(
+                    onSuccess = { update ->
+                        if (update != null) offerUpdate(update)
+                        else if (manual) toast(getString(R.string.update_none, BuildConfig.VERSION_NAME))
+                    },
+                    onFailure = { if (manual) toast(getString(R.string.update_check_failed)) },
+                )
+            }
+        }
+    }
+
+    private fun offerUpdate(update: AvailableUpdate) {
+        updateDialog?.dismiss()
+        updateDialog = AlertDialog.Builder(this)
+            .setTitle(getString(R.string.update_title, update.version))
+            .setMessage(getString(R.string.update_body, BuildConfig.VERSION_NAME))
+            .setPositiveButton(R.string.update_install) { _, _ -> downloadUpdate(update) }
+            .setNegativeButton(R.string.update_later, null)
+            .setNeutralButton(R.string.update_stop) { _, _ ->
+                updater.automatic = false
+                toast(getString(R.string.update_stopped))
+            }
+            .show()
+    }
+
+    private fun downloadUpdate(update: AvailableUpdate) {
+        if (!updating.compareAndSet(false, true)) return
+        val bar = ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal).apply { max = 100 }
+        val padding = (24 * resources.displayMetrics.density).toInt()
+        val frame = android.widget.FrameLayout(this).apply {
+            setPadding(padding, padding / 2, padding, 0)
+            addView(bar)
+        }
+        updateDialog?.dismiss()
+        updateDialog = AlertDialog.Builder(this)
+            .setTitle(getString(R.string.update_downloading, update.version))
+            .setView(frame)
+            .setCancelable(false)
+            .show()
+        var shown = -1
+        updateWork.execute {
+            val outcome = runCatching {
+                updater.download(update) { done, total ->
+                    val percent = if (total > 0) (done * 100 / total).toInt() else 0
+                    if (percent != shown) {
+                        shown = percent
+                        main.post { bar.progress = percent }
+                    }
+                }
+            }
+            main.post {
+                updating.set(false)
+                updateDialog?.dismiss()
+                updateDialog = null
+                val failure = (outcome.exceptionOrNull() as? UpdateException)?.failure
+                when {
+                    outcome.isSuccess -> installOrAskPermission(outcome.getOrThrow())
+                    failure == UpdateFailure.WrongSigner -> toast(getString(R.string.update_wrong_signer))
+                    failure == UpdateFailure.Corrupt -> toast(getString(R.string.update_corrupt))
+                    else -> toast(getString(R.string.update_download_failed))
+                }
+            }
+        }
+    }
+
+    /**
+     * Android asks once whether Moonfold may install apps. Asked from inside an install session,
+     * that question drops the session, so it is asked first and the install resumes on return.
+     */
+    private fun installOrAskPermission(apk: File) {
+        if (packageManager.canRequestPackageInstalls()) {
+            pendingApk = null
+            updateWork.execute {
+                val installed = runCatching { updater.install(apk) }
+                if (installed.isFailure) main.post { toast(getString(R.string.update_install_failed)) }
+            }
+            return
+        }
+        pendingApk = apk
+        updateDialog = AlertDialog.Builder(this)
+            .setTitle(R.string.update_permission_title)
+            .setMessage(R.string.update_permission_body)
+            .setPositiveButton(R.string.update_permission_open) { _, _ ->
+                startActivity(
+                    Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:$packageName")),
+                )
+            }
+            .setNegativeButton(R.string.update_later) { _, _ -> pendingApk = null }
+            .show()
+    }
+
+    private fun toast(text: String) = Toast.makeText(this, text, Toast.LENGTH_LONG).show()
 
     /** A link can come from any page, so unlike a scan it pairs only after the owner agrees. */
     private fun handleLink(intent: Intent?) {
