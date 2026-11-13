@@ -5,6 +5,7 @@ import {
   cliReleaseIndexPageUrl,
   cliReleaseTagApiUrl,
   newestCliReleaseVersion,
+  releaseDatabaseMigration,
 } from "@moonfold/shared/cliRelease";
 import * as Effect from "effect/Effect";
 import * as Option from "effect/Option";
@@ -63,7 +64,13 @@ export function useCliReleasePublished(version: string | null): boolean {
 }
 
 const decodeReleaseIndex = Schema.decodeUnknownOption(
-  Schema.Array(Schema.Struct({ tag_name: Schema.String, draft: Schema.optional(Schema.Boolean) })),
+  Schema.Array(
+    Schema.Struct({
+      tag_name: Schema.String,
+      draft: Schema.optional(Schema.Boolean),
+      body: Schema.optional(Schema.NullOr(Schema.String)),
+    }),
+  ),
 );
 
 /** Newest-first pages to read before giving up on a track. */
@@ -71,9 +78,9 @@ const RELEASE_INDEX_PAGES = 3;
 
 /**
  * The newest Moonfold release on a desktop update track, from GitHub Releases (where servers and
- * desktop apps update from), or null when the track has none. GitHub releases carry no database
- * migration number, so `databaseMigration` is undefined and a track switch that would cross
- * databases stays blocked until the release can prove it is safe.
+ * desktop apps update from), or null when the track has none. Its database migration comes from
+ * the marker the release workflow stamps into the notes; a release without one leaves it
+ * undefined, and a switch that would cross databases stays blocked.
  */
 export const cliChannelReleaseAtom = Atom.family((channel: DesktopUpdateChannel) =>
   Atom.make(
@@ -86,7 +93,10 @@ export const cliChannelReleaseAtom = Atom.family((channel: DesktopUpdateChannel)
         );
         const releases = Option.getOrElse(decodeReleaseIndex(body), () => []);
         const version = newestCliReleaseVersion(releases, releaseChannel);
-        if (version !== undefined) return { version, databaseMigration: undefined };
+        if (version !== undefined) {
+          const notes = releases.find((release) => release.tag_name === `v${version}`)?.body;
+          return { version, databaseMigration: releaseDatabaseMigration(notes) };
+        }
         if (releases.length < 100) break;
       }
       return null;

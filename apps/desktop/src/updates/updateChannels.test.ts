@@ -1,10 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 
-import {
-  electronUpdaterChannelSettings,
-  isNightlyDesktopVersion,
-  isTestingReleaseVersion,
-} from "./updateChannels.ts";
+import { electronUpdaterChannelSettings, isNightlyDesktopVersion } from "./updateChannels.ts";
 
 describe("updateChannels", () => {
   it("keeps preview builds branded as nightly", () => {
@@ -12,27 +8,17 @@ describe("updateChannels", () => {
     expect(isNightlyDesktopVersion("0.0.41-nightly.20260911.7")).toBe(true);
   });
 
-  it("treats betas as testing releases", () => {
-    expect(isTestingReleaseVersion("0.1.0-beta.1")).toBe(true);
-    expect(isTestingReleaseVersion("0.2.0-rc.3")).toBe(true);
-    expect(isTestingReleaseVersion("0.1.0")).toBe(false);
-    expect(isTestingReleaseVersion("0.1.0-nightly.20261020.1")).toBe(false);
-  });
-
-  it("leaves electron-updater's channel unset for a beta on the latest channel", () => {
-    // An explicit "latest" makes electron-updater skip every -beta.N release on GitHub.
-    expect(electronUpdaterChannelSettings("latest", "0.1.0-beta.1")).toEqual({
-      channel: null,
+  it("maps Beta to electron-updater's beta channel and Stable to the latest release", () => {
+    // An unset or "latest" channel on a beta install makes electron-updater skip every -beta.N.
+    expect(electronUpdaterChannelSettings("nightly")).toEqual({
+      channel: "beta",
       allowPrerelease: true,
-      fullChangelog: false,
+      fullChangelog: true,
     });
-    expect(electronUpdaterChannelSettings("latest", "0.1.0")).toMatchObject({
+    expect(electronUpdaterChannelSettings("latest")).toEqual({
       channel: "latest",
       allowPrerelease: false,
-    });
-    expect(electronUpdaterChannelSettings("nightly", "0.1.0-beta.1")).toMatchObject({
-      channel: "nightly",
-      allowPrerelease: true,
+      fullChangelog: false,
     });
   });
 

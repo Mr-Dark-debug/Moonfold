@@ -329,7 +329,7 @@ function AboutVersionSection() {
           {...searchableSetting("update-track")}
           description={
             nightlyDeniedBy !== undefined ? (
-              `${managedUpdatesMessage(nightlyDeniedBy)} Nightly builds are not available${
+              `${managedUpdatesMessage(nightlyDeniedBy)} Beta builds are not available${
                 selectedUpdateChannel === "nightly"
                   ? "; switch to Stable to keep getting updates."
                   : "."
@@ -351,7 +351,7 @@ function AboutVersionSection() {
                 </Button>
               </>
             ) : (
-              "Switches this app and every connected machine whose database the target release supports."
+              "Stable gets tested releases; Beta gets new features first. Switching installs the newest build of that track and keeps your projects, threads and settings."
             )
           }
           managed={updatesDenial}
@@ -381,7 +381,7 @@ function AboutVersionSection() {
                   value="nightly"
                   disabled={nightlyDeniedBy !== undefined && selectedUpdateChannel !== "nightly"}
                 >
-                  Nightly
+                  Beta
                 </SelectItem>
               </SelectPopup>
             </Select>

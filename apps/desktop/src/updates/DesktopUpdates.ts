@@ -481,7 +481,7 @@ export const make = Effect.gen(function* () {
   const channelBlockedReason = (channel: DesktopUpdateChannel): Option.Option<string> =>
     channel === "nightly" && !policy.allowNightly
       ? Option.some(
-          `${policy.message ?? "Nightly updates are turned off on this machine."} Switch to the stable channel to keep getting updates.`,
+          `${policy.message ?? "Beta updates are turned off on this machine."} Switch to the stable channel to keep getting updates.`,
         )
       : Option.none();
 
@@ -515,9 +515,8 @@ export const make = Effect.gen(function* () {
     channel: DesktopUpdateChannel,
   ) {
     yield* Effect.annotateCurrentSpan({ channel });
-    const updaterSettings = electronUpdaterChannelSettings(channel, environment.appVersion);
-    if (updaterSettings.channel !== null)
-      yield* electronUpdater.setChannel(updaterSettings.channel);
+    const updaterSettings = electronUpdaterChannelSettings(channel);
+    yield* electronUpdater.setChannel(updaterSettings.channel);
     yield* electronUpdater.setAllowPrerelease(updaterSettings.allowPrerelease);
     // An older build can lack migrations this one ran. Only a guarded track switch's own check
     // may offer one.
@@ -525,7 +524,7 @@ export const make = Effect.gen(function* () {
     yield* electronUpdater.setFullChangelog(updaterSettings.fullChangelog);
     yield* logUpdaterInfo("using update channel", {
       channel,
-      updaterChannel: updaterSettings.channel ?? "from version",
+      updaterChannel: updaterSettings.channel,
       allowPrerelease: updaterSettings.allowPrerelease,
       fullChangelog: updaterSettings.fullChangelog,
     });
