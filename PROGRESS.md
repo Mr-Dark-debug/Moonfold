@@ -1,5 +1,34 @@
 # Progress
 
+## Beta 6, Android updates and the default relay (2026-11-13)
+
+Owner asked for the Cloudflare relay to be set up through their Chrome, for the new features to
+reach beta users, and for the Android app to update itself.
+
+- Relay (D-75): deployed `infra/anywhere-relay` to the owner's Cloudflare account with a Wrangler
+  login limited to four scopes, then logged out. The workers.dev subdomain was renamed from the
+  owner's email name to `moonfold` at their choice. Default is now
+  `wss://moonfold-anywhere-relay.moonfold.workers.dev`. Verified: a TLS session through it from a
+  test phone to a test computer, certificate unchanged; and the emulator, paired with a code that
+  named no direct address, loaded the full Moonfold UI from a production server build through it
+  (first load about 40 s on a cold start; later loads use the web view cache).
+- Beta line (D-74): electron-updater never offers an `-rc` release to a beta install, so 1.0.0-rc.1
+  reached nobody. The same features ship as 1.0.0-beta.6; the release workflow refuses labels other
+  than alpha and beta.
+- Android updates (D-73): 0.3.0-beta.1 checks GitHub releases daily, verifies the SHA-256 and
+  signer, and installs through the system installer; launcher shortcut **Check for updates**.
+  Verified on the API 36 emulator: a release-signed 0.1.9 found, downloaded and installed the
+  published 0.2.0-beta.1 after the one-time install permission (a bug where that permission
+  dropped the install was found and fixed); the manual check reports the newest version. Unit
+  tests 13/13.
+- Checks: fmt, lint, knip, typecheck (contracts, web), brand check; dry run 43415636966 green on all
+  targets; main CI 43418538944 green; REA gate in docs/REA-BETA6.md.
+- Released: https://github.com/Mr-Dark-debug/Moonfold/releases/tag/v1.0.0-beta.6 (marked Latest,
+  release run 43420113395), 26 desktop assets matching `SHA256SUMS`, Android 0.3.0-beta.1 attached
+  (`002970b4…2c6a6e`). The rc.1 release page now points rc.1 installs to beta 6.
+
+Not verified: a real phone on mobile data; the relay under several users at once.
+
 ## Road to 1.0 (started 2026-11-10)
 
 Branch `stable-1`, merged into `main`. Plans: docs/plans/stable-1.0.md (order and gate),
