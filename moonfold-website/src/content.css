@@ -385,6 +385,14 @@ summary:focus-visible {
   height: auto;
   border-radius: 12px;
 }
+.prose video {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 24px 0;
+  border-radius: 12px;
+  background: #070a1f;
+}
 
 /* ---- Docs ---- */
 .docs-home {

@@ -1,433 +1,162 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Codex · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Use your ChatGPT plan or an existing Codex CLI login to code in Moonfold."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-codex/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-codex/" />
-    <meta property="og:title" content="Codex · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Use your ChatGPT plan or an existing Codex CLI login to code in Moonfold."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/" aria-current="page">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
-        <h1 id="codex">Codex</h1>
-        <p>Use your ChatGPT plan or an existing Codex CLI login to code in Moonfold.</p>
-        <h2 id="connect-with-chatgpt">
-          <a class="anchor" href="#connect-with-chatgpt">Connect with ChatGPT</a>
-        </h2>
-        <p>
-          Connect during onboarding or in <strong>Settings → Providers</strong>. For a remote
-          machine, select that environment first. Moonfold handles Codex installation; sign in on
-          OpenAI and allow sharing of your ChatGPT plan.
-        </p>
-        <p>
-          Manage shared usage and credits in ChatGPT through <strong>Manage usage</strong> in
-          Moonfold. If a request uses a feature that ChatGPT sharing does not support, use another
-          provider for that request.
-        </p>
-        <p>
-          When reconnecting, choose the same account in Moonfold and on OpenAI&#39;s sign-in page.
-          Disconnecting stops running threads but keeps their history and lets you reconnect later.
-        </p>
-        <p>
-          If remote sign-in cannot return automatically, paste the full URL from the final localhost
-          page into the sign-in panel, even if that page could not load.
-        </p>
-        <h2 id="use-an-existing-codex-login">
-          <a class="anchor" href="#use-an-existing-codex-login">Use an existing Codex login</a>
-        </h2>
-        <p>
-          Moonfold can use your installed Codex and its existing login. Run
-          <code>codex login</code> on the environment&#39;s machine to sign in.
-          <a href="/docs/install/#providers">Provider setup</a> covers installation and custom
-          configuration.
-        </p>
-        <h2 id="use-multiple-accounts">
-          <a class="anchor" href="#use-multiple-accounts">Use multiple accounts</a>
-        </h2>
-        <p>
-          Add another ChatGPT account in <strong>Settings → Providers</strong>, then select the
-          account from the thread&#39;s model picker. Compatible accounts can continue the same
-          thread. Connecting accounts through Moonfold leaves your CLI login unchanged.
-        </p>
-        <h3 id="multiple-cli-logins">
-          <a class="anchor" href="#multiple-cli-logins">Multiple CLI logins</a>
-        </h3>
-        <p>
-          A shared Codex home with a shadow home lets work and personal accounts continue the same
-          threads. The accounts share Codex sessions and configuration while keeping their own login
-          and available models.
-        </p>
-        <p>
-          Keep your first account in <code>~/.codex</code>. On the environment&#39;s machine, sign
-          the second account into a fresh directory:
-        </p>
-        <pre><code class="language-bash">mkdir -p ~/.codex_personal
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Codex · Moonfold docs</title>
+<meta name="description" content="Use your ChatGPT plan or an existing Codex CLI login to code in Moonfold.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-codex/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-codex/">
+<meta property="og:title" content="Codex · Moonfold docs">
+<meta property="og:description" content="Use your ChatGPT plan or an existing Codex CLI login to code in Moonfold.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/" aria-current="page">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Providers</p>
+<h1 id="codex">Codex</h1>
+<p>Use your ChatGPT plan or an existing Codex CLI login to code in Moonfold.</p>
+<h2 id="connect-with-chatgpt"><a class="anchor" href="#connect-with-chatgpt">Connect with ChatGPT</a></h2>
+<p>Connect during onboarding or in <strong>Settings → Providers</strong>. For a remote machine,
+select that environment first. Moonfold handles Codex installation; sign in on
+OpenAI and allow sharing of your ChatGPT plan.</p>
+<p>Manage shared usage and credits in ChatGPT through <strong>Manage usage</strong> in Moonfold.
+If a request uses a feature that ChatGPT sharing does not support, use another
+provider for that request.</p>
+<p>When reconnecting, choose the same account in Moonfold and on OpenAI&#39;s sign-in
+page. Disconnecting stops running threads but keeps their history and lets you
+reconnect later.</p>
+<p>If remote sign-in cannot return automatically, paste the full URL from the final
+localhost page into the sign-in panel, even if that page could not load.</p>
+<h2 id="use-an-existing-codex-login"><a class="anchor" href="#use-an-existing-codex-login">Use an existing Codex login</a></h2>
+<p>Moonfold can use your installed Codex and its existing login. Run <code>codex login</code>
+on the environment&#39;s machine to sign in. <a href="/docs/install/#providers">Provider setup</a>
+covers installation and custom configuration.</p>
+<h2 id="use-multiple-accounts"><a class="anchor" href="#use-multiple-accounts">Use multiple accounts</a></h2>
+<p>Add another ChatGPT account in <strong>Settings → Providers</strong>, then select the account
+from the thread&#39;s model picker. Compatible accounts can continue the same thread.
+Connecting accounts through Moonfold leaves your CLI login unchanged.</p>
+<h3 id="multiple-cli-logins"><a class="anchor" href="#multiple-cli-logins">Multiple CLI logins</a></h3>
+<p>A shared Codex home with a shadow home lets work and personal accounts continue
+the same threads. The accounts share Codex sessions and configuration while keeping
+their own login and available models.</p>
+<p>Keep your first account in <code>~/.codex</code>. On the environment&#39;s machine, sign the
+second account into a fresh directory:</p>
+<pre><code class="language-bash">mkdir -p ~/.codex_personal
 CODEX_HOME=~/.codex_personal codex login
 </code></pre>
-        <p>Then add a second Codex instance in <strong>Settings &gt; Providers</strong>:</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Instance</th>
-                <th>CODEX_HOME path</th>
-                <th>Shadow home path</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Codex Work</td>
-                <td><code>~/.codex</code></td>
-                <td>Leave empty</td>
-              </tr>
-              <tr>
-                <td>Codex Personal</td>
-                <td><code>~/.codex</code></td>
-                <td><code>~/.codex_personal</code></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
-          Both instances must use the same <strong>CODEX_HOME path</strong>. Moonfold prepares the
-          shared state in the shadow directory; do not populate it by copying your whole Codex home.
-        </p>
-        <p>
-          The shadow account needs its own <code>auth.json</code> file. If Codex uses an OS
-          credential store, configure file storage for this setup. See
-          <a
-            href="https://learn.chatgpt.com/docs/auth#credential-storage"
-            target="_blank"
-            rel="noopener noreferrer"
-            >OpenAI&#39;s credential storage guide</a
-          >.
-        </p>
-        <p>
-          Use a completely separate <strong>CODEX_HOME path</strong>, with no shadow home, when you
-          want separate Codex sessions and configuration. That instance cannot continue threads from
-          the other home.
-        </p>
-        <h2 id="switch-accounts-in-an-existing-thread">
-          <a class="anchor" href="#switch-accounts-in-an-existing-thread"
-            >Switch accounts in an existing thread</a
-          >
-        </h2>
-        <p>
-          Choose the other account from the thread&#39;s model picker. Moonfold offers compatible
-          Codex instances that share the thread&#39;s <strong>CODEX_HOME path</strong>. Changing
-          accounts does not move the conversation into a separate Codex home.
-        </p>
-        <p>
-          If the account is missing from the picker, compare the home paths in provider settings. If
-          two instances show the same unexpected account or models, check their reported accounts,
-          refresh provider status, and confirm the second instance has its own shadow path and
-          login. A shadow-home conflict usually means the directory contains a copied Codex setup.
-          Use a fresh shadow directory and sign in again.
-        </p>
-        <h2 id="answer-questions-while-codex-works">
-          <a class="anchor" href="#answer-questions-while-codex-works"
-            >Answer questions while Codex works</a
-          >
-        </h2>
-        <p>
-          Codex can ask a question and keep working. Answer it in the thread&#39;s question panel.
-          The answer becomes a new message: it reaches the active turn, or starts another turn if
-          Codex has finished. Unanswered questions survive reconnects. If you do not want to answer,
-          dismiss the question from its panel. Dismissing closes it without sending anything to
-          Codex. This requires a Codex version that supports async questions.
-        </p>
-        <h2 id="approve-app-access">
-          <a class="anchor" href="#approve-app-access">Approve app access</a>
-        </h2>
-        <p>
-          Codex tools can request access to another app. Respond to the named app&#39;s request in
-          the thread on web or desktop. Some tools offer access for one request, the current
-          session, or permanently. See <a href="/docs/permission-modes/">Permission modes</a> for
-          command and file approvals.
-        </p>
-        <h2 id="review-changes"><a class="anchor" href="#review-changes">Review changes</a></h2>
-        <p>
-          Send <code>/review</code> to have Codex review your uncommitted changes. The review runs
-          in the thread, and the findings arrive as Codex&#39;s reply.
-        </p>
-        <ul>
-          <li>
-            <code>/review branch main</code> reviews everything on your branch against
-            <code>main</code>.
-          </li>
-          <li><code>/review commit &lt;sha&gt;</code> reviews one commit.</li>
-          <li>
-            <code>/review</code> followed by any other text reviews with those instructions, for
-            example <code>/review focus on error handling</code>.
-          </li>
-        </ul>
-        <p>
-          The diff panel has a review button on Codex threads. It puts the matching command for the
-          changes on screen into the composer, so you can add a focus before you send.
-        </p>
-        <h2 id="manage-codexs-mcp-servers-skills-and-hooks">
-          <a class="anchor" href="#manage-codexs-mcp-servers-skills-and-hooks"
-            >Manage Codex&#39;s MCP servers, skills and hooks</a
-          >
-        </h2>
-        <p>
-          Open <strong>Settings → Providers</strong>, select a Codex provider, and open the section
-          you need. Each one reads Codex&#39;s own configuration on the computer running that
-          environment, so it matches what Codex threads use.
-        </p>
-        <ul>
-          <li>
-            <strong>MCP servers</strong> lists every server with its tools and any startup error.
-            Select <strong>Sign in</strong> for a server that needs it; a remote session finishes
-            the sign-in in a browser on the computer running the environment. Select
-            <strong>Reload config</strong> after editing Codex&#39;s <code>config.toml</code>.
-          </li>
-          <li>
-            <strong>Skills</strong> lists the skills Codex can use. Turn one off to stop Codex
-            offering it, or select <strong>View</strong> to read its <code>SKILL.md</code>. Pick a
-            project to include that project&#39;s skills.
-          </li>
-          <li>
-            <strong>Hooks</strong> shows the commands Codex runs on its own events. Edit them in
-            Codex&#39;s configuration.
-          </li>
-          <li>
-            <strong>Import from other agents</strong> finds skills, MCP servers and recent sessions
-            from other coding agents on the computer and copies the ones you pick into Codex.
-          </li>
-          <li>
-            <strong>Account usage</strong> shows the tokens the signed-in account has used, as
-            OpenAI reports them.
-          </li>
-        </ul>
-        <h2 id="archived-threads">
-          <a class="anchor" href="#archived-threads">Archived threads</a>
-        </h2>
-        <p>
-          Archiving a Codex thread in Moonfold also archives it in Codex, so it leaves the thread
-          lists of the Codex CLI and other Codex apps too. Unarchiving it in Moonfold brings it back
-          in both.
-        </p>
-        <h2 id="codex-says-i-hit-a-usage-limit">
-          <a class="anchor" href="#codex-says-i-hit-a-usage-limit"
-            >Codex says I hit a usage limit</a
-          >
-        </h2>
-        <p>
-          When Codex stops on a usage limit, the thread names the window that ran out and when it
-          resets, when Codex reports them. Send the message again after the reset. On a workspace
-          plan the message also says whether your workspace owner needs to add credits or raise the
-          spend limit to continue sooner.
-        </p>
-        <h2 id="send-feedback-to-openai">
-          <a class="anchor" href="#send-feedback-to-openai">Send feedback to OpenAI</a>
-        </h2>
-        <p>
-          In an existing Codex thread, send <code>/feedback</code> with an optional description, for
-          example <code>/feedback The agent stopped before finishing the tests</code>. This uploads
-          the conversation and Codex logs to OpenAI. The returned thread ID can be shared with
-          OpenAI support.
-        </p>
+<p>Then add a second Codex instance in <strong>Settings &gt; Providers</strong>:</p>
+<div class="table-wrap"><table><thead><tr><th>Instance</th><th>CODEX_HOME path</th><th>Shadow home path</th></tr></thead><tbody><tr><td>Codex Work</td><td><code>~/.codex</code></td><td>Leave empty</td></tr><tr><td>Codex Personal</td><td><code>~/.codex</code></td><td><code>~/.codex_personal</code></td></tr></tbody></table></div>
+<p>Both instances must use the same <strong>CODEX_HOME path</strong>. Moonfold prepares the shared
+state in the shadow directory; do not populate it by copying your whole Codex
+home.</p>
+<p>The shadow account needs its own <code>auth.json</code> file. If Codex uses an OS credential
+store, configure file storage for this setup. See
+<a href="https://learn.chatgpt.com/docs/auth#credential-storage" target="_blank" rel="noopener noreferrer">OpenAI&#39;s credential storage guide</a>.</p>
+<p>Use a completely separate <strong>CODEX_HOME path</strong>, with no shadow home, when you want
+separate Codex sessions and configuration. That instance cannot continue threads
+from the other home.</p>
+<h2 id="switch-accounts-in-an-existing-thread"><a class="anchor" href="#switch-accounts-in-an-existing-thread">Switch accounts in an existing thread</a></h2>
+<p>Choose the other account from the thread&#39;s model picker. Moonfold offers compatible
+Codex instances that share the thread&#39;s <strong>CODEX_HOME path</strong>. Changing accounts does
+not move the conversation into a separate Codex home.</p>
+<p>If the account is missing from the picker, compare the home paths in provider
+settings. If two instances show the same unexpected account or models, check their
+reported accounts, refresh provider status, and confirm the second instance has
+its own shadow path and login. A shadow-home conflict usually means the directory
+contains a copied Codex setup. Use a fresh shadow directory and sign in again.</p>
+<h2 id="answer-questions-while-codex-works"><a class="anchor" href="#answer-questions-while-codex-works">Answer questions while Codex works</a></h2>
+<p>Codex can ask a question and keep working. Answer it in the thread&#39;s question
+panel. The answer becomes a new message: it reaches the active turn, or starts
+another turn if Codex has finished. Unanswered questions survive reconnects.
+If you do not want to answer, dismiss the question from its panel. Dismissing
+closes it without sending anything to Codex. This requires a Codex version that
+supports async questions.</p>
+<h2 id="approve-app-access"><a class="anchor" href="#approve-app-access">Approve app access</a></h2>
+<p>Codex tools can request access to another app. Respond to the named app&#39;s request
+in the thread on web or desktop. Some tools offer access for one request,
+the current session, or permanently. See <a href="/docs/permission-modes/">Permission modes</a>
+for command and file approvals.</p>
+<h2 id="review-changes"><a class="anchor" href="#review-changes">Review changes</a></h2>
+<p>Send <code>/review</code> to have Codex review your uncommitted changes. The review runs in the thread, and
+the findings arrive as Codex&#39;s reply.</p>
+<ul>
+<li><code>/review branch main</code> reviews everything on your branch against <code>main</code>.</li>
+<li><code>/review commit &lt;sha&gt;</code> reviews one commit.</li>
+<li><code>/review</code> followed by any other text reviews with those instructions, for example
+<code>/review focus on error handling</code>.</li>
+</ul>
+<p>The diff panel has a review button on Codex threads. It puts the matching command for the
+changes on screen into the composer, so you can add a focus before you send.</p>
+<h2 id="manage-codexs-mcp-servers-skills-and-hooks"><a class="anchor" href="#manage-codexs-mcp-servers-skills-and-hooks">Manage Codex&#39;s MCP servers, skills and hooks</a></h2>
+<p>Open <strong>Settings → Providers</strong>, select a Codex provider, and open the section you need. Each one
+reads Codex&#39;s own configuration on the computer running that environment, so it matches what Codex
+threads use.</p>
+<ul>
+<li><strong>MCP servers</strong> lists every server with its tools and any startup error. Select <strong>Sign in</strong> for a
+server that needs it; a remote session finishes the sign-in in a browser on the computer running
+the environment. Select <strong>Reload config</strong> after editing Codex&#39;s <code>config.toml</code>.</li>
+<li><strong>Skills</strong> lists the skills Codex can use. Turn one off to stop Codex offering it, or select
+<strong>View</strong> to read its <code>SKILL.md</code>. Pick a project to include that project&#39;s skills.</li>
+<li><strong>Hooks</strong> shows the commands Codex runs on its own events. Edit them in Codex&#39;s configuration.</li>
+<li><strong>Import from other agents</strong> finds skills, MCP servers and recent sessions from other coding
+agents on the computer and copies the ones you pick into Codex.</li>
+<li><strong>Account usage</strong> shows the tokens the signed-in account has used, as OpenAI reports them.</li>
+</ul>
+<h2 id="archived-threads"><a class="anchor" href="#archived-threads">Archived threads</a></h2>
+<p>Archiving a Codex thread in Moonfold also archives it in Codex, so it leaves the thread lists of the
+Codex CLI and other Codex apps too. Unarchiving it in Moonfold brings it back in both.</p>
+<h2 id="codex-says-i-hit-a-usage-limit"><a class="anchor" href="#codex-says-i-hit-a-usage-limit">Codex says I hit a usage limit</a></h2>
+<p>When Codex stops on a usage limit, the thread names the window that ran out and
+when it resets, when Codex reports them. Send the message again after the reset. On a workspace plan the
+message also says whether your workspace owner needs to add credits or raise the
+spend limit to continue sooner.</p>
+<h2 id="send-feedback-to-openai"><a class="anchor" href="#send-feedback-to-openai">Send feedback to OpenAI</a></h2>
+<p>In an existing Codex thread, send <code>/feedback</code> with an optional description, for
+example <code>/feedback The agent stopped before finishing the tests</code>. This uploads
+the conversation and Codex logs to OpenAI. The returned thread ID can be shared
+with OpenAI support.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-codex.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/agent-browsing/"><small>Previous</small><span>Agent browsing</span></a
-          ><a class="next" href="/docs/providers-claude/"><small>Next</small><span>Claude</span></a>
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#connect-with-chatgpt">Connect with ChatGPT</a></li>
-            <li><a href="#use-an-existing-codex-login">Use an existing Codex login</a></li>
-            <li><a href="#use-multiple-accounts">Use multiple accounts</a></li>
-            <li>
-              <a href="#switch-accounts-in-an-existing-thread"
-                >Switch accounts in an existing thread</a
-              >
-            </li>
-            <li>
-              <a href="#answer-questions-while-codex-works">Answer questions while Codex works</a>
-            </li>
-            <li><a href="#approve-app-access">Approve app access</a></li>
-            <li><a href="#review-changes">Review changes</a></li>
-            <li>
-              <a href="#manage-codexs-mcp-servers-skills-and-hooks"
-                >Manage Codex's MCP servers, skills and hooks</a
-              >
-            </li>
-            <li><a href="#archived-threads">Archived threads</a></li>
-            <li><a href="#codex-says-i-hit-a-usage-limit">Codex says I hit a usage limit</a></li>
-            <li><a href="#send-feedback-to-openai">Send feedback to OpenAI</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-codex.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/agent-browsing/"><small>Previous</small><span>Agent browsing</span></a><a class="next" href="/docs/providers-claude/"><small>Next</small><span>Claude</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#connect-with-chatgpt">Connect with ChatGPT</a></li><li><a href="#use-an-existing-codex-login">Use an existing Codex login</a></li><li><a href="#use-multiple-accounts">Use multiple accounts</a></li><li><a href="#switch-accounts-in-an-existing-thread">Switch accounts in an existing thread</a></li><li><a href="#answer-questions-while-codex-works">Answer questions while Codex works</a></li><li><a href="#approve-app-access">Approve app access</a></li><li><a href="#review-changes">Review changes</a></li><li><a href="#manage-codexs-mcp-servers-skills-and-hooks">Manage Codex's MCP servers, skills and hooks</a></li><li><a href="#archived-threads">Archived threads</a></li><li><a href="#codex-says-i-hit-a-usage-limit">Codex says I hit a usage limit</a></li><li><a href="#send-feedback-to-openai">Send feedback to OpenAI</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

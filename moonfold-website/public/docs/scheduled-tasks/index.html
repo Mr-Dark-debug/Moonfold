@@ -1,319 +1,116 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Scheduled tasks · Moonfold docs</title>
-    <meta
-      name="description"
-      content="A scheduled task sends a prompt to an agent on a schedule. Create and edit tasks in Settings → Scheduled tasks; agents can also create them for you through Moonfold's tools. Each run starts a new thre"
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/scheduled-tasks/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/scheduled-tasks/" />
-    <meta property="og:title" content="Scheduled tasks · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="A scheduled task sends a prompt to an agent on a schedule. Create and edit tasks in Settings → Scheduled tasks; agents can also create them for you through Moonfold's tools. Each run starts a new thre"
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/" aria-current="page">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs">
-          <a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents
-        </p>
-        <h1 id="scheduled-tasks">Scheduled tasks</h1>
-        <p>
-          A scheduled task sends a prompt to an agent on a schedule. Create and edit tasks in
-          <strong>Settings → Scheduled tasks</strong>; agents can also create them for you through
-          Moonfold&#39;s tools. Each run starts a new thread in the task&#39;s project, or continues
-          the thread the task is bound to.
-        </p>
-        <h2 id="keep-a-thread-going">
-          <a class="anchor" href="#keep-a-thread-going">Keep a thread going</a>
-        </h2>
-        <p>
-          <strong>Run in</strong> chooses where each run happens: a new thread every time, or one of
-          the project&#39;s threads, which then receives the prompt on every run, queued behind any
-          work already going on. To set one up from a thread, choose
-          <strong>Schedule a follow-up…</strong> from its menu.
-        </p>
-        <p>
-          <strong>Use the pull request fix template</strong> starts a task that checks a
-          thread&#39;s pull request every hour and fixes failing checks or open review comments in
-          that thread&#39;s worktree; choose the pull request&#39;s thread under
-          <strong>Run in</strong>. It never touches the project&#39;s main checkout.
-        </p>
-        <p>
-          <strong>Add a skill</strong> under the prompt inserts a <code>$skill</code> mention for
-          the chosen model&#39;s provider, so each run uses that skill.
-        </p>
-        <h2 id="schedule-a-message">
-          <a class="anchor" href="#schedule-a-message">Schedule a message</a>
-        </h2>
-        <p>
-          To send a message later instead of now, right-click <strong>Send</strong> (or press and
-          hold it on a touch screen) and choose a date and time, or type
-          <code>/timed</code> followed by the time and the message, for example
-          <code>/timed tomorrow 9am run the tests</code> or <code>/timed in 2h continue</code>.
-          <code>/timed</code> understands <code>in 30m</code>, <code>in 2 hours</code>,
-          <code>at 9pm</code>, <code>14:30</code>, and <code>today</code> or
-          <code>tomorrow</code> before a time.
-        </p>
-        <p>
-          The message goes to the same thread with the agent and model you pick, survives a restart,
-          and waits behind any work still running. A banner above the composer shows what is
-          waiting, with <strong>Send now</strong> and <strong>Cancel</strong>. When an agent stops
-          at its usage limit, the limit notice offers <strong>Schedule a message for reset</strong>.
-          Scheduled messages carry text only, so attachments stay in the composer.
-        </p>
-        <h2 id="choose-when-a-task-runs">
-          <a class="anchor" href="#choose-when-a-task-runs">Choose when a task runs</a>
-        </h2>
-        <ul>
-          <li>
-            <strong>At a time</strong> runs at a time of day on the weekdays you pick, in the
-            server&#39;s time zone.
-          </li>
-          <li>
-            <strong>Once</strong> runs a single time at a date and time. If Moonfold was not running
-            then, the task is marked as missed instead of running late.
-          </li>
-          <li>
-            <strong>Repeat</strong> follows a schedule you pick from presets (every hour, every day,
-            weekdays, Mondays, the first of the month) or write as a cron expression: minute, hour,
-            day of month, month and day of week, for example <code>30 8 * * 1-5</code> for 08:30 on
-            weekdays. The form names the next few runs as you type. Add <strong>Until</strong> to
-            stop after a last day.
-          </li>
-          <li><strong>Every interval</strong> runs every so many minutes (at least one).</li>
-          <li>
-            <strong>On webhook</strong> runs when another service calls the task&#39;s URL; see
-            <a href="/docs/project-settings/#webhook-automations">Webhook automations</a>.
-          </li>
-        </ul>
-        <p>
-          <strong>Once</strong> and <strong>Repeat</strong> read their times in the task&#39;s own
-          time zone (your browser&#39;s when you create the task), so a task keeps its local time
-          even when the server runs elsewhere. Use an IANA name such as
-          <code>Europe/Berlin</code> or <code>Asia/Kolkata</code>.
-        </p>
-        <p>
-          A run that is more than ten minutes late, for example because the computer was asleep, is
-          skipped and the task waits for its next time. Interval tasks catch up with a single run
-          instead.
-        </p>
-        <h2 id="see-what-each-run-did">
-          <a class="anchor" href="#see-what-each-run-did">See what each run did</a>
-        </h2>
-        <p>
-          Choose <strong>Run history</strong> from a task&#39;s menu. Each run shows what started it
-          (its schedule, <strong>Run now</strong>, or a webhook), whether the agent&#39;s turn
-          succeeded, failed or was cancelled, and a link to its thread. A run whose prompt could not
-          be sent shows why. The last 100 runs are kept.
-        </p>
-        <h2 id="choose-when-you-hear-about-runs">
-          <a class="anchor" href="#choose-when-you-hear-about-runs"
-            >Choose when you hear about runs</a
-          >
-        </h2>
-        <p>
-          <strong>Notify me</strong> in the task form decides which runs notify you when their agent
-          finishes: after every run, only when a run fails, or never. Requests for input or approval
-          always notify, since the agent waits for them. Notifications appear on devices where
-          Moonfold is open, following your notification settings.
-        </p>
-        <h2 id="keep-tasks-running-with-the-window-closed">
-          <a class="anchor" href="#keep-tasks-running-with-the-window-closed"
-            >Keep tasks running with the window closed</a
-          >
-        </h2>
-        <p>
-          Tasks run while the Moonfold server runs. On macOS the desktop app keeps running after you
-          close its windows. On Windows and Linux, turn on
-          <strong>Settings → General → Keep running in the background</strong>: closing the last
-          window then leaves Moonfold in the system tray, and its menu opens a window again or
-          quits. You can also run the server as a
-          <a href="/docs/background-service/">background service</a> on Linux and macOS.
-        </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Scheduled tasks · Moonfold docs</title>
+<meta name="description" content="A scheduled task sends a prompt to an agent on a schedule. Create and edit tasks in Settings → Scheduled tasks; agents can also create them for you through Moonfold's tools. Each run starts a new thre">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/scheduled-tasks/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/scheduled-tasks/">
+<meta property="og:title" content="Scheduled tasks · Moonfold docs">
+<meta property="og:description" content="A scheduled task sends a prompt to an agent on a schedule. Create and edit tasks in Settings → Scheduled tasks; agents can also create them for you through Moonfold's tools. Each run starts a new thre">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/" aria-current="page">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents</p>
+<h1 id="scheduled-tasks">Scheduled tasks</h1>
+<p>A scheduled task sends a prompt to an agent on a schedule. Create and edit tasks in
+<strong>Settings → Scheduled tasks</strong>; agents can also create them for you through Moonfold&#39;s tools.
+Each run starts a new thread in the task&#39;s project, or continues the thread the task is bound to.</p>
+<h2 id="keep-a-thread-going"><a class="anchor" href="#keep-a-thread-going">Keep a thread going</a></h2>
+<p><strong>Run in</strong> chooses where each run happens: a new thread every time, or one of the project&#39;s
+threads, which then receives the prompt on every run, queued behind any work already going on.
+To set one up from a thread, choose <strong>Schedule a follow-up…</strong> from its menu.</p>
+<p><strong>Use the pull request fix template</strong> starts a task that checks a thread&#39;s pull request every
+hour and fixes failing checks or open review comments in that thread&#39;s worktree; choose the pull
+request&#39;s thread under <strong>Run in</strong>. It never touches the project&#39;s main checkout.</p>
+<p><strong>Add a skill</strong> under the prompt inserts a <code>$skill</code> mention for the chosen model&#39;s provider, so
+each run uses that skill.</p>
+<h2 id="schedule-a-message"><a class="anchor" href="#schedule-a-message">Schedule a message</a></h2>
+<p>To send a message later instead of now, right-click <strong>Send</strong> (or press and hold it on a touch
+screen) and choose a date and time, or type <code>/timed</code> followed by the time and the message, for
+example <code>/timed tomorrow 9am run the tests</code> or <code>/timed in 2h continue</code>. <code>/timed</code> understands
+<code>in 30m</code>, <code>in 2 hours</code>, <code>at 9pm</code>, <code>14:30</code>, and <code>today</code> or <code>tomorrow</code> before a time.</p>
+<p>The message goes to the same thread with the agent and model you pick, survives a restart, and
+waits behind any work still running. A banner above the composer shows what is waiting, with
+<strong>Send now</strong> and <strong>Cancel</strong>. When an agent stops at its usage limit, the limit notice offers
+<strong>Schedule a message for reset</strong>. Scheduled messages carry text only, so attachments stay in the
+composer.</p>
+<h2 id="choose-when-a-task-runs"><a class="anchor" href="#choose-when-a-task-runs">Choose when a task runs</a></h2>
+<ul>
+<li><strong>At a time</strong> runs at a time of day on the weekdays you pick, in the server&#39;s time zone.</li>
+<li><strong>Once</strong> runs a single time at a date and time. If Moonfold was not running then, the task is
+marked as missed instead of running late.</li>
+<li><strong>Repeat</strong> follows a schedule you pick from presets (every hour, every day, weekdays, Mondays,
+the first of the month) or write as a cron expression: minute, hour, day of month, month and
+day of week, for example <code>30 8 * * 1-5</code> for 08:30 on weekdays. The form names the next few runs
+as you type. Add <strong>Until</strong> to stop after a last day.</li>
+<li><strong>Every interval</strong> runs every so many minutes (at least one).</li>
+<li><strong>On webhook</strong> runs when another service calls the task&#39;s URL; see
+<a href="/docs/project-settings/#webhook-automations">Webhook automations</a>.</li>
+</ul>
+<p><strong>Once</strong> and <strong>Repeat</strong> read their times in the task&#39;s own time zone (your browser&#39;s when you
+create the task), so a task keeps its local time even when the server runs elsewhere. Use an IANA
+name such as <code>Europe/Berlin</code> or <code>Asia/Kolkata</code>.</p>
+<p>A run that is more than ten minutes late, for example because the computer was asleep, is skipped
+and the task waits for its next time. Interval tasks catch up with a single run instead.</p>
+<h2 id="see-what-each-run-did"><a class="anchor" href="#see-what-each-run-did">See what each run did</a></h2>
+<p>Choose <strong>Run history</strong> from a task&#39;s menu. Each run shows what started it (its schedule, <strong>Run
+now</strong>, or a webhook), whether the agent&#39;s turn succeeded, failed or was cancelled, and a link to
+its thread. A run whose prompt could not be sent shows why. The last 100 runs are kept.</p>
+<h2 id="choose-when-you-hear-about-runs"><a class="anchor" href="#choose-when-you-hear-about-runs">Choose when you hear about runs</a></h2>
+<p><strong>Notify me</strong> in the task form decides which runs notify you when their agent finishes: after
+every run, only when a run fails, or never. Requests for input or approval always notify, since
+the agent waits for them. Notifications appear on devices where Moonfold is open, following your
+notification settings.</p>
+<h2 id="keep-tasks-running-with-the-window-closed"><a class="anchor" href="#keep-tasks-running-with-the-window-closed">Keep tasks running with the window closed</a></h2>
+<p>Tasks run while the Moonfold server runs. On macOS the desktop app keeps running after you close
+its windows. On Windows and Linux, turn on <strong>Settings → General → Keep running in the
+background</strong>: closing the last window then leaves Moonfold in the system tray, and its menu opens
+a window again or quits. You can also run the server as a
+<a href="/docs/background-service/">background service</a> on Linux and macOS.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/scheduled-tasks.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/usage/"><small>Previous</small><span>Usage and limits</span></a
-          ><a class="next" href="/docs/memories/"><small>Next</small><span>Memories</span></a>
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#keep-a-thread-going">Keep a thread going</a></li>
-            <li><a href="#schedule-a-message">Schedule a message</a></li>
-            <li><a href="#choose-when-a-task-runs">Choose when a task runs</a></li>
-            <li><a href="#see-what-each-run-did">See what each run did</a></li>
-            <li><a href="#choose-when-you-hear-about-runs">Choose when you hear about runs</a></li>
-            <li>
-              <a href="#keep-tasks-running-with-the-window-closed"
-                >Keep tasks running with the window closed</a
-              >
-            </li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/scheduled-tasks.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/usage/"><small>Previous</small><span>Usage and limits</span></a><a class="next" href="/docs/memories/"><small>Next</small><span>Memories</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#keep-a-thread-going">Keep a thread going</a></li><li><a href="#schedule-a-message">Schedule a message</a></li><li><a href="#choose-when-a-task-runs">Choose when a task runs</a></li><li><a href="#see-what-each-run-did">See what each run did</a></li><li><a href="#choose-when-you-hear-about-runs">Choose when you hear about runs</a></li><li><a href="#keep-tasks-running-with-the-window-closed">Keep tasks running with the window closed</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Managed policy · Moonfold docs</title>
+<meta name="description" content="A managed policy lets an administrator configure Moonfold for every user on a machine. It sets defaults and locks for settings, and limits such as the broadest permission mode or which providers may r">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/managed-policy/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/managed-policy/">
+<meta property="og:title" content="Managed policy · Moonfold docs">
+<meta property="og:description" content="A managed policy lets an administrator configure Moonfold for every user on a machine. It sets defaults and locks for settings, and limits such as the broadest permission mode or which providers may r">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/" aria-current="page">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
+<h1 id="managed-policy">Managed policy</h1>
+<p>A managed policy lets an administrator configure Moonfold for every user on a machine. It sets
+defaults and locks for settings, and limits such as the broadest permission mode or which
+providers may run. The Moonfold server on the machine enforces it for every app that connects:
+the desktop app, a browser, or the mobile app.</p>
+<h2 id="roll-out-a-policy"><a class="anchor" href="#roll-out-a-policy">Roll out a policy</a></h2>
+<ol>
+<li>Write the policy as JSON, starting from the <a href="#write-a-policy">example</a>.</li>
+<li>Run <code>moonfold policy check policy.json</code>. It prints what the policy will do, or what is wrong with it.</li>
+<li>Deploy the policy to each machine with your device management tool, in
+<a href="#where-the-policy-goes">one of the supported places</a>.</li>
+<li>Restart Moonfold on the machine. The server reads the policy only when it starts.</li>
+<li>Run <code>moonfold policy show</code> on the machine to
+<a href="#check-what-the-server-loaded">check what the server loaded</a>.</li>
+</ol>
+<p>The desktop app includes the <code>moonfold</code> command; see <a href="/docs/install/#the-moonfold-command">The <code>moonfold</code> command</a>.</p>
+<h2 id="write-a-policy"><a class="anchor" href="#write-a-policy">Write a policy</a></h2>
+<pre><code class="language-json">{
+  &quot;schemaVersion&quot;: 1,
+  &quot;organization&quot;: &quot;Example Corp&quot;,
+  &quot;supportUrl&quot;: &quot;https://it.example.com/moonfold&quot;,
+  &quot;settings&quot;: {
+    &quot;defaultRuntimeMode&quot;: { &quot;value&quot;: &quot;approval-required&quot;, &quot;locked&quot;: false },
+    &quot;enableAgentBrowserAccess&quot;: { &quot;value&quot;: false, &quot;locked&quot;: true }
+  },
+  &quot;limits&quot;: {
+    &quot;maxRuntimeMode&quot;: &quot;auto-accept-edits&quot;,
+    &quot;clients&quot;: [&quot;desktop&quot;, &quot;local-browser&quot;],
+    &quot;telemetry&quot;: false
+  }
+}
+</code></pre>
+<p><code>schemaVersion</code> and <code>organization</code> are required. Users see the organization&#39;s name in Settings
+and beside each control the policy locks, with a link to <code>supportUrl</code> if you set one. <a href="#settings"><code>settings</code></a>
+sets defaults and locks, and <a href="#limits"><code>limits</code></a> restricts what Moonfold may do.</p>
+<p>Every user on the machine can read the policy, so do not put credentials in it.</p>
+<h2 id="where-the-policy-goes"><a class="anchor" href="#where-the-policy-goes">Where the policy goes</a></h2>
+<p>Use one of these per machine:</p>
+<div class="table-wrap"><table><thead><tr><th>OS</th><th>Native policy</th><th>Policy file</th></tr></thead><tbody><tr><td>macOS</td><td>Configuration profile for <code>dev.moonfold.app</code></td><td><code>/Library/Application Support/Moonfold/policy.json</code></td></tr><tr><td>Windows</td><td>Group Policy template, or a <code>Policy</code> JSON value (both under <code>HKLM\SOFTWARE\Policies\Moonfold\Moonfold</code>)</td><td><code>C:\Program Files\Moonfold\policy.json</code></td></tr><tr><td>Linux</td><td></td><td><code>/etc/moonfold/policy.json</code></td></tr></tbody></table></div>
+<p>Moonfold does not merge sources. If a machine has both a native policy and a policy file, Moonfold
+refuses to start until you remove one.</p>
+<p><strong>Policy file.</strong> Copy the JSON to the path for the OS. Make it and its folder writable only by
+administrators.</p>
+<p><strong>macOS configuration profile.</strong> Add a custom settings payload for the preference domain
+<code>dev.moonfold.app</code>. The payload&#39;s keys are the policy&#39;s top-level keys (<code>schemaVersion</code>,
+<code>organization</code>, <code>supportUrl</code>, <code>settings</code>, <code>limits</code>); JSON objects become dictionaries and lists
+become arrays. To make the payload from a policy file you checked, run
+<code>plutil -convert xml1 -o dev.moonfold.app.plist policy.json</code> and upload the result, or run
+<code>moonfold policy templates &lt;directory&gt; --policy policy.json</code> to write a complete
+<code>macos/moonfold.mobileconfig</code>. Install it as
+a device profile, since Moonfold ignores user profiles, and deploy only one profile for this domain.
+A profile cannot hold <code>null</code>, so use a policy file if a setting&#39;s value must be <code>null</code>.</p>
+<p><strong>Windows Group Policy.</strong> Run <code>moonfold policy templates &lt;directory&gt;</code> and copy
+<code>windows/moonfold.admx</code> and <code>windows/en-US/moonfold.adml</code> into your <code>PolicyDefinitions</code> folder or
+central store, or import them into Intune. The policies appear under Computer Configuration &gt;
+Administrative Templates &gt; Moonfold. Set <strong>Organization</strong> whenever you set any other Moonfold policy.
+Locks and provider fields go in the two JSON policies, as the same objects a policy file would hold.
+Machines pick up a change at the next Group Policy refresh; run <code>gpupdate /target:computer /force</code>
+to apply it now, then restart Moonfold.
+Setting <strong>Allow Moonfold Connect</strong>, <strong>Allow webhook tasks</strong>, <strong>Allow importing browser cookies</strong>, or
+<strong>Allow usage data</strong> to <strong>Disabled</strong> turns that feature off. Setting any other Moonfold policy to
+<strong>Disabled</strong> restricts nothing, the same as <strong>Not Configured</strong>.</p>
+<p><strong>Windows registry value.</strong> Instead of the template, set the <code>Policy</code> value (<code>REG_SZ</code>) to the whole policy as one line of JSON,
+from Group Policy Preferences or an Intune script. Moonfold reads it through the Windows registry
+API, so it works where registry tools such as <code>reg.exe</code> are blocked for users. Use one or the other:
+Moonfold refuses to start when the key holds both a <code>Policy</code> value and the template&#39;s settings. In
+PowerShell, as an administrator:</p>
+<pre><code class="language-powershell">$json = (Get-Content -Raw -Encoding UTF8 policy.json) -replace &#39;\r?\n\s*&#39;, &#39;&#39;
+New-Item -Path HKLM:\SOFTWARE\Policies\Moonfold\Moonfold -Force | Out-Null
+Set-ItemProperty -Path HKLM:\SOFTWARE\Policies\Moonfold\Moonfold -Name Policy -Value $json -Type String
+</code></pre>
+<h2 id="check-what-the-server-loaded"><a class="anchor" href="#check-what-the-server-loaded">Check what the server loaded</a></h2>
+<p>Run <code>moonfold policy show</code> as the user who runs Moonfold. It prints the installed policy and its
+fingerprint, then says whether the running server loaded that policy or an older one. The server
+reads the policy only when it starts, so &quot;Restart Moonfold to apply the installed policy&quot; means it
+still enforces the old one. In Settings, users see that your organization manages the environment,
+and each locked control shows <strong>Managed by</strong>.</p>
+<h2 id="change-or-remove-a-policy"><a class="anchor" href="#change-or-remove-a-policy">Change or remove a policy</a></h2>
+<p>After you deploy, change, or remove a policy, restart the Moonfold server on the machine: quit and
+reopen the desktop app, or run <code>moonfold service restart</code> for the
+<a href="/docs/background-service/">background service</a>. Reconnecting a phone or browser does not reload the
+policy.</p>
+<p>To remove a policy, delete the file, remove the profile, set the Group Policy settings to
+<strong>Not Configured</strong>, or delete the registry value, then restart
+the server. Users get back the settings they had chosen, since Moonfold never writes policy values
+into them.</p>
+<h2 id="when-moonfold-refuses-to-start"><a class="anchor" href="#when-moonfold-refuses-to-start">When Moonfold refuses to start</a></h2>
+<p>Moonfold refuses to start rather than run with a policy it cannot fully enforce. That includes a
+policy it cannot read or parse, a setting it does not know, a value of the wrong type, a key this
+version does not support, or a machine with both a native policy and a file. The error names where
+the policy came from and what is wrong.</p>
+<p><code>moonfold policy check</code> catches the same problems in a JSON file. For a profile or registry value, check
+the JSON before you convert it. For the Group Policy template, check a complete policy file that
+holds the same settings, then paste its <code>settings</code> and <code>limits.providers.instances</code> objects into the
+two JSON policies. A policy written for a newer version can use keys an older one
+cannot enforce, so upgrade Moonfold before you deploy a policy that uses them.</p>
+<h2 id="settings"><a class="anchor" href="#settings">Settings</a></h2>
+<p>Each key under <code>settings</code> is a setting&#39;s path in the server&#39;s <code>settings.json</code>, such as
+<code>storageCleanup.logsAfterDays</code>. To find a path, change the setting in Moonfold and look in
+<code>settings.json</code> under <code>~/.moonfold/userdata</code>.</p>
+<ul>
+<li><code>&quot;locked&quot;: false</code> sets a default. It applies wherever the user has not chosen a value of their
+own, and users can change it.</li>
+<li><code>&quot;locked&quot;: true</code> sets the value. Users and agents cannot change it, in Settings or in a project&#39;s
+settings, and Settings shows the control as managed by your organization. Removing the policy
+brings back the user&#39;s own value.</li>
+</ul>
+<p>A few settings need care:</p>
+<ul>
+<li>A default cannot add an entry, such as a provider instance, because users could never remove it.
+Lock the entry instead, or set provider fields with <a href="#providers"><code>providers.instances</code></a>.</li>
+<li>A setting that can be empty, such as <code>defaultModelSelection</code>, is managed as a whole. You cannot
+manage one field inside it.</li>
+<li><code>defaultRuntimeMode</code> cannot be broader than <a href="#permission-modes"><code>maxRuntimeMode</code></a>.</li>
+<li><code>worktreeCleanup</code>, which projects can also set, overrides the <code>worktree</code> rules in
+<code>storageCleanup</code>. Lock it along with those rules; Moonfold refuses a policy that locks only the
+rules.</li>
+<li><code>observability</code> cannot be managed. Its OTLP endpoints come from each user&#39;s environment
+variables, settings file and desktop startup input, which a policy cannot override.</li>
+<li>Manage <code>idleCompaction</code>, not the older <code>compactIdleThreads</code>. A Claude instance&#39;s own idle
+compaction choice still wins over <code>idleCompaction</code>.</li>
+<li>A provider instance&#39;s fields override each other, so lock <code>providerInstances.&lt;id&gt;</code> as a whole,
+or pin single fields with <a href="#providers"><code>providers.instances</code></a>. Moonfold refuses a lock on one
+field inside an instance. A whole-instance lock covers only that instance; to cover every
+instance of a provider, use <code>providers.instances</code>.</li>
+</ul>
+<h2 id="limits"><a class="anchor" href="#limits">Limits</a></h2>
+<p><code>limits</code> restricts what Moonfold may do. Leave a key out to keep Moonfold&#39;s normal behavior.</p>
+<pre><code class="language-json">{
+  &quot;schemaVersion&quot;: 1,
+  &quot;organization&quot;: &quot;Example Corp&quot;,
+  &quot;limits&quot;: {
+    &quot;maxRuntimeMode&quot;: &quot;auto-accept-edits&quot;,
+    &quot;clients&quot;: [&quot;desktop&quot;],
+    &quot;connect&quot;: false,
+    &quot;webhookTasks&quot;: false,
+    &quot;browserCookieImport&quot;: false,
+    &quot;telemetry&quot;: false,
+    &quot;providers&quot;: {
+      &quot;allowedDrivers&quot;: [&quot;claudeAgent&quot;, &quot;codex&quot;],
+      &quot;instances&quot;: {
+        &quot;claudeAgent&quot;: {
+          &quot;locked&quot;: true,
+          &quot;environment&quot;: [{ &quot;name&quot;: &quot;CLAUDE_CODE_USE_BEDROCK&quot;, &quot;value&quot;: &quot;1&quot; }]
+        }
+      }
+    },
+    &quot;updates&quot;: { &quot;mode&quot;: &quot;auto&quot;, &quot;feedUrl&quot;: &quot;https://updates.example.com/moonfold/&quot; }
+  }
+}
+</code></pre>
+<h3 id="permission-modes"><a class="anchor" href="#permission-modes">Permission modes</a></h3>
+<p><code>maxRuntimeMode</code> is the broadest <a href="/docs/permission-modes/">permission mode</a> any thread may use:
+<code>approval-required</code> (Supervised), <code>auto-accept-edits</code>, <code>auto</code>, or <code>full-access</code>. It covers threads
+that users start, agents start, and scheduled tasks start. A thread already above the limit cannot
+run another turn until someone lowers its mode; its queued messages send once that happens. New
+threads start at the limit when the user&#39;s default is above it.</p>
+<p>With <code>maxRuntimeMode</code> set, you own each provider&#39;s launch settings: binary path, launch arguments,
+config home, and the environment variables set on each provider. They come from
+<a href="#providers"><code>providers.instances</code></a> or Moonfold&#39;s defaults, and users cannot change them, because a
+wrapper script, a launch flag, or a variable such as <code>NODE_OPTIONS</code> could otherwise turn off the
+provider&#39;s approvals. Pin the variables your users need, such as a gateway URL, in
+<code>providers.instances</code>.</p>
+<p>Variables in the environment that starts Moonfold itself still reach providers, and a default
+binary path such as <code>claude</code> is looked up on that environment&#39;s <code>PATH</code>. The desktop app builds that
+environment from settings the user controls, such as their shell profile, so a user could put their
+own <code>claude</code> earlier on their <code>PATH</code>. Pin an absolute <code>binaryPath</code> in <code>providers.instances</code> for each
+provider you allow.</p>
+<p>ACP agents&#39; own mode menus have no effect under <code>maxRuntimeMode</code>, except Antigravity&#39;s, whose modes
+Moonfold can place under the limit. Users still choose which ACP Registry agent runs; leave
+<code>acpRegistry</code> out of <code>allowedDrivers</code> to stop that.</p>
+<p>The limit decides which modes Moonfold asks the provider for. It is not a sandbox; see
+<a href="#what-a-policy-does-not-cover">What a policy does not cover</a>.</p>
+<h3 id="clients-and-moonfold-connect"><a class="anchor" href="#clients-and-moonfold-connect">Clients and Moonfold Connect</a></h3>
+<p><code>clients</code> lists how the server may run:</p>
+<ul>
+<li><code>desktop</code>: as the desktop app&#39;s own server.</li>
+<li><code>local-browser</code>: as a server only browsers on this machine reach, such as <code>npx moonfold</code>.</li>
+<li><code>remote</code>: reachable from phones and other computers over the network.</li>
+</ul>
+<p><code>remote</code> is the line that matters. A server reachable from the network also accepts browsers on
+this machine, and the two local kinds differ only in how Moonfold was started. On machines with the
+desktop app, keep <code>desktop</code> in the list, or the app cannot start.</p>
+<p>Without <code>remote</code>, the server listens only on a loopback address, creates no pairing links, and
+signs out devices that paired earlier. It does not start with a host other than a loopback
+address or <code>localhost</code>. A <a href="/docs/background-service/">background service</a> installed before
+<code>MOONFOLD_LAN</code> existed keeps private-network access, so without <code>remote</code> it refuses to start.
+Run <code>moonfold up --no-lan</code> when its <code>service.env</code> sets no <code>MOONFOLD_HOST</code>, or set
+<code>MOONFOLD_HOST=127.0.0.1</code> in <code>service.env</code>, then run <code>moonfold service restart</code>. The desktop app starts
+with network access and Tailscale Serve off, whatever the user chose. That also turns off
+Moonfold Connect. To keep other remote access but turn off Moonfold Connect alone, set <code>&quot;connect&quot;: false</code>.</p>
+<p>When it starts, the server also turns off each Tailscale Serve route, HTTPS or TCP, that forwards
+to it, such as one <code>moonfold pair --tailscale</code> set up, and leaves other routes alone. It does not start
+while such a route stays on, or while Tailscale&#39;s answer cannot be read; the error names the
+command that turns the route off. A route whose target is a name, such as <code>localhost</code> or another
+machine on the same port, also stops it, since a name can resolve to this server; change the route
+or Moonfold&#39;s port. If Tailscale is installed but does not answer, as on a Mac where it was never set up, the
+server does not start until Tailscale is set up or removed. It does start when Tailscale is not
+installed, not running, or
+logged out, since nothing forwards then; a route Tailscale kept returns when Tailscale runs again,
+so restart Moonfold after that.</p>
+<h3 id="other-capabilities"><a class="anchor" href="#other-capabilities">Other capabilities</a></h3>
+<ul>
+<li><code>webhookTasks: false</code>: scheduled tasks cannot use webhook triggers. Existing webhook tasks stay
+but do not run, and cannot be turned back on. Users can still edit or delete them.</li>
+<li><code>browserCookieImport: false</code>: users cannot import cookies from another browser into Moonfold&#39;s
+browser.</li>
+<li><code>telemetry: false</code>: the server and desktop app send no <a href="/docs/telemetry/">product usage data</a> or
+relay connection traces. A policy cannot turn them on.</li>
+</ul>
+<h3 id="providers"><a class="anchor" href="#providers">Providers</a></h3>
+<p><code>providers.allowedDrivers</code> lists the providers that may run, by ID: <code>codex</code> (Codex),
+<code>claudeAgent</code> (Claude), <code>cursor</code> (Cursor), <code>grok</code> (Grok), <code>opencode</code> (OpenCode), <code>antigravity</code>
+(Antigravity), <code>fx</code> (fx), <code>kiro</code> (Kiro), <code>pi</code> (Pi), <code>muse</code> (Muse Code), and <code>acpRegistry</code> (ACP
+Registry).
+<code>moonfold policy check</code> rejects an ID this version does not know. Threads on other providers stay,
+marked unavailable, and users can still turn those providers off.</p>
+<p><code>providers.instances</code> sets fields on every instance of a provider, such as an environment variable
+that routes Claude through Amazon Bedrock or a base URL for a company gateway. <code>binaryPath</code> and
+<code>launchArgs</code> work only for providers that have those settings. With <code>&quot;locked&quot;: true</code>, users cannot
+change the fields you set. With <code>&quot;locked&quot;: false</code>, the fields fill in only what the user left
+empty. A <code>codex</code> entry that is locked, or any <code>codex</code> entry under <code>maxRuntimeMode</code>, also rules out
+<a href="/docs/providers-codex/#connect-with-chatgpt">Connect with ChatGPT</a>, since that runtime would skip
+your fields. In the same way, an <code>opencode</code> entry like that rules out a server URL, so OpenCode
+starts the binary you set.</p>
+<h3 id="updates"><a class="anchor" href="#updates">Updates</a></h3>
+<ul>
+<li><code>mode</code>: <code>auto</code> keeps the normal update flow. <code>off</code> stops Moonfold from checking for updates, for
+machines that get Moonfold through device management.</li>
+<li><code>feedUrl</code>: Moonfold updates from your own mirror instead of GitHub: the desktop app, <code>moonfold update</code>,
+and updates started from another device. Publish only the versions you have approved, laid out
+as on a GitHub release. The release&#39;s update files (<code>latest.yml</code>, <code>latest-mac.yml</code>,
+<code>latest-linux.yml</code>, <code>latest-linux-arm64.yml</code>, and their <code>nightly</code> versions if you allow nightly)
+and the desktop installers they list go at the URL&#39;s root. The release&#39;s <code>moonfold-*</code> archives and
+<code>SHA256SUMS</code> go under <code>v&lt;version&gt;/</code>. A <code>moonfold</code> run through <code>npx</code> comes from npm, so pin it with your
+package tooling.</li>
+<li><code>allowNightly: false</code>: the nightly channel is unavailable.</li>
+</ul>
+<h2 id="what-a-policy-does-not-cover"><a class="anchor" href="#what-a-policy-does-not-cover">What a policy does not cover</a></h2>
+<p>The policy controls what Moonfold does. Agents run through each provider&#39;s own CLI, which reads its
+own configuration, such as <code>~/.claude</code>, and which a user can also run outside Moonfold. To restrict
+those CLIs, use their own managed configuration, such as Claude Code&#39;s managed settings.</p>
+<p>On a managed Windows machine, the desktop app does not run a WSL environment. A Moonfold server a
+user starts inside WSL reads <code>/etc/moonfold/policy.json</code> in that distro, not the Windows policy.
+Deploy the policy file there too if your users run Moonfold in WSL.</p>
+<p>Without <code>remote</code>, Moonfold does not expose the server, but a user can still forward its local port
+with other tools.</p>
+<p>A user with administrator rights on the machine can edit or remove the policy. Moonfold enforces
+the policy in its own processes, which run as the user, so it stops users from changing managed
+settings in Moonfold but does not stop a user who modifies or replaces Moonfold itself. A version
+from before managed policy ignores it too. To control which builds can run, use your device
+management tool&#39;s application controls.</p>
+
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/managed-policy.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/keyboard-focus/"><small>Previous</small><span>Keyboard focus</span></a><a class="next" href="/docs/open-source-licenses/"><small>Next</small><span>Open source licenses</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#roll-out-a-policy">Roll out a policy</a></li><li><a href="#write-a-policy">Write a policy</a></li><li><a href="#where-the-policy-goes">Where the policy goes</a></li><li><a href="#check-what-the-server-loaded">Check what the server loaded</a></li><li><a href="#change-or-remove-a-policy">Change or remove a policy</a></li><li><a href="#when-moonfold-refuses-to-start">When Moonfold refuses to start</a></li><li><a href="#settings">Settings</a></li><li><a href="#limits">Limits</a></li><li><a href="#what-a-policy-does-not-cover">What a policy does not cover</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

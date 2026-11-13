@@ -1,281 +1,110 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>When your agent hits its limit, the task should keep going | Moonfold</title>
-    <meta
-      name="description"
-      content="How Moonfold moves a thread from one coding agent to another at a usage limit, what you see before anything is sent, and how to go back."
-    />
-    <link
-      rel="canonical"
-      href="https://moonfold-website.vercel.app/blog/when-your-agent-hits-its-limit/"
-    />
-    <meta property="og:type" content="article" />
-    <meta
-      property="og:url"
-      content="https://moonfold-website.vercel.app/blog/when-your-agent-hits-its-limit/"
-    />
-    <meta
-      property="og:title"
-      content="When your agent hits its limit, the task should keep going | Moonfold"
-    />
-    <meta
-      property="og:description"
-      content="How Moonfold moves a thread from one coding agent to another at a usage limit, what you see before anything is sent, and how to go back."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "When your agent hits its limit, the task should keep going",
-        "description": "How Moonfold moves a thread from one coding agent to another at a usage limit, what you see before anything is sent, and how to go back.",
-        "datePublished": "2026-10-27",
-        "author": { "@type": "Organization", "name": "The Moonfold team" },
-        "mainEntityOfPage": "https://moonfold-website.vercel.app/blog/when-your-agent-hits-its-limit/"
-      }
-    </script>
-  </head>
-  <body class="page-post">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/">Docs</a>
-        <a href="/blog/" aria-current="page">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <main class="post" id="content">
-      <div class="post-head">
-        <p class="crumbs">
-          <a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a
-          ><span aria-hidden="true">/</span><a href="/blog/#handoff">Handoff</a>
-        </p>
-        <p class="eyebrow">Handoff</p>
-        <h1>When your agent hits its limit, the task should keep going</h1>
-        <p class="lede">
-          How Moonfold moves a thread from one coding agent to another at a usage limit, what you
-          see before anything is sent, and how to go back.
-        </p>
-        <dl class="post-facts">
-          <div>
-            <dt>Written by</dt>
-            <dd>The Moonfold team</dd>
-          </div>
-          <div>
-            <dt>Published</dt>
-            <dd><time datetime="2026-10-27">Oct 27, 2026</time></dd>
-          </div>
-          <div>
-            <dt>Reading time</dt>
-            <dd>2 min</dd>
-          </div>
-        </dl>
-      </div>
-      <div class="post-body-wrap">
-        <nav class="post-toc" aria-label="In this post">
-          <h2>In this post</h2>
-          <ul>
-            <li><a href="#what-starts-a-handoff">What starts a handoff</a></li>
-            <li><a href="#you-see-it-before-it-is-sent">You see it before it is sent</a></li>
-            <li><a href="#control-over-where-context-goes">Control over where context goes</a></li>
-            <li><a href="#what-this-is-not">What this is not</a></li>
-          </ul>
-        </nav>
-        <article class="prose">
-          <p>
-            Every coding agent has a ceiling. Sooner or later the subscription runs out of tokens
-            for the window, a rate limit lands mid-refactor, or the agent simply stops being the
-            right one for the next step. Most tools treat that as the end of the session. You copy a
-            summary into another tool, re-explain the plan, and hope nothing important got lost on
-            the way.
-          </p>
-          <p>
-            Moonfold treats it as a handoff. The same thread continues in a different agent, with a
-            brief of where the work stands.
-          </p>
-          <h2 id="what-starts-a-handoff">
-            <a class="anchor" href="#what-starts-a-handoff">What starts a handoff</a>
-          </h2>
-          <p>A handoff starts in one of two ways:</p>
-          <ul>
-            <li>
-              <strong>You ask for it.</strong> Open the thread menu and choose
-              <strong>Hand off to…</strong>, or use the command palette, then pick the provider and
-              model.
-            </li>
-            <li>
-              <strong>The provider reports a usage limit.</strong> The notice above the composer
-              offers <strong>Continue in…</strong> with the first provider in your fallback order,
-              next to resuming when the limit resets.
-            </li>
-          </ul>
-          <p>
-            In <strong>Ask</strong> mode, which is the default, Moonfold only offers. In
-            <strong>Automatic</strong> mode it continues in the first available fallback on its own
-            and the divider in the thread says so. It skips providers that are turned off, not
-            allowed for the project, or at their own limit, and it never moves a thread more than
-            once for the same stopped turn.
-          </p>
-          <h2 id="you-see-it-before-it-is-sent">
-            <a class="anchor" href="#you-see-it-before-it-is-sent">You see it before it is sent</a>
-          </h2>
-          <p>Before anything leaves the current provider, the preview shows three things:</p>
-          <ol>
-            <li>the brief, exactly as the next provider will receive it;</li>
-            <li>what was redacted from it (keys, tokens, passwords and private keys), by kind;</li>
-            <li>how many earlier messages follow the brief.</li>
-          </ol>
-          <p>
-            Choose <strong>Send</strong> to continue. The thread keeps a divider with the reason and
-            time, and <strong>View brief</strong> on it shows what was sent. To go back, hand off
-            again and pick the earlier provider.
-          </p>
-          <h2 id="control-over-where-context-goes">
-            <a class="anchor" href="#control-over-where-context-goes"
-              >Control over where context goes</a
-            >
-          </h2>
-          <p>
-            Under <strong>Settings → Handoff</strong> you choose the mode, the fallback order, and
-            which providers may receive a thread&#39;s context at all. By default every enabled
-            provider may. For a project whose code should stay with one company, narrow the list;
-            each project can override the global setting in its own project settings.
-          </p>
-          <h2 id="what-this-is-not">
-            <a class="anchor" href="#what-this-is-not">What this is not</a>
-          </h2>
-          <p>
-            Moonfold does not pool or share anyone&#39;s login. Each provider runs as your own local
-            CLI with your own account, and a handoff only moves the thread between those CLIs on
-            your machine. The next agent does not inherit the previous agent&#39;s hidden reasoning
-            or tool state, and you should expect it to re-read files it needs. What it does get is
-            enough to pick up the work without a re-explanation.
-          </p>
-          <p>
-            Read <a href="/blog/what-a-handoff-brief-contains/">what goes into the brief</a> next,
-            or the <a href="/docs/provider-handoff/">provider handoff guide</a> for every setting.
-          </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>When your agent hits its limit, the task should keep going | Moonfold</title>
+<meta name="description" content="How Moonfold moves a thread from one coding agent to another at a usage limit, what you see before anything is sent, and how to go back.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/blog/when-your-agent-hits-its-limit/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://moonfold-website.vercel.app/blog/when-your-agent-hits-its-limit/">
+<meta property="og:title" content="When your agent hits its limit, the task should keep going | Moonfold">
+<meta property="og:description" content="How Moonfold moves a thread from one coding agent to another at a usage limit, what you see before anything is sent, and how to go back.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"When your agent hits its limit, the task should keep going","description":"How Moonfold moves a thread from one coding agent to another at a usage limit, what you see before anything is sent, and how to go back.","datePublished":"2026-10-27","author":{"@type":"Organization","name":"The Moonfold team"},"mainEntityOfPage":"https://moonfold-website.vercel.app/blog/when-your-agent-hits-its-limit/"}</script>
+</head>
+<body class="page-post">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/">Docs</a>
+    <a href="/blog/" aria-current="page">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<main class="post" id="content">
+<div class="post-head">
+<p class="crumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><a href="/blog/#handoff">Handoff</a></p>
+<p class="eyebrow">Handoff</p>
+<h1>When your agent hits its limit, the task should keep going</h1>
+<p class="lede">How Moonfold moves a thread from one coding agent to another at a usage limit, what you see before anything is sent, and how to go back.</p>
+<dl class="post-facts">
+<div><dt>Written by</dt><dd>The Moonfold team</dd></div>
+<div><dt>Published</dt><dd><time datetime="2026-10-27">Oct 27, 2026</time></dd></div>
+<div><dt>Reading time</dt><dd>2 min</dd></div>
+</dl>
+</div>
+<div class="post-body-wrap">
+<nav class="post-toc" aria-label="In this post"><h2>In this post</h2><ul><li><a href="#what-starts-a-handoff">What starts a handoff</a></li><li><a href="#you-see-it-before-it-is-sent">You see it before it is sent</a></li><li><a href="#control-over-where-context-goes">Control over where context goes</a></li><li><a href="#what-this-is-not">What this is not</a></li></ul></nav>
+<article class="prose">
+<p>Every coding agent has a ceiling. Sooner or later the subscription runs out of tokens for the window, a rate limit lands mid-refactor, or the agent simply stops being the right one for the next step. Most tools treat that as the end of the session. You copy a summary into another tool, re-explain the plan, and hope nothing important got lost on the way.</p>
+<p>Moonfold treats it as a handoff. The same thread continues in a different agent, with a brief of where the work stands.</p>
+<h2 id="what-starts-a-handoff"><a class="anchor" href="#what-starts-a-handoff">What starts a handoff</a></h2>
+<p>A handoff starts in one of two ways:</p>
+<ul>
+<li><strong>You ask for it.</strong> Open the thread menu and choose <strong>Hand off to…</strong>, or use the command palette, then pick the provider and model.</li>
+<li><strong>The provider reports a usage limit.</strong> The notice above the composer offers <strong>Continue in…</strong> with the first provider in your fallback order, next to resuming when the limit resets.</li>
+</ul>
+<p>In <strong>Ask</strong> mode, which is the default, Moonfold only offers. In <strong>Automatic</strong> mode it continues in the first available fallback on its own and the divider in the thread says so. It skips providers that are turned off, not allowed for the project, or at their own limit, and it never moves a thread more than once for the same stopped turn.</p>
+<h2 id="you-see-it-before-it-is-sent"><a class="anchor" href="#you-see-it-before-it-is-sent">You see it before it is sent</a></h2>
+<p>Before anything leaves the current provider, the preview shows three things:</p>
+<ol>
+<li>the brief, exactly as the next provider will receive it;</li>
+<li>what was redacted from it (keys, tokens, passwords and private keys), by kind;</li>
+<li>how many earlier messages follow the brief.</li>
+</ol>
+<p>Choose <strong>Send</strong> to continue. The thread keeps a divider with the reason and time, and <strong>View brief</strong> on it shows what was sent. To go back, hand off again and pick the earlier provider.</p>
+<h2 id="control-over-where-context-goes"><a class="anchor" href="#control-over-where-context-goes">Control over where context goes</a></h2>
+<p>Under <strong>Settings → Handoff</strong> you choose the mode, the fallback order, and which providers may receive a thread&#39;s context at all. By default every enabled provider may. For a project whose code should stay with one company, narrow the list; each project can override the global setting in its own project settings.</p>
+<h2 id="what-this-is-not"><a class="anchor" href="#what-this-is-not">What this is not</a></h2>
+<p>Moonfold does not pool or share anyone&#39;s login. Each provider runs as your own local CLI with your own account, and a handoff only moves the thread between those CLIs on your machine. The next agent does not inherit the previous agent&#39;s hidden reasoning or tool state, and you should expect it to re-read files it needs. What it does get is enough to pick up the work without a re-explanation.</p>
+<p>Read <a href="/blog/what-a-handoff-brief-contains/">what goes into the brief</a> next, or the <a href="/docs/provider-handoff/">provider handoff guide</a> for every setting.</p>
 
-          <div class="post-cta">
-            <p>
-              <strong>Try Moonfold.</strong> It is free, open source and runs the agents you already
-              use, with your own logins.
-            </p>
-            <a
-              class="btn btn-solid"
-              href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Download the beta</a
-            >
-          </div>
-        </article>
-      </div>
-      <section class="related">
-        <h2>Keep reading</h2>
-        <div class="post-grid">
-          <article class="post-card">
-            <a href="/blog/how-moonfold-detects-usage-limits/">
-              <span class="post-no" aria-hidden="true">01</span>
-              <span class="post-cat">Handoff</span>
-              <h3>How Moonfold detects that an agent hit its usage limit</h3>
-              <p>
-                Each provider reports limits differently. This is what each adapter reads today,
-                where reset times come from, and where handoff is still manual.
-              </p>
-              <span class="post-meta">Oct 24, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-          <article class="post-card">
-            <a href="/blog/what-a-handoff-brief-contains/">
-              <span class="post-no" aria-hidden="true">02</span>
-              <span class="post-cat">Handoff</span>
-              <h3>What goes into a handoff brief, and what is left out</h3>
-              <p>
-                The brief the next agent receives is built from the thread's history without a
-                model. Here is exactly what it holds and how secrets are redacted.
-              </p>
-              <span class="post-meta">Oct 23, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-          <article class="post-card">
-            <a href="/blog/moonfold-0-1-0-beta-4/">
-              <span class="post-no" aria-hidden="true">03</span>
-              <span class="post-cat">Releases</span>
-              <h3>Moonfold 0.1.0-beta.4: your agents on your phone, with no account</h3>
-              <p>
-                Beta 4 adds Moonfold for Android, paired with one QR scan over an encrypted
-                connection to your own computer, plus content exclusions and a token limit for one
-                run.
-              </p>
-              <span class="post-meta">Nov 2, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-        </div>
-      </section>
-    </main>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<div class="post-cta"><p><strong>Try Moonfold.</strong> It is free, open source and runs the agents you already use, with your own logins.</p><a class="btn btn-solid" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download the beta</a></div>
+</article>
+</div>
+<section class="related"><h2>Keep reading</h2><div class="post-grid"><article class="post-card"><a href="/blog/how-moonfold-detects-usage-limits/">
+<span class="post-no" aria-hidden="true">01</span>
+<span class="post-cat">Handoff</span>
+<h3>How Moonfold detects that an agent hit its usage limit</h3>
+<p>Each provider reports limits differently. This is what each adapter reads today, where reset times come from, and where handoff is still manual.</p>
+<span class="post-meta">Oct 24, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/what-a-handoff-brief-contains/">
+<span class="post-no" aria-hidden="true">02</span>
+<span class="post-cat">Handoff</span>
+<h3>What goes into a handoff brief, and what is left out</h3>
+<p>The brief the next agent receives is built from the thread's history without a model. Here is exactly what it holds and how secrets are redacted.</p>
+<span class="post-meta">Oct 23, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/moonfold-1-0-0-beta-6/">
+<span class="post-no" aria-hidden="true">03</span>
+<span class="post-cat">Releases</span>
+<h3>Moonfold 1.0.0-beta.6: Orbit, your phone on any network, and self-fixing pull requests</h3>
+<p>Beta 6 adds Orbit, a crew that keeps working on your project, lets the Android app reach your computer from anywhere, and fixes failing pull request checks.</p>
+<span class="post-meta">Nov 13, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article></div></section>
+</main>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

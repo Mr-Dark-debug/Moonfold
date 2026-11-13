@@ -1,433 +1,239 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Settings and project overrides · Moonfold docs</title>
-    <meta
-      name="description"
-      content='On web and desktop, the "Applying settings for …" sentence at the top of Settings pages picks the project and environment a change applies to. Pages that only hold device preferences, such as Appearan'
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/project-settings/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/project-settings/" />
-    <meta property="og:title" content="Settings and project overrides · Moonfold docs" />
-    <meta
-      property="og:description"
-      content='On web and desktop, the "Applying settings for …" sentence at the top of Settings pages picks the project and environment a change applies to. Pages that only hold device preferences, such as Appearan'
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li>
-                  <a href="/docs/project-settings/" aria-current="page"
-                    >Settings and project overrides</a
-                  >
-                </li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
-        <h1 id="settings-and-project-overrides">Settings and project overrides</h1>
-        <p>
-          On web and desktop, the &quot;Applying settings for …&quot; sentence at the top of
-          Settings pages picks the project and environment a change applies to. Pages that only hold
-          device preferences, such as Appearance, don&#39;t show it. They start at
-          <strong>All projects</strong> and <strong>All environments</strong> and stay selected as
-          you move between categories or search for a setting.
-        </p>
-        <p>
-          Preferences saved on this device, such as appearance, confirmations and browser profiles,
-          always show and ignore the selection. Everything else is stored on a server. Choose one
-          environment to edit its settings, or leave <strong>All environments</strong> to edit every
-          connected environment at once. Offline environments keep their current values; this is a
-          bulk edit, not a synced global default.
-        </p>
-        <p>
-          Choose a project to override settings for it on the selected environments. A layers icon
-          beside each server row&#39;s title shows where the value comes from: the built-in default,
-          the environment, or a project override. Click it to see that chain on every selected
-          environment. An override can be reset to inherit again. Settings that cannot be overridden
-          by a project are shown read-only while a project is selected.
-        </p>
-        <p>
-          When the selected environments disagree, the control shows <strong>Mixed</strong> in place
-          of a value and the layers icon turns amber. Picking a value applies it to every selected
-          environment.
-        </p>
-        <p>
-          Changing an environment value never touches a project&#39;s own override. When projects
-          override the setting you are editing, the layers icon counts them and the chain lists each
-          one with its value: click a project to jump to it, or <strong>Reset all</strong> to make
-          those projects follow the environment again.
-        </p>
-        <p>
-          Providers and diagnostics are per machine: they show one environment at a time, the
-          primary one until you pick another. Every other setting fans out to the selection.
-        </p>
-        <p>
-          With a project selected, a provider&#39;s switch in
-          <strong>Settings → Providers</strong> turns it on or off for that project only, in either
-          direction: a provider off on the machine can be used in one project, and one on everywhere
-          can be kept out of another. That project&#39;s model pickers follow the switch, and no new
-          turn there can start on a provider it turned off, including queued messages and follow-ups
-          from delegated tasks. A turn already running when the switch flips finishes. A delegated
-          task&#39;s result still lands in its parent thread, which sees it on its next turn. Reset
-          returns the project to the machine&#39;s setting. Every other provider setting stays per
-          machine.
-        </p>
-        <h2 id="worktree-branch-names">
-          <a class="anchor" href="#worktree-branch-names">Worktree branch names</a>
-        </h2>
-        <p>
-          In <strong>Settings → Source Control → Worktree branch naming</strong>, choose a static
-          prefix, a model-selected semantic prefix such as <code>feat/</code> or <code>fix/</code>,
-          or custom instructions for the complete name. The static prefix defaults to
-          <code>moonfold/</code>; a trailing slash is optional, and an empty prefix adds nothing.
-          Invalid characters in a static prefix are replaced with hyphens. Custom instructions are
-          appended to the naming prompt and can specify issue IDs, namespaces, and casing.
-        </p>
-        <p>
-          These settings apply to automatically named new worktree branches. Select a project to
-          override its environment defaults. Worktree directories keep their original names. If
-          generation fails, or a custom name is invalid or already taken, the temporary branch name
-          remains.
-        </p>
-        <h2 id="webhook-automations">
-          <a class="anchor" href="#webhook-automations">Webhook automations</a>
-        </h2>
-        <p>
-          In <strong>Settings → Scheduled tasks</strong>, choose <strong>On webhook</strong>
-          as a task&#39;s schedule to run it whenever another service calls its URL, such as GitHub
-          on a new pull request or a CI job that failed. A public URL needs a
-          <a href="/docs/remote-access/">Moonfold Connect</a> managed tunnel; after you save the
-          task, copy its URL from the editor. Without one, the editor shows only the URL&#39;s path.
-          <strong>Rotate</strong> replaces the URL and the old one stops working.
-        </p>
-        <p>
-          The prompt decides what the agent sees. Placeholders pull values out of the request:
-          <code>{{body.path}}</code> for a JSON or form field, <code>{{headers.name}}</code>,
-          <code>{{query.name}}</code>, <code>{{body}}</code> for the raw body, and
-          <code>{{request}}</code> for everything. For example,
-          <code>Review this PR: {{body.pull_request.html_url}}</code> sends only the pull request
-          link. A placeholder with no value is left empty.
-        </p>
-        <p>
-          For GitHub, turn on <strong>Require signature</strong>, keep the header
-          <code>x-hub-signature-256</code>, hex encoding and the <code>sha256=</code> prefix, and
-          enter the same secret in the repository&#39;s webhook settings with content type
-          <code>application/json</code>. Requests without a valid signature are rejected. Set this
-          up on desktop or web.
-        </p>
-        <p>
-          On desktop and web, pick <strong>Deliveries</strong> from a task&#39;s menu to see recent
-          requests and the prompt each one produced.
-        </p>
-        <p>
-          If the environment is offline, the sender gets an error and nothing runs; redeliver from
-          the sender, such as GitHub&#39;s <strong>Recent Deliveries</strong>, once it is back. To
-          have Moonfold Connect keep requests instead, turn on
-          <strong>Hold webhooks while offline</strong> in <strong>Settings → Connections</strong>.
-          Moonfold Connect then stores requests to a Moonfold Connect URL for up to 24 hours and
-          delivers them when the environment returns. Leave it off if you don&#39;t want request
-          bodies stored outside your machine. To skip requests that waited too long, set
-          <strong>Skip requests older than</strong> on the task.
-        </p>
-        <h2 id="defaults-and-inheritance">
-          <a class="anchor" href="#defaults-and-inheritance">Defaults and inheritance</a>
-        </h2>
-        <p>
-          General contains the model and workspace for new threads. Integrations controls agent
-          browser access. Source Control contains automatic pull, the default pull request merge
-          method and text generation. The same rows edit environment defaults or project overrides
-          depending on the project crumb.
-        </p>
-        <p>
-          The Project category, shown while a project is selected, holds the project&#39;s name,
-          icon, actions, checkouts and removal. Actions belong to a project: editing them creates
-          the project&#39;s own list on each selected environment, and reset returns to the
-          environment&#39;s shared list. A project&#39;s <code>moonfold.json</code> actions can be
-          imported there.
-        </p>
-        <p>
-          Settings a repository can also declare in <code>moonfold.json</code>, such as the
-          workspace for new threads, resolve in one order: a project override, then the environment
-          setting, then <code>moonfold.json</code>, then the built-in default. Leave a setting on
-          <strong>Inherit</strong> to let the next tier decide. Browser access changes apply when an
-          agent session next starts.
-        </p>
-        <p>
-          New worktrees initialize git submodules recursively. If that step is slow because the
-          repository declares many nested submodules, set <strong>Submodules</strong> in
-          <strong>Settings → General</strong> (with the project selected to override it there) to
-          <strong>Top level only</strong> to stop at the ones the repository declares itself, or
-          <strong>Skip</strong> to leave them for a setup script. It resolves in the same order as
-          the workspace default: a <code>&quot;worktreeSubmodules&quot;</code> value in the
-          <code>moonfold.json</code> of the branch being checked out applies when the project and
-          environment are both on <strong>Inherit</strong>.
-        </p>
-        <h2 id="worktree-location">
-          <a class="anchor" href="#worktree-location">Worktree location</a>
-        </h2>
-        <p>
-          New worktrees go in the <code>worktrees</code> folder of the Moonfold home directory. To
-          put them somewhere else, such as another drive, set
-          <strong>Settings → Storage → Worktree location</strong> to an absolute path like
-          <code>D:\worktrees</code> or <code>~/worktrees</code>. The setting is per machine.
-          Existing worktrees stay where they are, and cleanup covers both the default folder and the
-          custom one.
-        </p>
-        <h2 id="storage-cleanup"><a class="anchor" href="#storage-cleanup">Storage cleanup</a></h2>
-        <p>
-          Open <strong>Settings → Storage</strong> to enable automatic cleanup on one machine or all
-          connected environments. Policies are off by default and run on the server at startup, when
-          changed, and hourly. Offline machines keep their existing policies.
-        </p>
-        <p>
-          Select a project to set <strong>Automatic worktree cleanup</strong> to
-          <strong>Inherit</strong>, <strong>Off</strong>, or <strong>Custom</strong>. Inherit
-          follows each machine&#39;s rules; Off keeps that project&#39;s worktrees until you remove
-          them manually. Custom applies separate worktree rules to the selected project or checkout.
-          Browser captures and log retention remain machine-wide.
-        </p>
-        <p>
-          Worktrees can be removed after a chosen number of inactive days, after a thread settles,
-          after merging, or when they have no commits beyond the default branch. Set settled
-          retention to 0 days to remove a worktree at the next cleanup after settlement.
-          <strong>Keep only recent worktrees</strong> keeps the chosen number of each project&#39;s
-          most recently active worktrees and removes older ones. Only Moonfold-managed worktrees are
-          eligible. Active sessions and shared worktrees prevent removal.
-          <strong>Keep worktrees with local changes</strong> defaults to
-          <strong>Uncommitted changes</strong>, which protects tracked edits and untracked files but
-          deletes ignored files such as <code>.env</code> and build output.
-          <strong>Any local files</strong> also protects ignored files other than
-          <code>node_modules</code>. <strong>Edited tracked files</strong> protects only tracked
-          edits and allows untracked and ignored files to be deleted. Branches and thread history
-          stay; starting another turn recreates the checkout. Merge cleanup requires a merged pull
-          request whose commits are included in the remote default branch. A squash or rebase merge
-          on GitHub also counts when the pull request targeted the default branch and the worktree
-          is still at the pull request&#39;s last commit.
-        </p>
-        <p>
-          Enable <strong>Delete worktrees with deleted threads</strong> to remove safe worktrees
-          after their last thread is deleted, including archived threads and worktrees left by
-          earlier deletions. The server waits for sessions and terminals to stop and retries skipped
-          worktrees after restart. Existing prompts for deleting a worktree manually remain
-          available when this policy is off.
-        </p>
-        <p>
-          Choose <strong>Delete now</strong> to run the enabled rules immediately. The latest
-          results show which worktrees were removed or kept and why, plus any failures.
-        </p>
-        <p>
-          Browser captures and rotated logs have separate retention periods. Expired capture links
-          stop working. Current logs, message attachments, and browser profiles are kept.
-        </p>
-        <h2 id="project-icons"><a class="anchor" href="#project-icons">Project icons</a></h2>
-        <p>
-          Select the project and open Project to choose an icon, emoji, monogram, or image. The
-          choice applies to every checkout in the project group and appears on connected clients.
-          Choose <strong>Automatic</strong> to let Moonfold detect an icon again.
-        </p>
-        <p>
-          Choose <strong>Monogram</strong> in the icon picker to set one or two letters or numbers
-          and a color.
-        </p>
-        <p>
-          When no image is found, web and desktop show a two-character monogram with a color from
-          the icon palette, derived from the saved project name. For example,
-          <code>Nebula</code> becomes <code>NA</code>, <code>Silver Orchard</code> becomes
-          <code>SO</code>, and <code>M7 Forge</code> becomes <code>M7</code>.
-        </p>
-        <h2 id="keep-the-default-branch-current">
-          <a class="anchor" href="#keep-the-default-branch-current"
-            >Keep the default branch current</a
-          >
-        </h2>
-        <p>
-          In Source Control, enable <strong>Automatically pull</strong> to keep the default-branch
-          checkout up to date with its configured upstream. Choose an environment to set the default
-          or a project to override it.
-        </p>
-        <p>
-          Moonfold only pulls when it can fast-forward and the checkout has no changed files,
-          untracked files, or local commits. It skips checkouts on another branch or without an
-          upstream. If a checkout has local work, resolve it yourself before automatic pulls can
-          resume.
-        </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Settings and project overrides · Moonfold docs</title>
+<meta name="description" content="On web and desktop, the &quot;Applying settings for …&quot; sentence at the top of Settings pages picks the project and environment a change applies to. Pages that only hold device preferences, such as Appearan">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/project-settings/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/project-settings/">
+<meta property="og:title" content="Settings and project overrides · Moonfold docs">
+<meta property="og:description" content="On web and desktop, the &quot;Applying settings for …&quot; sentence at the top of Settings pages picks the project and environment a change applies to. Pages that only hold device preferences, such as Appearan">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/" aria-current="page">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
+<h1 id="settings-and-project-overrides">Settings and project overrides</h1>
+<p>On web and desktop, the &quot;Applying settings for …&quot; sentence at the top of Settings pages picks
+the project and environment a change applies to. Pages that only hold device preferences, such as
+Appearance, don&#39;t show it. They start at <strong>All projects</strong> and <strong>All environments</strong>
+and stay selected as you move between categories or search for a setting.</p>
+<p>Preferences saved on this device, such as appearance, confirmations and browser profiles, always
+show and ignore the selection. Everything else is stored on a server. Choose one environment to
+edit its settings, or leave <strong>All environments</strong> to edit every connected environment at once.
+Offline environments keep their current values; this is a bulk edit, not a synced global default.</p>
+<p>Choose a project to override settings for it on the selected environments. A layers icon beside
+each server row&#39;s title shows where the value comes from: the built-in default, the environment,
+or a project override. Click it to see that chain on every selected environment. An override can
+be reset to inherit again. Settings that cannot be overridden by a project are shown read-only
+while a project is selected.</p>
+<p>When the selected environments disagree, the control shows <strong>Mixed</strong> in place of a value and the
+layers icon turns amber. Picking a value applies it to every selected environment.</p>
+<p>Changing an environment value never touches a project&#39;s own override. When projects override the
+setting you are editing, the layers icon counts them and the chain lists each one with its value:
+click a project to jump to it, or <strong>Reset all</strong> to make those projects follow the environment
+again.</p>
+<p>Providers and diagnostics are per machine: they show one environment at a time, the primary
+one until you pick another. Every other setting fans out to the selection.</p>
+<p>With a project selected, a provider&#39;s switch in <strong>Settings → Providers</strong> turns it on or off for
+that project only, in either direction: a provider off on the machine can be used in one project,
+and one on everywhere can be kept out of another. That project&#39;s model pickers follow the switch,
+and no new turn there can start on a provider it turned off, including queued messages and
+follow-ups from delegated tasks. A turn already running when the switch flips finishes. A delegated
+task&#39;s result still lands in its parent thread, which sees it on its next turn. Reset returns the project to the
+machine&#39;s setting. Every other provider setting stays per machine.</p>
+<h2 id="pin-and-archive-projects"><a class="anchor" href="#pin-and-archive-projects">Pin and archive projects</a></h2>
+<p>Pinned projects come first in the project pickers: the project picker on a new thread, the
+new-thread list, the command palette, and the sidebar project filter. In the boring sidebar, pinned projects get the top
+folders, even with no active threads. Pin or unpin a project from its row in any of those lists,
+or press the thread pin shortcut (<code>mod+shift+p</code> by default) on the highlighted row. <strong>Pin
+project</strong> in the command palette and <strong>Settings → Projects</strong> work too. A list keeps its order
+while it is open, so a new pin moves up the next time you open it.</p>
+<p>Archive a project you are done with in <strong>Settings → Projects</strong>. It leaves the project pickers.
+Its threads, settings, and files stay as they are, and archived projects still show in the
+Settings project list, marked <strong>Archived</strong>. Choose one there and select <strong>Unarchive</strong> to bring it
+back.</p>
+<p>A project on several machines must have every machine connected to pin or archive it.</p>
+<h2 id="worktree-branch-names"><a class="anchor" href="#worktree-branch-names">Worktree branch names</a></h2>
+<p>In <strong>Settings → Worktrees → Worktree branch naming</strong>, choose a static prefix,
+a model-selected semantic prefix such as <code>feat/</code> or <code>fix/</code>, or custom instructions
+for the complete name. The static prefix defaults to <code>moonfold/</code>; a trailing slash is
+optional, and an empty prefix adds nothing. Invalid characters in a static prefix
+are replaced with hyphens. Custom instructions are appended to
+the naming prompt and can specify issue IDs, namespaces, and casing.</p>
+<p>These settings apply to automatically named new worktree branches. Select a project
+to override its environment defaults. Worktree directories keep their original names.
+If generation fails, or a custom name is invalid or already taken, the temporary
+branch name remains.</p>
+<h2 id="webhook-automations"><a class="anchor" href="#webhook-automations">Webhook automations</a></h2>
+<p>In <strong>Settings → Scheduled tasks</strong>, choose <strong>On webhook</strong>
+as a task&#39;s schedule to run it whenever another service calls its URL, such as
+GitHub on a new pull request or a CI job that failed. A public URL needs a
+<a href="/docs/remote-access/">Moonfold Connect</a> managed tunnel; after you save the task, copy
+its URL from the editor. Without one, the editor shows only the URL&#39;s path.
+<strong>Rotate</strong> replaces the URL and the old one stops working.</p>
+<p>The prompt decides what the agent sees. Placeholders pull values out of the
+request: <code>{{body.path}}</code> for a JSON or form field, <code>{{headers.name}}</code>,
+<code>{{query.name}}</code>, <code>{{body}}</code> for the raw body, and <code>{{request}}</code> for everything.
+For example, <code>Review this PR: {{body.pull_request.html_url}}</code> sends only the
+pull request link. A placeholder with no value is left empty.</p>
+<p>Each value reaches the agent wrapped in <code>&lt;webhook-data-…&gt;</code> tags and marked as
+untrusted request data. This helps the agent tell it apart from your
+instructions, but it doesn&#39;t guarantee the agent ignores what the text says.
+Inside a value, every <code>$</code>, other currency sign and <code>@</code>, and a <code>/</code> that starts
+a lone word, gets an invisible character after it, so mentions like <code>$skill</code>,
+<code>@file</code> and <code>/command</code> don&#39;t act. Text copied from a value, such as an email
+address or a command, carries that character too. Without a signature, anyone
+with the URL can start a run with any content. A signature only proves which
+service sent the request: a GitHub payload still carries text written by any
+GitHub user.</p>
+<p>For GitHub, turn on <strong>Require signature</strong>, keep the header
+<code>x-hub-signature-256</code>, hex encoding and the <code>sha256=</code> prefix, and enter the
+same secret in the repository&#39;s webhook settings with content type
+<code>application/json</code>. Requests without a valid signature are rejected. Set this
+up on desktop or web.</p>
+<p>To run only for some requests, add <strong>Filters</strong>. Each one tests a value named
+like a placeholder, without the braces, such as <code>headers.x-github-event</code> equals
+<code>pull_request</code> or <code>body.action</code> is one of <code>opened, reopened</code>. A task runs only
+when every filter matches; other requests are answered normally, logged as
+<strong>Filtered</strong> with the first filter that failed, and start nothing. Values
+compare as text, and a value that is an object or a list only passes
+<strong>exists</strong>. Separate <strong>is one of</strong> values with commas; a value can&#39;t contain
+a comma or start or end with a space.</p>
+<p>To suppress repeated deliveries, set a <strong>Duplicate request key</strong> template, such as
+<code>{{headers.delivery-id}}</code>. The same key is ignored for seven days per task.
+To combine a burst, set a <strong>Coalesce key</strong>, such as <code>{{body.id}}</code>, and a window
+of 10–3600 seconds (120 by default). One run uses the latest body, headers,
+and query when the window from the first delivery closes; later requests
+do not extend it. Pending windows survive a server restart. Keys must contain
+request placeholders; if any placeholder is missing, or the render is empty,
+that key&#39;s rule is skipped. Clear the templates to turn dedupe off.</p>
+<p>Duplicate and coalesced log entries share a limit of 10 per task per minute.
+Additional deliveries are accepted without a log entry, and coalesced deliveries
+always replace the persisted payload. Coalesced updates count toward a separate
+60-per-minute validation limit; exceeding it receives HTTP 429.</p>
+<p>On desktop and web, pick <strong>Deliveries</strong> from a task&#39;s menu to see recent
+requests and the prompt each one produced.</p>
+<p>If the environment is offline, the sender gets an error and nothing runs;
+redeliver from the sender, such as GitHub&#39;s <strong>Recent Deliveries</strong>, once it is
+back. To have Moonfold Connect keep requests instead, turn on <strong>Hold webhooks while
+offline</strong> in <strong>Settings → Sharing &amp; access</strong>. Moonfold Connect then stores requests to a
+Moonfold Connect URL for up to 24 hours and delivers them when the environment
+returns. Leave it off if you don&#39;t want request bodies stored outside your
+machine. To skip requests that waited too long, set <strong>Skip requests older
+than</strong> on the task.</p>
+<h2 id="defaults-and-inheritance"><a class="anchor" href="#defaults-and-inheritance">Defaults and inheritance</a></h2>
+<p>Threads contains the model and workspace for new threads. Browser controls agent browser
+access. Source control contains automatic pull, the default pull request merge method and text
+generation. The same rows edit environment defaults or project overrides depending on the
+project crumb.</p>
+<p>The Projects category, under Code, holds the project&#39;s name, icon, actions,
+checkouts and removal. Actions belong to a project: editing them creates the project&#39;s own list
+on each selected environment, and reset returns to the environment&#39;s shared list. A project&#39;s
+<code>moonfold.json</code> actions can be imported there.</p>
+<p>Settings a repository can also declare in <code>moonfold.json</code>, such as the workspace for new threads,
+resolve in one order: a project override, then the environment setting, then <code>moonfold.json</code>, then the
+built-in default. Leave a setting on <strong>Inherit</strong> to let the next tier decide.
+Browser access changes apply when an agent session next starts.</p>
+<p>New worktrees initialize git submodules recursively. If that step is slow because the repository
+declares many nested submodules, set <strong>Submodules</strong> in <strong>Settings → Worktrees</strong> under Advanced (with the project
+selected to override it there) to <strong>Top level only</strong> to stop at the ones the repository declares
+itself, or <strong>Skip</strong> to leave them for a setup script. It resolves in the same order as the
+workspace default: a <code>&quot;worktreeSubmodules&quot;</code> value in the <code>moonfold.json</code> of the branch being checked out
+applies when the project and environment are both on <strong>Inherit</strong>.</p>
+<h2 id="worktree-location"><a class="anchor" href="#worktree-location">Worktree location</a></h2>
+<p>New worktrees go in the <code>worktrees</code> folder of the Moonfold home directory. To put them somewhere else,
+such as another drive, set <strong>Settings → Worktrees → Worktree location</strong> to an absolute path like
+<code>D:\worktrees</code> or <code>~/worktrees</code>. The setting is per machine. Existing worktrees stay where they
+are, and cleanup covers both the default folder and the custom one.</p>
+<h2 id="storage-cleanup"><a class="anchor" href="#storage-cleanup">Storage cleanup</a></h2>
+<p>Open <strong>Settings → Worktrees → Cleanup</strong> to enable automatic cleanup on one machine or all connected
+environments. Policies are off by default and run on the server at startup, when changed, and
+hourly. Offline machines keep their existing policies.</p>
+<p>Select a project to set <strong>Automatic worktree cleanup</strong> to <strong>Inherit</strong>, <strong>Off</strong>, or <strong>Custom</strong>.
+Inherit follows each machine&#39;s rules; Off keeps that project&#39;s worktrees until you remove them
+manually. Custom applies separate worktree rules to the selected project or checkout. Browser
+captures and log retention remain machine-wide.</p>
+<p>Worktrees can be removed after a chosen number of inactive days, after a thread settles, after
+merging, or when they have no commits beyond the default branch. Set settled retention to 0 days
+to remove a worktree at the next cleanup after settlement. <strong>Keep only recent worktrees</strong> keeps
+the chosen number of each project&#39;s most recently active worktrees and removes older ones. In
+repositories without remotes, unchanged-worktree cleanup compares against the branch checked out
+in the project workspace; if that checkout has a detached HEAD, the worktree is kept. Only
+Moonfold-managed worktrees are eligible.
+Active sessions and shared worktrees prevent removal. <strong>Keep worktrees with local changes</strong> defaults
+to <strong>Uncommitted changes</strong>, which protects tracked edits and untracked files but deletes ignored
+files such as <code>.env</code> and build output. <strong>Any local files</strong> also protects ignored files other than
+<code>node_modules</code>. <strong>Edited tracked files</strong> protects only tracked edits and allows untracked and
+ignored files to be deleted. Branches and thread history stay; starting another turn recreates the checkout.
+Merge cleanup requires a merged pull request whose commits are included in the remote default
+branch. A squash or rebase merge on GitHub also counts when the pull request targeted the default
+branch and the worktree is still at the pull request&#39;s last commit.</p>
+<p>Enable <strong>Delete worktrees with deleted threads</strong> to remove safe worktrees after their last
+thread is deleted, including archived threads and worktrees left by earlier deletions. The
+server waits for sessions and terminals to stop and retries skipped worktrees after restart.
+Existing prompts for deleting a worktree manually remain available when this policy is off.</p>
+<p>Choose <strong>Delete now</strong> to run the enabled rules immediately. The latest results show which
+worktrees were removed or kept and why, plus any failures.
+Results also list folders in the worktree folder that no thread uses, with their sizes; cleanup never removes them, so remove them manually if you want.</p>
+<p>Browser captures and rotated logs have separate retention periods. Expired capture links stop
+working. Current logs, message attachments, and browser profiles are kept.</p>
+<h2 id="project-icons"><a class="anchor" href="#project-icons">Project icons</a></h2>
+<p>Select the project and open Project to choose an icon, emoji, monogram, or image. The choice applies to
+every checkout in the project group and appears on connected clients. Choose <strong>Automatic</strong> to let
+Moonfold detect an icon again.</p>
+<p>Choose <strong>Monogram</strong> in the icon picker to set one or two letters or numbers and a color.</p>
+<p>When no image is found, web and desktop show a two-character monogram with a color
+from the icon palette, derived from the saved project name. For example, <code>Nebula</code> becomes <code>NA</code>,
+<code>Silver Orchard</code> becomes <code>SO</code>, and <code>M7 Forge</code> becomes <code>M7</code>.</p>
+<h2 id="keep-the-default-branch-current"><a class="anchor" href="#keep-the-default-branch-current">Keep the default branch current</a></h2>
+<p>In Source control, enable <strong>Automatically pull</strong> to keep the default-branch checkout up to date
+with its configured upstream. Choose an environment to set the default or a project to override it.</p>
+<p>Moonfold only pulls when it can fast-forward and the checkout has no changed files, untracked files,
+or local commits. It skips checkouts on another branch or without an upstream. If a checkout has
+local work, resolve it yourself before automatic pulls can resume.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/project-settings.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/outside-agents/"><small>Previous</small><span>Outside agents</span></a
-          ><a class="next" href="/docs/prompt-links/"
-            ><small>Next</small><span>Prompt links</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#worktree-branch-names">Worktree branch names</a></li>
-            <li><a href="#webhook-automations">Webhook automations</a></li>
-            <li><a href="#defaults-and-inheritance">Defaults and inheritance</a></li>
-            <li><a href="#worktree-location">Worktree location</a></li>
-            <li><a href="#storage-cleanup">Storage cleanup</a></li>
-            <li><a href="#project-icons">Project icons</a></li>
-            <li><a href="#keep-the-default-branch-current">Keep the default branch current</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/project-settings.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/outside-agents/"><small>Previous</small><span>Outside agents</span></a><a class="next" href="/docs/prompt-links/"><small>Next</small><span>Prompt links</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#pin-and-archive-projects">Pin and archive projects</a></li><li><a href="#worktree-branch-names">Worktree branch names</a></li><li><a href="#webhook-automations">Webhook automations</a></li><li><a href="#defaults-and-inheritance">Defaults and inheritance</a></li><li><a href="#worktree-location">Worktree location</a></li><li><a href="#storage-cleanup">Storage cleanup</a></li><li><a href="#project-icons">Project icons</a></li><li><a href="#keep-the-default-branch-current">Keep the default branch current</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

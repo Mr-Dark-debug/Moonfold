@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>fx · Moonfold docs</title>
+<meta name="description" content="Moonfold can run fx. fx uses the login on the machine that runs the Moonfold server.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/providers-fx/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/providers-fx/">
+<meta property="og:title" content="fx · Moonfold docs">
+<meta property="og:description" content="Moonfold can run fx. fx uses the login on the machine that runs the Moonfold server.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/" aria-current="page">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
+<h1 id="fx">fx</h1>
+<p>Moonfold can run <a href="https://fx.sh" target="_blank" rel="noopener noreferrer">fx</a>. fx uses the login on the machine that runs the Moonfold server.</p>
+<h2 id="set-up-fx"><a class="anchor" href="#set-up-fx">Set up fx</a></h2>
+<ol>
+<li><p>Install fx on that machine:</p>
+<pre><code class="language-bash">curl -fsSL https://fx.sh/setup.sh | bash
+</code></pre>
+</li>
+<li><p>Run <code>fx login</code> in a terminal on that machine.</p>
+</li>
+<li><p>Open <strong>Settings → Providers</strong>, enable fx, and refresh the provider.</p>
+</li>
+</ol>
+<p>If <code>fx</code> is not on the server&#39;s <code>PATH</code>, set <strong>Binary path</strong> to the executable.</p>
+<p>Every fx instance on the same machine shares that machine&#39;s fx login. Moonfold does not keep a separate login per instance.</p>
+<h2 id="models-and-effort"><a class="anchor" href="#models-and-effort">Models and effort</a></h2>
+<p>The model picker lists <strong>Default</strong> first. That option runs the model <code>fx status</code> reports on the server&#39;s machine. A model set only for one project in fx&#39;s settings is not picked up, so choose it from the list instead. If the thread&#39;s fx backend does not offer that model, the thread keeps its current one. The other entries come from <code>fx models</code>. A custom model you add in the provider settings goes to fx as is, and fx reports an error if its backend does not offer it.</p>
+<p>fx also has an <strong>Effort</strong> control. A new thread starts at Medium.</p>
+<p>Moonfold does not show fx&#39;s backend selector. To use Codex, Grok, or Vercel AI Gateway, run <code>fx provider</code> on the environment&#39;s machine.</p>
+<p>Type <code>$</code> in the composer to list the skills fx finds in its skill folders, in the order fx&#39;s own skill menu shows them. When two different skills share a name, the menu lists the one fx loads for that name: the first copy in fx&#39;s folder order, starting with the workspace. The menu shows one skill per name regardless of case; to run a skill whose name differs only in case, such as <code>Review</code> next to <code>review</code>, type its exact name.</p>
+<h2 id="permission-modes"><a class="anchor" href="#permission-modes">Permission modes</a></h2>
+<p>fx offers two composer modes.</p>
+<div class="table-wrap"><table><thead><tr><th>Mode</th><th>Behavior</th></tr></thead><tbody><tr><td><strong>Supervised</strong></td><td>fx asks before it changes files or runs commands. Read requests run without asking.</td></tr><tr><td><strong>Auto</strong></td><td>fx handles routine actions itself. Anything it still asks about reaches you.</td></tr></tbody></table></div>
+<p>Moonfold does not offer <strong>Full access</strong> or <strong>Auto-accept edits</strong> for fx. A thread already set to one of those runs in <strong>Supervised</strong>. Changing the permission mode restarts the connection and reloads the same fx session.</p>
+<p>On fx versions after <a href="https://github.com/vercel-labs/fx/pull/1189" target="_blank" rel="noopener noreferrer">vercel-labs/fx#1189</a>, fx saves the mode Moonfold sets as its default permission mode. Moonfold sets it each time it opens an fx thread, so fx in the terminal then starts in that thread&#39;s mode.</p>
+<p>A message steered into a running turn stops that turn, and fx answers the new message in the same session.</p>
+<h2 id="sub-agents"><a class="anchor" href="#sub-agents">Sub-agents</a></h2>
+<p>When fx hands work to a sub-agent, it opens in its own thread under the parent. That thread shows the sub-agent&#39;s task and its reply, which fx shortens to a couple of lines. fx doesn&#39;t share the sub-agent&#39;s individual steps.</p>
+<p>fx doesn&#39;t pass on a sub-agent&#39;s permission requests, so a sub-agent that needs one waits until you press <strong>Stop</strong>. This mostly happens in <strong>Supervised</strong>. In <strong>Auto</strong>, sub-agents can finish routine work by themselves.</p>
+<h2 id="not-supported-yet"><a class="anchor" href="#not-supported-yet">Not supported yet</a></h2>
+<ul>
+<li>Plan mode.</li>
+<li><strong>Full access</strong>.</li>
+<li><strong>Auto-accept edits</strong>.</li>
+<li>Commit messages, pull request text, branch names, and thread titles. Pick another provider for those.</li>
+</ul>
+<p>See <a href="/docs/install/#providers">provider setup</a> and <a href="/docs/permission-modes/">Permission modes</a>.</p>
+
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/providers-fx.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/prompt-links/"><small>Previous</small><span>Prompt links</span></a><a class="next" href="/docs/providers-kiro/"><small>Next</small><span>Kiro</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#set-up-fx">Set up fx</a></li><li><a href="#models-and-effort">Models and effort</a></li><li><a href="#permission-modes">Permission modes</a></li><li><a href="#sub-agents">Sub-agents</a></li><li><a href="#not-supported-yet">Not supported yet</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

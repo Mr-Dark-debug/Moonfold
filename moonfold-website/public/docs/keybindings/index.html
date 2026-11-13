@@ -1,452 +1,223 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Keybindings · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Customize shortcuts in Settings → Keybindings on web and desktop. That page also lists the command IDs and defaults available in your version."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/keybindings/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/keybindings/" />
-    <meta property="og:title" content="Keybindings · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Customize shortcuts in Settings → Keybindings on web and desktop. That page also lists the command IDs and defaults available in your version."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/" aria-current="page">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
-        <h1 id="keybindings">Keybindings</h1>
-        <p>
-          Customize shortcuts in <strong>Settings → Keybindings</strong> on web and desktop. That
-          page also lists the command IDs and defaults available in your version.
-        </p>
-        <p>
-          To find what a shortcut does, select the keyboard button next to the search field and
-          press the shortcut. The list shows every binding that uses exactly that keystroke. Press
-          Escape to stop listening for keys.
-        </p>
-        <h2 id="composer-controls">
-          <a class="anchor" href="#composer-controls">Composer controls</a>
-        </h2>
-        <p>
-          In <strong>Settings → General → Send shortcut</strong>, choose whether Enter sends,
-          requires <code>mod+Enter</code> for multiline prompts, or always requires
-          <code>mod+Enter</code>. <code>Shift+Enter</code> inserts a new line. This applies to the
-          web and desktop composer at desktop widths.
-        </p>
-        <p>
-          <strong>Follow-up behavior</strong> chooses Queue or Steer while the agent runs. Use
-          <code>mod+Enter</code> to do the opposite for one message, even when the send shortcut
-          requires a modifier. <code>mod+Alt+Enter</code> sends, keeps that thread running in the
-          background, and opens a fresh new-thread composer. In a new thread,
-          <code>mod+Enter</code> does the same. Change these shortcuts in
-          <strong>Settings → Keybindings</strong> under
-          <strong>Composer: Opposite Queue or Steer Action</strong>,
-          <strong>Composer: Start in Background</strong>, or
-          <strong>Composer: Send and Start New Thread</strong>. These bindings take priority over
-          the send shortcut. Click the send button to use the configured follow-up behavior.
-        </p>
-        <p>
-          When an active turn has queued messages, <code>mod+Shift+Enter</code> sends the first as a
-          steer. Change it under <strong>Queue: Send First Queued Message as Steer</strong> in
-          Keybindings.
-        </p>
-        <p>
-          Use <code>mod+shift+m</code> to choose a model and <code>mod+shift+h</code> to choose a
-          host. To step a new thread to the next machine instead of opening the menu, bind
-          <strong>Composer: Cycle Host</strong> in Keybindings. It has no default shortcut. Use
-          <code>mod+shift+e</code> for effort, <code>mod+shift+a</code> for access mode,
-          <code>mod+shift+x</code> for the workspace, and <code>mod+shift+g</code> for the Git
-          branch. The workspace menu includes the current checkout, a new worktree, and the previous
-          worktree when available. Use <code>mod+shift+l</code> to reuse the previous worktree
-          directly.
-        </p>
-        <p>
-          In the model picker, press Left in an empty search field or Shift+Tab to reach the
-          provider list. Use Up/Down to move and Enter to choose. Right returns to model search.
-          <code>mod+shift+up</code> and <code>mod+shift+down</code> switch providers directly and
-          clear the search. These provider shortcuts can also be changed in Settings.
-        </p>
-        <p>
-          These shortcuts run inside the focused web or desktop client. <code>mod</code> uses
-          Command on macOS and Ctrl on Windows and Linux, including GNOME, KDE Plasma, Niri, and
-          Hyprland. If a custom desktop shortcut takes the same keys, choose another binding in
-          Settings.
-        </p>
-        <h2 id="copy-pull-request-references">
-          <a class="anchor" href="#copy-pull-request-references">Copy pull request references</a>
-        </h2>
-        <p>
-          With a PR open in the right panel or on the Pull Requests page, use
-          <code>mod+shift+c</code> to copy its URL and <code>mod+shift+k</code> to copy its number
-          with a <code>#</code> prefix. Both shortcuts can be changed in Settings. Search for “Copy
-          Link or Thread ID” or “Copy Number”. They copy the selected PR and leave terminal input
-          alone.
-        </p>
-        <h2 id="find-in-a-diff"><a class="anchor" href="#find-in-a-diff">Find in a diff</a></h2>
-        <p>
-          Click into a diff in the Diff panel or a pull request&#39;s Code tab, then press
-          <code>mod+f</code> to search every file in it, including folded files and unchanged lines
-          hidden between changes. Enter and <code>Shift+Enter</code> move between matches, and a
-          match in a folded file opens it. Escape closes the search. This shortcut is not
-          configurable. A very large uncommitted diff loads its files as you scroll, and find only
-          searches the files loaded so far.
-        </p>
-        <h2 id="ipad"><a class="anchor" href="#ipad">iPad</a></h2>
-        <p>
-          With a hardware keyboard, use <code>Cmd+1</code> through <code>Cmd+9</code> to open the
-          first nine displayed threads. The shortcuts follow the current list filters and order.
-          <code>Cmd+K</code> opens the command palette to search commands, projects, and threads.
-          Use the arrow keys and Return to choose a result, or <code>Cmd+1</code> through
-          <code>Cmd+9</code> to choose directly. Escape or <code>Cmd+K</code> closes the palette.
-          Start a search with <code>&gt;</code> to show only actions.
-        </p>
-        <p>In a new thread, <code>Cmd+Shift+H</code> moves the draft to the next machine.</p>
-        <p>
-          In the composer, Return sends and <code>Shift+Return</code> inserts a new line.
-          <code>Cmd+Return</code> also sends. To make Return insert a new line instead, change the
-          Return key behavior in Settings → Keyboard.
-        </p>
-        <h2 id="edit-the-configuration-file">
-          <a class="anchor" href="#edit-the-configuration-file">Edit the configuration file</a>
-        </h2>
-        <p>
-          Keybindings live on the environment&#39;s machine, in
-          <code>~/.moonfold/userdata/keybindings.json</code> by default. You can edit this file
-          directly. It is a JSON array of rules:
-        </p>
-        <pre><code class="language-json">[
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Keybindings · Moonfold docs</title>
+<meta name="description" content="Customize shortcuts in Settings → Keybindings on web and desktop. That page also lists the command IDs and defaults available in your version.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/keybindings/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/keybindings/">
+<meta property="og:title" content="Keybindings · Moonfold docs">
+<meta property="og:description" content="Customize shortcuts in Settings → Keybindings on web and desktop. That page also lists the command IDs and defaults available in your version.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/" aria-current="page">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
+<h1 id="keybindings">Keybindings</h1>
+<p>Customize shortcuts in <strong>Settings → Keybindings</strong> on web and desktop. That page
+also lists the command IDs and defaults available in your version.</p>
+<p>To find what a shortcut does, select the keyboard button next to the search field
+and press the shortcut. The list shows every binding that uses exactly that
+keystroke. Press Escape to stop listening for keys.</p>
+<h2 id="composer-controls"><a class="anchor" href="#composer-controls">Composer controls</a></h2>
+<p><code>mod+shift+d</code> starts dictation in the focused editor, or the composer, and finishes it on the next press;
+<code>Esc</code> discards the recording. Change the chord under <strong>Composer: Start or Finish
+Dictation</strong>, and the hold or toggle behavior in <strong>Settings → Voice</strong>. See
+<a href="/docs/voice-input/">Voice input</a>.</p>
+<p>In <strong>Settings → Chat → Send shortcut</strong>, choose whether Enter sends, requires
+<code>mod+Enter</code> for multiline prompts, or always requires <code>mod+Enter</code>. <code>Shift+Enter</code>
+inserts a new line. This applies to the web and desktop composer at desktop widths.</p>
+<p><strong>Follow-up behavior</strong> chooses Queue or Steer while the agent runs. Use
+<code>mod+Enter</code> to do the opposite for one message, even when the send shortcut
+requires a modifier. <code>mod+Alt+Enter</code> sends, keeps that thread running in the
+background, and opens a fresh new-thread composer. In a new thread, <code>mod+Enter</code>
+does the same. Change these shortcuts in <strong>Settings → Keybindings</strong> under
+<strong>Composer: Opposite Queue or Steer Action</strong>, <strong>Composer: Start in Background</strong>,
+or <strong>Composer: Send and Start New Thread</strong>. These bindings take priority over the
+send shortcut. Click the send button to use the configured follow-up behavior.</p>
+<p>When a thread has queued messages, <code>mod+Shift+Enter</code> sends the first one as a steer
+while a turn is running, or as a new turn when the thread is stopped. Change it under
+<strong>Queue: Send First Queued Message</strong> in Keybindings.</p>
+<p>Use <code>mod+shift+m</code> to choose a model and <code>mod+shift+h</code> to choose a host.
+To step a new thread to the next machine instead of opening the menu, bind
+<strong>Composer: Cycle Host</strong> in Keybindings. It has no default shortcut.
+Use <code>mod+shift+e</code> for effort, <code>mod+shift+a</code> for permissions, <code>mod+shift+x</code> for the
+workspace, and <code>mod+shift+g</code> for the Git branch. The workspace menu includes the
+current checkout, a new worktree, and the previous worktree when available.
+Use <code>mod+shift+l</code> to reuse the previous worktree directly.</p>
+<p>To change effort one step without opening the picker, bind
+<strong>Composer: Increase Effort</strong> and <strong>Composer: Decrease Effort</strong> in Keybindings.
+Both are unbound by default. Increase wraps from the highest level to the
+lowest, and decrease wraps from the lowest level to the highest.</p>
+<p>In the model picker, press Left in an empty search field or Shift+Tab to reach
+the provider list. Use Up/Down to move and Enter to choose. Right returns to
+model search. Right at the end of the search moves to the highlighted model&#39;s effort
+levels, and Left comes back. Choosing a model keeps the picker open on its effort. <code>mod+shift+up</code> and <code>mod+shift+down</code> switch providers directly and clear the
+search. These provider shortcuts can also be changed in Settings.</p>
+<p>These shortcuts run inside the focused web or desktop client. <code>mod</code> uses Command
+on macOS and Ctrl on Windows and Linux, including GNOME, KDE Plasma, Niri, and
+Hyprland. If a custom desktop shortcut takes the same keys, choose another binding
+in Settings.</p>
+<h2 id="copy-pull-request-references"><a class="anchor" href="#copy-pull-request-references">Copy pull request references</a></h2>
+<p>With a PR open in the right panel or on the Pull requests page, use <code>mod+shift+c</code>
+to copy its URL and <code>mod+shift+k</code> to copy its number with a <code>#</code> prefix.
+Both shortcuts can be changed in Settings. Search for “Copy Link or Thread”
+or “Copy Number”. They copy the selected PR and leave terminal input alone.
+Without a PR, <code>mod+shift+c</code> copies the thread itself, which pastes into a
+composer as a thread chip.</p>
+<h2 id="find-in-a-diff"><a class="anchor" href="#find-in-a-diff">Find in a diff</a></h2>
+<p>Click into a diff in the Diff panel or a pull request&#39;s Code tab, then press
+<code>mod+f</code> to search every file in it, including folded files and unchanged lines
+hidden between changes. Enter and <code>Shift+Enter</code> move between matches, and a
+match in a folded file opens it. Escape closes the search. This shortcut is not
+configurable. A very large uncommitted diff loads its files as you scroll, and
+find only searches the files loaded so far.</p>
+<h2 id="ipad"><a class="anchor" href="#ipad">iPad</a></h2>
+<p>With a hardware keyboard, use <code>Cmd+1</code> through <code>Cmd+9</code> to open the first nine
+displayed threads. The shortcuts follow the current list filters and order.
+<code>Cmd+K</code> opens the command palette to search commands, projects, and threads.
+Use the arrow keys and Return to choose a result, or <code>Cmd+1</code> through <code>Cmd+9</code> to
+choose directly. Escape or <code>Cmd+K</code> closes the palette. Start a search with <code>&gt;</code>
+to show only actions.</p>
+<p>In a new thread, <code>Cmd+Shift+H</code> moves the draft to the next machine.</p>
+<p>In the composer, Return sends and <code>Shift+Return</code> inserts a new line. <code>Cmd+Return</code>
+also sends. To make Return insert a new line instead, change the Return key
+behavior in Settings → Keyboard.</p>
+<h2 id="edit-the-configuration-file"><a class="anchor" href="#edit-the-configuration-file">Edit the configuration file</a></h2>
+<p>Keybindings live on the environment&#39;s machine, in
+<code>~/.moonfold/userdata/keybindings.json</code> by default. You can edit this file directly.
+It is a JSON array of rules:</p>
+<pre><code class="language-json">[
   { &quot;key&quot;: &quot;mod+g&quot;, &quot;command&quot;: &quot;terminal.toggle&quot; },
   { &quot;key&quot;: &quot;mod+shift+g&quot;, &quot;command&quot;: &quot;terminal.new&quot;, &quot;when&quot;: &quot;terminalFocus&quot; }
 ]
 </code></pre>
-        <p>
-          Moonfold creates the file with its defaults and adds new defaults on later startups. New
-          defaults do not replace commands you customized. If a new default overlaps one of your
-          shortcuts, <a href="#precedence">rule order</a> decides which runs. Invalid rules are
-          ignored; if the file cannot be parsed, Moonfold uses defaults.
-        </p>
-        <h2 id="rule-shape"><a class="anchor" href="#rule-shape">Rule shape</a></h2>
-        <p>
-          Each rule requires a <code>key</code> shortcut and a <code>command</code> ID. An optional
-          <code>when</code> expression restricts when it runs.
-        </p>
-        <p>
-          Project scripts use <code>script.{id}.run</code>, such as <code>script.test.run</code>.
-        </p>
-        <h2 id="key-syntax"><a class="anchor" href="#key-syntax">Key syntax</a></h2>
-        <p>
-          Join modifiers and a key with <code>+</code>, such as <code>mod+shift+d</code> or
-          <code>ctrl+l</code>. <code>mod</code> means Command on macOS and Control elsewhere. Other
-          modifiers are <code>cmd</code> / <code>meta</code>, <code>ctrl</code> /
-          <code>control</code>, <code>alt</code> / <code>option</code>, and <code>shift</code>.
-        </p>
-        <h2 id="when-conditions"><a class="anchor" href="#when-conditions">When conditions</a></h2>
-        <p>
-          Available context keys are <code>terminalFocus</code>, <code>terminalOpen</code>,
-          <code>previewFocus</code>, <code>previewOpen</code>, <code>modelPickerOpen</code>,
-          <code>usagePageOpen</code>, <code>composerFocus</code>, <code>composerDraft</code>,
-          <code>turnRunning</code>, <code>editableFocus</code>, <code>isWeb</code>, and
-          <code>isDesktop</code>. <code>editableFocus</code> is true while a text field, the
-          composer, or another editor has the keyboard. <code>isWeb</code> is true in a browser tab.
-          <code>isDesktop</code> is true in the desktop app. Unknown keys evaluate to
-          <code>false</code>.
-        </p>
-        <p>
-          <code>mod+1</code> through <code>mod+9</code> jump to the first nine threads, and to
-          models while the model picker is open. The thread jumps do not run while the model picker
-          is open. Those defaults use <code>isDesktop</code> so they do not steal the browser&#39;s
-          tab-switch shortcuts. Remove that condition in Settings if you want the same jumps in a
-          browser.
-        </p>
-        <p>
-          Combine keys with <code>!</code> for not, <code>&amp;&amp;</code> for and,
-          <code>||</code> for or, and parentheses:
-        </p>
-        <pre><code class="language-json">{ &quot;key&quot;: &quot;mod+j&quot;, &quot;command&quot;: &quot;terminal.toggle&quot;, &quot;when&quot;: &quot;terminalOpen &amp;&amp; !terminalFocus&quot; }
+<p>Moonfold creates the file with its defaults and adds new defaults on later startups.
+New defaults do not replace commands you customized. If a new default overlaps one
+of your shortcuts, <a href="#precedence">rule order</a> decides which runs.
+Invalid rules are ignored; if the file cannot be parsed, Moonfold uses defaults.</p>
+<h2 id="rule-shape"><a class="anchor" href="#rule-shape">Rule shape</a></h2>
+<p>Each rule requires a <code>key</code> shortcut and a <code>command</code> ID. An optional <code>when</code>
+expression restricts when it runs.</p>
+<p>Project scripts use <code>script.{id}.run</code>, such as <code>script.test.run</code>.</p>
+<h2 id="key-syntax"><a class="anchor" href="#key-syntax">Key syntax</a></h2>
+<p>Join modifiers and a key with <code>+</code>, such as <code>mod+shift+d</code> or <code>ctrl+l</code>.
+<code>mod</code> means Command on macOS and Control elsewhere. Other modifiers are
+<code>cmd</code> / <code>meta</code>, <code>ctrl</code> / <code>control</code>, <code>alt</code> / <code>option</code>, and <code>shift</code>.</p>
+<h2 id="when-conditions"><a class="anchor" href="#when-conditions">When conditions</a></h2>
+<p>Available context keys are <code>terminalFocus</code>, <code>terminalOpen</code>, <code>previewFocus</code>,
+<code>previewOpen</code>, <code>rightPanelOpen</code>, <code>modelPickerOpen</code>, <code>usagePageOpen</code>, <code>composerFocus</code>,
+<code>draftThreadRoute</code>, <code>turnRunning</code>, <code>editableFocus</code>, <code>isWeb</code>, and <code>isDesktop</code>.
+<code>rightPanelOpen</code> applies only to <code>rightPanel.new</code> and is true while the right panel is
+open; the default <code>mod+t</code> uses it to open the panel&#39;s new-tab menu.
+<code>draftThreadRoute</code> is true on a draft thread, including a restored draft, until it is first sent.
+<code>editableFocus</code> is true while a text field, the composer, or another editor has
+the keyboard. <code>isWeb</code> is true in a browser tab. <code>isDesktop</code> is true in the
+desktop app. Unknown keys evaluate to <code>false</code>.</p>
+<p><code>mod+1</code> through <code>mod+9</code> jump to the first nine threads, and to models while the
+model picker is open. The thread jumps do not run while the model picker is open.
+Those defaults use <code>isDesktop</code> so they do not steal the
+browser&#39;s tab-switch shortcuts. Remove that condition in Settings if you want
+the same jumps in a browser.</p>
+<p>Combine keys with <code>!</code> for not, <code>&amp;&amp;</code> for and, <code>||</code> for or, and parentheses:</p>
+<pre><code class="language-json">{ &quot;key&quot;: &quot;mod+j&quot;, &quot;command&quot;: &quot;terminal.toggle&quot;, &quot;when&quot;: &quot;terminalOpen &amp;&amp; !terminalFocus&quot; }
 </code></pre>
-        <h2 id="find-in-the-current-thread">
-          <a class="anchor" href="#find-in-the-current-thread">Find in the current thread</a>
-        </h2>
-        <p>
-          <code>chat.find</code> searches conversation messages and proposed plans in the active
-          thread. Entering a query searches the entire thread, including older messages. Thread
-          search requires server support; update an older server to enable it. Select
-          <strong>Retry</strong> if a search fails. It defaults to <code>mod+f</code> outside
-          terminals and previews. Press <strong>Enter</strong> or <strong>Shift+Enter</strong> to
-          move between matches, and <strong>Escape</strong> to close find.
-        </p>
-        <h2 id="precedence"><a class="anchor" href="#precedence">Precedence</a></h2>
-        <p>
-          The last rule whose key and condition both match wins, even if it belongs to a different
-          command. Put a more specific rule after a general one when they share a shortcut.
-        </p>
-        <h2 id="commands-with-special-behavior">
-          <a class="anchor" href="#commands-with-special-behavior"
-            >Commands with special behavior</a
-          >
-        </h2>
-        <p>
-          <code>thread.stop</code> interrupts the running turn in the focused thread. It has no
-          default shortcut; assign one in <strong>Settings → Keybindings</strong>.
-        </p>
-        <p>
-          <code>thread.undo</code> (<code>mod+z</code> by default) reverses the actions shown in the
-          notice at the bottom of the sidebar, such as unpin, settle, snooze, archive, or discarding
-          a draft. Consecutive actions of the same kind undo together. The notice remains available
-          for five seconds after the latest action. The default shortcut skips text fields and
-          terminals so native undo keeps working there.
-        </p>
-        <p>
-          <code>navigation.back</code> (<code>mod+[</code> by default) and
-          <code>navigation.forward</code> (<code>mod+]</code>) move through the pages you have
-          visited, like a browser&#39;s back and forward buttons.
-        </p>
-        <p>
-          <code>chat.new</code> may ask you to choose a project when there is more than one.
-          <code>chat.newLocal</code> skips that chooser. Both use your
-          <a href="/docs/thread-sidebar/#start-a-thread">new-thread defaults</a>.
-          <code>chat.newWithoutProject</code> (<code>mod+alt+n</code>) starts a thread
-          <a href="/docs/thread-sidebar/#start-without-a-project">without a project</a>.
-        </p>
-        <h2 id="reserved-shortcuts">
-          <a class="anchor" href="#reserved-shortcuts">Reserved shortcuts</a>
-        </h2>
-        <p>
-          In the desktop app, <code>mod+w</code> closes the focused terminal or the active
-          right-panel tab. When nothing remains to close, it closes the window. In a browser,
-          <code>mod+w</code> closes the browser tab; rebind <code>rightPanel.close</code> and
-          <code>terminal.close</code> to an available shortcut such as <code>alt+w</code>.
-        </p>
-        <p>
-          <code>mod+shift+t</code> reopens the last closed tab across the app, including files,
-          diffs, pull requests, browsers, and devices, in the order you closed them. A browser opens
-          in a fresh session without its old page history. Incognito tabs can reopen until you
-          reload or quit the app. This shortcut does not undo deleted work. Browsers also use it to
-          reopen browser tabs; choose another binding in Settings if the browser takes it first.
-        </p>
-        <p>
-          Many defaults include <code>!terminalFocus</code> so they do not intercept terminal input.
-          Keep that condition when remapping them if you want the same behavior.
-        </p>
-        <h2 id="desktop-quit-shortcut">
-          <a class="anchor" href="#desktop-quit-shortcut">Desktop quit shortcut</a>
-        </h2>
-        <p>
-          Use <code>Cmd+Q</code> on macOS or <code>Ctrl+Q</code> on Windows and Linux. In the
-          default <strong>Hold</strong> mode, hold for 1.2 seconds or press twice within 500
-          milliseconds. Holding requires keyboard repeat; if repeat is disabled, use two presses or
-          the application menu.
-        </p>
-        <p>
-          Change <strong>Settings → General → Confirmations → Quit shortcut</strong> to
-          <strong>Direct</strong> for a single press or <strong>Double press</strong> for two
-          presses only. Choosing <strong>Quit</strong> from the application menu always quits
-          immediately.
-        </p>
-        <h2 id="quick-window"><a class="anchor" href="#quick-window">Quick window</a></h2>
-        <p>
-          The desktop app can open a small window from anywhere with a global shortcut. Set it in
-          <strong>Settings → General → Quick window shortcut</strong>: choose
-          <strong>Set shortcut</strong> and press a key with at least one of <code>Ctrl</code>,
-          <code>Alt</code>, or <code>Cmd</code>. It is off until you set one.
-        </p>
-        <p>
-          The shortcut opens a new thread in your most recently used project, in a window that stays
-          on top of other apps (use the pin in its header to change that). Press the shortcut again
-          to hide the window while it is in front, and once more to bring it back. If another app
-          already holds the shortcut, the setting says so and you can pick a different one.
-          <strong>Turn off</strong> releases it.
-        </p>
+<h2 id="find-in-the-current-thread"><a class="anchor" href="#find-in-the-current-thread">Find in the current thread</a></h2>
+<p><code>chat.find</code> searches conversation messages and proposed plans in the active thread. Entering a
+query searches the entire thread, including older messages. Thread search requires server support;
+update an older server to enable it. Select <strong>Retry</strong> if a search fails. It defaults to
+<code>mod+f</code> outside terminals and previews. Press <strong>Enter</strong> or <strong>Shift+Enter</strong> to move between matches,
+and <strong>Escape</strong> to close find.</p>
+<h2 id="precedence"><a class="anchor" href="#precedence">Precedence</a></h2>
+<p>The last rule whose key and condition both match wins, even if it belongs to a
+different command. Put a more specific rule after a general one when they share
+a shortcut.</p>
+<h2 id="commands-with-special-behavior"><a class="anchor" href="#commands-with-special-behavior">Commands with special behavior</a></h2>
+<p><code>thread.stop</code> interrupts the running turn in the focused thread. It has no default
+shortcut; assign one in <strong>Settings → Keybindings</strong>.</p>
+<p><code>thread.undo</code> (<code>mod+z</code> by default) reverses the actions shown in the notice at the
+bottom of the sidebar, such as unpin, settle, snooze, archive, or discarding a
+draft. Consecutive
+actions of the same kind undo together. The notice remains available for five
+seconds after the latest action. Right after an action, the shortcut works even
+in a text field such as the composer. Once you type or press another key, the
+field gets its own undo back. Terminals always keep their native shortcut.</p>
+<p><code>navigation.back</code> (<code>mod+[</code> by default) and <code>navigation.forward</code> (<code>mod+]</code>) move
+through the pages you have visited, like a browser&#39;s back and forward buttons.</p>
+<p><code>chat.new</code> may ask you to choose a project when there is more than one.
+<code>chat.newLocal</code> skips that chooser. Both use your
+<a href="/docs/thread-sidebar/#start-a-thread">new-thread defaults</a>. <code>chat.newWithoutProject</code>
+(<code>mod+alt+n</code>) starts a thread <a href="/docs/thread-sidebar/#start-without-a-project">without a project</a>.</p>
+<h2 id="reserved-shortcuts"><a class="anchor" href="#reserved-shortcuts">Reserved shortcuts</a></h2>
+<p>In the desktop app, <code>mod+w</code> closes the focused terminal or the active right-panel
+tab. When nothing remains to close, it does nothing; it never closes the window. In a browser, <code>mod+w</code>
+closes the browser tab; rebind <code>rightPanel.close</code> and <code>terminal.close</code> to an available
+shortcut such as <code>alt+w</code>.</p>
+<p><code>mod+shift+t</code> reopens the last closed tab across the app, including files,
+diffs, pull requests, browsers, and devices, in the order you closed them.
+A browser opens in a fresh session without its old page history. Incognito tabs
+can reopen until you reload or quit the app. This shortcut does not undo deleted work.
+Browsers also use it to reopen browser tabs; choose another binding in Settings
+if the browser takes it first.</p>
+<p>Many defaults include <code>!terminalFocus</code> so they do not intercept terminal input.
+Keep that condition when remapping them if you want the same behavior.</p>
+<h2 id="desktop-quit-shortcut"><a class="anchor" href="#desktop-quit-shortcut">Desktop quit shortcut</a></h2>
+<p>Use <code>Cmd+Q</code> on macOS or <code>Ctrl+Q</code> on Windows and Linux. In the default <strong>Hold</strong> mode,
+hold for 1.2 seconds or press twice within 500 milliseconds. Holding requires
+keyboard repeat; if repeat is disabled, use two presses or the application menu.</p>
+<p>Change <strong>Settings → General → Confirmations → Quit shortcut</strong> to <strong>Direct</strong> for a
+single press or <strong>Double press</strong> for two presses only. Choosing <strong>Quit</strong> from the
+application menu always quits immediately.</p>
+<h2 id="quick-window"><a class="anchor" href="#quick-window">Quick window</a></h2>
+<p>The desktop app can open a small window from anywhere with a global shortcut. Set it in
+<strong>Settings → General → Quick window shortcut</strong>: choose <strong>Set shortcut</strong> and press a key with at
+least one of <code>Ctrl</code>, <code>Alt</code>, or <code>Cmd</code>. It is off until you set one.</p>
+<p>The shortcut opens a new thread in your most recently used project, in a window that stays on
+top of other apps (use the pin in its header to change that). Press the shortcut again to hide
+the window while it is in front, and once more to bring it back. If another app already holds
+the shortcut, the setting says so and you can pick a different one. <strong>Turn off</strong> releases it.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/keybindings.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/html-renders/"><small>Previous</small><span>Visual replies</span></a
-          ><a class="next" href="/docs/keyboard-focus/"
-            ><small>Next</small><span>Keyboard focus</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#composer-controls">Composer controls</a></li>
-            <li><a href="#copy-pull-request-references">Copy pull request references</a></li>
-            <li><a href="#find-in-a-diff">Find in a diff</a></li>
-            <li><a href="#ipad">iPad</a></li>
-            <li><a href="#edit-the-configuration-file">Edit the configuration file</a></li>
-            <li><a href="#rule-shape">Rule shape</a></li>
-            <li><a href="#key-syntax">Key syntax</a></li>
-            <li><a href="#when-conditions">When conditions</a></li>
-            <li><a href="#find-in-the-current-thread">Find in the current thread</a></li>
-            <li><a href="#precedence">Precedence</a></li>
-            <li><a href="#commands-with-special-behavior">Commands with special behavior</a></li>
-            <li><a href="#reserved-shortcuts">Reserved shortcuts</a></li>
-            <li><a href="#desktop-quit-shortcut">Desktop quit shortcut</a></li>
-            <li><a href="#quick-window">Quick window</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/keybindings.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/html-renders/"><small>Previous</small><span>Visual replies</span></a><a class="next" href="/docs/keyboard-focus/"><small>Next</small><span>Keyboard focus</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#composer-controls">Composer controls</a></li><li><a href="#copy-pull-request-references">Copy pull request references</a></li><li><a href="#find-in-a-diff">Find in a diff</a></li><li><a href="#ipad">iPad</a></li><li><a href="#edit-the-configuration-file">Edit the configuration file</a></li><li><a href="#rule-shape">Rule shape</a></li><li><a href="#key-syntax">Key syntax</a></li><li><a href="#when-conditions">When conditions</a></li><li><a href="#find-in-the-current-thread">Find in the current thread</a></li><li><a href="#precedence">Precedence</a></li><li><a href="#commands-with-special-behavior">Commands with special behavior</a></li><li><a href="#reserved-shortcuts">Reserved shortcuts</a></li><li><a href="#desktop-quit-shortcut">Desktop quit shortcut</a></li><li><a href="#quick-window">Quick window</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

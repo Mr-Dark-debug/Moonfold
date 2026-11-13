@@ -1,281 +1,109 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Moonfold 0.1.0-beta.2 release notes | Moonfold</title>
-    <meta
-      name="description"
-      content="A new mark, OpenCode handoffs and Edit this page links from our first outside contributors, and the known limits of this beta."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/blog/moonfold-0-1-0-beta-2/" />
-    <meta property="og:type" content="article" />
-    <meta
-      property="og:url"
-      content="https://moonfold-website.vercel.app/blog/moonfold-0-1-0-beta-2/"
-    />
-    <meta property="og:title" content="Moonfold 0.1.0-beta.2 release notes | Moonfold" />
-    <meta
-      property="og:description"
-      content="A new mark, OpenCode handoffs and Edit this page links from our first outside contributors, and the known limits of this beta."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Moonfold 0.1.0-beta.2 release notes",
-        "description": "A new mark, OpenCode handoffs and Edit this page links from our first outside contributors, and the known limits of this beta.",
-        "datePublished": "2026-10-26",
-        "author": { "@type": "Organization", "name": "The Moonfold team" },
-        "mainEntityOfPage": "https://moonfold-website.vercel.app/blog/moonfold-0-1-0-beta-2/"
-      }
-    </script>
-  </head>
-  <body class="page-post">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/">Docs</a>
-        <a href="/blog/" aria-current="page">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <main class="post" id="content">
-      <div class="post-head">
-        <p class="crumbs">
-          <a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a
-          ><span aria-hidden="true">/</span><a href="/blog/#releases">Releases</a>
-        </p>
-        <p class="eyebrow">Releases</p>
-        <h1>Moonfold 0.1.0-beta.2 release notes</h1>
-        <p class="lede">
-          A new mark, OpenCode handoffs and Edit this page links from our first outside
-          contributors, and the known limits of this beta.
-        </p>
-        <dl class="post-facts">
-          <div>
-            <dt>Written by</dt>
-            <dd>The Moonfold team</dd>
-          </div>
-          <div>
-            <dt>Published</dt>
-            <dd><time datetime="2026-10-26">Oct 26, 2026</time></dd>
-          </div>
-          <div>
-            <dt>Reading time</dt>
-            <dd>2 min</dd>
-          </div>
-        </dl>
-      </div>
-      <div class="post-body-wrap">
-        <nav class="post-toc" aria-label="In this post">
-          <h2>In this post</h2>
-          <ul>
-            <li><a href="#what-is-new">What is new</a></li>
-            <li><a href="#install">Install</a></li>
-            <li><a href="#known-limits">Known limits</a></li>
-          </ul>
-        </nav>
-        <article class="prose">
-          <p>
-            The second Moonfold beta is out. It has a new look, OpenCode handoffs and docs edit
-            links from our first outside contributors, and fixes from the first week.
-          </p>
-          <h2 id="what-is-new"><a class="anchor" href="#what-is-new">What is new</a></h2>
-          <ul>
-            <li>
-              <strong>A new mark.</strong> The app icon, favicons, installer artwork and docs site
-              use the ringed-moon logo, and the command-line installers draw it in your terminal
-              while they work.
-            </li>
-            <li>
-              <strong>OpenCode hands off at its usage limit.</strong> Its limit errors now start a
-              handoff like Codex and Claude Code do, instead of showing as an ordinary error. Thanks
-              to @Aaqibhafeezkhan.
-            </li>
-            <li>
-              <strong>Edit this page links</strong> on every page of the docs. Thanks to
-              @sadhana-s-codez.
-            </li>
-            <li>
-              After a handoff, the composer stays on the thread&#39;s new agent instead of switching
-              back.
-            </li>
-            <li>
-              Releases are marked as the latest release on GitHub, and every update check, installer
-              and model or schema download points only at this repository.
-            </li>
-          </ul>
-          <h2 id="install"><a class="anchor" href="#install">Install</a></h2>
-          <p>
-            Download the <code>.dmg</code>, <code>.exe</code>, or <code>.AppImage</code> /
-            <code>.deb</code> for your machine from the
-            <a
-              href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-              target="_blank"
-              rel="noopener noreferrer"
-              >releases page</a
-            >. Beta 1 installs update to this release on their own. From a terminal, use the
-            installer script for macOS and Linux, or the PowerShell one on Windows; both are in the
-            <a href="/docs/install/">install guide</a>, and you can read the script before running
-            it. <code>SHA256SUMS</code> lists a checksum for every file, and the SBOM lists every
-            dependency.
-          </p>
-          <h2 id="known-limits"><a class="anchor" href="#known-limits">Known limits</a></h2>
-          <p>We would rather list these than have you find them:</p>
-          <ul>
-            <li>
-              The installers are <strong>not signed</strong>, so macOS and Windows warn before the
-              first launch.
-            </li>
-            <li>
-              The desktop app takes about four seconds to become usable on a mid-range Windows
-              laptop. A splash shows within a second. Getting under three seconds is on the list.
-            </li>
-            <li>
-              Verified on real installs: Codex CLI and Claude Code on Windows 11. Gemini CLI
-              connects over ACP. Cursor, Grok Build and Antigravity are carried over from T3 Code
-              and were not checked on a real install for this beta.
-            </li>
-            <li>
-              Cursor and other ACP agents report limits as ordinary errors, so hand off from them by
-              hand.
-            </li>
-            <li>Computer use is Windows only.</li>
-          </ul>
-          <p>
-            This is a beta: back up anything important before letting an agent change it. Problems
-            and ideas go to the
-            <a
-              href="https://github.com/Mr-Dark-debug/Moonfold/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              >issue tracker</a
-            >, and issues labelled <code>good first issue</code> are a good place to start
-            contributing.
-          </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Moonfold 0.1.0-beta.2 release notes | Moonfold</title>
+<meta name="description" content="A new mark, OpenCode handoffs and Edit this page links from our first outside contributors, and the known limits of this beta.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/blog/moonfold-0-1-0-beta-2/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://moonfold-website.vercel.app/blog/moonfold-0-1-0-beta-2/">
+<meta property="og:title" content="Moonfold 0.1.0-beta.2 release notes | Moonfold">
+<meta property="og:description" content="A new mark, OpenCode handoffs and Edit this page links from our first outside contributors, and the known limits of this beta.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Moonfold 0.1.0-beta.2 release notes","description":"A new mark, OpenCode handoffs and Edit this page links from our first outside contributors, and the known limits of this beta.","datePublished":"2026-10-26","author":{"@type":"Organization","name":"The Moonfold team"},"mainEntityOfPage":"https://moonfold-website.vercel.app/blog/moonfold-0-1-0-beta-2/"}</script>
+</head>
+<body class="page-post">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/">Docs</a>
+    <a href="/blog/" aria-current="page">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<main class="post" id="content">
+<div class="post-head">
+<p class="crumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><a href="/blog/#releases">Releases</a></p>
+<p class="eyebrow">Releases</p>
+<h1>Moonfold 0.1.0-beta.2 release notes</h1>
+<p class="lede">A new mark, OpenCode handoffs and Edit this page links from our first outside contributors, and the known limits of this beta.</p>
+<dl class="post-facts">
+<div><dt>Written by</dt><dd>The Moonfold team</dd></div>
+<div><dt>Published</dt><dd><time datetime="2026-10-26">Oct 26, 2026</time></dd></div>
+<div><dt>Reading time</dt><dd>2 min</dd></div>
+</dl>
+</div>
+<div class="post-body-wrap">
+<nav class="post-toc" aria-label="In this post"><h2>In this post</h2><ul><li><a href="#what-is-new">What is new</a></li><li><a href="#install">Install</a></li><li><a href="#known-limits">Known limits</a></li></ul></nav>
+<article class="prose">
+<p>The second Moonfold beta is out. It has a new look, OpenCode handoffs and docs edit links from our first outside contributors, and fixes from the first week.</p>
+<h2 id="what-is-new"><a class="anchor" href="#what-is-new">What is new</a></h2>
+<ul>
+<li><strong>A new mark.</strong> The app icon, favicons, installer artwork and docs site use the ringed-moon logo, and the command-line installers draw it in your terminal while they work.</li>
+<li><strong>OpenCode hands off at its usage limit.</strong> Its limit errors now start a handoff like Codex and Claude Code do, instead of showing as an ordinary error. Thanks to @Aaqibhafeezkhan.</li>
+<li><strong>Edit this page links</strong> on every page of the docs. Thanks to @sadhana-s-codez.</li>
+<li>After a handoff, the composer stays on the thread&#39;s new agent instead of switching back.</li>
+<li>Releases are marked as the latest release on GitHub, and every update check, installer and model or schema download points only at this repository.</li>
+</ul>
+<h2 id="install"><a class="anchor" href="#install">Install</a></h2>
+<p>Download the <code>.dmg</code>, <code>.exe</code>, or <code>.AppImage</code> / <code>.deb</code> for your machine from the <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">releases page</a>. Beta 1 installs update to this release on their own. From a terminal, use the installer script for macOS and Linux, or the PowerShell one on Windows; both are in the <a href="/docs/install/">install guide</a>, and you can read the script before running it. <code>SHA256SUMS</code> lists a checksum for every file, and the SBOM lists every dependency.</p>
+<h2 id="known-limits"><a class="anchor" href="#known-limits">Known limits</a></h2>
+<p>We would rather list these than have you find them:</p>
+<ul>
+<li>The installers are <strong>not signed</strong>, so macOS and Windows warn before the first launch.</li>
+<li>The desktop app takes about four seconds to become usable on a mid-range Windows laptop. A splash shows within a second. Getting under three seconds is on the list.</li>
+<li>Verified on real installs: Codex CLI and Claude Code on Windows 11. Gemini CLI connects over ACP. Cursor, Grok Build and Antigravity are carried over from T3 Code and were not checked on a real install for this beta.</li>
+<li>Cursor and other ACP agents report limits as ordinary errors, so hand off from them by hand.</li>
+<li>Computer use is Windows only.</li>
+</ul>
+<p>This is a beta: back up anything important before letting an agent change it. Problems and ideas go to the <a href="https://github.com/Mr-Dark-debug/Moonfold/issues" target="_blank" rel="noopener noreferrer">issue tracker</a>, and issues labelled <code>good first issue</code> are a good place to start contributing.</p>
 
-          <div class="post-cta">
-            <p>
-              <strong>Try Moonfold.</strong> It is free, open source and runs the agents you already
-              use, with your own logins.
-            </p>
-            <a
-              class="btn btn-solid"
-              href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Download the beta</a
-            >
-          </div>
-        </article>
-      </div>
-      <section class="related">
-        <h2>Keep reading</h2>
-        <div class="post-grid">
-          <article class="post-card">
-            <a href="/blog/moonfold-0-1-0-beta-4/">
-              <span class="post-no" aria-hidden="true">01</span>
-              <span class="post-cat">Releases</span>
-              <h3>Moonfold 0.1.0-beta.4: your agents on your phone, with no account</h3>
-              <p>
-                Beta 4 adds Moonfold for Android, paired with one QR scan over an encrypted
-                connection to your own computer, plus content exclusions and a token limit for one
-                run.
-              </p>
-              <span class="post-meta">Nov 2, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-          <article class="post-card">
-            <a href="/blog/moonfold-0-1-0-beta-3/">
-              <span class="post-no" aria-hidden="true">02</span>
-              <span class="post-cat">Releases</span>
-              <h3>
-                Moonfold 0.1.0-beta.3: DeepSeek Harness, local models, prompt profiles, scheduled
-                messages
-              </h3>
-              <p>
-                Beta 3 adds DeepSeek Harness, local Ollama and LM Studio models through Pi, prompt
-                profiles for every agent, and messages you can schedule for later.
-              </p>
-              <span class="post-meta">Oct 28, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-          <article class="post-card">
-            <a href="/blog/when-your-agent-hits-its-limit/">
-              <span class="post-no" aria-hidden="true">03</span>
-              <span class="post-cat">Handoff</span>
-              <h3>When your agent hits its limit, the task should keep going</h3>
-              <p>
-                How Moonfold moves a thread from one coding agent to another at a usage limit, what
-                you see before anything is sent, and how to go back.
-              </p>
-              <span class="post-meta">Oct 27, 2026 · 2 min read</span>
-              <span class="post-go">Read the post <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
-        </div>
-      </section>
-    </main>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<div class="post-cta"><p><strong>Try Moonfold.</strong> It is free, open source and runs the agents you already use, with your own logins.</p><a class="btn btn-solid" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download the beta</a></div>
+</article>
+</div>
+<section class="related"><h2>Keep reading</h2><div class="post-grid"><article class="post-card"><a href="/blog/moonfold-1-0-0-beta-6/">
+<span class="post-no" aria-hidden="true">01</span>
+<span class="post-cat">Releases</span>
+<h3>Moonfold 1.0.0-beta.6: Orbit, your phone on any network, and self-fixing pull requests</h3>
+<p>Beta 6 adds Orbit, a crew that keeps working on your project, lets the Android app reach your computer from anywhere, and fixes failing pull request checks.</p>
+<span class="post-meta">Nov 13, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/moonfold-1-0-0-beta-7/">
+<span class="post-no" aria-hidden="true">02</span>
+<span class="post-cat">Releases</span>
+<h3>Moonfold 1.0.0-beta.7: safer Windows upgrades, settings that stay put, Stable or Beta</h3>
+<p>Beta 7 fixes Windows upgrades that left Moonfold missing, stops seven settings pages from crashing, and lets you choose Stable or Beta updates.</p>
+<span class="post-meta">Nov 13, 2026 · 1 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/moonfold-0-1-0-beta-5/">
+<span class="post-no" aria-hidden="true">03</span>
+<span class="post-cat">Releases</span>
+<h3>Moonfold 0.1.0-beta.5: a redesigned workspace and home screen artwork</h3>
+<p>Beta 5 brings a redesigned thread and composer, artwork behind the new thread screen, brand kits with /brand, question cards and better review tools.</p>
+<span class="post-meta">Nov 10, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article></div></section>
+</main>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

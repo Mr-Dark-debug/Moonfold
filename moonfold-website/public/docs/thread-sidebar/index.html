@@ -1,494 +1,330 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>Working with threads · Moonfold docs</title>
-    <meta
-      name="description"
-      content="Use a new thread for a separate task. Choose New worktree when its code changes need a separate branch and working directory."
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/thread-sidebar/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/thread-sidebar/" />
-    <meta property="og:title" content="Working with threads · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="Use a new thread for a separate task. Choose New worktree when its code changes need a separate branch and working directory."
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li>
-                  <a href="/docs/thread-sidebar/" aria-current="page">Working with threads</a>
-                </li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs">
-          <a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents
-        </p>
-        <h1 id="working-with-threads">Working with threads</h1>
-        <p>
-          Use a new thread for a separate task. Choose <strong>New worktree</strong> when its code
-          changes need a separate branch and working directory.
-        </p>
-        <h2 id="start-a-thread"><a class="anchor" href="#start-a-thread">Start a thread</a></h2>
-        <p>
-          On web and desktop, a new thread keeps the current project and carries your model and mode
-          selections, unless the destination project has its own model default. Its branch and
-          workspace mode come from your configured defaults. To continue in an existing worktree,
-          use <strong>New thread in this worktree</strong> from the branch toolbar.
-        </p>
-        <p>
-          When you change a new thread&#39;s project, Moonfold stays in the current environment if
-          that project exists there. Otherwise it selects an environment that has it.
-        </p>
-        <h3 id="start-without-a-project">
-          <a class="anchor" href="#start-without-a-project">Start without a project</a>
-        </h3>
-        <p>
-          A thread does not need a project. To start one without a project, click
-          <strong>or start without a project</strong> under a new thread&#39;s heading, pick
-          <strong>No project</strong> from the project menu in that heading or from
-          <strong>New thread in...</strong> in the command palette, or press
-          <code>mod+alt+n</code>.It starts on your current machine; before sending, pick another
-          machine from the machine menu to move it there. To move a draft into a project, pick the
-          project in the heading.
-        </p>
-        <p>
-          Each thread without a project works in its own folder under
-          <code>~/.moonfold/scratch</code> (the <code>scratch</code> folder of your Moonfold data
-          directory), named after its date, the first words of its first message, and a short id,
-          like <code>2026-09-25-convert-these-pngs-to-webp-a1b2c3d4</code>. Deleting a thread keeps
-          its folder, so the files the agent wrote stay until you delete them. Branch, worktree, and
-          diff controls stay hidden because these folders are not Git repositories. This is
-          unavailable when the data directory itself sits inside a Git checkout.
-        </p>
-        <h3 id="start-in-the-background">
-          <a class="anchor" href="#start-in-the-background">Start in the background</a>
-        </h3>
-        <p>
-          In a desktop browser or the desktop app, press <code>Cmd+Enter</code> on macOS or
-          <code>Ctrl+Enter</code> on Windows and Linux to start a new thread and immediately open
-          another draft. The next draft keeps the workspace mode and base branch you selected. With
-          <strong>New worktree</strong>, each background submission creates its own worktree.
-        </p>
-        <p>
-          To send the same prompt to several models on web or desktop,
-          <strong>Shift-click</strong> models in a new thread&#39;s model picker to add or remove
-          them. A regular click returns to a single model. Choose a base branch and send. Each
-          selection starts a separate thread and worktree while you stay in the new thread composer.
-          This requires a Git project.
-        </p>
-        <h2 id="pin-and-reorder-threads">
-          <a class="anchor" href="#pin-and-reorder-threads">Pin and reorder threads</a>
-        </h2>
-        <p>Pin a thread from its menu to keep it above your active work.</p>
-        <p>
-          On web and desktop, unpinning, settling, snoozing, and archiving a thread each show a
-          notification with <strong>Undo</strong> for five seconds. Undo restores the thread&#39;s
-          previous state, including its pinned position, and reopens an archived thread you were
-          viewing. Discarding an unsent draft from the sidebar works the same way: Undo brings back
-          its text and attachments. <code>mod+z</code> triggers the most recent Undo when no text
-          field is focused; see
-          <a href="/docs/keybindings/#commands-with-special-behavior">Keybindings</a>.
-        </p>
-        <p>
-          On web and desktop, you can also drag files from your computer onto any thread row: the
-          thread opens and the files are attached in its composer, ready for your next message. The
-          same per-message file limits apply as when attaching files directly; see
-          <a href="/docs/composer/#attach-files">Attach files</a>.
-        </p>
-        <p>
-          On web and desktop, pinning or unpinning a thread keeps the sidebar at your current scroll
-          position instead of following the thread to its new place in the list.
-        </p>
-        <p>Pinning does not prevent automatic settlement. Settling a thread removes its pin.</p>
-        <p>
-          On web and desktop, drag a thread between sections to change its state. Drag a thread up
-          into the pinned section to pin it at the spot you drop it; drag a pinned thread down into
-          the active list to unpin it. Dragging a thread onto the <strong>Settled</strong> header
-          settles it, and dragging a settled thread into the active list un-settles it. A snoozed
-          thread can be dragged out of the snoozed shelf, which wakes it, but threads cannot be
-          dragged into the shelf because snoozing needs a wake time. Dragging a pinned thread out of
-          the pinned section does not ask for unpin confirmation. Pinned and active boundary labels
-          appear only while dragging, without moving the rows. The other rows slide aside to show
-          where the thread will land. When you cross into another section, the dragged thread shows
-          the action the drop performs, with its icon: <strong>Pin</strong>, <strong>Unpin</strong>,
-          <strong>Settle</strong>, <strong>Un-settle</strong>, or <strong>Wake</strong>. Its status
-          and hover actions hide during the drag. A pinned thread keeps its pin only while it stays
-          in the pinned section; once it leaves, the badge takes over. Reordering within the same
-          section shows no badge. When there are no pins, drag to the top edge to pin a thread.
-          Section labels stay readable for the whole drag, and the section the thread is over takes
-          the accent color. Section labels also identify empty sections and a collapsed settled
-          shelf.
-        </p>
-        <p>
-          Drag within the pinned or active section to change its order. Other rows slide aside to
-          show the spot where the thread will land. Drops into either section keep the position you
-          choose. <strong>Move up</strong> and <strong>Move down</strong> are also available in the
-          thread menu. The server saves the order, so it survives a refresh and appears on your
-          other connected devices.
-        </p>
-        <p>
-          On web and desktop, the list also animates section changes made with thread actions such
-          as <strong>Pin</strong>, <strong>Settle</strong>, and <strong>Snooze</strong>. These
-          transitions respect your system&#39;s reduced-motion preference. While dragging, rows
-          follow the insertion gap without replaying a second transition after the drop.
-        </p>
-        <p>
-          New threads appear above the active threads you have arranged. Settling clears a
-          thread&#39;s active position, so using <strong>Un-settle</strong> returns it to the top.
-          Pinning and snoozing preserve its active position until you move it again. Thread activity
-          does not change the order. The settled shelf continues to use settlement time.
-        </p>
-        <p>
-          If dragging is unavailable for one environment, update the Moonfold server running in that
-          environment. Pinned and active reordering require server support. Threads from older
-          servers keep their default order until the server is updated.
-        </p>
-        <p>
-          To generate a fresh title from the conversation, open a thread&#39;s menu and choose
-          <strong>Regenerate title</strong>. The action is unavailable while title generation is in
-          progress or when the connected environment needs a server update.
-        </p>
-        <p>
-          Agents connected through Moonfold can use the same server-owned metadata workflow to
-          rename a thread, regenerate its title, or link and unlink a pull request. These changes
-          appear on web and desktop without requiring the originating browser to remain open.
-        </p>
-        <h3 id="fold-working-threads-beta">
-          <a class="anchor" href="#fold-working-threads-beta">Fold working threads (beta)</a>
-        </h3>
-        <p>
-          Turn on <strong>Settings → General → Working section (beta)</strong> to move threads that
-          are working or monitoring into a collapsed <strong>Working</strong> section below the
-          active list. A thread returns to the top of the active list when it finishes, fails, or
-          needs an approval or answer. The Working section lists the thread you last sent work to
-          first. Pinned threads stay in the pinned section. Each device keeps its own choice.
-        </p>
-        <p>
-          While this is on, the active list is ordered by when each thread last came back to you, so
-          you cannot drag or move threads within it. Your saved order returns when you turn it off.
-        </p>
-        <h2 id="open-a-thread-in-its-own-window">
-          <a class="anchor" href="#open-a-thread-in-its-own-window"
-            >Open a thread in its own window</a
-          >
-        </h2>
-        <p>
-          In the desktop app, right-click a thread in the sidebar, or select the thread title, and
-          choose <strong>Open in new window</strong>. The thread opens in a separate window with the
-          sidebar closed, so you can keep it beside your editor. Select the pin button in that
-          window&#39;s header to keep it above other windows. Notifications and links still go to
-          the main window.
-        </p>
-        <h2 id="settle-finished-work">
-          <a class="anchor" href="#settle-finished-work">Settle finished work</a>
-        </h2>
-        <p>
-          Choose <strong>Settle thread</strong> from its menu to move finished work out of the
-          active list without deleting the conversation. <strong>Un-settle thread</strong> restores
-          it to active work and prevents automatic settlement until new activity resumes the usual
-          rules. Manually settling an idle thread dismisses unanswered async questions without
-          sending an answer or restarting the agent. Settling also closes the thread&#39;s terminals
-          that wait at an idle prompt, and keeps their output. A terminal that runs a command, such
-          as a dev server, stays open.
-        </p>
-        <p>
-          To reclaim disk space from settled work, turn on
-          <strong>Run in the thread&#39;s worktree when the thread settles</strong> for one of the
-          project&#39;s actions, or set <code>&quot;runOnSettle&quot;: true</code> on a
-          <code>moonfold.json</code> script, for example <code>cargo clean</code>. It runs each time
-          a thread in its own worktree settles, manually or automatically, even if a terminal there
-          still runs a command such as a dev server. Threads in the project&#39;s main checkout skip
-          it. Its terminal closes when the command succeeds and stays open when it fails.
-        </p>
-        <p>
-          On web and desktop, press a thread&#39;s <strong>Settle</strong> button and drag up or
-          down to settle every thread in that section between it and the one you release on. The
-          <strong>Un-settle</strong> and <strong>Wake</strong> buttons work the same way in their
-          sections. Press <code>Escape</code> while dragging to cancel.
-        </p>
-        <p>
-          By default, environments settle inactive threads after three days and settle threads whose
-          pull request merged. A closed pull request can also settle an idle thread. Work in
-          progress, pending questions or approvals, and live background work prevent automatic
-          settlement. An open pull request does not prevent inactivity settlement unless you turn on
-          <strong>Keep threads with a PR</strong> in <strong>Settings → General</strong>, but an old
-          closed or merged pull request does not settle work you resumed after it closed. Only your
-          own messages count as resuming. A turn that finished background work or a pull request
-          watch starts on its own does not.
-        </p>
-        <p>
-          To keep one thread out of the settled shelf no matter how long it sits idle, open its
-          menu, choose <strong>Auto-settle behavior</strong>, and pick <strong>Disabled</strong>.
-          The current option is checked. Pick <strong>Enabled</strong> to return to the usual rules.
-          Manual settle, snooze, and archive still work while it is disabled.
-        </p>
-        <p>
-          Change these rules in <strong>Settings → General</strong> on web and desktop. They
-          continue to run when your apps are closed. On web and desktop, choose an environment at
-          the top to change only its rules, or <strong>All environments</strong> to update connected
-          environments together. Mixed values show where the selected environments disagree. Offline
-          environments and older servers keep their previous values. Changing a rule does not reopen
-          already settled threads.
-        </p>
-        <h2 id="link-a-pull-request">
-          <a class="anchor" href="#link-a-pull-request">Link a pull request</a>
-        </h2>
-        <p>
-          The server finds the PR for each unsettled thread&#39;s saved branch, even when your apps
-          are closed. Settled threads keep their saved links. Update the server if automatic branch
-          links do not appear.
-        </p>
-        <p>
-          On web and desktop, right-click a pull request link in a thread and choose
-          <strong>Link to thread</strong> to select a different PR. Use
-          <strong>Unlink from thread</strong> on the same link to return to the branch PR, if one
-          exists. The linked pull request participates in automatic settlement.
-        </p>
-        <h2 id="find-and-reference-work">
-          <a class="anchor" href="#find-and-reference-work">Find and reference work</a>
-        </h2>
-        <p>
-          On web and desktop, open the command palette with <code>Cmd/Ctrl+K</code> to search
-          threads across connected environments. Message search starts after two characters and
-          includes your messages and final agent responses.
-        </p>
-        <p>
-          Use <strong>Settings → Keybindings</strong> to find or customize shortcuts for searching
-          files and copying a thread reference. A copied reference uses the thread&#39;s pull
-          request link when available, otherwise its thread ID. See
-          <a href="/docs/keybindings/">keybindings</a> for custom configuration.
-        </p>
-        <h2 id="inspect-agent-work">
-          <a class="anchor" href="#inspect-agent-work">Inspect agent work</a>
-        </h2>
-        <p>
-          <strong>Limited</strong> means the provider stopped on a usage or rate limit. The
-          conversation keeps the provider&#39;s explanation. Retry after the limit resets, or switch
-          to another provider instance. On web and desktop, press <strong>Resume</strong> in an
-          empty composer to continue a limited or interrupted turn manually. Queued messages stay
-          saved while the limit blocks the thread. They run after the continuation finishes. If the
-          queue was held by a restart, resume it then.
-        </p>
-        <p>
-          When the provider reports a reset time, choose <strong>Resume at reset</strong> to
-          schedule a continuation. You can cancel it from the thread. Enable
-          <strong>Auto-resume limited threads</strong> in <strong>Settings → General</strong> on web
-          and desktop. The environment must be running when the reset arrives; it resumes overdue
-          continuations after a restart. Sending a new message, archiving, or settling the thread
-          prevents a pending continuation from starting.
-        </p>
-        <p>
-          Choose <strong>Snooze until reset</strong> to hide the thread until its allowance returns.
-          Snooze and auto-resume are independent: snooze alone wakes the thread without sending a
-          message; enabling both wakes and continues it. <strong>Wake now</strong> cancels the
-          snooze. Enable <strong>Snooze limited threads</strong> in thread behavior settings to
-          snooze limit stops by default. Providers without a reset time offer manual retry and the
-          normal snooze choices.
-        </p>
-        <p>
-          On web and desktop, use <strong>Agents</strong> to follow work delegated to subagents.
-          Stop on a thread also stops the subagents it delegated to.
-        </p>
-        <p>
-          Subagent threads started by the agent can&#39;t take messages; message the parent thread
-          instead. When such a subagent needs an approval or an answer, the parent thread asks for
-          it.
-        </p>
-        <p>
-          Expand a tool call in the conversation to see its full command and output. Summaries
-          shorten shell wrappers and can still describe the latest call after it finishes; the
-          call&#39;s own result shows its status.
-        </p>
-        <h2 id="snooze-until-later">
-          <a class="anchor" href="#snooze-until-later">Snooze until later</a>
-        </h2>
-        <p>
-          Choose <strong>Snooze → Custom…</strong> from a thread&#39;s menu to pick a date and time
-          in your local time zone, or a duration in minutes, hours, or days. Durations start when
-          you confirm; one day means 24 hours. On web and desktop, you can also snooze several
-          selected threads together. Choose <strong>Wake thread</strong> to bring a thread back
-          early.
-        </p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Working with threads · Moonfold docs</title>
+<meta name="description" content="Use a new thread for a separate task. Choose New worktree when its code changes need a separate branch and working directory.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/thread-sidebar/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/thread-sidebar/">
+<meta property="og:title" content="Working with threads · Moonfold docs">
+<meta property="og:description" content="Use a new thread for a separate task. Choose New worktree when its code changes need a separate branch and working directory.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/" aria-current="page">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>Work with agents</p>
+<h1 id="working-with-threads">Working with threads</h1>
+<p>Use a new thread for a separate task. Choose <strong>New worktree</strong> when its code changes
+need a separate branch and working directory.</p>
+<h2 id="start-a-thread"><a class="anchor" href="#start-a-thread">Start a thread</a></h2>
+<p>On web and desktop, <strong>New thread</strong> opens the project picker when you have multiple
+projects in the default or project-grouped sidebar. The legacy sidebar always
+starts in the current project. <strong>Shift-click</strong> to start in
+the current project, or use a project&#39;s own new-thread action. A new thread carries
+your model and mode selections, unless the destination project has its own model default.
+Its branch and workspace mode come from your configured defaults. To continue in
+an existing worktree, use <strong>New thread in this worktree</strong> from the branch toolbar.</p>
+<p>On mobile, <strong>New thread</strong> starts in the current thread&#39;s project, or else in the
+last project you opened or chose on that device. If neither is available, the
+project picker opens. Turn off <strong>Settings → General → Use last project</strong> to
+choose a project every time. When you pick a project that is on more than one
+machine, the thread starts on a connected one if any is connected.</p>
+<p>When you change a new thread&#39;s project, Moonfold stays in the current environment
+if that project exists there. Otherwise it selects an environment that has it.</p>
+<h3 id="start-without-a-project"><a class="anchor" href="#start-without-a-project">Start without a project</a></h3>
+<p>A thread does not need a project. To start one without a project, click <strong>or
+start without a project</strong> under a new thread&#39;s heading, pick <strong>No project</strong> from
+the project menu in that heading or from <strong>New thread in...</strong> in the command
+palette, or press <code>mod+alt+n</code>.It starts on your current machine; before sending, pick another machine
+from the machine menu to move it there. To move a draft into a project, pick the
+project in the heading.</p>
+<p>Each thread without a project works in its own folder under <code>~/.moonfold/scratch</code> (the
+<code>scratch</code> folder of your Moonfold data directory), named after its date, the first words
+of its first message, and a short id, like
+<code>2026-09-25-convert-these-pngs-to-webp-a1b2c3d4</code>. Deleting a thread keeps its
+folder, so the files the agent wrote stay until you delete them. Branch, worktree, and diff controls stay hidden because
+these folders are not Git repositories. This is unavailable when the data
+directory itself sits inside a Git checkout.</p>
+<p>When the work grows into something real, pick <strong>Turn into project</strong> from the
+thread&#39;s menu. The thread&#39;s folder becomes a project where it is, so nothing
+moves and the agent keeps working in the same place. Other threads in that folder
+move with it. Rename the project in its settings, and use <strong>Initialize Git</strong> to
+get branch and diff controls.</p>
+<h3 id="start-in-the-background"><a class="anchor" href="#start-in-the-background">Start in the background</a></h3>
+<p>In a desktop browser or the desktop app, press <code>Cmd+Enter</code> on macOS or <code>Ctrl+Enter</code>
+on Windows and Linux to start a new thread and immediately open another draft. The
+next draft keeps the workspace mode and base branch you selected. With <strong>New
+worktree</strong>, each background submission creates its own worktree.</p>
+<p>To send the same prompt to several models on web or desktop, <strong>Shift-click</strong> models
+in a new thread&#39;s model picker to add or remove them. A regular click returns to a
+single model. Choose a base branch and send. Each selection starts a separate thread
+and worktree while you stay in the new thread composer. This requires a Git project.</p>
+<h2 id="pin-and-reorder-threads"><a class="anchor" href="#pin-and-reorder-threads">Pin and reorder threads</a></h2>
+<p>Pin a thread from its menu to keep it above your active work.</p>
+<p>On web and desktop, unpinning, settling, snoozing, and archiving a thread each show
+a notification with <strong>Undo</strong> for five seconds. Undo restores the thread&#39;s previous
+state, including its pinned position, and reopens an archived thread you were
+viewing. Discarding an unsent draft from the sidebar works the same way: Undo brings
+back its text and attachments. <code>mod+z</code> triggers the most recent Undo, even from the composer; see
+<a href="/docs/keybindings/#commands-with-special-behavior">Keybindings</a>.</p>
+<p>On web and desktop, you can also drag files from your computer onto any thread row:
+the thread opens and the files are attached in its composer, ready for
+your next message. The same per-message file limits apply as when attaching
+files directly; see <a href="/docs/composer/#attach-files">Attach files</a>.</p>
+<p>On web and desktop, pinning or unpinning a thread keeps the sidebar at your current
+scroll position instead of following the thread to its new place in the list.</p>
+<p>Pinning does not prevent automatic settlement. Settling a thread removes its pin.</p>
+<p>On web and desktop, drag a thread between sections to change its state. Drag a thread up into
+the pinned section to pin it at the spot you drop it; drag a pinned thread down into the active
+list to unpin it. Dragging a thread onto the <strong>Settled</strong> header settles it, and dragging a settled
+thread into the active list un-settles it. A snoozed thread can be dragged out of the snoozed
+shelf, which wakes it, but threads cannot be dragged into the shelf because snoozing needs a wake
+time. Dragging a pinned thread out of the pinned section does not ask for unpin confirmation.
+Pinned and active boundary labels appear only while dragging, without moving the rows. The
+other rows slide aside to show where the thread will land. When you cross into another section,
+the dragged thread shows the action the drop performs, with its icon: <strong>Pin</strong>, <strong>Unpin</strong>,
+<strong>Settle</strong>, <strong>Un-settle</strong>, or <strong>Wake</strong>. Its status and hover actions hide during the drag. A pinned
+thread keeps its pin only while it stays in the pinned section; once it leaves, the badge takes
+over. Reordering within the same section shows no badge. When there are no pins, drag to the top
+edge to pin a thread. Section labels stay readable for the whole drag, and the section the
+thread is over takes the accent color. Section labels also
+identify empty sections and a collapsed settled shelf.</p>
+<p>Drag within the pinned or active section to change its order. Other rows slide aside to show the
+spot where the thread will land. Drops into either section keep the position you choose.
+<strong>Move up</strong> and <strong>Move down</strong> are also available in the thread menu. The server
+saves the order, so it survives a refresh and appears on your other connected devices.</p>
+<p>On web and desktop, the list also animates section changes made with thread actions such as
+<strong>Pin</strong>, <strong>Settle</strong>, and <strong>Snooze</strong>. These transitions respect your system&#39;s reduced-motion
+preference. While dragging, rows follow the insertion gap without replaying a second transition
+after the drop.</p>
+<p>New threads appear above the active threads you have arranged. Settling clears a thread&#39;s active
+position, so using <strong>Un-settle</strong> returns it to the top. Pinning and snoozing preserve its active
+position until you move it again. Thread activity does not change the order. The settled shelf
+continues to use settlement time.</p>
+<p>If dragging is unavailable for one environment, update the Moonfold server running in that
+environment. Pinned and active reordering require server support. Threads from older servers keep
+their default order until the server is updated.</p>
+<p>To generate a fresh title from the conversation, open a thread&#39;s menu and choose
+<strong>Regenerate title</strong>. The action is unavailable while title generation is in progress
+or when the connected environment needs a server update.</p>
+<p>To change how titles are written, add <strong>Thread title instructions</strong> in <strong>Settings → Threads →
+Text generation</strong>, under Advanced, such as a length limit or an identifier to put first. They apply to new and
+regenerated titles. Select a project to give it its own instructions.</p>
+<p>Agents connected through Moonfold can use the same server-owned metadata workflow to
+rename a thread, regenerate its title, or link and unlink a pull request. These changes
+appear on web and desktop without requiring the originating browser to remain
+open.</p>
+<h3 id="fold-working-threads-beta"><a class="anchor" href="#fold-working-threads-beta">Fold working threads (beta)</a></h3>
+<p>Threads that are working or waiting on work they will resume from move into a collapsed
+<strong>Working</strong> section below the active list.
+That includes subagents, watched pull requests, and background commands or monitors the agent
+says it is waiting on. A dev server or other process an agent leaves running does not keep a thread
+there. A thread returns to the top of the active list when it finishes, fails, or needs an approval or
+answer. The Working section lists the thread you last sent work to first. Pinned threads stay in
+the pinned section.</p>
+<p>This is on by default. Turn it off with <strong>Settings → General → Working section</strong>. Each device
+keeps its own choice.</p>
+<p>While this is on, the active list is ordered by when each thread last came back to you, so you
+cannot drag or move threads within it. Your saved order returns when you turn it off.</p>
+<h3 id="group-threads-by-project-beta"><a class="anchor" href="#group-threads-by-project-beta">Group threads by project (beta)</a></h3>
+<p>Turn on <strong>Settings → Labs → Boring sidebar (group by project)</strong> on web and desktop to put active
+threads in a folder for each project. Pinned projects come first. A project with no active
+threads has no folder unless it is pinned or you pick it in the project filter. An archived
+project&#39;s folder comes last and shows only while it has active threads. Click a folder to open or
+close it. A closed folder shows how many threads it holds, and a dot when one of them
+needs you. Use the pen button on a folder, or right-click it, to start a thread in that project.
+Pinned threads stay above the folders, and Snoozed and Settled stay below them. In this mode you
+cannot drag threads, and the Working section is off. Each device keeps its own choice.</p>
+<h2 id="open-a-thread-in-its-own-window"><a class="anchor" href="#open-a-thread-in-its-own-window">Open a thread in its own window</a></h2>
+<p>In the desktop app, right-click a thread in the sidebar, or select the thread title, and choose
+<strong>Open in new window</strong>. The thread opens in a separate window with the sidebar closed, so you can
+keep it beside your editor. Select the pin button in that window&#39;s header to keep it above other
+windows. Notifications and links still go to the main window.</p>
+<h2 id="settle-finished-work"><a class="anchor" href="#settle-finished-work">Settle finished work</a></h2>
+<p>Choose <strong>Settle thread</strong> from its menu to move finished work out of the active list
+without deleting the conversation. <strong>Un-settle thread</strong> restores it to active work
+and prevents automatic settlement until new activity resumes the usual rules.
+Manually settling an idle thread dismisses unanswered async questions without
+sending an answer or restarting the agent. Settling also closes the thread&#39;s
+terminals that wait at an idle prompt, and keeps their output. A terminal that
+runs a command, such as a dev server, stays open unless its action has <strong>Stop this action
+when the thread settles</strong> enabled in Settings &gt; Projects &gt; Actions. You can also set
+<code>&quot;stopOnSettle&quot;: true</code> on a <code>moonfold.json</code> action and import it there. Start the command through
+that action so Moonfold can stop its terminal and child processes. Commands started through an
+agent&#39;s own shell tools are managed by the provider.</p>
+<p>To reclaim disk space from settled work, turn on <strong>Run in the thread&#39;s worktree when the
+thread settles</strong> for one of the project&#39;s actions, or set <code>&quot;runOnSettle&quot;: true</code> on a
+<code>moonfold.json</code> script, for example <code>cargo clean</code>. It runs each time a thread in its own
+worktree settles, manually or automatically, even if a terminal there still runs a
+command such as a dev server. Threads in the project&#39;s main checkout skip it. Its terminal
+closes when the command succeeds and stays open when it fails.</p>
+<p>On web and desktop, press a thread&#39;s <strong>Settle</strong> button and drag up or down to
+settle every thread in that section between it and the one you release on.
+The <strong>Un-settle</strong> and <strong>Wake</strong> buttons work the same way in their sections.
+Press <code>Escape</code> while dragging to cancel.</p>
+<p>By default, environments settle inactive threads after three days and settle
+threads whose pull request merged. A closed pull request can also settle an idle
+thread. An empty thread&#39;s inactivity counts from when it was created.
+Work in progress, pending questions or approvals, and background work the agent
+is waiting on prevent automatic settlement. An open pull request does not prevent inactivity
+settlement unless you turn on <strong>Keep threads with a PR</strong> in <strong>Settings → Threads</strong>,
+but an old closed or merged pull request does not settle work you
+resumed after it closed. Only your own messages count as resuming. A turn that
+finished background work or a pull request watch starts on its own does not.</p>
+<p>To keep one thread out of the settled shelf no matter how long it sits idle, open its menu,
+choose <strong>Auto-settle behavior</strong>, and pick <strong>Disabled</strong>. The current option is checked. Pick
+<strong>Enabled</strong> to return to the usual rules. Manual settle, snooze, and archive still work while it
+is disabled.</p>
+<p>Change these rules in <strong>Settings → Threads</strong>.
+They continue to run when your apps are closed. On web and desktop, choose an environment at the
+top to change only its rules, or <strong>All environments</strong> to update connected environments together.
+Mixed values show where the selected environments disagree. Offline environments
+and older servers keep their previous values. Changing a rule does not reopen
+already settled threads.</p>
+<h2 id="link-a-pull-request"><a class="anchor" href="#link-a-pull-request">Link a pull request</a></h2>
+<p>The server finds the PR for each unsettled thread&#39;s saved branch, even when your
+apps are closed. Settled threads keep their saved links. Update the server if
+automatic branch links do not appear.</p>
+<p>On web and desktop, right-click a pull request link in a thread and choose
+<strong>Link to thread</strong> to select a different PR. Use <strong>Unlink from thread</strong> on the
+same link to return to the branch PR, if one exists.
+The linked pull request participates in automatic settlement.</p>
+<h2 id="find-and-reference-work"><a class="anchor" href="#find-and-reference-work">Find and reference work</a></h2>
+<p>On web and desktop, open the command palette with <code>Cmd/Ctrl+K</code> to search threads
+across connected environments by title, branch, pull request, or project.
+Threads you open often or recently rank higher, and for three weeks the thread
+you last picked for a query ranks higher when you type that query again.
+Threads whose messages contain all your words appear below, under <strong>In
+messages</strong>, and open at the matching message. Message search needs at least
+one word of three or more letters, or two for Chinese, Japanese, and Korean.
+On mobile, the thread list search also lists message matches and opens them at
+the matching message; on an iPad with a keyboard, <code>Cmd+K</code> opens the same
+palette.</p>
+<p>Use <strong>Settings → Keybindings</strong> to find or customize shortcuts for searching files
+and copying a thread reference. A copied reference uses the thread&#39;s pull request
+link when available, otherwise a link to the thread, which opens it from anywhere
+you paste it and pastes into a composer as a thread chip (see
+<a href="/docs/prompt-links/#share-a-thread">sharing a thread</a>). To copy the thread even
+when it has a PR, choose <strong>Copy → Thread</strong> from its context menu, or <strong>Copy
+thread</strong> from its long-press menu on mobile.
+<strong>Thread ID</strong> copies the bare ID for scripts and the <code>moonfold</code> CLI. See
+<a href="/docs/keybindings/">keybindings</a> for custom configuration.</p>
+<h2 id="inspect-agent-work"><a class="anchor" href="#inspect-agent-work">Inspect agent work</a></h2>
+<p><strong>Limited</strong> means the provider stopped on a usage or rate limit. The conversation
+keeps the provider&#39;s explanation. Retry after the limit resets, or switch to
+another provider instance.
+Press <strong>Resume</strong> in an empty composer to continue a limited or interrupted turn
+manually. Do this when the provider reports no reset time, because nothing
+continues the turn on its own.
+Queued messages stay saved while the limit blocks the thread. They run after
+the continuation finishes. If the queue was held by a restart, resume it then.</p>
+<p>When the provider reports a reset time, choose <strong>Resume at reset</strong> to schedule a
+continuation. You can cancel it from the thread. Enable <strong>Resume after
+usage limits</strong> in <strong>Settings → Threads</strong> to schedule limit stops by default.
+The environment must be running when the reset arrives; it resumes overdue
+continuations after a restart. Stopping the thread, sending a new message,
+archiving, or settling it prevents a pending continuation from starting.</p>
+<p>Choose <strong>Snooze until reset</strong> to hide the thread until its allowance returns.
+Snooze and auto-resume are independent: snooze alone wakes the thread without
+sending a message; enabling both wakes and continues it. <strong>Wake now</strong> cancels
+the snooze. Enable <strong>Snooze until limits reset</strong> in thread behavior settings to
+snooze limit stops by default. Providers without a reset time offer manual
+retry and the normal snooze choices.</p>
+<p>On web and desktop, use <strong>Agents</strong> to follow work delegated to subagents.
+On mobile, open a subagent from its conversation card or <strong>Agents</strong>. On iOS
+layouts with an inspector, its thread opens beside the parent. Maximize it to
+fill the screen; close the full-screen view to return to the parent and inspector.
+Stop on a thread also stops the subagents it delegated to.</p>
+<p>Subagent threads started by the agent can&#39;t take messages; message the parent
+thread instead. When such a subagent needs an approval or an answer, the parent
+thread asks for it.</p>
+<p>Expand a tool call in the conversation to see its full command and output.
+Summaries shorten shell wrappers and can still describe the latest call after it
+finishes; the call&#39;s own result shows its status.</p>
+<p>On web and desktop, the thread details card lists the local servers that the
+thread&#39;s terminals or its Claude agent started, with their ports. Not every one
+serves a web page. A server the agent started stays listed after the agent&#39;s
+turn ends.
+Select a server to open it in the browser panel. <strong>Stop</strong> ends the server&#39;s job
+and keeps the agent, the terminal, and Moonfold running. Stop needs terminal
+access to the environment and is not available on Windows.</p>
+<p>To choose what the thread details card shows, right-click the card or open
+<strong>Settings → Appearance → Thread details</strong>. Hidden rows keep their keyboard
+shortcuts, such as Open in editor and project scripts. <strong>Reset to default</strong> brings
+back the standard rows.</p>
+<h2 id="side-chats"><a class="anchor" href="#side-chats">Side chats</a></h2>
+<p>A side chat lets you ask a question about a thread without adding to it. It starts
+with what the thread knows, and the thread keeps working while you ask.</p>
+<p>On web and desktop, start a message with <code>/side</code> or <code>/btw</code>, then your question.
+You can also choose <strong>Side chat</strong> from the <strong>+</strong> menu in the right panel. The side
+chat opens as a tab there, with its own composer. Side chats do not show in the
+sidebar. Find one again under <strong>Side chats</strong> in thread details.</p>
+<p>A side chat works in the same folder as the thread and inherits its permissions
+when created, including for its first reply. Change permissions for an individual
+side chat in its composer. Later changes to the parent do not change existing side chats.</p>
+<p>To use what you learned, choose <strong>Bring back</strong>. The thread gets the side chat with
+your next message there. Bring back is available while the thread is idle.</p>
+<p>Closing a side chat you never sent a message in deletes it. To delete one you used,
+choose <strong>Delete</strong> at the top of the side chat. Deleting a thread also deletes its
+side chats.</p>
+<p>On mobile, a thread lists its side chats above the composer. Tap one to open it and
+answer its questions.</p>
+<h2 id="snooze-until-later"><a class="anchor" href="#snooze-until-later">Snooze until later</a></h2>
+<p>To change the choices in the snooze menu, open <strong>Settings → Threads → Snooze options</strong>.
+Each option is a duration, such as 3 hours, or a time on a day, such as 9:00 PM
+tomorrow. A weekday means the next one after today. Menus list the options soonest
+first and hide a today option after its time passes. Saved with <strong>All environments</strong>
+selected, the options apply to every connected environment, and the mobile app uses them too.</p>
+<p>Choose <strong>Snooze → Custom…</strong> from a thread&#39;s menu to pick a date and time in your
+local time zone, or a duration in minutes, hours, or days. Durations start when
+you confirm; one day means 24 hours. On web and desktop, you can also snooze
+several selected threads together. Choose <strong>Wake thread</strong> to bring a thread back early.</p>
+<p>A snoozed thread keeps working and stays hidden until its wake time, even while
+its agent wakes itself for background work. It comes back early for an approval,
+a new question, a failed run, or a message or answer you send. You can snooze an existing
+question and answer when the thread wakes; the question stays unanswered.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/thread-sidebar.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/background-service/"
-            ><small>Previous</small><span>Running Moonfold in the background</span></a
-          ><a class="next" href="/docs/composer/"
-            ><small>Next</small><span>Messages and context</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#start-a-thread">Start a thread</a></li>
-            <li><a href="#pin-and-reorder-threads">Pin and reorder threads</a></li>
-            <li><a href="#open-a-thread-in-its-own-window">Open a thread in its own window</a></li>
-            <li><a href="#settle-finished-work">Settle finished work</a></li>
-            <li><a href="#link-a-pull-request">Link a pull request</a></li>
-            <li><a href="#find-and-reference-work">Find and reference work</a></li>
-            <li><a href="#inspect-agent-work">Inspect agent work</a></li>
-            <li><a href="#snooze-until-later">Snooze until later</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/thread-sidebar.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/background-service/"><small>Previous</small><span>Running Moonfold in the background</span></a><a class="next" href="/docs/composer/"><small>Next</small><span>Messages and context</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#start-a-thread">Start a thread</a></li><li><a href="#pin-and-reorder-threads">Pin and reorder threads</a></li><li><a href="#open-a-thread-in-its-own-window">Open a thread in its own window</a></li><li><a href="#settle-finished-work">Settle finished work</a></li><li><a href="#link-a-pull-request">Link a pull request</a></li><li><a href="#find-and-reference-work">Find and reference work</a></li><li><a href="#inspect-agent-work">Inspect agent work</a></li><li><a href="#side-chats">Side chats</a></li><li><a href="#snooze-until-later">Snooze until later</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

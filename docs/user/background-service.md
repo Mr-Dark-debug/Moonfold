@@ -155,9 +155,6 @@ Downloads, it may need Full Disk Access for the `moonfold` executable listed in
 `ProgramArguments` in
 `~/Library/LaunchAgents/dev.moonfold.app.service.plist`.
 
-For failures after signing in to Moonfold Connect, see
-[connection troubleshooting](./moonfold-connect-troubleshooting.md).
-
 ## Reclaim database space
 
 Moonfold removes internal history older than a day on its own while it runs;

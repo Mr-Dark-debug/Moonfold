@@ -1,338 +1,133 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2236cc" />
-    <title>SnapShots · Moonfold docs</title>
-    <meta
-      name="description"
-      content="A SnapShot captures the window you are working in and attaches it to your current draft. The attachment carries the app name and window title, and when available the app icon and the window's accessib"
-    />
-    <link rel="canonical" href="https://moonfold-website.vercel.app/docs/snap-shot/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moonfold-website.vercel.app/docs/snap-shot/" />
-    <meta property="og:title" content="SnapShots · Moonfold docs" />
-    <meta
-      property="og:description"
-      content="A SnapShot captures the window you are working in and attaches it to your current draft. The attachment carries the app name and window title, and when available the app icon and the window's accessib"
-    />
-    <meta
-      property="og:image"
-      content="https://moonfold-website.vercel.app/assets/social-card.jpg"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg" />
-    <link
-      rel="preload"
-      href="/assets/manrope-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="/content.css" />
-    <script src="/content.js" defer></script>
-  </head>
-  <body class="page-docs">
-    <a class="skip-link" href="#content">Skip to content</a>
-    <header class="sp-header">
-      <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
-      <nav class="sp-nav" aria-label="Site">
-        <a href="/docs/" aria-current="page">Docs</a>
-        <a href="/blog/">Blog</a>
-        <a
-          class="sp-gh"
-          href="https://github.com/Mr-Dark-debug/Moonfold"
-          target="_blank"
-          rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-      <a
-        class="sp-pill"
-        href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Download <span aria-hidden="true">↗</span></a
-      >
-    </header>
-    <div class="doc-layout" id="content">
-      <aside class="doc-side">
-        <details class="doc-nav-mobile" open>
-          <summary>Browse the docs</summary>
-          <div class="doc-nav-body">
-            <label class="doc-search"
-              ><span class="sr-only">Filter pages</span
-              ><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter
-            /></label>
-            <section class="doc-nav-group">
-              <h2>Get started</h2>
-              <ul>
-                <li><a href="/docs/install/">Install Moonfold</a></li>
-                <li><a href="/docs/welcome-wizard/">Welcome wizard</a></li>
-                <li><a href="/docs/updating/">Updating Moonfold</a></li>
-                <li><a href="/docs/remote-access/">Remote access</a></li>
-                <li><a href="/docs/mobile-app/">Mobile app</a></li>
-                <li><a href="/docs/background-service/">Running Moonfold in the background</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Work with agents</h2>
-              <ul>
-                <li><a href="/docs/thread-sidebar/">Working with threads</a></li>
-                <li><a href="/docs/composer/">Messages and context</a></li>
-                <li><a href="/docs/permission-modes/">Permission modes</a></li>
-                <li><a href="/docs/provider-handoff/">Provider handoff</a></li>
-                <li><a href="/docs/prompt-profiles/">Prompt profiles</a></li>
-                <li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li>
-                <li><a href="/docs/usage/">Usage and limits</a></li>
-                <li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li>
-                <li><a href="/docs/memories/">Memories</a></li>
-                <li><a href="/docs/plugins/">Plugins</a></li>
-                <li><a href="/docs/agent-instructions/">Agent instructions</a></li>
-                <li><a href="/docs/artifacts/">Artifacts</a></li>
-                <li><a href="/docs/computer-use/">Computer use</a></li>
-                <li><a href="/docs/agent-browsing/">Agent browsing</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>Providers</h2>
-              <ul>
-                <li><a href="/docs/providers-codex/">Codex</a></li>
-                <li><a href="/docs/providers-claude/">Claude</a></li>
-                <li><a href="/docs/providers-gemini/">Gemini CLI</a></li>
-                <li><a href="/docs/providers-acp/">ACP providers</a></li>
-                <li><a href="/docs/cursor/">Cursor</a></li>
-                <li><a href="/docs/providers-opencode/">OpenCode</a></li>
-                <li><a href="/docs/providers-antigravity/">Antigravity</a></li>
-                <li><a href="/docs/providers-pi/">Pi</a></li>
-                <li><a href="/docs/providers-muse/">Muse Code</a></li>
-                <li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li>
-              </ul>
-            </section>
-            <section class="doc-nav-group">
-              <h2>More</h2>
-              <ul>
-                <li><a href="/docs/activity-log/">Activity log</a></li>
-                <li><a href="/docs/appearance/">Appearance and themes</a></li>
-                <li><a href="/docs/browser-import/">Import browser sessions</a></li>
-                <li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li>
-                <li><a href="/docs/devices/">Devices</a></li>
-                <li><a href="/docs/html-renders/">Visual replies</a></li>
-                <li><a href="/docs/keybindings/">Keybindings</a></li>
-                <li><a href="/docs/keyboard-focus/">Keyboard focus</a></li>
-                <li><a href="/docs/open-source-licenses/">Open source licenses</a></li>
-                <li><a href="/docs/outside-agents/">Outside agents</a></li>
-                <li><a href="/docs/project-settings/">Settings and project overrides</a></li>
-                <li><a href="/docs/prompt-links/">Prompt links</a></li>
-                <li><a href="/docs/question-attachments/">Files in question answers</a></li>
-                <li><a href="/docs/snap-shot/" aria-current="page">SnapShots</a></li>
-                <li><a href="/docs/source-control/">Source control</a></li>
-                <li><a href="/docs/telemetry/">Product usage data</a></li>
-                <li><a href="/docs/terminal/">Terminal history</a></li>
-                <li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li>
-              </ul>
-            </section>
-            <p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
-          </div>
-        </details>
-      </aside>
-      <article class="doc-main prose">
-        <p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
-        <h1 id="snapshots">SnapShots</h1>
-        <p>
-          A SnapShot captures the window you are working in and attaches it to your current draft.
-          The attachment carries the app name and window title, and when available the app icon and
-          the window&#39;s accessibility data (its controls, text, and their positions in the
-          image). Agents can use that data to reason about the screenshot.
-        </p>
-        <p>
-          SnapShots are off by default and available in the desktop app on macOS, Windows, and Linux
-          with Wayland. X11 sessions are not supported.
-        </p>
-        <h2 id="turning-it-on"><a class="anchor" href="#turning-it-on">Turning it on</a></h2>
-        <p>
-          Open <strong>Settings</strong> &gt; <strong>SnapShots</strong> and turn the feature on.
-          Setup has two steps: allow capture, then choose a shortcut. Each step shows only what your
-          desktop needs. <strong>Finish later</strong> turns capture back off but keeps anything you
-          already installed, so you can resume where you left off.
-        </p>
-        <ul>
-          <li>
-            <strong>macOS</strong> asks for Screen Recording during setup. It asks for Accessibility
-            only when <strong>Include app text</strong> is on.
-          </li>
-          <li><strong>Windows</strong> needs no setup or permission.</li>
-          <li>
-            <strong>Linux</strong> depends on your desktop. See
-            <a href="#linux-desktops">Linux desktops</a>.
-          </li>
-        </ul>
-        <p>
-          Turning capture off releases the shortcut. It does not uninstall a helper or extension you
-          installed.
-        </p>
-        <h2 id="taking-a-capture">
-          <a class="anchor" href="#taking-a-capture">Taking a capture</a>
-        </h2>
-        <p>
-          Switch to the window you want and press the shortcut. The default on macOS and Windows is
-          both Shift keys together. Moonfold attaches the image to your draft and brings itself
-          forward. If no thread is open it starts a draft in the current project.
-        </p>
-        <p>Pressing the shortcut while Moonfold is in front captures Moonfold itself.</p>
-        <p>
-          Pending captures are kept on disk until the attachment is saved to the draft, so a capture
-          survives closing the app mid-way and is attached on the next launch. Captures rejected
-          because the image is too large are discarded.
-        </p>
-        <h2 id="changing-the-shortcut">
-          <a class="anchor" href="#changing-the-shortcut">Changing the shortcut</a>
-        </h2>
-        <p>
-          Select the shortcut in Settings, press the new keys, then <strong>Save</strong>. On macOS
-          and Windows you can use a modifier pair such as Command+Command or Ctrl+Ctrl, or a key
-          chord. Moonfold refuses shortcuts that collide with its own keybindings or that the
-          operating system already reserves.
-        </p>
-        <p>
-          On Linux, choose a key chord; modifier pairs are not supported. On Niri and Hyprland the
-          shortcut lives in your compositor config, so <strong>Change shortcut</strong> reopens
-          setup to review the change.
-        </p>
-        <h2 id="include-app-text">
-          <a class="anchor" href="#include-app-text">Include app text</a>
-        </h2>
-        <p>
-          <strong>Include app text</strong> controls whether captures include the window&#39;s
-          accessibility data. Turn it off to attach screenshots only. On macOS this also drops the
-          Accessibility permission requirement.
-        </p>
-        <p>
-          Availability depends on the app. Some apps expose only their window controls, not the
-          document or terminal contents. If an app is slow to answer, Moonfold attaches the
-          screenshot without the data rather than waiting.
-        </p>
-        <p>
-          On GNOME, browsers may need app accessibility enabled in the desktop&#39;s accessibility
-          settings before they expose text. Restart the browser after enabling it.
-        </p>
-        <p>
-          An icon beside the app name on an attachment shows whether accessibility data was
-          included. Select it to inspect what was captured.
-        </p>
-        <h2 id="sound-flash-and-animation">
-          <a class="anchor" href="#sound-flash-and-animation">Sound, flash, and animation</a>
-        </h2>
-        <p>
-          Settings controls the capture sound, the brief flash on the captured window, and the
-          animation that flies the image into your draft. Each can be turned off independently. The
-          operating system&#39;s reduced-motion setting also disables the animation.
-        </p>
-        <h2 id="linux-desktops"><a class="anchor" href="#linux-desktops">Linux desktops</a></h2>
-        <p>
-          SnapShots work on Wayland sessions. Each desktop provides capture differently, and setup
-          names your current desktop and shows only what it needs. Preferences carry across
-          desktops, but each desktop&#39;s helper and shortcut approval are separate.
-        </p>
-        <p>
-          <strong>GNOME.</strong> Install the bundled <strong>Moonfold SnapShots</strong> extension
-          during setup. It is installed per-user, offline, and needs no administrator password. Sign
-          out and back in after the first install so GNOME discovers it, then enable it from setup
-          or from GNOME&#39;s Extensions app. If GNOME has disabled all user extensions, turn them
-          on there first. Disable or remove the extension in GNOME&#39;s Extensions app to revoke
-          access.
-        </p>
-        <p>
-          <strong>KDE Plasma 6.</strong> Install the bundled capture helper during setup; no
-          sign-out is needed. If the shortcut does not fire, check Moonfold under
-          <strong>System Settings</strong> &gt; <strong>Keyboard</strong> &gt;
-          <strong>Shortcuts</strong>. If a shortcut using Shift and a number does not work on your
-          keyboard layout, use a letter chord instead. Remove the helper from
-          <strong>Manage capture</strong> &gt; <strong>Access</strong> &gt;
-          <strong>Advanced</strong>.
-        </p>
-        <p>
-          <strong>Hyprland and Omarchy.</strong> Install the bundled helper during setup, then
-          choose a shortcut and select <strong>Review changes</strong>. Moonfold shows the exact
-          change it will make to your Hyprland config. <strong>Save shortcut</strong> writes only
-          that change, keeps a backup, and reloads Hyprland. Approve the screen-sharing prompt for
-          the helper if one appears. On Omarchy, bind in your own config, not the shipped defaults.
-          Some Hyprland versions return an &quot;access denied&quot; image instead of an error when
-          capture is blocked; check the helper&#39;s screen-sharing permission.
-        </p>
-        <p>
-          <strong>Niri.</strong> Choose a shortcut and select <strong>Review changes</strong>.
-          Moonfold shows the exact binding it will add to your Niri config, validates the result,
-          keeps a backup, and saves it when you approve. Niri reloads the config on its own. The
-          binding needs the <code>gdbus</code> command, normally part of your distribution&#39;s
-          GLib tools. Remove the line from your config to release the key.
-        </p>
-        <p>
-          <strong>Other Wayland desktops.</strong> Moonfold uses the desktop&#39;s screenshot portal
-          when it can capture the active window. Otherwise Settings shows
-          <strong>Manual capture only</strong> and the shortcut opens the desktop&#39;s window
-          picker. Picker captures do not include accessibility data.
-        </p>
-        <p>Apps running through XWayland inside a Wayland session can still be captured.</p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>SnapShots · Moonfold docs</title>
+<meta name="description" content="A SnapShot captures the window you are working in and attaches it to your current draft. The attachment carries the app name and window title, and when available the app icon and the window's accessib">
+<link rel="canonical" href="https://moonfold-website.vercel.app/docs/snap-shot/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://moonfold-website.vercel.app/docs/snap-shot/">
+<meta property="og:title" content="SnapShots · Moonfold docs">
+<meta property="og:description" content="A SnapShot captures the window you are working in and attaches it to your current draft. The attachment carries the app name and window title, and when available the app icon and the window's accessib">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/" aria-current="page">Docs</a>
+    <a href="/blog/">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<div class="doc-layout" id="content">
+<aside class="doc-side"><details class="doc-nav-mobile" open><summary>Browse the docs</summary>
+<div class="doc-nav-body">
+<label class="doc-search"><span class="sr-only">Filter pages</span><input type="search" placeholder="Filter pages" autocomplete="off" data-doc-filter></label>
+<section class="doc-nav-group"><h2>Get started</h2><ul><li><a href="/docs/install/">Install Moonfold</a></li><li><a href="/docs/welcome-wizard/">Welcome wizard</a></li><li><a href="/docs/updating/">Updating Moonfold</a></li><li><a href="/docs/remote-access/">Remote access</a></li><li><a href="/docs/mobile-app/">Mobile app</a></li><li><a href="/docs/background-service/">Running Moonfold in the background</a></li></ul></section><section class="doc-nav-group"><h2>Work with agents</h2><ul><li><a href="/docs/thread-sidebar/">Working with threads</a></li><li><a href="/docs/composer/">Messages and context</a></li><li><a href="/docs/permission-modes/">Permission modes</a></li><li><a href="/docs/provider-handoff/">Provider handoff</a></li><li><a href="/docs/prompt-profiles/">Prompt profiles</a></li><li><a href="/docs/portable-handoffs/">Context in portable handoffs</a></li><li><a href="/docs/usage/">Usage and limits</a></li><li><a href="/docs/scheduled-tasks/">Scheduled tasks</a></li><li><a href="/docs/memories/">Memories</a></li><li><a href="/docs/plugins/">Plugins</a></li><li><a href="/docs/agent-instructions/">Agent instructions</a></li><li><a href="/docs/artifacts/">Artifacts</a></li><li><a href="/docs/computer-use/">Computer use</a></li><li><a href="/docs/agent-browsing/">Agent browsing</a></li></ul></section><section class="doc-nav-group"><h2>Providers</h2><ul><li><a href="/docs/providers-codex/">Codex</a></li><li><a href="/docs/providers-claude/">Claude</a></li><li><a href="/docs/providers-gemini/">Gemini CLI</a></li><li><a href="/docs/providers-acp/">ACP providers</a></li><li><a href="/docs/cursor/">Cursor</a></li><li><a href="/docs/providers-opencode/">OpenCode</a></li><li><a href="/docs/providers-antigravity/">Antigravity</a></li><li><a href="/docs/providers-pi/">Pi</a></li><li><a href="/docs/providers-muse/">Muse Code</a></li><li><a href="/docs/providers-deepseek-harness/">DeepSeek Harness</a></li></ul></section><section class="doc-nav-group"><h2>More</h2><ul><li><a href="/docs/activity-log/">Activity log</a></li><li><a href="/docs/appearance/">Appearance and themes</a></li><li><a href="/docs/brand-kits/">Brand kits with Cassandre</a></li><li><a href="/docs/browser-import/">Import browser sessions</a></li><li><a href="/docs/default-browser/">Use Moonfold as your default browser</a></li><li><a href="/docs/devices/">Devices</a></li><li><a href="/docs/html-renders/">Visual replies</a></li><li><a href="/docs/keybindings/">Keybindings</a></li><li><a href="/docs/keyboard-focus/">Keyboard focus</a></li><li><a href="/docs/managed-policy/">Managed policy</a></li><li><a href="/docs/open-source-licenses/">Open source licenses</a></li><li><a href="/docs/orbit/">Orbit</a></li><li><a href="/docs/outside-agents/">Outside agents</a></li><li><a href="/docs/project-settings/">Settings and project overrides</a></li><li><a href="/docs/prompt-links/">Prompt links</a></li><li><a href="/docs/providers-fx/">fx</a></li><li><a href="/docs/providers-kiro/">Kiro</a></li><li><a href="/docs/question-attachments/">Files in question answers</a></li><li><a href="/docs/secrets/">Secrets</a></li><li><a href="/docs/snap-shot/" aria-current="page">SnapShots</a></li><li><a href="/docs/source-control/">Source control</a></li><li><a href="/docs/telemetry/">Product usage data</a></li><li><a href="/docs/terminal/">Terminal history</a></li><li><a href="/docs/thread-migration/">Threads from older Moonfold versions</a></li><li><a href="/docs/triage/">Triage an issue</a></li><li><a href="/docs/voice-input/">Voice input</a></li></ul></section>
+<p class="doc-empty" hidden data-doc-empty>No page matches that.</p>
+</div></details></aside>
+<article class="doc-main prose">
+<p class="crumbs"><a href="/docs/">Docs</a><span aria-hidden="true">/</span>More</p>
+<h1 id="snapshots">SnapShots</h1>
+<p>A SnapShot captures the window you are working in and attaches it to your current draft. The
+attachment carries the app name and window title, and when available the app icon and the window&#39;s
+accessibility data (its controls, text, and their positions in the image). Agents can use that data
+to reason about the screenshot.</p>
+<p>SnapShots are off by default and available in the desktop app on macOS, Windows, and Linux with
+Wayland. X11 sessions are not supported.</p>
+<h2 id="turning-it-on"><a class="anchor" href="#turning-it-on">Turning it on</a></h2>
+<p>Open <strong>Settings</strong> &gt; <strong>SnapShots</strong> and turn the feature on. Setup has two steps: allow capture, then
+choose a shortcut. Each step shows only what your desktop needs. <strong>Finish later</strong> turns capture back
+off but keeps anything you already installed, so you can resume where you left off.</p>
+<ul>
+<li><strong>macOS</strong> asks for Screen Recording during setup. It asks for Accessibility only when <strong>Include
+app text</strong> is on.</li>
+<li><strong>Windows</strong> needs no setup or permission.</li>
+<li><strong>Linux</strong> depends on your desktop. See <a href="#linux-desktops">Linux desktops</a>.</li>
+</ul>
+<p>Turning capture off releases the shortcut. It does not uninstall a helper or extension you installed.</p>
+<h2 id="taking-a-capture"><a class="anchor" href="#taking-a-capture">Taking a capture</a></h2>
+<p>Switch to the window you want and press the shortcut. The default on macOS and Windows is both
+Shift keys together. Moonfold attaches the image to your draft and brings itself forward. If no thread
+is open it starts a draft in the current project.</p>
+<p>Pressing the shortcut while Moonfold is in front captures Moonfold itself.</p>
+<p>Pending captures are kept on disk until the attachment is saved to the draft, so a capture survives
+closing the app mid-way and is attached on the next launch. Captures rejected because the image is
+too large are discarded.</p>
+<h2 id="changing-the-shortcut"><a class="anchor" href="#changing-the-shortcut">Changing the shortcut</a></h2>
+<p>Select the shortcut in Settings, press the new keys, then <strong>Save</strong>. On macOS and Windows you can use
+a modifier pair such as Command+Command or Ctrl+Ctrl, or a key chord. Moonfold refuses shortcuts
+that collide with its own keybindings or that the operating system already reserves.</p>
+<p>On Linux, choose a key chord; modifier pairs are not supported. On Niri and Hyprland the shortcut
+lives in your compositor config, so <strong>Change shortcut</strong> reopens setup to review the change.</p>
+<h2 id="include-app-text"><a class="anchor" href="#include-app-text">Include app text</a></h2>
+<p><strong>Include app text</strong> controls whether captures include the window&#39;s accessibility data. Turn it off
+to attach screenshots only. On macOS this also drops the Accessibility permission requirement.</p>
+<p>Availability depends on the app. Some apps expose only their window controls, not the document or
+terminal contents. If an app is slow to answer, Moonfold attaches the screenshot without the data
+rather than waiting.</p>
+<p>On GNOME, browsers may need app accessibility enabled in the desktop&#39;s accessibility settings before
+they expose text. Restart the browser after enabling it.</p>
+<p>An icon beside the app name on an attachment shows whether accessibility data was included. Select
+it to inspect what was captured.</p>
+<h2 id="sound-flash-and-animation"><a class="anchor" href="#sound-flash-and-animation">Sound, flash, and animation</a></h2>
+<p>Settings controls the capture sound, the brief flash on the captured window, and the animation that
+flies the image into your draft. Each can be turned off independently. The operating system&#39;s
+reduced-motion setting also disables the animation.</p>
+<h2 id="linux-desktops"><a class="anchor" href="#linux-desktops">Linux desktops</a></h2>
+<p>SnapShots work on Wayland sessions. Each desktop provides capture differently, and setup names your
+current desktop and shows only what it needs. Preferences carry across desktops, but each desktop&#39;s
+helper and shortcut approval are separate.</p>
+<p><strong>GNOME.</strong> Install the bundled <strong>Moonfold SnapShots</strong> extension during setup. It is installed
+per-user, offline, and needs no administrator password. Sign out and back in after the first
+install so GNOME discovers it, then enable it from setup or from GNOME&#39;s Extensions app. If GNOME
+has disabled all user extensions, turn them on there first. Disable or remove the extension in
+GNOME&#39;s Extensions app to revoke access.</p>
+<p><strong>KDE Plasma 6.</strong> Install the bundled capture helper during setup; no sign-out is needed. If the
+shortcut does not fire, check Moonfold under <strong>System Settings</strong> &gt; <strong>Keyboard</strong> &gt; <strong>Shortcuts</strong>. If a
+shortcut using Shift and a number does not work on your keyboard layout, use a letter chord instead.
+Remove the helper from <strong>Manage capture</strong> &gt; <strong>Access</strong> &gt; <strong>Advanced</strong>.</p>
+<p><strong>Hyprland and Omarchy.</strong> Install the bundled helper during setup, then choose a shortcut and select
+<strong>Review changes</strong>. Moonfold shows the exact change it will make to your Hyprland config. <strong>Save
+shortcut</strong> writes only that change, keeps a backup, and reloads Hyprland. Approve the screen-sharing
+prompt for the helper if one appears. On Omarchy, bind in your own config, not the shipped defaults.
+Some Hyprland versions return an &quot;access denied&quot; image instead of an error when capture is blocked;
+check the helper&#39;s screen-sharing permission.</p>
+<p><strong>Niri.</strong> Choose a shortcut and select <strong>Review changes</strong>. Moonfold shows the exact binding it will
+add to your Niri config, validates the result, keeps a backup, and saves it when you approve. Niri
+reloads the config on its own. The binding needs the <code>gdbus</code> command, normally part of your
+distribution&#39;s GLib tools. Remove the line from your config to release the key.</p>
+<p><strong>Other Wayland desktops.</strong> Moonfold uses the desktop&#39;s screenshot portal when it can capture the
+active window. Otherwise Settings shows <strong>Manual capture only</strong> and the shortcut opens the desktop&#39;s
+window picker. Picker captures do not include accessibility data.</p>
+<p>Apps running through XWayland inside a Wayland session can still be captured.</p>
 
-        <p class="doc-edit">
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/snap-shot.md"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Edit this page on GitHub</a
-          >
-        </p>
-        <nav class="pager" aria-label="More pages">
-          <a href="/docs/question-attachments/"
-            ><small>Previous</small><span>Files in question answers</span></a
-          ><a class="next" href="/docs/source-control/"
-            ><small>Next</small><span>Source control</span></a
-          >
-        </nav>
-      </article>
-      <aside class="doc-aside">
-        <nav class="doc-toc" aria-label="On this page">
-          <h2>On this page</h2>
-          <ul>
-            <li><a href="#turning-it-on">Turning it on</a></li>
-            <li><a href="#taking-a-capture">Taking a capture</a></li>
-            <li><a href="#changing-the-shortcut">Changing the shortcut</a></li>
-            <li><a href="#include-app-text">Include app text</a></li>
-            <li><a href="#sound-flash-and-animation">Sound, flash, and animation</a></li>
-            <li><a href="#linux-desktops">Linux desktops</a></li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-    <footer class="sp-footer">
-      <div class="sp-footer-inner">
-        <p>
-          <strong>Moonfold</strong> is open source under the MIT licence, built on
-          <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer"
-            >T3 Code</a
-          >. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other
-          provider it works with.
-        </p>
-        <nav aria-label="Footer">
-          <a href="/">Home</a>
-          <a href="/docs/">Docs</a>
-          <a href="/blog/">Blog</a>
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://github.com/Mr-Dark-debug/Moonfold/releases"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Releases</a
-          >
-        </nav>
-      </div>
-    </footer>
-  </body>
+<p class="doc-edit"><a href="https://github.com/Mr-Dark-debug/Moonfold/edit/main/docs/user/snap-shot.md" target="_blank" rel="noopener noreferrer">Edit this page on GitHub</a></p>
+<nav class="pager" aria-label="More pages"><a href="/docs/secrets/"><small>Previous</small><span>Secrets</span></a><a class="next" href="/docs/source-control/"><small>Next</small><span>Source control</span></a></nav>
+</article>
+<aside class="doc-aside"><nav class="doc-toc" aria-label="On this page"><h2>On this page</h2><ul><li><a href="#turning-it-on">Turning it on</a></li><li><a href="#taking-a-capture">Taking a capture</a></li><li><a href="#changing-the-shortcut">Changing the shortcut</a></li><li><a href="#include-app-text">Include app text</a></li><li><a href="#sound-flash-and-animation">Sound, flash, and animation</a></li><li><a href="#linux-desktops">Linux desktops</a></li></ul></nav></aside>
+</div>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
 </html>

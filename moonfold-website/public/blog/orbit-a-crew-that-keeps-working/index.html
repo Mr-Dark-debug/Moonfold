@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2236cc">
+<title>Orbit, a crew that keeps working on your project while you are away | Moonfold</title>
+<meta name="description" content="How Orbit turns public feedback into a ranked backlog and proposed pull requests, and the limits that keep a crew of coding agents in check.">
+<link rel="canonical" href="https://moonfold-website.vercel.app/blog/orbit-a-crew-that-keeps-working/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://moonfold-website.vercel.app/blog/orbit-a-crew-that-keeps-working/">
+<meta property="og:title" content="Orbit, a crew that keeps working on your project while you are away | Moonfold">
+<meta property="og:description" content="How Orbit turns public feedback into a ranked backlog and proposed pull requests, and the limits that keep a crew of coding agents in check.">
+<meta property="og:image" content="https://moonfold-website.vercel.app/assets/social-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/moonfold-mark.svg">
+<link rel="preload" href="/assets/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/content.css">
+<script src="/content.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Orbit, a crew that keeps working on your project while you are away","description":"How Orbit turns public feedback into a ranked backlog and proposed pull requests, and the limits that keep a crew of coding agents in check.","datePublished":"2026-11-13","author":{"@type":"Organization","name":"The Moonfold team"},"mainEntityOfPage":"https://moonfold-website.vercel.app/blog/orbit-a-crew-that-keeps-working/"}</script>
+</head>
+<body class="page-post">
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sp-header">
+  <a class="sp-brand" href="/">Moonfold<span class="sp-dot">.</span></a>
+  <nav class="sp-nav" aria-label="Site">
+    <a href="/docs/">Docs</a>
+    <a href="/blog/" aria-current="page">Blog</a>
+    <a class="sp-gh" href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <a class="sp-pill" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download <span aria-hidden="true">↗</span></a>
+</header>
+<main class="post" id="content">
+<div class="post-head">
+<p class="crumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><a href="/blog/#guides">Guides</a></p>
+<p class="eyebrow">Guides</p>
+<h1>Orbit, a crew that keeps working on your project while you are away</h1>
+<p class="lede">How Orbit turns public feedback into a ranked backlog and proposed pull requests, and the limits that keep a crew of coding agents in check.</p>
+<dl class="post-facts">
+<div><dt>Written by</dt><dd>The Moonfold team</dd></div>
+<div><dt>Published</dt><dd><time datetime="2026-11-13">Nov 13, 2026</time></dd></div>
+<div><dt>Reading time</dt><dd>2 min</dd></div>
+</dl>
+</div>
+<div class="post-body-wrap">
+<nav class="post-toc" aria-label="In this post"><h2>In this post</h2><ul><li><a href="#five-roles-one-mission">Five roles, one mission</a></li><li><a href="#how-far-it-goes-on-its-own">How far it goes on its own</a></li><li><a href="#why-a-post-cannot-steer-the-builder">Why a post cannot steer the builder</a></li><li><a href="#try-it">Try it</a></li></ul></nav>
+<article class="prose">
+<p>Most coding agents wait for you to type. Orbit is for the time in between: a small crew of agents that keeps working on one project while you are away, and leaves its work for you to review.</p>
+<p><video controls preload="metadata" playsinline width="1440" height="810" poster="/assets/demo-beta6-orbit-poster.jpg" src="/assets/demo-beta6-orbit.mp4"></video></p>
+<h2 id="five-roles-one-mission"><a class="anchor" href="#five-roles-one-mission">Five roles, one mission</a></h2>
+<p>You write the mission once: what the product is, who it is for, what to work towards and what to avoid. Only you can change it. The agents read it but cannot edit it.</p>
+<div class="table-wrap"><table><thead><tr><th>Role</th><th>What it does</th></tr></thead><tbody><tr><td>Scout</td><td>Reads your channels and records what users said, in its own words</td></tr><tr><td>Planner</td><td>Turns that into a ranked backlog</td></tr><tr><td>Builder</td><td>Builds the top item with tests and opens a pull request</td></tr><tr><td>Sentinel</td><td>Checks dependency advisories and security alerts every day</td></tr><tr><td>Herald</td><td>Writes release notes and announcement drafts</td></tr></tbody></table></div>
+<p>Each role has its own switch and interval, and <strong>Run now</strong> starts one immediately. Every run is an ordinary Moonfold thread on your own computer, using your own provider sign-in, so you can open it and read exactly what happened.</p>
+<h2 id="how-far-it-goes-on-its-own"><a class="anchor" href="#how-far-it-goes-on-its-own">How far it goes on its own</a></h2>
+<ul>
+<li><strong>Observe</strong>: the crew reads and reports, and nothing changes in your code.</li>
+<li><strong>Propose</strong>, the default: the builder and sentinel open pull requests and the herald writes drafts. You merge, release and post.</li>
+<li><strong>Ship</strong>: the builder may merge its own pull request once its checks pass and another provider&#39;s review approves.</li>
+<li><strong>Publish</strong>: as Ship, and drafts may also be posted where you allow it. Posting is not built yet, so drafts wait in the inbox at every level.</li>
+</ul>
+<h2 id="why-a-post-cannot-steer-the-builder"><a class="anchor" href="#why-a-post-cannot-steer-the-builder">Why a post cannot steer the builder</a></h2>
+<p>Public feedback is untrusted text, and an agent that reads it should not be the one that changes your code. Orbit keeps those apart. The scout is the only role that reads public posts, and it can only record summaries. The builder sees the planner&#39;s backlog, never the posts themselves. Each role&#39;s tools check which role is calling, so a scout cannot write the backlog, and no role can change the mission or the settings. The activity log records every change and run and cannot be edited.</p>
+<p><strong>Runs per day</strong> caps how many runs start in a day, so a busy week does not turn into a surprise bill.</p>
+<h2 id="try-it"><a class="anchor" href="#try-it">Try it</a></h2>
+<p>Open <strong>Orbit</strong> in the sidebar, pick a project, write the mission and add a few Hacker News searches or subreddits under <strong>Where to listen</strong>. Start at Propose and read a few runs before you give it more. The <a href="/docs/orbit/">Orbit guide</a> covers the rest.</p>
+
+<div class="post-cta"><p><strong>Try Moonfold.</strong> It is free, open source and runs the agents you already use, with your own logins.</p><a class="btn btn-solid" href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Download the beta</a></div>
+</article>
+</div>
+<section class="related"><h2>Keep reading</h2><div class="post-grid"><article class="post-card"><a href="/blog/moonfold-android-updates-itself/">
+<span class="post-no" aria-hidden="true">01</span>
+<span class="post-cat">Guides</span>
+<h3>Moonfold for Android now updates itself</h3>
+<p>From 0.3, the Moonfold Android app finds new releases on GitHub, checks the checksum and signing key, and installs the update after you agree.</p>
+<span class="post-meta">Nov 13, 2026 · 1 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/windows-searching-for-exe-after-update/">
+<span class="post-no" aria-hidden="true">02</span>
+<span class="post-cat">Guides</span>
+<h3>Windows is searching for an .exe after an update: why it happens and how we fixed it</h3>
+<p>A Windows shortcut that searches for a missing .exe after an app update usually means the installer could not replace a running file. Here is the cause and the fix.</p>
+<span class="post-meta">Nov 13, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article><article class="post-card"><a href="/blog/reach-moonfold-from-another-device/">
+<span class="post-no" aria-hidden="true">03</span>
+<span class="post-cat">Guides</span>
+<h3>Reach your Moonfold from another device</h3>
+<p>Pair a phone, a browser or another desktop with a Moonfold running on a different machine, using your own network, Tailscale or an SSH tunnel.</p>
+<span class="post-meta">Oct 25, 2026 · 2 min read</span>
+<span class="post-go">Read the post <span aria-hidden="true">→</span></span>
+</a></article></div></section>
+</main>
+<footer class="sp-footer">
+  <div class="sp-footer-inner">
+    <p><strong>Moonfold</strong> is open source under the MIT licence, built on <a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener noreferrer">T3 Code</a>. It is not affiliated with or endorsed by OpenAI, Anthropic, Google, Cursor or any other provider it works with.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/docs/">Docs</a>
+      <a href="/blog/">Blog</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/Mr-Dark-debug/Moonfold/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
