@@ -684,3 +684,12 @@ PowerShell 5.1 leaves empty for a single match. A lone helper started from the a
 uninstaller was left, so shortcuts pointed at a missing app (seen on the owner's machine on
 2026-11-13). The installer now runs electron-builder's check, which still asks before closing a
 running Moonfold, and then force-closes anything left in the install folder.
+
+## D-78 Every release ships a demo video and blog posts; ten problem posts a week
+
+Owner rule from 2026-11-13. Each new feature gets a short demo video, recorded in a real build on
+real data, and each change gets a blog post on the website. Every week also brings ten posts on
+problems people really report with coding agents. Each cites its source and gives a tested fix,
+because invented or thin posts would break the real-data rule and hurt search ranking. The weekly
+run is a local scheduled task. It deploys the website from a clean checkout of `main`, so other
+uncommitted website work is never published by accident.
