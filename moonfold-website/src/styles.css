@@ -567,6 +567,36 @@ body.fs-nav-open .nv-reveal {
       transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     transition-delay: calc(0.45s + var(--nv-i, 0) * 0.07s);
   }
+  /* Reveal stagger indexes; inline style attributes are CSP-blocked in production */
+  .fs-nav-top {
+    --nv-i: 0;
+  }
+  .fs-links li:nth-child(1) {
+    --nv-i: 1;
+  }
+  .fs-links li:nth-child(2) {
+    --nv-i: 2;
+  }
+  .fs-links li:nth-child(3) {
+    --nv-i: 3;
+  }
+  .fs-links li:nth-child(4) {
+    --nv-i: 4;
+  }
+  .fs-links li:nth-child(5),
+  .fs-links li:nth-child(6),
+  .fs-cta {
+    --nv-i: 5;
+  }
+  .fs-nav-media img:nth-child(1) {
+    --nv-i: 6;
+  }
+  .fs-nav-media img:nth-child(2) {
+    --nv-i: 7;
+  }
+  .fs-nav-bottom {
+    --nv-i: 8;
+  }
   body.fs-nav-closing .nv-reveal {
     transition:
       opacity 0.3s ease,
