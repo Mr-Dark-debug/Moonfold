@@ -163,6 +163,9 @@ export default defineConfig({
       "packages/source-control-github/schema/**",
       "apps/server/schema/**",
       "*.icon/**",
+      // Written by moonfold-website `npm run content`; regenerate rather than format.
+      "moonfold-website/public/blog/**",
+      "moonfold-website/public/docs/**",
     ],
     sortPackageJson: {},
     overrides: [

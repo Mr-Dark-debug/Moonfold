@@ -105,6 +105,9 @@ overrides:
   "source-map-js": "^1.2.2"
   "valibot": "^1.4.2"
   "sharp": "^0.35.5"
+  # @cloudflare/unenv-preset peers on exactly this version; a lockfile-free install would take
+  # the newer rc and fail the strict peer check.
+  "unenv": "2.0.0-rc.24"
   # Pin every patched package, including transitive dependencies, so lockfile-free
   # release installs cannot drift past the patch. Update these with patchedDependencies.
   mdast-util-math: 3.0.0
