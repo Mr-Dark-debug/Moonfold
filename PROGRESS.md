@@ -1,5 +1,40 @@
 # Progress
 
+## Beta 8: import chat sessions from other agents (2026-11-27)
+
+Owner request: import a Claude Code, Codex or Antigravity chat into Moonfold by session ID, then
+ship it as a new version with a demo video, release notes and a website post.
+
+Done:
+
+- Import chat session dialog (sidebar header button, project menu, command palette): lookup by ID
+  across Claude Code, Codex, Antigravity and Pi, or pick from recent local sessions; preview, then
+  import as a thread with messages, thinking and tool calls. New RPCs `agentSessions.lookup` and
+  `agentSessions.importSession`; parsers in `AgentSessionRichTranscript.ts`. Started by Antigravity
+  (gemini), finished by Claude after a handoff: fixed 33 typecheck/Effect-diagnostic errors and
+  made the dialog default to the current thread's or draft's project.
+- Real data: parsers read real local sessions read-only (Codex 223 messages / 1,432 tool calls,
+  Claude Code 7 / 15, Antigravity 444 / 646). No Pi history on this machine; unit tests cover it.
+- Checks: `vp run check:changed` → lint, knip, typecheck (38 packages), tests (21 files, 307 pass)
+  and react compiler pass. Format failed only on an untracked demo folder (removed), graphql only on
+  the untouched `ExpoApi.graphql.ts` (line endings on Windows). Main CI 46039009100 green; release
+  dry run 46039030163 green; REA gate in docs/REA-BETA8.md.
+- Demo video re-recorded on an isolated home whose fake user profile holds only the old
+  invoice-calc demo sessions, so no real chat appears (the earlier take showed a real chat about
+  T3 and the PC name). Embedded in the beta 8 post and a guide post; site deployed by CLI and
+  verified live. User guide docs/user/import-sessions.md.
+- Released https://github.com/Mr-Dark-debug/Moonfold/releases/tag/v1.0.0-beta.8 (Latest, run
+  46043045908, 28 assets including the demo mp4; notes link the website video).
+
+Open problems:
+
+- The video was recorded before the default-project fix, so it shows choosing the project by hand.
+- The video is not embedded inline on GitHub: that needs the browser upload flow, and Claude in
+  Chrome was not available in this session.
+- Moonfold cannot import ChatGPT web conversations: they live in OpenAI's cloud, not on disk.
+
+Next: upload the video in the release editor so it plays inline; collect beta 8 feedback.
+
 ## Release content: demo videos and blog posts for betas 5 to 7 (2026-11-13)
 
 Done:
