@@ -47,7 +47,7 @@ npx vercel@64.3.1 link --project moonfold-website --scope prashant-project
 npx vercel@64.3.1 deploy --prod --scope prashant-project
 ```
 
-The current project uses manual deployments. Its Git integration is disconnected so unrelated application pushes cannot trigger a build of the wrong directory. If enabling Git deployment later, set the project root directory to `moonfold-website` first. Vercel authentication is limited to previews; the production site is public. Never publish `.vercel`, `.env` files, or provider credentials.
+Production is updated only by this command. The `moonfold-website` project's Root Directory is `.`, so it is meant to be deployed from this folder. Its Git integration is connected, but those builds run at the repository root and fail (`vp: command not found`), so a push to `main` does not update the site and its Vercel status check on GitHub shows a failure. The separate `moonfold-moonfold-website` project (Root Directory `moonfold-website`) builds from Git correctly, but it is not the public address. Deploy from a clean checkout of `main` so another session's uncommitted files are never published, and check the live URL afterwards. Vercel authentication is limited to previews; the production site is public. Never publish `.vercel`, `.env` files, or provider credentials.
 
 ## Content and assets
 
