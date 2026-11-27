@@ -193,6 +193,7 @@ const SECTIONS = [
       "provider-handoff",
       "prompt-profiles",
       "portable-handoffs",
+      "import-sessions",
       "usage",
       "scheduled-tasks",
       "memories",
