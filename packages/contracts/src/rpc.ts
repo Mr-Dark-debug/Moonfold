@@ -91,9 +91,16 @@ import {
 } from "./filesystem.ts";
 import {
   AgentSessionImportInput,
+  AgentSessionImportNotFoundError,
   AgentSessionImportProjectChangedError,
   AgentSessionImportProjectNotFoundError,
   AgentSessionImportResult,
+  AgentSessionImportSessionInput,
+  AgentSessionImportSessionResult,
+  AgentSessionListInput,
+  AgentSessionListResult,
+  AgentSessionLookupInput,
+  AgentSessionLookupResult,
   AgentSessionScanInput,
   AgentSessionScanResult,
   AgentSessionScanError,
@@ -520,6 +527,9 @@ export const WS_METHODS = {
   filesystemGetMetadata: "filesystem.getMetadata",
   agentSessionsScan: "agentSessions.scan",
   agentSessionsImport: "agentSessions.import",
+  agentSessionsList: "agentSessions.list",
+  agentSessionsLookup: "agentSessions.lookup",
+  agentSessionsImportSession: "agentSessions.importSession",
   assetsCreateUrl: "assets.createUrl",
   assetsPersistChatAttachments: "assets.persistChatAttachments",
   attachmentsCreateUploadUrl: "attachments.createUploadUrl",
@@ -1624,6 +1634,29 @@ const WsAgentSessionsImportRpc = Rpc.make(WS_METHODS.agentSessionsImport, {
   ]),
 });
 
+const WsAgentSessionsListRpc = Rpc.make(WS_METHODS.agentSessionsList, {
+  payload: AgentSessionListInput,
+  success: AgentSessionListResult,
+  error: Schema.Union([AgentSessionScanError, EnvironmentAuthorizationError]),
+});
+
+const WsAgentSessionsLookupRpc = Rpc.make(WS_METHODS.agentSessionsLookup, {
+  payload: AgentSessionLookupInput,
+  success: AgentSessionLookupResult,
+  error: Schema.Union([AgentSessionScanError, EnvironmentAuthorizationError]),
+});
+
+const WsAgentSessionsImportSessionRpc = Rpc.make(WS_METHODS.agentSessionsImportSession, {
+  payload: AgentSessionImportSessionInput,
+  success: AgentSessionImportSessionResult,
+  error: Schema.Union([
+    AgentSessionImportNotFoundError,
+    AgentSessionImportProjectNotFoundError,
+    AgentSessionScanError,
+    EnvironmentAuthorizationError,
+  ]),
+});
+
 const WsAssetsCreateUrlRpc = Rpc.make(WS_METHODS.assetsCreateUrl, {
   payload: AssetCreateUrlInput,
   success: AssetCreateUrlResult,
@@ -2570,6 +2603,9 @@ const WsRpcGroupPart3 = RpcGroup.make(
   WsFilesystemGetMetadataRpc,
   WsAgentSessionsScanRpc,
   WsAgentSessionsImportRpc,
+  WsAgentSessionsListRpc,
+  WsAgentSessionsLookupRpc,
+  WsAgentSessionsImportSessionRpc,
   WsAssetsCreateUrlRpc,
   WsAssetsPersistChatAttachmentsRpc,
   WsAttachmentsCreateUploadUrlRpc,

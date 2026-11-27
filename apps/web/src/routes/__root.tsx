@@ -18,6 +18,7 @@ import { AppSidebarLayout } from "../components/AppSidebarLayout";
 import { CommandPalette } from "../components/CommandPalette";
 import { CustomSnoozeDialogHost } from "../components/CustomSnoozeDialog";
 import { HandoffBriefDialogHost, HandoffDialogHost } from "../components/HandoffDialog";
+import { ImportSessionDialogHost } from "../components/ImportSessionDialog";
 import { ScheduleSendDialogHost } from "../components/ScheduleSendDialog";
 import { MoveToWorktreeDialogHost } from "../components/MoveToWorktreeDialog";
 import { GuestShareDialogHost } from "../components/chat/GuestShareControls";
@@ -177,6 +178,7 @@ function RootRouteBranch() {
         <CustomSnoozeDialogHost />
         <GuestShareDialogHost />
         <HandoffDialogHost />
+        <ImportSessionDialogHost />
         <ScheduleSendDialogHost />
         <HandoffBriefDialogHost />
         <MoveToWorktreeDialogHost />
@@ -233,6 +235,7 @@ function RootRouteBranch() {
         <CustomSnoozeDialogHost />
         <GuestShareDialogHost />
         <HandoffDialogHost />
+        <ImportSessionDialogHost />
         <ScheduleSendDialogHost />
         <HandoffBriefDialogHost />
         <MoveToWorktreeDialogHost />

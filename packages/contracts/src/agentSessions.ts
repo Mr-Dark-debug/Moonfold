@@ -1,8 +1,14 @@
 import * as Schema from "effect/Schema";
-import { IsoDateTime, NonNegativeInt, ProjectId, TrimmedNonEmptyString } from "./baseSchemas.ts";
+import {
+  IsoDateTime,
+  NonNegativeInt,
+  ProjectId,
+  ThreadId,
+  TrimmedNonEmptyString,
+} from "./baseSchemas.ts";
 import { ProviderInstanceId } from "./providerInstance.ts";
 
-export const AgentSessionSource = Schema.Literals(["claudeAgent", "codex", "pi"]);
+export const AgentSessionSource = Schema.Literals(["claudeAgent", "codex", "antigravity", "pi"]);
 export type AgentSessionSource = typeof AgentSessionSource.Type;
 
 export const AgentSessionImportSource = Schema.Struct({
@@ -53,6 +59,90 @@ export const AgentSessionImportInput = Schema.Struct({
   expectedWorkspaceRoot: Schema.optional(TrimmedNonEmptyString),
 });
 export type AgentSessionImportInput = typeof AgentSessionImportInput.Type;
+
+export const AgentSessionSummary = Schema.Struct({
+  provider: AgentSessionSource,
+  providerInstanceId: ProviderInstanceId,
+  sessionId: TrimmedNonEmptyString,
+  title: TrimmedNonEmptyString,
+  cwd: Schema.NullOr(TrimmedNonEmptyString),
+  model: Schema.NullOr(TrimmedNonEmptyString),
+  createdAt: IsoDateTime,
+  updatedAt: IsoDateTime,
+  alreadyImportedThreadId: Schema.NullOr(ThreadId),
+  matchedProjectId: Schema.NullOr(ProjectId),
+});
+export type AgentSessionSummary = typeof AgentSessionSummary.Type;
+
+export const AgentSessionListInput = Schema.Struct({
+  provider: Schema.optional(AgentSessionSource),
+  projectId: Schema.optional(ProjectId),
+  query: Schema.optional(Schema.String.check(Schema.isMaxLength(200))),
+  limit: Schema.optional(Schema.Int.check(Schema.isBetween({ minimum: 1, maximum: 200 }))),
+});
+export type AgentSessionListInput = typeof AgentSessionListInput.Type;
+
+export const AgentSessionListResult = Schema.Struct({
+  sessions: Schema.Array(AgentSessionSummary),
+  truncated: Schema.optional(Schema.Boolean),
+});
+export type AgentSessionListResult = typeof AgentSessionListResult.Type;
+
+export const AgentSessionLookupInput = Schema.Struct({
+  sessionId: TrimmedNonEmptyString.check(Schema.isMaxLength(512)),
+  provider: Schema.optional(AgentSessionSource),
+});
+export type AgentSessionLookupInput = typeof AgentSessionLookupInput.Type;
+
+export const AgentSessionLookupPreview = Schema.Struct({
+  ...AgentSessionSummary.fields,
+  messageCount: NonNegativeInt,
+  toolCallCount: NonNegativeInt,
+  reasoningCount: NonNegativeInt,
+  omittedItemCount: NonNegativeInt,
+  firstUserPrompt: Schema.NullOr(Schema.String),
+});
+export type AgentSessionLookupPreview = typeof AgentSessionLookupPreview.Type;
+
+export const AgentSessionLookupResult = Schema.Struct({
+  session: Schema.NullOr(AgentSessionLookupPreview),
+});
+export type AgentSessionLookupResult = typeof AgentSessionLookupResult.Type;
+
+export const AgentSessionImportSessionInput = Schema.Struct({
+  sessionId: TrimmedNonEmptyString.check(Schema.isMaxLength(512)),
+  provider: Schema.optional(AgentSessionSource),
+  providerInstanceId: Schema.optional(ProviderInstanceId),
+  projectId: ProjectId,
+});
+export type AgentSessionImportSessionInput = typeof AgentSessionImportSessionInput.Type;
+
+export const AgentSessionImportSessionResult = Schema.Struct({
+  threadId: ThreadId,
+  imported: Schema.Boolean,
+  alreadyImported: Schema.Boolean,
+  provider: AgentSessionSource,
+  title: TrimmedNonEmptyString,
+  messageCount: NonNegativeInt,
+  toolCallCount: NonNegativeInt,
+  reasoningCount: NonNegativeInt,
+  omittedItemCount: NonNegativeInt,
+});
+export type AgentSessionImportSessionResult = typeof AgentSessionImportSessionResult.Type;
+
+export class AgentSessionImportNotFoundError extends Schema.TaggedError<AgentSessionImportNotFoundError>()(
+  "AgentSessionImportNotFoundError",
+  {
+    sessionId: Schema.String,
+    provider: Schema.optional(AgentSessionSource),
+  },
+) {
+  override get message(): string {
+    return this.provider === undefined
+      ? `No external chat session was found with ID '${this.sessionId}'.`
+      : `No '${this.provider}' chat session was found with ID '${this.sessionId}'.`;
+  }
+}
 
 export class AgentSessionImportProjectNotFoundError extends Schema.TaggedError<AgentSessionImportProjectNotFoundError>()(
   "AgentSessionImportProjectNotFoundError",

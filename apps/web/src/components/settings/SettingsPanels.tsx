@@ -2,9 +2,10 @@ import { useAtomValue } from "@effect/atom-react";
 import { NotificationSettings } from "./NotificationSettings";
 import { PRIVACY_POLICY_URL } from "../../legalLinks";
 import { AboutMoonfoldCredits } from "./AboutMoonfold";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, DownloadIcon } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useRef, useState } from "react";
+import { requestImportSession } from "../ImportSessionDialog";
 import {
   type DesktopUpdateChannel,
   IDLE_COMPACTION_MODES,
@@ -1767,6 +1768,31 @@ export function ThreadsSettingsPanel() {
               }
             />
           ) : null}
+        </SettingsSection>
+      ) : null}
+
+      {environmentId !== null ? (
+        <SettingsSection id="external-sessions" title="External sessions">
+          <SettingsRow
+            title="Import chat session"
+            description="Bring an existing Claude Code, Codex, Antigravity, or Pi conversation (messages, thinking, and tool calls) into Moonfold by session ID."
+            control={
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={() =>
+                  requestImportSession({
+                    environmentId,
+                    projectId: target?.projectId ?? null,
+                  })
+                }
+              >
+                <DownloadIcon className="size-3.5" />
+                Import session…
+              </Button>
+            }
+          />
         </SettingsSection>
       ) : null}
 

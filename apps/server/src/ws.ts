@@ -3145,6 +3145,10 @@ export const layerWsRpc = (
         [WS_METHODS.agentSessionsScan]: () => agentSessionScanner.scan,
         [WS_METHODS.agentSessionsImport]: (input) =>
           agentSessionImporter.importRecentAgentThreads(input),
+        [WS_METHODS.agentSessionsList]: (input) => agentSessionImporter.listSessions(input),
+        [WS_METHODS.agentSessionsLookup]: (input) => agentSessionImporter.lookupSession(input),
+        [WS_METHODS.agentSessionsImportSession]: (input) =>
+          agentSessionImporter.importSessionById(input),
         [WS_METHODS.assetsCreateUrl]:
           /* Request instrumentation already owns the span; keep this helper in that context. */
           Effect.fnUntraced(function* (input) {

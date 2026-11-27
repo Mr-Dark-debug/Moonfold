@@ -176,6 +176,7 @@ const makeImporter = Effect.fn(function* (
     ServerSettings.ServerSettingsService,
     ServerSettingsError
   > = ServerSettings.layerTest(),
+  scannerOverrides?: Partial<Context.Service.Shape<typeof AgentSessionScanner.AgentSessionScanner>>,
 ) {
   const sql = yield* SqlClient.SqlClient;
   const events = yield* EventStore.EventStoreV2;
@@ -206,6 +207,16 @@ const makeImporter = Effect.fn(function* (
       ),
     ),
   );
+  const projectRecord = {
+    id: projectId,
+    title: "Project",
+    workspaceRoot: "/workspace/project",
+    defaultModelSelection: null,
+    scripts: [],
+    createdAt: timestamp,
+    updatedAt: timestamp,
+    deletedAt: null,
+  };
   const context = yield* Layer.build(
     AgentSessionImporter.layer.pipe(
       Layer.provide(
@@ -219,19 +230,11 @@ const makeImporter = Effect.fn(function* (
           ),
           Layer.mock(AgentSessionScanner.AgentSessionScanner)({
             recentThreads: () => Stream.fromIterable(candidates),
+            ...scannerOverrides,
           }),
           Layer.mock(ProjectService.ProjectService)({
-            getById: () =>
-              Effect.succeedSome({
-                id: projectId,
-                title: "Project",
-                workspaceRoot: "/workspace/project",
-                defaultModelSelection: null,
-                scripts: [],
-                createdAt: timestamp,
-                updatedAt: timestamp,
-                deletedAt: null,
-              }),
+            getById: () => Effect.succeedSome(projectRecord),
+            listShells: () => Effect.succeed([projectRecord]),
           }),
           Layer.mock(Orchestrator.OrchestratorV2)({
             getThreadRecords: (threadId, fields) =>
@@ -248,7 +251,7 @@ const makeImporter = Effect.fn(function* (
     ),
   );
   const importer = Context.get(context, AgentSessionImporter.AgentSessionImporter);
-  return { run: importer.importRecentAgentThreads({ projectId }), published };
+  return { importer, run: importer.importRecentAgentThreads({ projectId }), published };
 });
 
 it.effect(
@@ -448,4 +451,152 @@ it.effect("imports under a policy ceiling in the project's default, kept under t
       "auto-accept-edits",
     );
   }).pipe(Effect.scoped, Effect.provide(persistence)),
+);
+
+it.effect(
+  "looks up and imports a rich session by ID with reasoning and tool calls, and handles repeat imports idempotently",
+  () =>
+    Effect.gen(function* () {
+      const projections = yield* ProjectionStore.ProjectionStoreV2;
+      const runtimes = yield* ProviderSessionRuntime.ProviderSessionRuntimeRepository;
+      const sessionId = "50f6346a-2a6e-4dc7-9121-ba869cc25d43";
+      const providerInstanceId = CLAUDE_MODEL_SELECTION.instanceId;
+      const loaded = {
+        source: {
+          provider: "claudeAgent" as const,
+          providerInstanceId,
+          providerSessionId: sessionId,
+          filePath: `/tmp/claude/${sessionId}.jsonl`,
+          size: 512,
+          mtimeMs: 1000,
+          device: 1,
+          inode: 2,
+          birthtimeMs: 500,
+        },
+        thread: {
+          source: "claudeAgent" as const,
+          providerInstanceId,
+          providerSessionId: sessionId,
+          title: "Rich Claude Session",
+          cwd: "/workspace/project",
+          model: CLAUDE_MODEL_SELECTION.model,
+          createdAt: timestamp,
+          updatedAt: timestamp,
+          messageCount: 2,
+          toolCallCount: 3,
+          reasoningCount: 1,
+          omittedItemCount: 0,
+          firstUserPrompt: "Fix the parser",
+          sourceFilePath: `/tmp/claude/${sessionId}.jsonl`,
+          items: [
+            { kind: "user_message" as const, text: "Fix the parser", createdAt: timestamp },
+            {
+              kind: "reasoning" as const,
+              text: "Checking parser tests first.",
+              createdAt: timestamp,
+            },
+            {
+              kind: "command_execution" as const,
+              input: "vp test run parser.test.ts",
+              output: "All passed",
+              status: "completed" as const,
+              createdAt: timestamp,
+            },
+            {
+              kind: "file_change" as const,
+              fileName: "src/parser.ts",
+              oldStr: "null",
+              newStr: "result",
+              status: "completed" as const,
+              createdAt: timestamp,
+            },
+            {
+              kind: "dynamic_tool" as const,
+              toolName: "mcp_search",
+              title: "Search docs",
+              input: { query: "effect" },
+              output: "Found 2 results",
+              status: "completed" as const,
+              createdAt: timestamp,
+            },
+            {
+              kind: "assistant_message" as const,
+              text: "Parser fixed and tests pass.",
+              createdAt: timestamp,
+            },
+          ],
+        },
+      };
+
+      const { importer } = yield* makeImporter([], Effect.void, ServerSettings.layerTest(), {
+        loadRichSession: (query) =>
+          Effect.succeed(query.sessionId === sessionId ? Option.some(loaded) : Option.none()),
+      });
+
+      const preview = yield* importer.lookupSession({ sessionId });
+      expect(preview).toMatchObject({
+        session: {
+          provider: "claudeAgent",
+          sessionId,
+          title: "Rich Claude Session",
+          messageCount: 2,
+          toolCallCount: 3,
+          reasoningCount: 1,
+          matchedProjectId: projectId,
+          alreadyImportedThreadId: null,
+        },
+      });
+
+      const missingPreview = yield* importer.lookupSession({ sessionId: "does-not-exist" });
+      expect(missingPreview).toEqual({ session: null });
+
+      const imported = yield* importer.importSessionById({ sessionId, projectId });
+      expect(imported).toMatchObject({
+        imported: true,
+        alreadyImported: false,
+        provider: "claudeAgent",
+        title: "Rich Claude Session",
+        messageCount: 2,
+        toolCallCount: 3,
+        reasoningCount: 1,
+      });
+
+      const records = yield* projections.getThreadRecords(imported.threadId, [
+        "messages",
+        "turnItems",
+        "providerThreads",
+      ]);
+      expect(records.messages.map((m) => m.text)).toEqual([
+        "Fix the parser",
+        "Parser fixed and tests pass.",
+      ]);
+      expect(records.turnItems.map((item) => item.type)).toEqual([
+        "user_message",
+        "reasoning",
+        "command_execution",
+        "file_change",
+        "dynamic_tool",
+        "assistant_message",
+      ]);
+      expect(
+        Option.getOrThrow(yield* runtimes.getByThreadId({ threadId: imported.threadId })),
+      ).toMatchObject({
+        providerInstanceId,
+        resumeCursor: { threadId: imported.threadId, resume: sessionId },
+      });
+
+      // Repeat import returns alreadyImported: true without duplicating events.
+      const repeat = yield* importer.importSessionById({ sessionId, projectId });
+      expect(repeat).toMatchObject({
+        threadId: imported.threadId,
+        imported: false,
+        alreadyImported: true,
+      });
+
+      // Importing a missing session fails with AgentSessionImportNotFoundError.
+      const notFoundError = yield* importer
+        .importSessionById({ sessionId: "missing-session", projectId })
+        .pipe(Effect.flip);
+      expect(notFoundError._tag).toBe("AgentSessionImportNotFoundError");
+    }).pipe(Effect.scoped, Effect.provide(persistence)),
 );

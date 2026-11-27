@@ -10,6 +10,7 @@ import {
 import { discardComposerDraft } from "../lib/discardComposerDraft";
 import { requestCustomSnooze } from "./CustomSnoozeDialog";
 import { requestHandoff } from "./HandoffDialog";
+import { requestImportSession } from "./ImportSessionDialog";
 import { useAtomValue } from "@effect/atom-react";
 import * as Option from "effect/Option";
 import { Atom } from "effect/reactivity";
@@ -1261,6 +1262,7 @@ export default function Sidebar({ routeReveal }: { routeReveal: SidebarRouteReve
           api.contextMenu.show(
             [
               { id: "new-thread", label: "New thread" },
+              { id: "import-session", label: "Import chat session…" },
               { id: "copy-path", label: "Copy path" },
               ...(canPinProject(group)
                 ? [
@@ -1278,6 +1280,9 @@ export default function Sidebar({ routeReveal }: { routeReveal: SidebarRouteReve
         switch (clicked.value) {
           case "new-thread":
             startThreadInProjectFolder(group);
+            return;
+          case "import-session":
+            requestImportSession({ environmentId: group.environmentId, projectId: group.id });
             return;
           case "copy-path":
             copyPathToClipboard(group.workspaceRoot, { path: group.workspaceRoot });
@@ -3238,6 +3243,23 @@ export default function Sidebar({ routeReveal }: { routeReveal: SidebarRouteReve
                 </Combobox>
               }
               onNewProject={openAddProjectCommandPalette}
+              onImportSession={() => {
+                const current = newThreadContext.activeThread ?? newThreadContext.activeDraftThread;
+                if (current) {
+                  requestImportSession({
+                    environmentId: current.environmentId,
+                    projectId: current.projectId,
+                  });
+                  return;
+                }
+                const targetProject =
+                  scopedProjectGroups.length === 1 ? scopedProjectGroups[0] : projects[0];
+                if (!targetProject) return;
+                requestImportSession({
+                  environmentId: targetProject.environmentId,
+                  projectId: targetProject.id,
+                });
+              }}
               onNewThread={handleNewThreadClick}
               newThreadDisabled={projects.length === 0}
               newThreadShortcutLabel={newThreadShortcutLabel}

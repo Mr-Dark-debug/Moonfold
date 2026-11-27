@@ -46,7 +46,7 @@ import {
   AuthSourceControlWriteScope,
   AuthFilesystemReadScope,
   type DesktopWslState,
-  type EnvironmentId,
+  EnvironmentId,
   type FilesystemBrowseResult,
   SourceControlProviderKind,
   PRIMARY_LOCAL_ENVIRONMENT_ID,
@@ -60,6 +60,7 @@ import {
   CheckIcon,
   ChevronRightIcon,
   CornerLeftUpIcon,
+  DownloadIcon,
   FileSearchIcon,
   FolderGit2Icon,
   FolderIcon,
@@ -80,6 +81,7 @@ import {
 } from "lucide-react";
 import { openThreadFind } from "./chat/threadFindStore";
 import { requestHandoff } from "./HandoffDialog";
+import { requestImportSession } from "./ImportSessionDialog";
 import {
   useDeferredValue,
   useEffect,
@@ -1493,6 +1495,38 @@ function OpenCommandPaletteDialog(props: {
       },
     });
   }
+
+  const importSessionFallbackProject = projectByKey.values().next().value;
+  const importSessionEnvironmentId =
+    currentProjectEnvironmentId ??
+    importSessionFallbackProject?.environmentId ??
+    EnvironmentId.make(PRIMARY_LOCAL_ENVIRONMENT_ID);
+  actionItems.push({
+    kind: "action",
+    value: "action:import-chat-session",
+    searchTerms: [
+      "import",
+      "session",
+      "claude",
+      "codex",
+      "chatgpt",
+      "antigravity",
+      "pi",
+      "chat",
+      "conversation",
+      "history",
+      "uuid",
+    ],
+    title: "Import chat session…",
+    description: "Import a Claude Code, Codex, Antigravity, or Pi session by ID",
+    icon: <DownloadIcon className={ITEM_ICON_CLASS} />,
+    run: async () => {
+      requestImportSession({
+        environmentId: importSessionEnvironmentId,
+        projectId: currentProjectId ?? importSessionFallbackProject?.id ?? null,
+      });
+    },
+  });
 
   actionItems.push({
     kind: "action",
